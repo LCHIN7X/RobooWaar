@@ -20,6 +20,13 @@ class Battlefield {
         int height;  // this is the m value from m x n
         int width;   //  this is the n value from m x n
         vector<Robot> listOfRobots;        
+    public:
+        Battlefield(int h, int w) {
+           height = h;
+           width = w; 
+        };
+        void respawnRobots();
+
 };
 
 int main()
