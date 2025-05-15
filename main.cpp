@@ -16,7 +16,6 @@ class Robot;
 // Battlefield class that keeps track of all activity
 //**********************************************************
 
-
 class Battlefield
 {
 private:
@@ -145,7 +144,7 @@ public:
 
 //******************************************
 // Moving Robot class
-//******************************************* 
+//*******************************************
 
 class MovingRobot : public virtual Robot
 {
@@ -470,6 +469,33 @@ int main()
         cout << "Robot Coords: (" << x << "," << y << ")" << endl;
     }
     cout << endl;
+
+    int currentStep = 1;
+    int maxSteps = battlefield.getSteps();
+    vector<Robot *> listOfActiveRobots = battlefield.getListOfRobots();
+
+    while (currentStep <= maxSteps && listOfActiveRobots.size() > 0)
+    {
+        cout << "Turn number: " << currentStep << endl;
+        currentStep++;
+    }
+
+    if (listOfActiveRobots.size() <= 1)
+    {
+        if (listOfActiveRobots.empty())
+        {
+
+            cout << "No Robots Left!" << endl;
+        }
+        else {
+            cout << listOfActiveRobots[1] << " is the last one standing!" << endl;
+        }
+    }
+
+    if (currentStep + 1 > maxSteps)
+    {
+        cout << "Steps exceeded! Simulation ends!" << endl;
+    }
 
     return 0; // Battlefield object goes out of scope here, destructor is called.
 }
