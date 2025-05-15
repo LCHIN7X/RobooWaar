@@ -12,7 +12,11 @@ using namespace std;
 class Battlefield;
 class Robot;
 
+//**********************************************************
 // Battlefield class that keeps track of all activity
+//**********************************************************
+
+
 class Battlefield
 {
 private:
@@ -87,7 +91,10 @@ public:
     int getHeight() const { return height; }
 };
 
+//******************************************
 // Abstract base Robot class
+//******************************************
+
 class Robot
 {
 protected:
@@ -136,7 +143,10 @@ public:
     void setHidden(bool state) { hidden = state; }
 };
 
+//******************************************
 // Moving Robot class
+//******************************************* 
+
 class MovingRobot : public virtual Robot
 {
 protected:
@@ -158,7 +168,10 @@ public:
     void incrementMoveCount() { moveCount++; }
 };
 
+//******************************************
 // Shooting Robot class
+//******************************************
+
 class ShootingRobot : public virtual Robot
 {
 protected:
@@ -189,7 +202,10 @@ public:
     }
 };
 
+//******************************************
 // Seeing Robot class
+//******************************************
+
 class SeeingRobot : public virtual Robot
 {
 protected:
@@ -213,7 +229,10 @@ public:
     }
 };
 
+//******************************************
 // Thinking Robot class
+//******************************************
+
 class ThinkingRobot : public virtual Robot
 {
 protected:
@@ -232,7 +251,10 @@ public:
     virtual string decideAction() const = 0;
 };
 
+//******************************************
 // GenericRobot class
+//******************************************
+
 class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobot, public ThinkingRobot
 {
 private:
@@ -312,7 +334,10 @@ public:
     }
 };
 
+//******************************************
 // Destructor
+//******************************************
+
 Battlefield::~Battlefield()
 {
     for (Robot *robot : listOfRobots)
@@ -322,7 +347,11 @@ Battlefield::~Battlefield()
     listOfRobots.clear();
     cout << "Battlefield: Destructor" << endl;
 }
+
+//******************************************
 // Function implementations
+//******************************************
+
 void parseInputFile(const string &line, Battlefield &battlefield)
 {
     vector<string> tokens;
@@ -378,7 +407,10 @@ void parseInputFile(const string &line, Battlefield &battlefield)
     }
 }
 
+//*****************************************************************************************
 // Modified to take Battlefield by reference to avoid copying/double-free memory error
+//*****************************************************************************************
+
 void readInputFile(Battlefield &battlefield, const string &filename = "inputFile.txt")
 {
     ifstream inputFile(filename);
