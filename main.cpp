@@ -6,6 +6,10 @@
 #include <random>
 #include <stdexcept>
 #include <cstdlib>
+#include <queue>
+#include <ctime>
+#include <cstdlib>
+
 using namespace std;
 
 // Forward declarations
@@ -33,6 +37,10 @@ private:
     // - write output to .txt file
 
 public:
+
+    bool checkOccupied(int a,int y);
+    void placeRobot(Robot* r);
+
     // Constructor
     Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {};
 
@@ -124,6 +132,9 @@ protected:
     bool hidden;
 
 public:
+    bool isReentry();
+    void onReenter();
+
     Robot(string name, int x, int y)
         : name(name), positionX(x), positionY(y), lives(3), hidden(false) {}
 
@@ -468,6 +479,61 @@ void Battlefield::cleanupDestroyedRobots()
 void Battlefield::displayBattlefield()
 {
 }
+//Reentry Queue class
+//******************************************
+
+class Reentry {
+private:
+    queue<Robot*> reentry_queue;
+    Battlefield* battlefield;
+
+public:
+    Reentry(Battlefield* battlefield_) : battlefield(battlefield_) {
+        srand(time(0)); 
+    }
+
+    void requeue(Robot* robot) {
+        if (robot->isReentry()) {
+            reentry_queue.push(robot);
+            cout << robot->getName() << " added to reentry queue.\n";
+        } else {
+            cout << robot->getName() << " cannot reenter anymore.\n";
+        }
+    }
+
+    void reentrying() {
+        if (reentry_queue.empty()) {
+            cout << "No robot in reentry queue.\n";
+            return;
+        }
+
+        Robot* robot = reentry_queue.front();
+
+        if (!robot->isReentry()) {
+            cout << robot->getName() << " cannot reenter.\n";
+            reentry_queue.pop();
+            return;
+        }
+
+
+        //find a empty place put robot
+        int tries = 50;
+        while (tries--) {
+            int x = rand() % battlefield->getWidth();
+            int y = rand() % battlefield->getHeight();
+
+            if (!battlefield->checkOccupied(x, y)) { 
+                robot->setPosition(x, y);
+                robot->onReenter(); 
+                battlefield->placeRobot(robot); 
+                reentry_queue.pop();
+                return;
+            }
+        }
+
+        cout << "No free space for " << robot->getName() << ", will try again next time.\n";
+    }
+};
 
 //******************************************
 // Destructor
