@@ -8,6 +8,9 @@
 #include <cstdlib>
 using namespace std;
 
+// Forward declarations
+class Robot;
+
 //**********************************************************
 // Battlefield class that keeps track of all activity
 //**********************************************************
@@ -19,7 +22,8 @@ private:
     int width;  // this is the n value from m x n
     int steps;  // max number of simulation steps
     int numberOfRobots;
-    vector<class Robot *> listOfRobots; // using forward declaration here
+    vector<Robot *> listOfRobots;            // using forward declaration here
+    vector<vector<Robot *>> battlefieldGrid; // battlefield grid
 
 public:
     // Constructor
@@ -32,6 +36,7 @@ public:
     {
         height = h;
         width = w;
+        battlefieldGrid.assign(height, vector<Robot *>(width, nullptr));
     }
 
     void printDimensions() const
@@ -82,8 +87,20 @@ public:
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+
+    // Function prototypes (definitions are after Robot class)
     void simulationTurn();
-    void respawnRobots() {}; // Stub for now
+    int getNumberOfAliveRobots();
+    void cleanupDestroyedRobots();
+    void respawnRobots();
+
+    Robot *getRobotAt(int x, int y) const;
+    void placeRobot(Robot *robot, int x, int y);
+    void removeRobotFromGrid(Robot *robot);
+    bool isPositionAvailable(int x, int y);
+    bool isPositionWithinGrid(int x, int y) const;
+
+    void displayBattlefield();
 };
 
 //******************************************
@@ -330,7 +347,7 @@ public:
 };
 
 //******************************************
-// simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to) 
+// simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
 void Battlefield::simulationTurn()
@@ -351,6 +368,89 @@ void Battlefield::simulationTurn()
         robot->act();
         cout << robot->getName() << " is done." << endl;
     }
+}
+
+// To get the number of alive robots
+// **TO BE USED IN MAIN LOOP**
+int Battlefield::getNumberOfAliveRobots() {
+    int num = 0;
+    for (const Robot* robot : listOfRobots) {
+        if (robot->getLives() > 0) {
+            num++;
+        }
+    }
+    return num;
+}
+
+// to check if the given coordinates are within the grid
+bool Battlefield::isPositionWithinGrid(int x, int y) const
+{
+    return (x >= 0 && x < width) && (y >= 0 && y < height);
+}
+
+// to get the Robot at given coordinates, if not found then return nullptr
+Robot *Battlefield::getRobotAt(int x, int y) const
+{
+    if (!isPositionWithinGrid(x, y))
+    {
+        return nullptr;
+    }
+    return battlefieldGrid[y][x];
+}
+
+// to check if the given coordinates is available
+bool Battlefield::isPositionAvailable(int x, int y)
+{
+    if (getRobotAt(x, y) == nullptr)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+// Put robot at specified coordinates
+void Battlefield::placeRobot(Robot* robot, int x, int y) {
+    battlefieldGrid[y][x] = robot;
+    robot->setPosition(x, y);
+}
+
+void Battlefield::removeRobotFromGrid(Robot *robot)
+{
+    int x = robot->getX();
+    int y = robot->getY();
+
+    if (isPositionWithinGrid(x, y) && battlefieldGrid[y][x] == robot)
+    {
+        battlefieldGrid[y][x] = nullptr;
+    }
+}
+
+// respawnRobots member function definition
+void Battlefield::respawnRobots()
+{
+}
+
+//  cleanupDestroyedRobots member function
+void Battlefield::cleanupDestroyedRobots()
+{
+    auto iterator = listOfRobots.begin();
+    while (iterator != listOfRobots.end())
+    {
+        if ((*iterator)->getLives() <= 0)
+        {
+            cout << (*iterator)->getName() << " has been deleted from the grid." << endl;
+        }
+    }
+}
+
+//******************************************
+// To display the battlefield state 
+//******************************************
+void Battlefield::displayBattlefield()
+{
 }
 
 //******************************************
@@ -458,10 +558,12 @@ void writeOutputToFile(const Battlefield &battlefield)
 
 int main()
 {
+    // Seed the random number generator once
+    srand(static_cast<unsigned>(time(0)));
+
     Battlefield battlefield;
-    // Pass battlefield by reference to readInputFile to populate the main object directly
     cout << "READING INPUT FILE" << endl;
-    readInputFile(battlefield);
+    readInputFile(battlefield); // This sets dimensions and initializes grid
 
     cout << "TESTING BATTLEFIELD CLASS" << endl;
     cout << "Battlefield Dimensions: ";
@@ -476,47 +578,75 @@ int main()
     battlefield.printNumberOfRobots();
     cout << endl;
 
-    // This works
-    cout << "Robots on battlefield: " << endl;
-    vector<Robot *> robotsList = battlefield.getListOfRobots();
+    cout << "Initial Robots on battlefield: " << endl;
+    vector<Robot *> robotsList = battlefield.getListOfRobots(); // This is the initial list
     for (Robot *robot : robotsList)
     {
         string name = robot->getName();
         int x = robot->getX();
         int y = robot->getY();
-
-        cout << "Robot Name: " << name << endl;
-        cout << "Robot Coords: (" << x << "," << y << ")" << endl;
+        int lives = robot->getLives();
+        cout << "Robot Name: " << name << ", Coords: (" << x << "," << y << "), Lives: " << lives << endl;
     }
     cout << endl;
 
-    int currentStep = 1;
-    int maxSteps = battlefield.getSteps();
-    vector<Robot *> listOfActiveRobots = battlefield.getListOfRobots();
+    cout << "Initial Battlefield State:" << endl;
+    battlefield.displayBattlefield(); // Display the grid
+    cout << endl;
 
-    while (currentStep <= maxSteps && listOfActiveRobots.size() > 0)
+    // --- Simulation Loop ---
+    int currentStep = 0;
+    int maxSteps = battlefield.getSteps();
+
+    cout << "--- Starting Simulation ---" << endl;
+
+    // Loop while max steps not reached AND there's more than one robot alive
+    while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
-        cout << "Turn number: " << currentStep << endl;
-        battlefield.simulationTurn();
+        cout << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
+
+        battlefield.simulationTurn(); // Executes turns, cleans up, respawns
+
+        cout << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
+        battlefield.displayBattlefield(); // Display the updated grid
+        // Implement logging here
+        // writeOutputToFile(battlefield);
+
         currentStep++;
     }
 
-    if (listOfActiveRobots.size() <= 1)
-    {
-        if (listOfActiveRobots.empty())
-        {
+    // --- End of Simulation ---
+    cout << "\n--- Simulation Ended ---" << endl;
 
-            cout << "No Robots Left!" << endl;
+    size_t remainingRobots = battlefield.getNumberOfAliveRobots();
+
+    if (remainingRobots <= 1)
+    {
+        if (remainingRobots == 0)
+        {
+            cout << "Result: All robots destroyed!" << endl;
         }
         else
         {
-            cout << listOfActiveRobots[1] << " is the last one standing!" << endl;
+            Robot* lastRobot = nullptr;
+            const vector<Robot*>& finalRobotList = battlefield.getListOfRobots();
+            for(Robot* robot : finalRobotList) {
+                if(robot->getLives() > 0) {
+                    lastRobot = robot;
+                    break;
+                }
+            }
+            if (lastRobot) {
+                 cout << "Result: " << lastRobot->getName() << " is the last one standing!" << endl;
+            } else {
+                 cout << "Result: Simulation ended with one robot expected, but couldn't find the last one." << endl;
+            }
         }
     }
-
-    if (currentStep + 1 > maxSteps)
+    else
     {
-        cout << "Steps exceeded! Simulation ends!" << endl;
+         cout << "Result: Maximum steps reached (" << maxSteps << " steps)." << endl;
+         cout << "Remaining robots: " << remainingRobots << endl;
     }
 
     return 0; // Battlefield object goes out of scope here, destructor is called.
