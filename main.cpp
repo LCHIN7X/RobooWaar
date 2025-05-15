@@ -355,29 +355,26 @@ private:
     Battlefield* battlefield;
 
 public:
-    Reentry(Battlefield* battlefield_) : battlefield(battlefield_) {
+    Reentry(Battlefield* batttlefieldd) : battlefield(batttlefieldd) {
         srand(time(0)); 
     }
 
     void requeue(Robot* robot) {
-        if (robot->isReentry()) {
-            reentry_queue.push(robot);
-            cout << robot->getName() << " added to reentry queue.\n";
-        } else {
-            cout << robot->getName() << " cannot reenter anymore.\n";
-        }
+        
+        reentry_queue.push(robot);
+        cout << robot->getName() << " add to queue\n";
+
     }
 
     void reentrying() {
         if (reentry_queue.empty()) {
-            cout << "No robot in reentry queue.\n";
+            cout << "No robot queue\n";
             return;
         }
 
         Robot* robot = reentry_queue.front();
-
         if (!robot->isReentry()) {
-            cout << robot->getName() << " cannot reenter.\n";
+            cout << robot->getName() << " cannot reenter\n";
             reentry_queue.pop();
             return;
         }
@@ -398,7 +395,7 @@ public:
             }
         }
 
-        cout << "No free space for " << robot->getName() << ", will try again next time.\n";
+        cout << "No place put " << robot->getName() << ", try it next time.\n";
     }
 };
 
