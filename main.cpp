@@ -8,10 +8,6 @@
 #include <cstdlib>
 using namespace std;
 
-// Forward declarations
-class Battlefield;
-class Robot;
-
 //**********************************************************
 // Battlefield class that keeps track of all activity
 //**********************************************************
@@ -23,7 +19,7 @@ private:
     int width;  // this is the n value from m x n
     int steps;  // max number of simulation steps
     int numberOfRobots;
-    vector<Robot *> listOfRobots; // vector to store all Robots
+    vector<class Robot *> listOfRobots; // using forward declaration here
 
 public:
     // Constructor
@@ -84,10 +80,10 @@ public:
         return listOfRobots;
     }
 
-    void respawnRobots() {}; // Stub for now
-
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+    void simulationTurn();
+    void respawnRobots() {}; // Stub for now
 };
 
 //******************************************
@@ -334,6 +330,30 @@ public:
 };
 
 //******************************************
+// simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to) 
+//******************************************
+
+void Battlefield::simulationTurn()
+{
+    vector<Robot *> currentlyAliveRobots;
+
+    for (Robot *robot : listOfRobots)
+    {
+        if (robot->getLives() > 0)
+        {
+            currentlyAliveRobots.push_back(robot);
+        }
+    }
+
+    for (Robot *robot : currentlyAliveRobots)
+    {
+        cout << robot->getName() << "'s turn: " << endl;
+        robot->act();
+        cout << robot->getName() << " is done." << endl;
+    }
+}
+
+//******************************************
 // Destructor
 //******************************************
 
@@ -477,6 +497,7 @@ int main()
     while (currentStep <= maxSteps && listOfActiveRobots.size() > 0)
     {
         cout << "Turn number: " << currentStep << endl;
+        battlefield.simulationTurn();
         currentStep++;
     }
 
@@ -487,7 +508,8 @@ int main()
 
             cout << "No Robots Left!" << endl;
         }
-        else {
+        else
+        {
             cout << listOfActiveRobots[1] << " is the last one standing!" << endl;
         }
     }
