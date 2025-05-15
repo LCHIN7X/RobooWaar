@@ -335,6 +335,58 @@ public:
 };
 
 //******************************************
+//Reentry Queue class
+//******************************************
+
+class Reentry{
+    private
+    queue<Robot*>reentry_queuq;
+    Battlefield*battlefield;
+
+    public:
+    Reentry(Battlefield*batttlefieldd):battlefield(batttlefieldd){
+        srand(time(0))；
+
+    }
+    
+    void requeue(Robot*robot){
+        reentry_queue.push(robot);
+        cout<<robot->name<< "add to queue\n";
+    }
+
+    void reentrying(){
+        if (reentry_queue()){
+            cout<<"No robot queue\n";
+            return;
+
+        }
+
+        Robot*robot=reentry_queue.front();
+        if(!robot->isReentry()){
+            cout<<robot->name<<"cannot reentry\n";
+            reentry_queue.pop();
+            return;
+        }
+
+        //find a empty put robot back
+        int tries=50;
+        while(tries--){
+            int x = rand() % battlefield->getWidth();
+            int y = rand() % battlefield->getHeight();
+
+            if(!battlefield->checkoccupied(x,y)){
+                robot->setPosition(x,y);
+                robot->onreenter();
+                battlefield->place_robot(robot);
+                reentry_queue.pop();
+                return;
+            }
+        }
+        cout<< "No place put "<<robot->name<<" ,try it next time\n";
+    }
+};
+
+//******************************************
 // Destructor
 //******************************************
 
