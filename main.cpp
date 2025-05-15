@@ -24,6 +24,13 @@ private:
     int numberOfRobots;
     vector<Robot *> listOfRobots;            // using forward declaration here
     vector<vector<Robot *>> battlefieldGrid; // battlefield grid
+    // TODO for Battlefield:
+    // - add respawn feature
+    // - complete cleanup feature
+    // - display battlefield during each turn
+    
+    // TODO others:
+    // - write output to .txt file
 
 public:
     // Constructor
@@ -183,7 +190,6 @@ public:
 //******************************************
 // Shooting Robot class
 //******************************************
-
 class ShootingRobot : public virtual Robot
 {
 protected:
@@ -368,14 +374,20 @@ void Battlefield::simulationTurn()
         robot->act();
         cout << robot->getName() << " is done." << endl;
     }
+
+    cleanupDestroyedRobots();
+    respawnRobots();
 }
 
 // To get the number of alive robots
 // **TO BE USED IN MAIN LOOP**
-int Battlefield::getNumberOfAliveRobots() {
+int Battlefield::getNumberOfAliveRobots()
+{
     int num = 0;
-    for (const Robot* robot : listOfRobots) {
-        if (robot->getLives() > 0) {
+    for (const Robot *robot : listOfRobots)
+    {
+        if (robot->getLives() > 0)
+        {
             num++;
         }
     }
@@ -412,9 +424,13 @@ bool Battlefield::isPositionAvailable(int x, int y)
 }
 
 // Put robot at specified coordinates
-void Battlefield::placeRobot(Robot* robot, int x, int y) {
-    battlefieldGrid[y][x] = robot;
-    robot->setPosition(x, y);
+void Battlefield::placeRobot(Robot *robot, int x, int y)
+{
+    if (isPositionAvailable(x, y) && isPositionWithinGrid(x, y))
+    {
+        battlefieldGrid[y][x] = robot;
+        robot->setPosition(x, y);
+    }
 }
 
 void Battlefield::removeRobotFromGrid(Robot *robot)
@@ -447,7 +463,7 @@ void Battlefield::cleanupDestroyedRobots()
 }
 
 //******************************************
-// To display the battlefield state 
+// To display the battlefield state
 //******************************************
 void Battlefield::displayBattlefield()
 {
@@ -523,6 +539,7 @@ void parseInputFile(const string &line, Battlefield &battlefield)
 
         Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);
         battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
     }
 }
 
@@ -628,25 +645,30 @@ int main()
         }
         else
         {
-            Robot* lastRobot = nullptr;
-            const vector<Robot*>& finalRobotList = battlefield.getListOfRobots();
-            for(Robot* robot : finalRobotList) {
-                if(robot->getLives() > 0) {
+            Robot *lastRobot = nullptr;
+            const vector<Robot *> &finalRobotList = battlefield.getListOfRobots();
+            for (Robot *robot : finalRobotList)
+            {
+                if (robot->getLives() > 0)
+                {
                     lastRobot = robot;
                     break;
                 }
             }
-            if (lastRobot) {
-                 cout << "Result: " << lastRobot->getName() << " is the last one standing!" << endl;
-            } else {
-                 cout << "Result: Simulation ended with one robot expected, but couldn't find the last one." << endl;
+            if (lastRobot)
+            {
+                cout << "Result: " << lastRobot->getName() << " is the last one standing!" << endl;
+            }
+            else
+            {
+                cout << "Result: Simulation ended with one robot expected, but couldn't find the last one." << endl;
             }
         }
     }
     else
     {
-         cout << "Result: Maximum steps reached (" << maxSteps << " steps)." << endl;
-         cout << "Remaining robots: " << remainingRobots << endl;
+        cout << "Result: Maximum steps reached (" << maxSteps << " steps)." << endl;
+        cout << "Remaining robots: " << remainingRobots << endl;
     }
 
     return 0; // Battlefield object goes out of scope here, destructor is called.
