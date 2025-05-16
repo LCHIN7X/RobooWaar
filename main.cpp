@@ -191,7 +191,11 @@ public:
 
     bool isValidMove(int newX, int newY, const Battlefield &battlefield) const
     {
-        return newX >= 0 && newX < battlefield.getWidth() &&
+        // Only allow moving to adjacent cell (1 step in any direction)
+        int dx = abs(newX - positionX);
+        int dy = abs(newY - positionY);
+        bool oneStep = (dx + dy == 1); // Manhattan distance of 1 (no diagonal)
+        return oneStep && newX >= 0 && newX < battlefield.getWidth() &&
                newY >= 0 && newY < battlefield.getHeight();
     }
 
@@ -272,8 +276,9 @@ public:
         : Robot(name, x, y), strategyLevel(strategy) {}
 
     virtual ~ThinkingRobot() = default;
-    // NOTE: think() was void and override. Kept as is per instruction.
-    virtual void think() override = 0;
+    void think() override {
+        cout << name << " is thinking..." << endl;
+    }
 
     int getStrategyLevel() const { return strategyLevel; }
 
@@ -321,22 +326,51 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
-        if (hasAmmo())
-        {
-            cout << name << " is firing...\n";
+        if (hasAmmo()) {
+            // Pick a random coordinate to fire at
+            int targetX = rand() % battlefield.getWidth();
+            int targetY = rand() % battlefield.getHeight();
+            cout << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
             useAmmo();
-            // Basic shooting logic would go here, using 'battlefield'
-        }
-        else
-        {
-            cout << name << " has no ammo left!\n";
+            Robot* target = battlefield.getRobotAt(targetX, targetY);
+            if (target != nullptr && target != this) {
+                if (hitProbability()) {
+                    cout << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                } else {
+                    cout << "Missed!" << endl;
+                }
+            } else {
+                cout << "Missed!" << endl;
+            }
+        } else {
+            cout << name << " has no ammo left!" << endl;
         }
     }
 
-    void look(Battlefield &battlefield) override
-    {
-        cout << name << " is looking around...\n";
-        // Basic vision logic would go here, using 'battlefield'
+    void look(Battlefield &battlefield) override {
+        cout << name << " is scanning surroundings...." << endl;
+        int cx = positionX;
+        int cy = positionY;
+        for (int dx = -1; dx <= 1; ++dx) {
+            for (int dy = -1; dy <= 1; ++dy) {
+                int nx = cx + dx;
+                int ny = cy + dy;
+                cout << "Checking (" << nx << ", " << ny << "): ";
+                if (!battlefield.isPositionWithinGrid(nx, ny)) {
+                    cout << "Exceed Boundary" << endl;
+                } else if (nx == cx && ny == cy) {
+                    cout << "Current Position" << endl;
+                } else {
+                    Robot* r = battlefield.getRobotAt(nx, ny);
+                    if (r == nullptr) {
+                        cout << "In Boundary but Empty" << endl;
+                    } else {
+                        cout << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
+                    }
+                }
+            }
+        }
     }
 
     string decideAction() const override
