@@ -357,13 +357,21 @@ public:
     void fire(Battlefield &battlefield) override
     {
         if (hasAmmo()) {
-            // Pick a random coordinate to fire at
-            int targetX = rand() % battlefield.getWidth();
-            int targetY = rand() % battlefield.getHeight();
-            cout << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-            useAmmo();
-            Robot* target = battlefield.getRobotAt(targetX, targetY);
-            if (target != nullptr && target != this) {
+            // Collect all possible targets (other robots, not self, and alive)
+            vector<Robot*> possibleTargets;
+            for (Robot* r : battlefield.getListOfRobots()) {
+                if (r != nullptr && r != this && r->getLives() > 0) {
+                    possibleTargets.push_back(r);
+                }
+            }
+            if (!possibleTargets.empty()) {
+                // Pick a random target from the list
+                int idx = rand() % possibleTargets.size();
+                Robot* target = possibleTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                cout << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
                 if (hitProbability()) {
                     cout << "Hit! (" << target->getName() << ") be killed" << endl;
                     target->takeDamage();
@@ -371,7 +379,7 @@ public:
                     cout << "Missed!" << endl;
                 }
             } else {
-                cout << "Missed!" << endl;
+                cout << name << " has no valid targets to fire at!" << endl;
             }
         } else {
             cout << name << " has no ammo left!" << endl;
@@ -1107,6 +1115,21 @@ int main()
     while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
         cout << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
+
+        // Display robot status right after the simulation step title
+        cout << "Robot Status before Step " << currentStep + 1 << ":" << endl;
+        for (Robot* robot : battlefield.getListOfRobots()) {
+            string typeName;
+            if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
+            else if (dynamic_cast<JumpBot*>(robot)) typeName = "JumpBot";
+            else if (dynamic_cast<GenericRobot*>(robot)) typeName = "GenericRobot";
+            else if (dynamic_cast<TestRobot*>(robot)) typeName = "TestRobot";
+            else typeName = "Robot";
+            cout << "  Type: " << typeName
+                 << ", Name: " << robot->getName()
+                 << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
+                 << ", Life: " << robot->getLives() << endl;
+        }
 
         battlefield.simulationTurn(); // Executes turns, cleans up, respawns
 
