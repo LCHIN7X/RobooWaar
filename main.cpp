@@ -37,6 +37,8 @@ private:
     // TODO others:
     // - write output to .txt file
     // - log more details to text file and output
+    // - Detailed comments
+    // - More error handling
 
 public:
     // bool checkOccupied(int a, int y);
