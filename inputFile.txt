@@ -1,6 +1,6 @@
 M by N : 40 50
 steps: 300
-robots: 9
+robots: 12
 GenericRobot Kidd 3 6
 GenericRobot Jet 12 1
 GenericRobot Alpha 35 20
@@ -8,7 +8,8 @@ GenericRobot Beta 20 37
 GenericRobot Star random random
 HideBot Ghost 10 7
 JumpBot Jumpp 33 15
-LongShotBot Xiuuu 17 22
+LongShotBot TungtungtungSahur 17 22
 SemiAutoBot Autoo 6 45
-ThirtyShotBot Tree 15 17
+ThirtyShotBot LiriliLarila 15 17
 ScoutBot Scan 8 16
+TrackBot TralaleroTralala 27 13
