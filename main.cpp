@@ -505,6 +505,62 @@ class LongShotBot : public GenericRobot{
 
 };
 
+//******************************************
+//SemiAutoBot
+//******************************************
+
+class SemiAutoBot : public GenericRobot{
+    private:
+    int fire_count = 0;
+
+
+    public:
+    SemiAutoBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void fire(Battlefield &battlefield) override{
+        int x = getX();
+        int y = getY();
+
+        Robot* target = battlefield.getRobotAt(x,y);
+        
+        if(!target || target == this){
+            cout<< getName()<<"sadly didnt hit any robot\n";
+            return;
+        }
+
+        GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+
+        cout << getName() << "fire 3 consecutive shoot at ("<<x<<","<<y<<")\n";
+
+        for (int i = 0;i <3;i ++){
+            double chance = (double)rand()/RAND_MAX;
+            if (chance < 0.7) {
+                cout << "shot" << (i + 1) <<"successful hit the robot\n";
+                if (gtarget->isHit()){
+                    gtarget->takeDamage();
+                    fire_count++;
+                }
+                
+            }
+            else{
+                cout << "shot"<< (i+1)<< "is miss\n";
+                    
+                }
+        }
+
+    }
+    int getFireCount() const{
+        return fire_count;
+    }
+};
+
+//******************************************
+//ThirtyShotBot
+//******************************************
+
+
 
 //******************************************
 //Testbot
@@ -1027,6 +1083,25 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new LongShotBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "SemiAutoBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new SemiAutoBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
