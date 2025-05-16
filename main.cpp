@@ -610,6 +610,42 @@ class ThirtyShotBot : public GenericRobot {
     }
 };
 
+//******************************************
+//ScoutBot
+//******************************************
+class ScoutBot : public GenericRobot{
+    private:
+    int scout_count = 0;
+
+    public:
+    ScoutBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void looking(Battlefield &battlefield){
+        if (scout_count >= 3){
+            cout<< getName() << "cannot scout already\n";
+            return;
+        }
+        cout << getName() <<"scaning\n";
+
+        for (int i = 0;i <battlefield.getWidth();++i){
+            for (int j = 0;j <battlefield.getHeight();++j){
+                Robot *r = battlefield.getRobotAt(i,j);
+                if (r)
+                    cout<<"["<< r->getName()<<"]\n";
+                else
+                    cout<<"[]]n";
+            }
+        }
+        scout_count++;
+    }
+
+    int getScoutCount() const{
+        return scout_count;
+    }
+};
+
 
 //******************************************
 //Testbot
@@ -1170,6 +1206,25 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new ThirtyShotBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "ScoutBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new ScoutBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }

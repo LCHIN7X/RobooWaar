@@ -11,3 +11,4 @@ JumpBot Jumpp 33 15
 LongShotBot Xiuuu 17 22
 SemiAutoBot Autoo 6 45
 ThirtyShotBot Tree 15 17
+ScoutBot Scan 8 16
