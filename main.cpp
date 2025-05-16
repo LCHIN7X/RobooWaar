@@ -32,8 +32,7 @@ private:
     map<string, int> respawnCounts;
 
     // TODO for Battlefield:
-    // - respawn queue
-    // - display battlefield during each turn
+    // - fix bugs if any
 
     // TODO others:
     // - write output to .txt file
@@ -90,7 +89,6 @@ public:
     {
         return numberOfRobots;
     }
-
 
     const vector<Robot *> getListOfRobots() const
     {
@@ -424,7 +422,7 @@ int Battlefield::getNumberOfAliveRobots()
     return num;
 }
 
-void Battlefield::addNewRobot(Robot* robot)
+void Battlefield::addNewRobot(Robot *robot)
 {
 
     listOfRobots.push_back(robot);
@@ -568,6 +566,80 @@ void Battlefield::cleanupDestroyedRobots()
 //******************************************
 void Battlefield::displayBattlefield()
 {
+    // Print column numbers header
+    cout << "   ";
+    for (int x = 0; x < width; x++)
+    {
+        cout << x % 10 << " "; // Single digit for each column
+    }
+    cout << endl;
+
+    // Print top border
+    cout << "  +";
+    for (int x = 0; x < width; x++)
+    {
+        cout << "--";
+    }
+    cout << "+" << endl;
+
+    // Print each row
+    for (int y = 0; y < height; y++)
+    {
+        // Print row number
+        cout << y % 10 << " |"; // Single digit for each row
+
+        // Print cells
+        for (int x = 0; x < width; x++)
+        {
+            Robot *robot = battlefieldGrid[y][x];
+            if (robot != nullptr)
+            {
+                if (robot->getLives() <= 0)
+                {
+                    cout << "X "; // Dead robot
+                }
+                else if (robot->isHidden())
+                {
+                    cout << "H "; // Hidden robot
+                }
+                else
+                {
+                    // Show first letter of robot's name
+                    cout << robot->getName()[0] << " ";
+                }
+            }
+            else
+            {
+                cout << ". "; // Empty space
+            }
+        }
+        cout << "| " << y % 10 << endl; // Row number on right side
+    }
+
+    // Print bottom border
+    cout << "  +";
+    for (int x = 0; x < width; x++)
+    {
+        cout << "--";
+    }
+    cout << "+" << endl;
+
+    // Print column numbers footer
+    cout << "   ";
+    for (int x = 0; x < width; x++)
+    {
+        cout << x % 10 << " ";
+    }
+    cout << endl
+         << endl;
+
+    // Print legend
+    cout << "LEGEND:" << endl;
+    cout << "  . - Empty space" << endl;
+    cout << "  X - Destroyed robot" << endl;
+    cout << "  H - Hidden robot" << endl;
+    cout << "  [Letter] - First letter of robot's name" << endl
+         << endl;
 }
 // Reentry Queue class
 //******************************************
