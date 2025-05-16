@@ -1131,6 +1131,7 @@ void Battlefield::displayBattlefield()
 //             reentry_queue.push(robot);
 //             cout << robot->getName() << " added to reentry queue.\n";
 //         }
+
 //         else
 //         {
 //             cout << robot->getName() << " cannot reenter anymore.\n";
