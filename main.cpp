@@ -15,7 +15,6 @@ using namespace std;
 
 // Forward declarations
 class Robot;
-
 //**********************************************************
 // Battlefield class that keeps track of all activity
 //**********************************************************
@@ -92,14 +91,6 @@ public:
         return numberOfRobots;
     }
 
-    void addNewRobot(Robot *robot)
-    {
-        listOfRobots.push_back(robot);
-        if (respawnCounts.find(robot->getName()) == respawnCounts.end())
-        {
-            respawnCounts[robot->getName()] = 3;
-        }
-    }
 
     const vector<Robot *> getListOfRobots() const
     {
@@ -111,6 +102,7 @@ public:
 
     // Function prototypes (definitions are after Robot class)
     void simulationTurn();
+    void addNewRobot(Robot *robot);
     int getNumberOfAliveRobots();
     void cleanupDestroyedRobots();
     void respawnRobots();
@@ -370,6 +362,26 @@ public:
     }
 };
 
+class TestRobot : public Robot
+{
+public:
+    TestRobot(const string &name, int x, int y) : Robot(name, x, y)
+    {
+        cout << "TestRobot " << name << " created at (" << x << ", " << y << ")" << endl;
+    }
+
+    void think() override
+    {
+        cout << getName() << "TestRobot is thinking...";
+    }
+
+    void act() override
+    {
+        cout << getName() << "TestRobot is acting. It will take 1 damage here for testing purposes" << endl;
+        takeDamage();
+    }
+};
+
 //******************************************
 // simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
@@ -410,6 +422,16 @@ int Battlefield::getNumberOfAliveRobots()
         }
     }
     return num;
+}
+
+void Battlefield::addNewRobot(Robot* robot)
+{
+
+    listOfRobots.push_back(robot);
+    if (respawnCounts.find(robot->getName()) == respawnCounts.end())
+    {
+        respawnCounts[robot->getName()] = 3;
+    }
 }
 
 // COMPLETED: to check if the given coordinates are within the grid
@@ -495,7 +517,7 @@ void Battlefield::respawnRobots()
 
         if (spotFound)
         {
-            Robot *newRobot = new GenericRobot(nameOfRobotToRespawn, randomX, randomY);
+            Robot *newRobot = new TestRobot(nameOfRobotToRespawn, randomX, randomY);
             newRobot->setLives(livesLeft);
             placeRobot(newRobot, randomX, randomY);
             listOfRobots.push_back(newRobot);
@@ -507,15 +529,15 @@ void Battlefield::respawnRobots()
 //  PARTIALLY COMPLETED: cleanupDestroyedRobots member function
 void Battlefield::cleanupDestroyedRobots()
 {
+    cout << "Battlefield::cleanupDestroyedRobots()" << endl;
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
     {
         Robot *robot = *iterator;
         if (robot != nullptr && (*iterator)->getLives() <= 0)
         {
-            cout << (*iterator)->getName() << " has been deleted from the grid." << endl;
-
             removeRobotFromGrid(robot);
+            cout << (*iterator)->getName() << " has been deleted from the grid." << endl;
 
             string robotName = robot->getName();
 
@@ -528,14 +550,16 @@ void Battlefield::cleanupDestroyedRobots()
                 delete robot;
 
                 iterator = listOfRobots.erase(iterator);
-            } 
-            else {
+            }
+            else
+            {
                 cout << robotName << " does not have any lives left. Removing it permanently from battlefield..." << endl;
                 delete robot;
 
                 iterator = listOfRobots.erase(iterator);
             }
         }
+        iterator++;
     }
 }
 
@@ -679,7 +703,7 @@ void parseInputFile(const string &line, Battlefield &battlefield)
             robotYCoordinates = stoi(tokens[3]);
         }
 
-        Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);
+        Robot *newRobot = new TestRobot(robotName, robotXCoordinates, robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
     }
