@@ -9,6 +9,7 @@
 #include <queue>
 #include <ctime>
 #include <cstdlib>
+#include <map>
 
 using namespace std;
 
@@ -26,20 +27,21 @@ private:
     int width;  // this is the n value from m x n
     int steps;  // max number of simulation steps
     int numberOfRobots;
-    vector<Robot *> listOfRobots;            // using forward declaration here
+    vector<Robot *> listOfRobots;            // stores all robots
     vector<vector<Robot *>> battlefieldGrid; // battlefield grid
+    vector<pair<string, int>> respawnQueue;  // Tracks robot name, robot lives in pairs
+    map<string, int> respawnCounts;
+
     // TODO for Battlefield:
-    // - add respawn feature
-    // - complete cleanup feature
+    // - respawn queue
     // - display battlefield during each turn
-    
+
     // TODO others:
     // - write output to .txt file
 
 public:
-
-    bool checkOccupied(int a,int y);
-    void placeRobot(Robot* r);
+    // bool checkOccupied(int a, int y);
+    // void placeRobot(Robot *r);
 
     // Constructor
     Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {};
@@ -93,6 +95,10 @@ public:
     void addNewRobot(Robot *robot)
     {
         listOfRobots.push_back(robot);
+        if (respawnCounts.find(robot->getName()) == respawnCounts.end())
+        {
+            respawnCounts[robot->getName()] = 3;
+        }
     }
 
     const vector<Robot *> getListOfRobots() const
@@ -132,8 +138,8 @@ protected:
     bool hidden;
 
 public:
-    bool isReentry();
-    void onReenter();
+    // bool isReentry();
+    // void onReenter();
 
     Robot(string name, int x, int y)
         : name(name), positionX(x), positionY(y), lives(3), hidden(false) {}
@@ -150,6 +156,7 @@ public:
     int getX() const { return positionX; }
     int getY() const { return positionY; }
     int getLives() const { return lives; }
+    void setLives(int numOfLives) { lives = numOfLives; }
     bool isHidden() const { return hidden; }
 
     void setPosition(int x, int y)
@@ -390,7 +397,7 @@ void Battlefield::simulationTurn()
     respawnRobots();
 }
 
-// To get the number of alive robots
+// COMPLETED: To get the number of alive robots
 // **TO BE USED IN MAIN LOOP**
 int Battlefield::getNumberOfAliveRobots()
 {
@@ -405,13 +412,13 @@ int Battlefield::getNumberOfAliveRobots()
     return num;
 }
 
-// to check if the given coordinates are within the grid
+// COMPLETED: to check if the given coordinates are within the grid
 bool Battlefield::isPositionWithinGrid(int x, int y) const
 {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
 
-// to get the Robot at given coordinates, if not found then return nullptr
+// COMPLETED: to get the Robot at given coordinates, if not found then return nullptr
 Robot *Battlefield::getRobotAt(int x, int y) const
 {
     if (!isPositionWithinGrid(x, y))
@@ -421,7 +428,7 @@ Robot *Battlefield::getRobotAt(int x, int y) const
     return battlefieldGrid[y][x];
 }
 
-// to check if the given coordinates is available
+// COMPLETED: to check if the given coordinates is available
 bool Battlefield::isPositionAvailable(int x, int y)
 {
     if (getRobotAt(x, y) == nullptr)
@@ -434,7 +441,7 @@ bool Battlefield::isPositionAvailable(int x, int y)
     }
 }
 
-// Put robot at specified coordinates
+// COMPLETED: to put robot at specified coordinates
 void Battlefield::placeRobot(Robot *robot, int x, int y)
 {
     if (isPositionAvailable(x, y) && isPositionWithinGrid(x, y))
@@ -444,6 +451,7 @@ void Battlefield::placeRobot(Robot *robot, int x, int y)
     }
 }
 
+// COMPLETED: to remove robot from grid position
 void Battlefield::removeRobotFromGrid(Robot *robot)
 {
     int x = robot->getX();
@@ -455,20 +463,78 @@ void Battlefield::removeRobotFromGrid(Robot *robot)
     }
 }
 
-// respawnRobots member function definition
+// PARTIALLY COMPLETED: respawnRobots member function definition
 void Battlefield::respawnRobots()
 {
+    if (!respawnQueue.empty())
+    {
+        pair<string, int> respawnInfo = respawnQueue.front();
+        string nameOfRobotToRespawn = respawnInfo.first;
+        int livesLeft = respawnInfo.second;
+        respawnQueue.erase(respawnQueue.begin());
+
+        cout << "Respawning " << nameOfRobotToRespawn << endl;
+
+        int randomX;
+        int randomY;
+        int attempts = 50;
+        bool spotFound = false;
+
+        while (attempts > 0)
+        {
+            randomX = rand() % width;
+            randomY = rand() % height;
+
+            if (isPositionWithinGrid(randomX, randomY) && isPositionAvailable(randomX, randomY))
+            {
+                spotFound = true;
+                break;
+            }
+            attempts--;
+        }
+
+        if (spotFound)
+        {
+            Robot *newRobot = new GenericRobot(nameOfRobotToRespawn, randomX, randomY);
+            newRobot->setLives(livesLeft);
+            placeRobot(newRobot, randomX, randomY);
+            listOfRobots.push_back(newRobot);
+            cout << nameOfRobotToRespawn << " respawned successfully at (" << randomX << ", " << randomY << ")" << endl;
+        }
+    }
 }
 
-//  cleanupDestroyedRobots member function
+//  PARTIALLY COMPLETED: cleanupDestroyedRobots member function
 void Battlefield::cleanupDestroyedRobots()
 {
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
     {
-        if ((*iterator)->getLives() <= 0)
+        Robot *robot = *iterator;
+        if (robot != nullptr && (*iterator)->getLives() <= 0)
         {
             cout << (*iterator)->getName() << " has been deleted from the grid." << endl;
+
+            removeRobotFromGrid(robot);
+
+            string robotName = robot->getName();
+
+            if (respawnCounts.count(robotName) && respawnCounts.at(robotName) > 0)
+            {
+                cout << robotName << " added to respawn queue (" << respawnCounts.at(robotName) << " respawns left." << endl;
+                respawnQueue.push_back({robotName, robot->getLives()});
+                respawnCounts[robotName]--;
+
+                delete robot;
+
+                iterator = listOfRobots.erase(iterator);
+            } 
+            else {
+                cout << robotName << " does not have any lives left. Removing it permanently from battlefield..." << endl;
+                delete robot;
+
+                iterator = listOfRobots.erase(iterator);
+            }
         }
     }
 }
@@ -479,61 +545,71 @@ void Battlefield::cleanupDestroyedRobots()
 void Battlefield::displayBattlefield()
 {
 }
-//Reentry Queue class
+// Reentry Queue class
 //******************************************
 
-class Reentry {
-private:
-    queue<Robot*> reentry_queue;
-    Battlefield* battlefield;
+// class Reentry
+// {
+// private:
+//     queue<Robot *> reentry_queue;
+//     Battlefield *battlefield;
 
-public:
-    Reentry(Battlefield* battlefield_) : battlefield(battlefield_) {
-        srand(time(0)); 
-    }
+// public:
+//     Reentry(Battlefield *battlefield_) : battlefield(battlefield_)
+//     {
+//         srand(time(0));
+//     }
 
-    void requeue(Robot* robot) {
-        if (robot->isReentry()) {
-            reentry_queue.push(robot);
-            cout << robot->getName() << " added to reentry queue.\n";
-        } else {
-            cout << robot->getName() << " cannot reenter anymore.\n";
-        }
-    }
+//     void requeue(Robot *robot)
+//     {
+//         if (robot->isReentry())
+//         {
+//             reentry_queue.push(robot);
+//             cout << robot->getName() << " added to reentry queue.\n";
+//         }
+//         else
+//         {
+//             cout << robot->getName() << " cannot reenter anymore.\n";
+//         }
+//     }
 
-    void reentrying() {
-        if (reentry_queue.empty()) {
-            cout << "No robot in reentry queue.\n";
-            return;
-        }
+//     void reentrying()
+//     {
+//         if (reentry_queue.empty())
+//         {
+//             cout << "No robot in reentry queue.\n";
+//             return;
+//         }
 
-        Robot* robot = reentry_queue.front();
+//         Robot *robot = reentry_queue.front();
 
-        if (!robot->isReentry()) {
-            cout << robot->getName() << " cannot reenter.\n";
-            reentry_queue.pop();
-            return;
-        }
+//         if (!robot->isReentry())
+//         {
+//             cout << robot->getName() << " cannot reenter.\n";
+//             reentry_queue.pop();
+//             return;
+//         }
 
+//         // find a empty place put robot
+//         int tries = 50;
+//         while (tries--)
+//         {
+//             int x = rand() % battlefield->getWidth();
+//             int y = rand() % battlefield->getHeight();
 
-        //find a empty place put robot
-        int tries = 50;
-        while (tries--) {
-            int x = rand() % battlefield->getWidth();
-            int y = rand() % battlefield->getHeight();
+//             if (!battlefield->checkOccupied(x, y))
+//             {
+//                 robot->setPosition(x, y);
+//                 robot->onReenter();
+//                 battlefield->placeRobot(robot);
+//                 reentry_queue.pop();
+//                 return;
+//             }
+//         }
 
-            if (!battlefield->checkOccupied(x, y)) { 
-                robot->setPosition(x, y);
-                robot->onReenter(); 
-                battlefield->placeRobot(robot); 
-                reentry_queue.pop();
-                return;
-            }
-        }
-
-        cout << "No free space for " << robot->getName() << ", will try again next time.\n";
-    }
-};
+//         cout << "No free space for " << robot->getName() << ", will try again next time.\n";
+//     }
+// };
 
 //******************************************
 // Destructor
