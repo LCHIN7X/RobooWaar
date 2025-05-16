@@ -418,6 +418,41 @@ class HideBot : public GenericRobot{
 };
 
 //******************************************
+//Jumpbot
+//******************************************
+class JumpBot : public GenericRobot{
+    private:
+    
+    int jump_count = 0;
+
+    public:
+    JumpBot(const string &name,int x, int y)
+    :Robot(name,x,y),
+     GenericRobot(name,x,y){}
+
+    void move(Battlefield &battlefield) override {
+        if (jump_count < 3){
+            jump_count++;
+            int jumpx = rand() % battlefield.getWidth();
+            int jumpy = rand() % battlefield.getHeight();
+
+            setPosition(jumpx,jumpy);
+            cout << getName() << "jump to ("<< jumpx << ","<<jumpy<< ")\n";
+
+        }
+        else{
+            cout<< getName() << "cannot jump already\n";
+        }
+    }
+
+    int getJumpCount() const{
+        return jump_count;
+    }
+
+};
+
+
+//******************************************
 //Testbot
 //******************************************
 
