@@ -36,6 +36,7 @@ private:
 
     // TODO others:
     // - write output to .txt file
+    // - log more details to text file and output
 
 public:
     // bool checkOccupied(int a, int y);
@@ -422,9 +423,9 @@ int Battlefield::getNumberOfAliveRobots()
     return num;
 }
 
+// COMPLETED: To add new robot to battlefield during initialization
 void Battlefield::addNewRobot(Robot *robot)
 {
-
     listOfRobots.push_back(robot);
     if (respawnCounts.find(robot->getName()) == respawnCounts.end())
     {
@@ -809,6 +810,9 @@ void readInputFile(Battlefield &battlefield, const string &filename = "inputFile
 
 void writeOutputToFile(const Battlefield &battlefield)
 {
+    const string fileName = "outputFile.txt";
+    ofstream outputFile(fileName);
+
 }
 
 int main()
@@ -864,7 +868,7 @@ int main()
 
         cout << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
         battlefield.displayBattlefield(); // Display the updated grid
-        // Implement logging here
+        writeOutputToFile(battlefield);
         // writeOutputToFile(battlefield);
 
         currentStep++;
