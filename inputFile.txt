@@ -1,6 +1,6 @@
-M by N : 5 5
+M by N : 10 10
 steps: 5
 robots: 7
-GenericRobot Kidd 2 3
+GenericRobot Kidd 5 10
 GenericRobot Jet 1 5
 GenericRobot Star random random
