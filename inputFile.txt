@@ -10,3 +10,4 @@ HideBot Ghost 10 7
 JumpBot Jumpp 33 15
 LongShotBot Xiuuu 17 22
 SemiAutoBot Autoo 6 45
+ThirtyShotBot Tree 15 17

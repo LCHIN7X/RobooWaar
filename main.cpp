@@ -559,7 +559,56 @@ class SemiAutoBot : public GenericRobot{
 //******************************************
 //ThirtyShotBot
 //******************************************
+class ThirtyShotBot : public GenericRobot {
+    private:
+    int shell_count;
 
+    public:
+    ThirtyShotBot( const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void load(){
+        shell_count = 30;
+        cout << getName() << "reload 30 shells \n";
+
+    }
+
+    void fire(Battlefield &battlefield) override{
+        if (shell_count <= 0){
+            cout << getName() << "shell is finish,please reload\n";
+            return;
+        }
+
+        int x = getX();
+        int y = getY();
+        bool fired = false;
+
+        for (int dx = -1;dx <= 1 && !fired; dx++){
+            for (int dy = -1;dy <= 1 && !fired;dy++){
+                int targetX = x+dx;
+                int targetY = y+dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+                if (target && target != this){
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    if (gtarget && gtarget->isHit()){
+                        gtarget->takeDamage();
+                        shell_count--;
+                        cout << getName() <<"fires ("<< targetX <<","<<targetY<<"), left:"<<shell_count<<"\n";
+                        fired = true;
+                    }
+                }
+            }
+        }
+        if (!fired) {
+            cout<<getName()<<"no target to shoot\n";
+        }
+    }
+    int getShellCount() const{
+        return shell_count;
+    }
+};
 
 
 //******************************************
@@ -1102,6 +1151,25 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new SemiAutoBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "ThirtyShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new ThirtyShotBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
