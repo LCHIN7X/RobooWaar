@@ -111,6 +111,7 @@ protected:
     int positionY;
     int lives;
     bool hidden;
+    virtual bool isHit() = 0 ;
 
 public:
     bool isReentry();
@@ -343,7 +344,60 @@ public:
             // Upgrade effects would go here
         }
     }
+
+    bool isHit() override{
+        return true;
+    }
 };
+
+//******************************************
+//HideBot
+//******************************************
+class HideBot : public GenericRobot{
+
+    private:
+    int hide_count = 0;
+    bool isHidden=false;
+
+    public:
+    HideBot(const string &name, int x, int y) 
+        : Robot(name,x,y),
+          GenericRobot(name,x,y){}
+
+    void move(Battlefield &battlefield)override{
+        if (hide_count <  3){
+            hide_count++;
+            isHidden = true;
+            cout << getName() << "hide,("<< hide_count<<"/3)"<< endl;            
+        }
+        else{
+            isHidden = false;
+            cout << getName() << "finish use hide,keep moving"<< endl;
+        }
+    }
+
+    bool getHiddenStatus() const{
+        return isHidden;
+    }
+
+    void appear(){
+        isHidden = false;
+    }
+
+    bool isHit() override{
+        if (isHidden){
+            cout << getName() << "is hiding,cannot attack"<< endl ;
+            return false;
+
+        }
+        else {
+            cout << getName() << "is hit"<< endl;
+            return true;
+        }
+
+    }
+};
+
 
 //******************************************
 //Reentry Queue class
