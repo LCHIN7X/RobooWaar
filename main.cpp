@@ -646,6 +646,67 @@ class ScoutBot : public GenericRobot{
     }
 };
 
+//******************************************
+//TrackBot
+//******************************************
+
+class TrackBot: public GenericRobot{
+    private:
+    int tracker = 3;
+    vector<Robot*> track_target;
+
+    public:
+    TrackBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void looking(Battlefield &battlefield){
+        if (tracker == 0){
+            cout << getName() << "cannot track robot already\n";
+            return;
+        }
+
+        int x = getX();
+        int y = getY();
+        bool plant = false;
+
+        for (int dx = -1;dx <= 1 && !plant; dx++){
+            for (int dy = -1;dy <= 1 && !plant; dy++){
+                int targetX = x + dx;
+                int targetY = y + dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+                if (target && target != this){
+                    track_target.push_back(target);
+                    tracker--;
+                    cout << getName() << "track"<< target -> getName()<< "at ("<<targetX<<","<<targetY<<")\n";
+                    plant = true;
+
+                }
+            }
+        }
+        if (!plant){
+            cout<<getName()<<"no target can track\n";
+        }
+    }
+    void showTrackTarget(){
+        if (track_target.empty()){
+            cout<<getName()<<"didnt track any robot\n";
+            return;
+        }
+        cout<< getName()<<"is tracking:\n";
+        for (Robot* r :track_target){
+            cout<<r->getName()<<"at ("<<r->getX()<<","<<r->getY()<<")\n";
+        }
+    }
+    int getTracker() const{
+        return tracker;
+    }
+
+
+};
+
 
 //******************************************
 //Testbot
@@ -1225,6 +1286,25 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new ScoutBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "TrackBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new TrackBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
