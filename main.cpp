@@ -334,11 +334,14 @@ public:
         }
     }
 
+
     void look(Battlefield &battlefield) override
     {
         cout << name << " is looking around...\n";
         // Basic vision logic would go here, using 'battlefield'
     }
+
+    
 
     string decideAction() const override
     {
@@ -447,6 +450,57 @@ class JumpBot : public GenericRobot{
 
     int getJumpCount() const{
         return jump_count;
+    }
+
+};
+
+//******************************************
+//LongShotBot
+//******************************************
+
+class LongShotBot : public GenericRobot{
+    private:
+    int fire_count = 0;
+
+    public:
+    LongShotBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void fire(Battlefield &battlefield) override {
+
+        bool fired = false;
+        int x = getX();
+        int y = getY();
+
+
+        for (int dx =-3; dx <= -3;dx++){
+            for (int dy = -3; dy <= -3;dy++){
+                if (abs(dx)+abs(dy) >3) continue;
+
+                int targetX = x+dx;
+                int targetY = y+dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+                if (target && target != this){
+
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    cout << getName() << "fire ("<< targetX<<","<<targetY<<")"<<endl;
+                    if (gtarget->isHit()){
+                        gtarget->takeDamage();
+                        fire_count++;
+                        fired= true;
+                        break;
+                    }
+                }
+            }
+            if (fired)break;
+        }
+            if (!fired){
+                cout<<getName()<<"no robot there\n";
+        }
+        
     }
 
 };
@@ -954,6 +1008,25 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new JumpBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "LongShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new LongShotBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
