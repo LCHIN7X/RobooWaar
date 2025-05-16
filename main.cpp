@@ -1498,7 +1498,7 @@ int main()
     // Loop while max steps not reached AND there's more than one robot alive
     while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
-        cout << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
+        cout << "\n--- Simulation Turn " << currentStep + 1 << " ---" << endl;
 
         //TO DO:able to display proper simulation step
         cout << "Robot Status before Step " << currentStep + 1 << ":" << endl;
