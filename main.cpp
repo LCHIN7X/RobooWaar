@@ -522,6 +522,259 @@ class JumpBot : public GenericRobot{
 
 };
 
+//******************************************
+//LongShotBot
+//******************************************
+
+class LongShotBot : public GenericRobot{
+    private:
+    int fire_count = 0;
+
+    public:
+    LongShotBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void fire(Battlefield &battlefield) override {
+
+        bool fired = false;
+        int x = getX();
+        int y = getY();
+
+
+        for (int dx =-3; dx <= -3;dx++){
+            for (int dy = -3; dy <= -3;dy++){
+                if (abs(dx)+abs(dy) >3) continue;
+
+                int targetX = x+dx;
+                int targetY = y+dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+                if (target && target != this){
+
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    cout << getName() << "fire ("<< targetX<<","<<targetY<<")"<<endl;
+                    if (gtarget->isHit()){
+                        gtarget->takeDamage();
+                        fire_count++;
+                        fired= true;
+                        break;
+                    }
+                }
+            }
+            if (fired)break;
+        }
+            if (!fired){
+                cout<<getName()<<"no robot there\n";
+        }
+        
+    }
+
+};
+
+//******************************************
+//SemiAutoBot
+//******************************************
+
+class SemiAutoBot : public GenericRobot{
+    private:
+    int fire_count = 0;
+
+
+    public:
+    SemiAutoBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void fire(Battlefield &battlefield) override{
+        int x = getX();
+        int y = getY();
+
+        Robot* target = battlefield.getRobotAt(x,y);
+        
+        if(!target || target == this){
+            cout<< getName()<<"sadly didnt hit any robot\n";
+            return;
+        }
+
+        GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+
+        cout << getName() << "fire 3 consecutive shoot at ("<<x<<","<<y<<")\n";
+
+        for (int i = 0;i <3;i ++){
+            double chance = (double)rand()/RAND_MAX;
+            if (chance < 0.7) {
+                cout << "shot" << (i + 1) <<"successful hit the robot\n";
+                if (gtarget->isHit()){
+                    gtarget->takeDamage();
+                    fire_count++;
+                }
+                
+            }
+            else{
+                cout << "shot"<< (i+1)<< "is miss\n";
+                    
+                }
+        }
+
+    }
+    int getFireCount() const{
+        return fire_count;
+    }
+};
+
+//******************************************
+//ThirtyShotBot
+//******************************************
+class ThirtyShotBot : public GenericRobot {
+    private:
+    int shell_count;
+
+    public:
+    ThirtyShotBot( const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void load(){
+        shell_count = 30;
+        cout << getName() << "reload 30 shells \n";
+
+    }
+
+    void fire(Battlefield &battlefield) override{
+        if (shell_count <= 0){
+            cout << getName() << "shell is finish,please reload\n";
+            return;
+        }
+
+        int x = getX();
+        int y = getY();
+        bool fired = false;
+
+        for (int dx = -1;dx <= 1 && !fired; dx++){
+            for (int dy = -1;dy <= 1 && !fired;dy++){
+                int targetX = x+dx;
+                int targetY = y+dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+                if (target && target != this){
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    if (gtarget && gtarget->isHit()){
+                        gtarget->takeDamage();
+                        shell_count--;
+                        cout << getName() <<"fires ("<< targetX <<","<<targetY<<"), left:"<<shell_count<<"\n";
+                        fired = true;
+                    }
+                }
+            }
+        }
+        if (!fired) {
+            cout<<getName()<<"no target to shoot\n";
+        }
+    }
+    int getShellCount() const{
+        return shell_count;
+    }
+};
+
+//******************************************
+//ScoutBot
+//******************************************
+class ScoutBot : public GenericRobot{
+    private:
+    int scout_count = 0;
+
+    public:
+    ScoutBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void looking(Battlefield &battlefield){
+        if (scout_count >= 3){
+            cout<< getName() << "cannot scout already\n";
+            return;
+        }
+        cout << getName() <<"scaning\n";
+
+        for (int i = 0;i <battlefield.getWidth();++i){
+            for (int j = 0;j <battlefield.getHeight();++j){
+                Robot *r = battlefield.getRobotAt(i,j);
+                if (r)
+                    cout<<"["<< r->getName()<<"]\n";
+                else
+                    cout<<"[]]n";
+            }
+        }
+        scout_count++;
+    }
+
+    int getScoutCount() const{
+        return scout_count;
+    }
+};
+
+//******************************************
+//TrackBot
+//******************************************
+
+class TrackBot: public GenericRobot{
+    private:
+    int tracker = 3;
+    vector<Robot*> track_target;
+
+    public:
+    TrackBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
+
+    void looking(Battlefield &battlefield){
+        if (tracker == 0){
+            cout << getName() << "cannot track robot already\n";
+            return;
+        }
+
+        int x = getX();
+        int y = getY();
+        bool plant = false;
+
+        for (int dx = -1;dx <= 1 && !plant; dx++){
+            for (int dy = -1;dy <= 1 && !plant; dy++){
+                int targetX = x + dx;
+                int targetY = y + dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+                if (target && target != this){
+                    track_target.push_back(target);
+                    tracker--;
+                    cout << getName() << "track"<< target -> getName()<< "at ("<<targetX<<","<<targetY<<")\n";
+                    plant = true;
+
+                }
+            }
+        }
+        if (!plant){
+            cout<<getName()<<"no target can track\n";
+        }
+    }
+    void showTrackTarget(){
+        if (track_target.empty()){
+            cout<<getName()<<"didnt track any robot\n";
+            return;
+        }
+        cout<< getName()<<"is tracking:\n";
+        for (Robot* r :track_target){
+            cout<<r->getName()<<"at ("<<r->getX()<<","<<r->getY()<<")\n";
+        }
+    }
+    int getTracker() const{
+        return tracker;
+    }
+
+
+};
+
 
 //******************************************
 //Testbot
@@ -878,6 +1131,7 @@ void Battlefield::displayBattlefield()
 //             reentry_queue.push(robot);
 //             cout << robot->getName() << " added to reentry queue.\n";
 //         }
+
 //         else
 //         {
 //             cout << robot->getName() << " cannot reenter anymore.\n";
@@ -1029,6 +1283,101 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         }
 
         Robot* newRobot = new JumpBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "LongShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new LongShotBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "SemiAutoBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new SemiAutoBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "ThirtyShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new ThirtyShotBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "ScoutBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new ScoutBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "TrackBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new TrackBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
