@@ -10,6 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -293,6 +294,7 @@ class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobo
 {
 private:
     bool hasUpgraded[3] = {false, false, false}; // Track upgrades for moving, shooting, seeing
+    Battlefield* battlefield = nullptr; // Pointer to current battlefield
 
 public:
     GenericRobot(const string &name, int x, int y)
@@ -306,8 +308,8 @@ public:
 
     ~GenericRobot() override = default;
 
-    // NOTE: Overrides void think() and act(). Kept as is per instruction.
-    // These cannot access Battlefield without changing the base class signature.
+    void setBattlefield(Battlefield* bf) { battlefield = bf; }
+
     void think() override
     {
         cout << name << " is thinking...\n";
@@ -315,13 +317,40 @@ public:
 
     void act() override
     {
+        if (!battlefield) {
+            cout << name << " has no battlefield context!" << endl;
+            return;
+        }
         think();
+        look(*battlefield);
+        fire(*battlefield);
+        move(*battlefield);
     }
 
     void move(Battlefield &battlefield) override
     {
         cout << name << " is moving...\n";
-        // Basic movement logic would go here, using 'battlefield'
+        int dx[] = {0, 1, 0, -1};
+        int dy[] = {1, 0, -1, 0};
+        vector<int> directions = {0, 1, 2, 3};
+        static std::random_device rd;
+        static std::mt19937 g(rd());
+        std::shuffle(directions.begin(), directions.end(), g);
+        for (int dir : directions) {
+            int newX = positionX + dx[dir];
+            int newY = positionY + dy[dir];
+            // Ensure only one robot at (newX, newY)
+            if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY)) {
+                if (battlefield.getRobotAt(newX, newY) == nullptr) {
+                    battlefield.removeRobotFromGrid(this);
+                    battlefield.placeRobot(this, newX, newY);
+                    incrementMoveCount();
+                    cout << name << " moved to (" << newX << ", " << newY << ")\n";
+                    return;
+                }
+            }
+        }
+        cout << name << " could not move (no available adjacent cell).\n";
     }
 
     void fire(Battlefield &battlefield) override
@@ -474,6 +503,10 @@ void Battlefield::simulationTurn()
 
     for (Robot *robot : currentlyAliveRobots)
     {
+        // Set battlefield context if robot is a GenericRobot
+        if (auto gen = dynamic_cast<GenericRobot*>(robot)) {
+            gen->setBattlefield(this);
+        }
         cout << robot->getName() << "'s turn: " << endl;
         robot->act();
         cout << robot->getName() << " is done." << endl;
@@ -591,7 +624,7 @@ void Battlefield::respawnRobots()
 
         if (spotFound)
         {
-            Robot *newRobot = new TestRobot(nameOfRobotToRespawn, randomX, randomY);
+            Robot *newRobot = new GenericRobot(nameOfRobotToRespawn, randomX, randomY);
             newRobot->setLives(livesLeft);
             placeRobot(newRobot, randomX, randomY);
             listOfRobots.push_back(newRobot);
@@ -851,7 +884,7 @@ void parseInputFile(const string &line, Battlefield &battlefield)
             robotYCoordinates = stoi(tokens[3]);
         }
 
-        Robot *newRobot = new TestRobot(robotName, robotXCoordinates, robotYCoordinates);
+        Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
     }
