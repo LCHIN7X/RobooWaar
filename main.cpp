@@ -130,6 +130,7 @@ protected:
     int positionY;
     int lives;
     bool hidden;
+    virtual bool isHit() = 0;
 
 public:
     // bool isReentry();
@@ -424,7 +425,99 @@ public:
             // Upgrade effects would go here
         }
     }
+
+    bool isHit() override {
+        return true;
+    }
 };
+
+//******************************************
+//HideBot
+//******************************************
+
+class HideBot : public GenericRobot{
+
+    private:
+    int hide_count = 0;
+    bool isHidden=false;
+
+    public:
+    HideBot(const string &name, int x, int y) 
+        : Robot(name,x,y),
+          GenericRobot(name,x,y){}
+
+    void move(Battlefield &battlefield)override{
+        if (hide_count <  3){
+            hide_count++;
+            isHidden = true;
+            cout << getName() << "hide,("<< hide_count<<"/3)"<< endl;            
+        }
+        else{
+            isHidden = false;
+            cout << getName() << "finish use hide,keep moving"<< endl;
+        }
+    }
+
+    bool getHiddenStatus() const{
+        return isHidden;
+    }
+
+    void appear(){
+        isHidden = false;
+    }
+
+    bool isHit() override{
+        if (isHidden){
+            cout << getName() << "is hiding,cannot attack"<< endl ;
+            return false;
+
+        }
+        else {
+            cout << getName() << "is hit"<< endl;
+            return true;
+        }
+
+    }
+};
+
+//******************************************
+//Jumpbot
+//******************************************
+class JumpBot : public GenericRobot{
+    private:
+    
+    int jump_count = 0;
+
+    public:
+    JumpBot(const string &name,int x, int y)
+    :Robot(name,x,y),
+     GenericRobot(name,x,y){}
+
+    void move(Battlefield &battlefield) override {
+        if (jump_count < 3){
+            jump_count++;
+            int jumpx = rand() % battlefield.getWidth();
+            int jumpy = rand() % battlefield.getHeight();
+
+            setPosition(jumpx,jumpy);
+            cout << getName() << "jump to ("<< jumpx << ","<<jumpy<< ")\n";
+
+        }
+        else{
+            cout<< getName() << "cannot jump already\n";
+        }
+    }
+
+    int getJumpCount() const{
+        return jump_count;
+    }
+
+};
+
+
+//******************************************
+//Testbot
+//******************************************
 
 class TestRobot : public Robot
 {
@@ -483,7 +576,12 @@ public:
 
     //     cout << "No place put " << robot->getName() << ", try it next time.\n";
     // }
+
+    bool isHit() override{
+        return true;
+    }
 };
+
 
 //******************************************
 // simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
@@ -887,6 +985,44 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+    else if (tokens[0] == "HideBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new HideBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "JumpBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new JumpBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
 }
 
