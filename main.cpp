@@ -381,6 +381,45 @@ public:
         cout << getName() << "TestRobot is acting. It will take 1 damage here for testing purposes" << endl;
         takeDamage();
     }
+
+    // void requeue(Robot* robot) {
+        
+    //     reentry_queue.push(robot);
+    //     cout << robot->getName() << " add to queue\n";
+
+    // }
+
+    // void reentrying() {
+    //     if (reentry_queue.empty()) {
+    //         cout << "No robot queue\n";
+    //         return;
+    //     }
+
+    //     Robot* robot = reentry_queue.front();
+    //     if (!robot->isReentry()) {
+    //         cout << robot->getName() << " cannot reenter\n";
+    //         reentry_queue.pop();
+    //         return;
+    //     }
+
+
+    //     //find a empty place put robot
+    //     int tries = 50;
+    //     while (tries--) {
+    //         int x = rand() % battlefield->getWidth();
+    //         int y = rand() % battlefield->getHeight();
+
+    //         if (!battlefield->checkOccupied(x, y)) { 
+    //             robot->setPosition(x, y);
+    //             robot->onReenter(); 
+    //             battlefield->placeRobot(robot); 
+    //             reentry_queue.pop();
+    //             return;
+    //         }
+    //     }
+
+    //     cout << "No place put " << robot->getName() << ", try it next time.\n";
+    // }
 };
 
 //******************************************
