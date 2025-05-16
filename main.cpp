@@ -44,13 +44,8 @@ private:
 public:
     // bool checkOccupied(int a, int y);
     // void placeRobot(Robot *r);
-
-    // Constructor
     Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {};
-
     ~Battlefield();
-
-    // Member functions for Battlefield class
     void setDimensions(int h, int w)
     {
         height = h;
@@ -296,6 +291,9 @@ class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobo
 private:
     bool hasUpgraded[3] = {false, false, false}; // Track upgrades for moving, shooting, seeing
     Battlefield* battlefield = nullptr; // Pointer to current battlefield
+    // Upgrade logic
+    bool pendingUpgrade = false;
+    std::string upgradeType = "";
 
 public:
     GenericRobot(const string &name, int x, int y)
@@ -370,19 +368,26 @@ public:
                 Robot* target = possibleTargets[idx];
                 int targetX = target->getX();
                 int targetY = target->getY();
-                cout << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
                 useAmmo();
                 if (hitProbability()) {
-                    cout << "Hit! (" << target->getName() << ") be killed" << endl;
+                    std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
                     target->takeDamage();
+                    if (target->getLives() <= 0 && !pendingUpgrade) {
+                        // Only upgrade once per robot
+                        static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot"};
+                        int t = rand() % types.size();
+                        setPendingUpgrade(types[t]);
+                        std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
+                    }
                 } else {
-                    cout << "Missed!" << endl;
+                    std::cout << "Missed!" << std::endl;
                 }
             } else {
-                cout << name << " has no valid targets to fire at!" << endl;
+                std::cout << name << " has no valid targets to fire at!" << std::endl;
             }
         } else {
-            cout << name << " has no ammo left!" << endl;
+            std::cout << name << " has no ammo left!" << std::endl;
         }
     }
 
@@ -437,6 +442,11 @@ public:
     bool isHit() override {
         return true;
     }
+
+    void setPendingUpgrade(const std::string& type) { pendingUpgrade = true; upgradeType = type; }
+    bool isPendingUpgrade() const { return pendingUpgrade; }
+    std::string getUpgradeType() const { return upgradeType; }
+    void clearPendingUpgrade() { pendingUpgrade = false; upgradeType = ""; }
 };
 
 //******************************************
@@ -850,6 +860,33 @@ public:
 
 void Battlefield::simulationTurn()
 {
+    // Handle upgrades first
+    for (size_t i = 0; i < listOfRobots.size(); ++i) {
+        GenericRobot* gen = dynamic_cast<GenericRobot*>(listOfRobots[i]);
+        if (gen && gen->isPendingUpgrade()) {
+            std::string type = gen->getUpgradeType();
+            Robot* upgraded = nullptr;
+            if (type == "HideBot") upgraded = new HideBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpBot") upgraded = new JumpBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "LongShotBot") upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "SemiAutoBot") upgraded = new SemiAutoBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "ThirtyShotBot") upgraded = new ThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "ScoutBot") upgraded = new ScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "TrackBot") upgraded = new TrackBot(gen->getName(), gen->getX(), gen->getY());
+            if (upgraded) {
+                upgraded->setLives(gen->getLives());
+                // Fix: clear the upgrade flag so the new bot doesn't try to upgrade again
+                GenericRobot* upGen = dynamic_cast<GenericRobot*>(upgraded);
+                if (upGen) upGen->clearPendingUpgrade();
+                removeRobotFromGrid(gen);
+                placeRobot(upgraded, gen->getX(), gen->getY());
+                delete gen;
+                listOfRobots[i] = upgraded;
+                cout << upgraded->getName() << " has upgraded to " << type << "!" << endl;
+            }
+        }
+    }
+
     vector<Robot *> currentlyAliveRobots;
 
     for (Robot *robot : listOfRobots)
@@ -935,7 +972,7 @@ void Battlefield::placeRobot(Robot *robot, int x, int y)
     if (isPositionAvailable(x, y) && isPositionWithinGrid(x, y))
     {
         battlefieldGrid[y][x] = robot;
-        robot->setPosition(x, y);
+        robot->setPosition(x, y); 
     }
 }
 
@@ -1194,8 +1231,7 @@ Battlefield::~Battlefield()
 // Function implementations
 //******************************************
 
-void parseInputFile(const string &line, Battlefield &battlefield)
-{
+void parseInputFile(const string &line, Battlefield &battlefield) {
     vector<string> tokens;
     istringstream iss(line);
     string token;
@@ -1294,7 +1330,6 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         if (tokens[2] == "random" && tokens[3] == "random"){
             robotXCoordinates = rand() % battlefield.getWidth();
             robotYCoordinates = rand() % battlefield.getHeight();
-
         }
         else{
             robotXCoordinates = stoi(tokens[2]);
@@ -1463,17 +1498,22 @@ int main()
     // Loop while max steps not reached AND there's more than one robot alive
     while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
-        cout << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
+        cout << "\n--- Simulation Turn " << currentStep + 1 << " ---" << endl;
 
-        // Display robot status right after the simulation step title
+        //TO DO:able to display proper simulation step
         cout << "Robot Status before Step " << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
             string typeName;
             if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
             else if (dynamic_cast<JumpBot*>(robot)) typeName = "JumpBot";
+            else if (dynamic_cast<LongShotBot*>(robot)) typeName = "LongShotBot";
+            else if (dynamic_cast<SemiAutoBot*>(robot)) typeName = "SemiAutoBot";
+            else if (dynamic_cast<ThirtyShotBot*>(robot)) typeName = "ThirtyShotBot";
+            else if (dynamic_cast<ScoutBot*>(robot)) typeName = "ScoutBot";
+            else if (dynamic_cast<TrackBot*>(robot)) typeName = "TrackBot";
             else if (dynamic_cast<GenericRobot*>(robot)) typeName = "GenericRobot";
-            else if (dynamic_cast<TestRobot*>(robot)) typeName = "TestRobot";
             else typeName = "Robot";
+            //TO DO :able to display current robot type
             cout << "  Type: " << typeName
                  << ", Name: " << robot->getName()
                  << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
