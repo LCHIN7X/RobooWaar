@@ -1,7 +1,7 @@
 M by N : 4 5
 steps: 2000
 robots: 3
-JumpBot Ghost 4 3
+TrackBot Ghost 4 3
 GenericRobot Kidd 3 2
 GenericRobot Jet 1 1
 
