@@ -125,6 +125,7 @@ protected:
     int positionY;
     int lives;
     bool hidden;
+    bool isDie = false;
     virtual bool isHit() = 0;
 
 public:
@@ -148,6 +149,8 @@ public:
     int getLives() const { return lives; }
     void setLives(int numOfLives) { lives = numOfLives; }
     bool isHidden() const { return hidden; }
+    bool getIsDie() const { return isDie; }
+    void setIsDie(bool val) { isDie = val; }    
 
     void setPosition(int x, int y)
     {
@@ -164,6 +167,7 @@ public:
             {
                 cout << name << " has been destroyed!\n";
             }
+            isDie = true; // Mark as dead for this turn
         }
     }
 
@@ -316,14 +320,15 @@ public:
 
     void act() override
     {
-        if (!battlefield) {
-            cout << name << " has no battlefield context!" << endl;
-            return;
-        }
-        think();
-        look(*battlefield);
-        fire(*battlefield);
-        move(*battlefield);
+        if (isDie) return;
+            if (!battlefield) {
+                cout << name << " has no battlefield context!" << endl;
+                return;
+            }
+            think();
+            look(*battlefield);
+            fire(*battlefield);
+            move(*battlefield);
     }
 
     void move(Battlefield &battlefield) override
@@ -358,7 +363,7 @@ public:
         // Collect all possible targets (other robots, not self, and alive)
         vector<Robot*> possibleTargets;
         for (Robot* r : battlefield.getListOfRobots()) {
-            if (r != nullptr && r != this && r->getLives() > 0) {
+            if (r != nullptr && r != this && r->getLives() > 0 && !r->getIsDie()) {
                 possibleTargets.push_back(r);
             }
         }
@@ -940,7 +945,7 @@ void Battlefield::simulationTurn()
 
     for (Robot *robot : listOfRobots)
     {
-        if (robot->getLives() > 0)
+        if (robot->getLives() > 0 && !robot->getIsDie())
         {
             currentlyAliveRobots.push_back(robot);
         }
@@ -960,6 +965,10 @@ void Battlefield::simulationTurn()
 
     cleanupDestroyedRobots();
     respawnRobots();
+    for (Robot *robot : listOfRobots)
+    {
+        robot->setIsDie(false);
+    }
 }
 
 // COMPLETED: To get the number of alive robots
