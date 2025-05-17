@@ -274,7 +274,7 @@ public:
 
     virtual ~ThinkingRobot() = default;
     void think() override {
-        cout << name << " is thinking..." << endl;
+        cout <<">> "<< name << " is thinking..." << endl;
     }
 
     int getStrategyLevel() const { return strategyLevel; }
@@ -328,7 +328,7 @@ public:
 
     void move(Battlefield &battlefield) override
     {
-        cout << name << " is moving...\n";
+        cout <<">> "<< name << " is moving...\n";
         int dx[] = {0, 1, 0, -1};
         int dy[] = {1, 0, -1, 0};
         vector<int> directions = {0, 1, 2, 3};
@@ -401,7 +401,7 @@ public:
 
 
     void look(Battlefield &battlefield) override {
-        cout << name << " is scanning surroundings...." << endl;
+        cout <<">> "<< name << " is scanning surroundings...." << endl;
         int cx = positionX;
         int cy = positionY;
         for (int dx = -1; dx <= 1; ++dx) {
@@ -952,6 +952,7 @@ void Battlefield::simulationTurn()
         if (auto gen = dynamic_cast<GenericRobot*>(robot)) {
             gen->setBattlefield(this);
         }
+        cout<<"----------------------------------------" << endl;
         cout << robot->getName() << "'s turn: " << endl;
         robot->act();
         cout << robot->getName() << " is done." << endl;
@@ -1081,6 +1082,7 @@ void Battlefield::respawnRobots()
 //  PARTIALLY COMPLETED: cleanupDestroyedRobots member function
 void Battlefield::cleanupDestroyedRobots()
 {
+    cout << "----------------------------------------" << endl;
     cout << "Battlefield::cleanupDestroyedRobots()" << endl;
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
@@ -1550,7 +1552,7 @@ int main()
         cout << "\n--- Simulation Turn " << currentStep + 1 << " ---" << endl;
 
         //TO DO:able to display proper simulation step
-        cout << "Robot Status before Step " << currentStep + 1 << ":" << endl;
+        cout << "Robot Status before Turn " << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
             string typeName;
             if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
@@ -1571,7 +1573,7 @@ int main()
 
         battlefield.simulationTurn(); // Executes turns, cleans up, respawns
 
-        cout << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
+        cout << "\nBattlefield State after Turn " << currentStep + 1 << ":" << endl;
         battlefield.displayBattlefield(); // Display the updated grid
         writeOutputToFile(battlefield);
         // writeOutputToFile(battlefield);
