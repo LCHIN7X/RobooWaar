@@ -1538,18 +1538,18 @@ int main()
         //TO DO:able to display proper simulation step
         cout << "Robot Status before Turn " << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
-            string typeName;
-            if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
-            else if (dynamic_cast<JumpBot*>(robot)) typeName = "JumpBot";
-            else if (dynamic_cast<LongShotBot*>(robot)) typeName = "LongShotBot";
-            else if (dynamic_cast<SemiAutoBot*>(robot)) typeName = "SemiAutoBot";
-            else if (dynamic_cast<ThirtyShotBot*>(robot)) typeName = "ThirtyShotBot";
-            else if (dynamic_cast<ScoutBot*>(robot)) typeName = "ScoutBot";
-            else if (dynamic_cast<TrackBot*>(robot)) typeName = "TrackBot";
-            else if (dynamic_cast<GenericRobot*>(robot)) typeName = "GenericRobot";
-            else typeName = "Robot";
+            string type;
+            if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
+            else if (dynamic_cast<JumpBot*>(robot)) type = "JumpBot";
+            else if (dynamic_cast<LongShotBot*>(robot)) type = "LongShotBot";
+            else if (dynamic_cast<SemiAutoBot*>(robot)) type = "SemiAutoBot";
+            else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
+            else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
+            else if (dynamic_cast<TrackBot*>(robot)) type = "TrackBot";
+            else if (dynamic_cast<GenericRobot*>(robot)) type = "GenericRobot";
+            else type = "Robot";
             //TO DO :able to display current robot type
-            cout << "  Type: " << typeName
+            cout << "  Type: " << type
                  << ", Name: " << robot->getName()
                  << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
                  << ", Life: " << robot->getLives() << endl;
