@@ -1501,7 +1501,7 @@ int main()
         cout << "\n--- Simulation Turn " << currentStep + 1 << " ---" << endl;
 
         //TO DO:able to display proper simulation step
-        cout << "Robot Status before Step " << currentStep + 1 << ":" << endl;
+        cout << "Robot Status before Turn " << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
             string typeName;
             if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
@@ -1522,7 +1522,7 @@ int main()
 
         battlefield.simulationTurn(); // Executes turns, cleans up, respawns
 
-        cout << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
+        cout << "\nBattlefield State after Turn " << currentStep + 1 << ":" << endl;
         battlefield.displayBattlefield(); // Display the updated grid
         writeOutputToFile(battlefield);
         // writeOutputToFile(battlefield);
