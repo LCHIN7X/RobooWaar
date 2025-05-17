@@ -288,7 +288,7 @@ public:
 
 class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobot, public ThinkingRobot
 {
-private:
+protected:
     bool hasUpgraded[3] = {false, false, false}; // Track upgrades for moving, shooting, seeing
     Battlefield* battlefield = nullptr; // Pointer to current battlefield
     // Upgrade logic
@@ -353,43 +353,52 @@ public:
     }
 
     void fire(Battlefield &battlefield) override
-    {
-        if (hasAmmo()) {
-            // Collect all possible targets (other robots, not self, and alive)
-            vector<Robot*> possibleTargets;
-            for (Robot* r : battlefield.getListOfRobots()) {
-                if (r != nullptr && r != this && r->getLives() > 0) {
-                    possibleTargets.push_back(r);
+{
+    if (hasAmmo()) {
+        // Collect all possible targets (other robots, not self, and alive)
+        vector<Robot*> possibleTargets;
+        for (Robot* r : battlefield.getListOfRobots()) {
+            if (r != nullptr && r != this && r->getLives() > 0) {
+                possibleTargets.push_back(r);
+            }
+        }
+        if (!possibleTargets.empty()) {
+             // Pick a random target from the list        
+            int idx = rand() % possibleTargets.size();
+            Robot* target = possibleTargets[idx];
+            int targetX = target->getX();
+            int targetY = target->getY();
+            std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+            useAmmo();
+
+         
+            if (target->isHidden()) {
+                std::cout << target->getName() << " is hide, attack miss." << std::endl;
+            }
+            else if (hitProbability()) {
+                std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
+                target->takeDamage();
+                if (target->getLives() <= 0 && !pendingUpgrade) {
+                    // Only upgrade once per robot
+                    static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot"};
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
                 }
             }
-            if (!possibleTargets.empty()) {
-                // Pick a random target from the list
-                int idx = rand() % possibleTargets.size();
-                Robot* target = possibleTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
-                useAmmo();
-                if (hitProbability()) {
-                    std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
-                    target->takeDamage();
-                    if (target->getLives() <= 0 && !pendingUpgrade) {
-                        // Only upgrade once per robot
-                        static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot"};
-                        int t = rand() % types.size();
-                        setPendingUpgrade(types[t]);
-                        std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
-                    }
-                } else {
-                    std::cout << "Missed!" << std::endl;
-                }
-            } else {
-                std::cout << name << " has no valid targets to fire at!" << std::endl;
+            else {
+                std::cout << "Missed!" << std::endl;
             }
-        } else {
-            std::cout << name << " has no ammo left!" << std::endl;
+        }
+        else {
+            std::cout << name << " has no valid targets to fire at!" << std::endl;
         }
     }
+    else {
+        std::cout << name << " has no ammo left!" << std::endl;
+    }
+}
+
 
     void look(Battlefield &battlefield) override {
         cout << name << " is scanning surroundings...." << endl;
@@ -464,17 +473,23 @@ class HideBot : public GenericRobot{
         : Robot(name,x,y),
           GenericRobot(name,x,y){}
 
-    void move(Battlefield &battlefield)override{
-        if (hide_count <  3){
-            hide_count++;
-            isHidden = true;
-            cout << getName() << "hide,("<< hide_count<<"/3)"<< endl;            
-        }
-        else{
-            isHidden = false;
-            cout << getName() << "finish use hide,keep moving"<< endl;
-        }
+    void move(Battlefield &battlefield) override {
+    if (hide_count < 3 && rand() % 2 == 0) {
+        isHidden = true;
+        hide_count++;
+        setHidden(true);
+        cout << getName() << " hide,(" << hide_count << "/3)" << endl;
     }
+    else {
+        isHidden = false;
+        setHidden(false);
+
+        if (hide_count >= 3)
+            cout << getName() << " finish use hide , keep moving" << endl;
+        else
+            cout << getName() << " did not hide this turn, keep moving" << endl;
+    }
+}
 
     bool getHiddenStatus() const{
         return isHidden;
@@ -484,17 +499,15 @@ class HideBot : public GenericRobot{
         isHidden = false;
     }
 
-    bool isHit() override{
-        if (isHidden){
-            cout << getName() << "is hiding,cannot attack"<< endl ;
-            return false;
+    void act() override {
+    think();
+    look(*battlefield);
+    fire(*battlefield);
+    move(*battlefield);
+    }
 
-        }
-        else {
-            cout << getName() << "is hit"<< endl;
-            return true;
-        }
-
+    bool isHit() override {
+        return !isHidden;
     }
 };
 
@@ -524,6 +537,13 @@ class JumpBot : public GenericRobot{
         else{
             cout<< getName() << "cannot jump already\n";
         }
+    }
+
+    void act() override {
+    think();
+    look(*battlefield);
+    fire(*battlefield);
+    move(*battlefield);
     }
 
     int getJumpCount() const{
