@@ -1095,23 +1095,7 @@ void Battlefield::cleanupDestroyedRobots()
 
             string robotName = robot->getName();
 
-            if (respawnCounts.count(robotName) && respawnCounts.at(robotName) > 0)
-            {
-                cout << robotName << " added to respawn queue (" << respawnCounts.at(robotName) << " respawns left." << endl;
-                respawnQueue.push_back({robotName, robot->getLives()});
-                respawnCounts[robotName]--;
-
-                delete robot;
-
-                iterator = listOfRobots.erase(iterator);
-            }
-            else
-            {
-                cout << robotName << " does not have any lives left. Removing it permanently from battlefield..." << endl;
-                delete robot;
-
-                iterator = listOfRobots.erase(iterator);
-            }
+            // Check if the robot can respawn
         }
         iterator++;
     }
