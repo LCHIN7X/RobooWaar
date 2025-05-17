@@ -628,7 +628,7 @@ class SemiAutoBot : public GenericRobot{
                 target = r;
                 break; 
              }
-}
+        }
         
         if(!target){
             cout<< getName()<<" sadly didnt hit any robot\n";
