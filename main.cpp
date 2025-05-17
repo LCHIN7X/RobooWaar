@@ -274,7 +274,7 @@ public:
 
     virtual ~ThinkingRobot() = default;
     void think() override {
-        cout << name << " is thinking..." << endl;
+        cout <<">> "<< name << " is thinking..." << endl;
     }
 
     int getStrategyLevel() const { return strategyLevel; }
@@ -328,7 +328,7 @@ public:
 
     void move(Battlefield &battlefield) override
     {
-        cout << name << " is moving...\n";
+        cout <<">> "<< name << " is moving...\n";
         int dx[] = {0, 1, 0, -1};
         int dy[] = {1, 0, -1, 0};
         vector<int> directions = {0, 1, 2, 3};
@@ -368,7 +368,7 @@ public:
                 Robot* target = possibleTargets[idx];
                 int targetX = target->getX();
                 int targetY = target->getY();
-                std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+                std::cout <<">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
                 useAmmo();
                 if (hitProbability()) {
                     std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
@@ -392,7 +392,7 @@ public:
     }
 
     void look(Battlefield &battlefield) override {
-        cout << name << " is scanning surroundings...." << endl;
+        cout <<">> "<< name << " is scanning surroundings...." << endl;
         int cx = positionX;
         int cy = positionY;
         for (int dx = -1; dx <= 1; ++dx) {
@@ -903,6 +903,7 @@ void Battlefield::simulationTurn()
         if (auto gen = dynamic_cast<GenericRobot*>(robot)) {
             gen->setBattlefield(this);
         }
+        cout<<"----------------------------------------" << endl;
         cout << robot->getName() << "'s turn: " << endl;
         robot->act();
         cout << robot->getName() << " is done." << endl;
@@ -1032,6 +1033,7 @@ void Battlefield::respawnRobots()
 //  PARTIALLY COMPLETED: cleanupDestroyedRobots member function
 void Battlefield::cleanupDestroyedRobots()
 {
+    cout << "----------------------------------------" << endl;
     cout << "Battlefield::cleanupDestroyedRobots()" << endl;
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
