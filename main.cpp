@@ -311,7 +311,7 @@ public:
 
     void think() override
     {
-        cout << name << " is thinking...\n";
+        cout <<">> "<< name << " is thinking...\n";
     }
 
     void act() override
@@ -368,7 +368,7 @@ public:
             Robot* target = possibleTargets[idx];
             int targetX = target->getX();
             int targetY = target->getY();
-            std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+            std::cout <<">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
             useAmmo();
 
          
