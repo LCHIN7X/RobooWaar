@@ -385,7 +385,7 @@ public:
                 target->takeDamage();
                 if (target->getLives() <= 0 && !pendingUpgrade) {
                     // Only upgrade once per robot
-                    static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot"};
+                    static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
                     int t = rand() % types.size();
                     setPendingUpgrade(types[t]);
                     std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
@@ -721,6 +721,55 @@ public:
 };
 
 //******************************************
+// KnightBot
+//******************************************
+
+class KnightBot : public GenericRobot {
+private:
+    int fire_count = 0;
+
+public:
+    KnightBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y) {}
+
+    void fire(Battlefield &battlefield) override {
+        int x = getX();
+        int y = getY();
+        bool anyFired = false;
+        std::vector<std::string> hitRobots;
+
+        for (Robot* target : battlefield.getListOfRobots()) {
+            if (target && target != this && target->getLives() > 0) {
+                int dx = target->getX() - x;
+                int dy = target->getY() - y;
+                double distance = sqrt(dx * dx + dy * dy);
+                if (distance <= 8.0) {
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    cout << getName() << " fires at (" << target->getX() << "," << target->getY() << ")" << endl;
+                    if (gtarget && gtarget->isHit()) {
+                        gtarget->takeDamage();
+                        fire_count++;
+                        anyFired = true;
+                        hitRobots.push_back(gtarget->getName());
+                    }
+                }
+            }
+        }
+        if (!anyFired) {
+            cout << getName() << " no robots in range to fire at\n";
+        } else {
+            cout << getName() << " hit the following robots: ";
+            for (size_t i = 0; i < hitRobots.size(); ++i) {
+                cout << hitRobots[i];
+                if (i != hitRobots.size() - 1) cout << ", ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+//******************************************
 //ScoutBot
 //******************************************
 class ScoutBot : public GenericRobot {
@@ -923,6 +972,7 @@ void Battlefield::simulationTurn()
             if (type == "HideBot") upgraded = new HideBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "JumpBot") upgraded = new JumpBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "LongShotBot") upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "KnightBot") upgraded = new KnightBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "SemiAutoBot") upgraded = new SemiAutoBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ThirtyShotBot") upgraded = new ThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ScoutBot") upgraded = new ScoutBot(gen->getName(), gen->getX(), gen->getY());
@@ -1460,6 +1510,24 @@ void parseInputFile(const string &line, Battlefield &battlefield) {
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
+    else if (tokens[0] == "KnightBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new KnightBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
 }
 
 //*****************************************************************************************
@@ -1518,8 +1586,8 @@ int main()
     cout << endl;
 
     cout << "Initial Robots on battlefield: " << endl;
-    vector<Robot *> robotsList = battlefield.getListOfRobots(); // This is the initial list
-    for (Robot *robot : robotsList)
+   
+    for (Robot *robot : battlefield.getListOfRobots())
     {
         string name = robot->getName();
         int x = robot->getX();
@@ -1551,6 +1619,7 @@ int main()
             if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
             else if (dynamic_cast<JumpBot*>(robot)) type = "JumpBot";
             else if (dynamic_cast<LongShotBot*>(robot)) type = "LongShotBot";
+            else if (dynamic_cast<KnightBot*>(robot)) type = "KnightBot";
             else if (dynamic_cast<SemiAutoBot*>(robot)) type = "SemiAutoBot";
             else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
             else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
