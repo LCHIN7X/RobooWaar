@@ -125,7 +125,7 @@ protected:
     int positionY;
     int lives;
     bool hidden;
-    
+    virtual bool isHit() = 0;
 
 public:
     // bool isReentry();
@@ -140,7 +140,6 @@ public:
     // This means they cannot directly interact with the Battlefield passed to derived methods.
     virtual void think() = 0;
     virtual void act() = 0;
-    virtual bool isHit(Robot* attacker = nullptr) = 0;
 
     // Common robot functions
     string getName() const { return name; }
@@ -312,7 +311,7 @@ public:
 
     void think() override
     {
-        cout << name << " is thinking...\n";
+        cout <<">> "<< name << " is thinking...\n";
     }
 
     void act() override
@@ -369,7 +368,7 @@ public:
             Robot* target = possibleTargets[idx];
             int targetX = target->getX();
             int targetY = target->getY();
-            std::cout << name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+            std::cout <<">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
             useAmmo();
 
          
@@ -382,7 +381,7 @@ public:
                 if (target->getLives() <= 0 && !pendingUpgrade) {
                     // Only upgrade once per robot
                     static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot"};
-                    int t = rand() % types.size();
+                    int t = rand() % 1;
                     setPendingUpgrade(types[t]);
                     std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
                 }
@@ -449,7 +448,7 @@ public:
         }
     }
 
-    bool isHit(Robot* attacker = nullptr) override {
+    bool isHit() override {
         return true;
     }
 
@@ -507,8 +506,8 @@ class HideBot : public GenericRobot{
         move(*battlefield);
     }
 
-    bool isHit(Robot* attacker = nullptr) override {
-        return true;
+    bool isHit() override {
+        return !isHidden;
     }
 };
 
@@ -836,57 +835,57 @@ class TrackBot: public GenericRobot{
 };
 
 //******************************************
-//EqualBot
+//QueenBot
 //******************************************
 
-class EqualBot : public GenericRobot {
-private:
-    int equal_count = 0;      
-    bool equal = false; 
-    Robot* Attacker = nullptr; 
+class QueenBot : public GenericRobot{
+    private:
+    vector<string> hit;
 
-public:
-    EqualBot(const string &name, int x, int y)
-        : Robot(name, x, y), 
-          GenericRobot(name, x, y) {}
+    public:
+    QueenBot(const string &name,int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y){}
 
-   
-    void fire(Battlefield &battlefield) {
-        if (equal_count >= 3) {
-            cout << getName() << " cannot attack back already\n";
-            equal = false;
-            return;
+    void fire(Battlefield &battlefield) override {
+
+        bool fired = false;
+        int x = getX();
+        int y = getY();
+
+
+        for (int dx = -3; dx <= 3; dx++){
+            for (int dy = -3; dy <= 3;dy++){
+                if (dx == 0 && dy == 0) continue;
+                if (abs(dx)+abs(dy) >3) continue;
+
+                int targetX = x+dx;
+                int targetY = y+dy;
+
+                Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+                if (target && target != this){
+
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                    cout << getName() << " fire ("<< targetX<<","<<targetY<<")"<<endl;
+                    if (gtarget->isHit()){
+                        gtarget->takeDamage();
+                        
+                        fired= true;
+                        break;
+                    }
+                }
+            }
+            if (fired)break;
         }
-
-        if (rand() % 2 == 0) {
-            equal = true;
-            equal_count++;
-            cout << getName() << " want attack u back (" << equal_count << "/3)\n";
-        } else {
-            equal = false;
-            cout << getName() << " although i want to attack back but i cant\n";
+            if (!fired){
+                cout<<getName()<<" no robot there\n";
         }
+        
     }
 
-
-    bool isHit(Robot* attacker = nullptr) override {
-        if (equal && attacker != nullptr) {
-            cout << getName() << "'s mirror reflects damage to " << attacker->getName() << "!\n";
-            attacker->takeDamage(); 
-            equal = false;
-            return false; 
-        }
-        return true; 
-    }
-
-
-    void act() override {
-        think();
-        look(*battlefield);
-        fire(*battlefield);
-        move(*battlefield);
-    }
 };
+
 
 
 //******************************************
@@ -951,7 +950,7 @@ public:
     //     cout << "No place put " << robot->getName() << ", try it next time.\n";
     // }
 
-    bool isHit(Robot* attacker = nullptr) override {
+    bool isHit() override{
         return true;
     }
 };
@@ -1518,25 +1517,6 @@ void parseInputFile(const string &line, Battlefield &battlefield) {
         }
 
         Robot* newRobot = new TrackBot(robotName,robotXCoordinates,robotYCoordinates);
-        battlefield.addNewRobot(newRobot);
-        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
-    }
-    else if (tokens[0] == "EqualBot" && tokens.size() >= 4){
-        string robotName = tokens[1];
-        int robotXCoordinates;
-        int robotYCoordinates;
-
-        if (tokens[2] == "random" && tokens[3] == "random"){
-            robotXCoordinates = rand() % battlefield.getWidth();
-            robotYCoordinates = rand() % battlefield.getHeight();
-
-        }
-        else{
-            robotXCoordinates = stoi(tokens[2]);
-            robotYCoordinates = stoi(tokens[3]);
-        }
-
-        Robot* newRobot = new EqualBot(robotName,robotXCoordinates,robotYCoordinates);
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }

@@ -1,7 +1,7 @@
 M by N : 4 5
 steps: 300
 robots: 5
-EqualBot Kidd 3 6
+GenericRobot Kidd 3 6
 GenericRobot Jet 12 1
 GenericRobot Alpha 35 20
 GenericRobot Beta 20 37
