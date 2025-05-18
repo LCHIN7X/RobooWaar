@@ -125,6 +125,7 @@ protected:
     int positionY;
     int lives;
     bool hidden;
+    bool isDie = false;
     virtual bool isHit() = 0;
 
 public:
@@ -148,6 +149,8 @@ public:
     int getLives() const { return lives; }
     void setLives(int numOfLives) { lives = numOfLives; }
     bool isHidden() const { return hidden; }
+    bool getIsDie() const { return isDie; }
+    void setIsDie(bool val) { isDie = val; }    
 
     void setPosition(int x, int y)
     {
@@ -164,6 +167,7 @@ public:
             {
                 cout << name << " has been destroyed!\n";
             }
+            isDie = true; // Mark as dead for this turn
         }
     }
 
@@ -316,14 +320,15 @@ public:
 
     void act() override
     {
-        if (!battlefield) {
-            cout << name << " has no battlefield context!" << endl;
-            return;
-        }
-        think();
-        look(*battlefield);
-        fire(*battlefield);
-        move(*battlefield);
+        if (isDie) return;
+            if (!battlefield) {
+                cout << name << " has no battlefield context!" << endl;
+                return;
+            }
+            think();
+            look(*battlefield);
+            fire(*battlefield);
+            move(*battlefield);
     }
 
     void move(Battlefield &battlefield) override
@@ -358,7 +363,7 @@ public:
         // Collect all possible targets (other robots, not self, and alive)
         vector<Robot*> possibleTargets;
         for (Robot* r : battlefield.getListOfRobots()) {
-            if (r != nullptr && r != this && r->getLives() > 0) {
+            if (r != nullptr && r != this && r->getLives() > 0 && !r->getIsDie()) {
                 possibleTargets.push_back(r);
             }
         }
@@ -940,7 +945,7 @@ void Battlefield::simulationTurn()
 
     for (Robot *robot : listOfRobots)
     {
-        if (robot->getLives() > 0)
+        if (robot->getLives() > 0 && !robot->getIsDie())
         {
             currentlyAliveRobots.push_back(robot);
         }
@@ -960,6 +965,10 @@ void Battlefield::simulationTurn()
 
     cleanupDestroyedRobots();
     respawnRobots();
+    for (Robot *robot : listOfRobots)
+    {
+        robot->setIsDie(false);
+    }
 }
 
 // COMPLETED: To get the number of alive robots
@@ -1095,23 +1104,7 @@ void Battlefield::cleanupDestroyedRobots()
 
             string robotName = robot->getName();
 
-            if (respawnCounts.count(robotName) && respawnCounts.at(robotName) > 0)
-            {
-                cout << robotName << " added to respawn queue (" << respawnCounts.at(robotName) << " respawns left." << endl;
-                respawnQueue.push_back({robotName, robot->getLives()});
-                respawnCounts[robotName]--;
-
-                delete robot;
-
-                iterator = listOfRobots.erase(iterator);
-            }
-            else
-            {
-                cout << robotName << " does not have any lives left. Removing it permanently from battlefield..." << endl;
-                delete robot;
-
-                iterator = listOfRobots.erase(iterator);
-            }
+            // Check if the robot can respawn
         }
         iterator++;
     }
@@ -1554,18 +1547,18 @@ int main()
         //TO DO:able to display proper simulation step
         cout << "Robot Status before Turn " << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
-            string typeName;
-            if (dynamic_cast<HideBot*>(robot)) typeName = "HideBot";
-            else if (dynamic_cast<JumpBot*>(robot)) typeName = "JumpBot";
-            else if (dynamic_cast<LongShotBot*>(robot)) typeName = "LongShotBot";
-            else if (dynamic_cast<SemiAutoBot*>(robot)) typeName = "SemiAutoBot";
-            else if (dynamic_cast<ThirtyShotBot*>(robot)) typeName = "ThirtyShotBot";
-            else if (dynamic_cast<ScoutBot*>(robot)) typeName = "ScoutBot";
-            else if (dynamic_cast<TrackBot*>(robot)) typeName = "TrackBot";
-            else if (dynamic_cast<GenericRobot*>(robot)) typeName = "GenericRobot";
-            else typeName = "Robot";
+            string type;
+            if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
+            else if (dynamic_cast<JumpBot*>(robot)) type = "JumpBot";
+            else if (dynamic_cast<LongShotBot*>(robot)) type = "LongShotBot";
+            else if (dynamic_cast<SemiAutoBot*>(robot)) type = "SemiAutoBot";
+            else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
+            else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
+            else if (dynamic_cast<TrackBot*>(robot)) type = "TrackBot";
+            else if (dynamic_cast<GenericRobot*>(robot)) type = "GenericRobot";
+            else type = "Robot";
             //TO DO :able to display current robot type
-            cout << "  Type: " << typeName
+            cout << "  Type: " << type
                  << ", Name: " << robot->getName()
                  << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
                  << ", Life: " << robot->getLives() << endl;
