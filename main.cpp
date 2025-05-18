@@ -854,7 +854,7 @@ class QueenBot : public GenericRobot{
         int y = getY();
 
 
-        for (int dx = -3; dx <= 3; dx++){
+        for (int dx = -3; dx <= 3; dx++){ //need change to queen function
             for (int dy = -3; dy <= 3;dy++){
                 if (dx == 0 && dy == 0) continue;
                 if (abs(dx)+abs(dy) >3) continue;
