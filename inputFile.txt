@@ -1,5 +1,5 @@
 M by N : 40 50
-steps: 300
+steps: 10
 robots: 12
 robots: 12
 GenericRobot Kidd 3 6
@@ -7,3 +7,4 @@ GenericRobot Jet 2 4
 GenericRobot Alpha 3 9
 GenericRobot Beta 3 10
 GenericRobot Star random random
+LongShotBot Test 6 6

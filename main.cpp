@@ -127,7 +127,6 @@ protected:
     bool hidden;
     bool isDie = false;
     virtual bool isHit() = 0;
-    
 
 public:
     // bool isReentry();
@@ -301,7 +300,6 @@ protected:
     // Upgrade logic
     bool pendingUpgrade = false;
     std::string upgradeType = "";
-    bool enemyDetectedNearby = false; // Flag for detecting nearby enemies
 
 public:
     GenericRobot(const string &name, int x, int y)
@@ -320,26 +318,19 @@ public:
     void think() override
     {
         cout <<">> "<< name << " is thinking...\n";
-        // If look detects an enemy, fire first then move, else move then fire
-        if (getEnemyDetectedNearby()) {
-            fire(*battlefield);
-            move(*battlefield);
-        } else {
-            move(*battlefield);
-            fire(*battlefield);
-        }
     }
 
     void act() override
     {
         if (isDie) return;
-        if (!battlefield) {
-            cout << name << " has no battlefield context!" << endl;
-            return;
-        }
-        look(*battlefield);
-        think();
-    
+            if (!battlefield) {
+                cout << name << " has no battlefield context!" << endl;
+                return;
+            }
+            look(*battlefield);
+            think();
+            fire(*battlefield);
+            move(*battlefield);
     }
 
     void move(Battlefield &battlefield) override
@@ -394,13 +385,11 @@ public:
             else if (hitProbability()) {
                 std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
                 target->takeDamage();
-                
                     // Only upgrade once per robot
                     static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
                     int t = rand() % types.size();
                     setPendingUpgrade(types[t]);
                     std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
-                
             }
             else {
                 std::cout << "Missed!" << std::endl;
@@ -420,7 +409,6 @@ public:
         cout <<">> "<< name << " is scanning surroundings...." << endl;
         int cx = positionX;
         int cy = positionY;
-        enemyDetectedNearby = false; // Reset flag
         for (int dx = -1; dx <= 1; ++dx) {
             for (int dy = -1; dy <= 1; ++dy) {
                 int nx = cx + dx;
@@ -436,7 +424,6 @@ public:
                         cout << "In Boundary but Empty" << endl;
                     } else {
                         cout << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
-                        enemyDetectedNearby = true; // Set flag
                     }
                 }
             }
@@ -474,7 +461,6 @@ public:
     bool isPendingUpgrade() const { return pendingUpgrade; }
     std::string getUpgradeType() const { return upgradeType; }
     void clearPendingUpgrade() { pendingUpgrade = false; upgradeType = ""; }
-    bool getEnemyDetectedNearby() const { return enemyDetectedNearby; }
 };
 
 //******************************************
@@ -527,7 +513,7 @@ class HideBot : public GenericRobot{
 
     bool isHit() override {
         return !isHidden;
-    } ///
+    }
 };
 
 //******************************************
@@ -603,12 +589,19 @@ class LongShotBot : public GenericRobot{
 
                 if (target && target != this){
 
-                    GenericRobot* target = dynamic_cast<GenericRobot*>(target);
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
                     cout << getName() << " fire ("<< targetX<<","<<targetY<<")"<<endl;
-                    if (target->isHit()){
-                        target->takeDamage();
+                    if (gtarget->isHit()){
+                        gtarget->takeDamage();
                         fire_count++;
                         fired= true;
+                        static const std::vector<std::string> types = {
+                            "HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", 
+                            "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot"
+                        };
+                        int t = rand() % types.size();
+                        setPendingUpgrade(types[t]);
+                        cout << getName() << " will upgrade to " << types[t] << " next turn!" << endl;
                         break;
                     }
                 }
@@ -654,10 +647,11 @@ class SemiAutoBot : public GenericRobot{
             return;
         }
 
-       GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+        GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
 
         cout << getName() << "fire 3 consecutive shoot at ("<<x<<","<<y<<")\n";
 
+        bool hitSucessful = false;
         for (int i = 0;i <3;i ++){
             double chance = (double)rand()/RAND_MAX;
             if (chance < 0.7) {
@@ -665,6 +659,7 @@ class SemiAutoBot : public GenericRobot{
                 if (gtarget->isHit()){
                     gtarget->takeDamage();
                     fire_count++;
+                    hitSucessful=true;
                 }
                 
             }
@@ -672,6 +667,16 @@ class SemiAutoBot : public GenericRobot{
                 cout << "shot "<< (i+1)<< " is miss\n";
                     
                 }
+        
+        }
+        if (hitSucessful) {
+            static const std::vector<std::string> types = {
+                "HideBot", "JumpBot", "LongShotBot", "SemiAutoBot",
+                "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot"
+            };
+            int t = rand() % types.size();
+            setPendingUpgrade(types[t]);
+            cout << getName() << " will upgrade to " << types[t] << " next turn!\n";
         }
 
     }
@@ -705,6 +710,7 @@ public:
         int x = getX();
         int y = getY();
         bool fired = false;
+        bool hitSucessful = false;
 
         for (int dx = -1; dx <= 1 && !fired; dx++) {
             for (int dy = -1; dy <= 1 && !fired; dy++) {
@@ -719,9 +725,19 @@ public:
                         shell_count--;
                         cout << getName() << " fire at (" << targetX << "," << targetY<< "), shell left: " << shell_count << "\n";
                         fired = true;
+                        hitSucessful = true;
                     }
                 }
             }
+        }
+        if (hitSucessful) {
+            static const std::vector<std::string> types = {
+                "HideBot", "JumpBot", "LongShotBot", "SemiAutoBot",
+                "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot"
+            };
+            int t = rand() % types.size();
+            setPendingUpgrade(types[t]);
+            cout << getName() << " will upgrade to " << types[t] << " next turn!\n";
         }
 
         if (!fired) {
@@ -751,6 +767,7 @@ public:
         int x = getX();
         int y = getY();
         bool anyFired = false;
+        bool hitSucessful = false;
         std::vector<std::string> hitRobots;
 
         for (Robot* target : battlefield.getListOfRobots()) {
@@ -765,6 +782,7 @@ public:
                         gtarget->takeDamage();
                         fire_count++;
                         anyFired = true;
+                        hitSucessful = true;
                         hitRobots.push_back(gtarget->getName());
                     }
                 }
@@ -780,6 +798,15 @@ public:
             }
             cout << endl;
         }
+        if (hitSucessful) {
+                static const std::vector<std::string> types = {
+                    "HideBot", "JumpBot", "LongShotBot", "SemiAutoBot",
+                    "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot"
+                };
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                cout << getName() << " will upgrade to " << types[t] << " next turn!\n";
+            }
     }
 };
 
@@ -1425,6 +1452,16 @@ void parseInputFile(const string &line, Battlefield &battlefield) {
             robotXCoordinates = stoi(tokens[2]);
             robotYCoordinates = stoi(tokens[3]);
         }
+
+        Robot* newRobot = new JumpBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "LongShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
         if (tokens[2] == "random" && tokens[3] == "random"){
             robotXCoordinates = rand() % battlefield.getWidth();
             robotYCoordinates = rand() % battlefield.getHeight();
