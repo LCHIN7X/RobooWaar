@@ -98,7 +98,7 @@ public:
     int getHeight() const { return height; }
 
     // Function prototypes (definitions are after Robot class)
-    void simulationTurn();
+    void simulationStep();
     void addNewRobot(Robot *robot);
     int getNumberOfAliveRobots();
     void cleanupDestroyedRobots();
@@ -227,11 +227,13 @@ public:
 
     int getAmmo() const { return ammo; }
 
+
+    //Stimulate and check hit probablity is 70 percent
     bool hitProbability() const
     {
-        static random_device rd;
-        static mt19937 gen(rd());
-        uniform_real_distribution<> dis(0.0, 1.0);
+        static random_device rd; // True random number generator 
+        static mt19937 gen(rd()); // Mersenne Twister pseudo-random generator seeded with rd
+        uniform_real_distribution<> dis(0.0, 1.0); // Distribution for numbers between 0.0 and 1.0
         return dis(gen) <= 0.7; // 70% hit chance
     }
 };
@@ -958,10 +960,10 @@ public:
 
 
 //******************************************
-// simulationTurn member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
+// simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
-void Battlefield::simulationTurn()
+void Battlefield::simulationStep()
 {
     // Handle upgrades first
     for (size_t i = 0; i < listOfRobots.size(); ++i) {
@@ -1610,10 +1612,10 @@ int main()
     // Loop while max steps not reached AND there's more than one robot alive
     while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
-        cout << "\n--- Simulation Turn " << currentStep + 1 << " ---" << endl;
+        cout << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
 
         //TO DO:able to display proper simulation step
-        cout << "Robot Status before Turn " << currentStep + 1 << ":" << endl;
+        cout << "Robot Status before Step" << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
             string type;
             if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
@@ -1633,9 +1635,9 @@ int main()
                  << ", Life: " << robot->getLives() << endl;
         }
 
-        battlefield.simulationTurn(); // Executes turns, cleans up, respawns
+        battlefield.simulationStep(); // Executes turns, cleans up, respawns
 
-        cout << "\nBattlefield State after Turn " << currentStep + 1 << ":" << endl;
+        cout << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
         battlefield.displayBattlefield(); // Display the updated grid
         writeOutputToFile(battlefield);
         // writeOutputToFile(battlefield);
