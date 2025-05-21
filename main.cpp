@@ -352,6 +352,13 @@ protected:
     bool enemyDetectedNearby = false; // Flag for detecting nearby enemies
     std::vector<Robot*> detectedTargets; // <-- Add this line
     std::vector<std::string> upgrades;
+    std::vector<std::pair<int, int>> availableSpaces;
+
+    // Action flags for per-round limitation
+    bool hasLooked = false;
+    bool hasMoved = false;
+    bool hasThought = false;
+    bool hasFired = false;
 
 public:
     GenericRobot(const string &name, int x, int y);
