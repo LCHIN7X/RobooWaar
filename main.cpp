@@ -178,6 +178,8 @@ protected:
     string name;
     int positionX;
     int positionY;
+protected:
+    string name;
     int lives;
     bool hidden;
     bool isDie = false;
@@ -191,6 +193,8 @@ public:
 
     virtual void think() = 0;
     virtual void act() = 0;
+    virtual void move(Battlefield &battlefield) = 0;
+    virtual void fire(Battlefield &battlefield) = 0;
     virtual void move(Battlefield &battlefield) = 0;
     virtual void fire(Battlefield &battlefield) = 0;
 
@@ -245,6 +249,8 @@ public:
     bool isValidMove(int newX, int newY, const Battlefield &battlefield) const
     {
         // Only allow moving to adjacent cell (1 step in any direction)
+        int dx = abs(newX - getX());
+        int dy = abs(newY - getY());
         int dx = abs(newX - getX());
         int dy = abs(newY - getY());
         bool oneStep = (dx + dy == 1); // Manhattan distance of 1 (no diagonal)
@@ -417,6 +423,8 @@ void GenericRobot::move(Battlefield &battlefield)
     for (int i = 0; i < 4; ++i) {
         int newX = getX() + dx[i];
         int newY = getY() + dy[i];
+        int newX = getX() + dx[i];
+        int newY = getY() + dy[i];
         if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY)) {
             if (battlefield.getRobotAt(newX, newY) == nullptr) {
                 battlefield.removeRobotFromGrid(this);
@@ -462,7 +470,9 @@ void GenericRobot::fire(Battlefield &battlefield)
         }
     }
     else {
-        logger << name << " has no ammo left!" << std::endl;
+        logger << name << " has no ammo left. It will self destroy!" << std::endl;
+        lives = 0;
+        isDie = true;
     }
     detectedTargets.clear();
 }
@@ -470,6 +480,8 @@ void GenericRobot::fire(Battlefield &battlefield)
 void GenericRobot::look(Battlefield &battlefield)
 {
     logger << ">> " << name << " is scanning surroundings...." << endl;
+    int cx = getX();
+    int cy = getY();
     int cx = getX();
     int cy = getY();
     enemyDetectedNearby = false;
@@ -831,6 +843,7 @@ public:
                     {
                         gtarget->takeDamage();
                         shell_count--;
+                        logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
                         logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
                         fired = true;
 

@@ -1,6 +1,6 @@
-M by N : 20 10 
+M by N : 10 10 
 steps: 10
-robots: 3
-JumpBot Kidd 3 6
-QueenBot Jet 10 5
-HideBot Star 15 9
+robots: 5
+GenericRobot Kidd 3 6
+JumpBot Jet 4 5
+GenericRobot Star random random
