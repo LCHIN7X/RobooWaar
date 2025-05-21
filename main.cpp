@@ -354,7 +354,6 @@ protected:
     bool hasMoved = false;
     bool hasThought = false;
     bool hasFired = false;
-    bool hasJumped = false; // For JumpBot
 
 public:
     GenericRobot(const string &name, int x, int y);
@@ -381,7 +380,6 @@ public:
         hasMoved = false;
         hasThought = false;
         hasFired = false;
-        hasJumped = false;
     }
 };
 
@@ -650,8 +648,7 @@ public:
 
     void move(Battlefield &battlefield) override
     {
-        if (hasJumped) return;
-        hasJumped = true;
+
         if (jump_count < 3 && rand() % 2 == 0)
         {
             jump_count++;
