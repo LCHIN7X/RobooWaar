@@ -10,6 +10,7 @@
 #include <ctime>
 #include <map>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
@@ -174,10 +175,7 @@ class Robot
 private:
     int positionX;
     int positionY;
-protected:
-    string name;
-    int positionX;
-    int positionY;
+
 protected:
     string name;
     int lives;
@@ -195,8 +193,7 @@ public:
     virtual void act() = 0;
     virtual void move(Battlefield &battlefield) = 0;
     virtual void fire(Battlefield &battlefield) = 0;
-    virtual void move(Battlefield &battlefield) = 0;
-    virtual void fire(Battlefield &battlefield) = 0;
+
 
     // Common robot functions
     string getName() const { return name; }
@@ -251,8 +248,7 @@ public:
         // Only allow moving to adjacent cell (1 step in any direction)
         int dx = abs(newX - getX());
         int dy = abs(newY - getY());
-        int dx = abs(newX - getX());
-        int dy = abs(newY - getY());
+
         bool oneStep = (dx + dy == 1); // Manhattan distance of 1 (no diagonal)
         return oneStep && newX >= 0 && newX < battlefield.getWidth() &&
                newY >= 0 && newY < battlefield.getHeight();
@@ -355,6 +351,7 @@ protected:
     std::string upgradeType = "";
     bool enemyDetectedNearby = false; // Flag for detecting nearby enemies
     std::vector<Robot*> detectedTargets; // <-- Add this line
+    std::vector<std::string> upgrades;
 
 public:
     GenericRobot(const string &name, int x, int y);
@@ -423,8 +420,7 @@ void GenericRobot::move(Battlefield &battlefield)
     for (int i = 0; i < 4; ++i) {
         int newX = getX() + dx[i];
         int newY = getY() + dy[i];
-        int newX = getX() + dx[i];
-        int newY = getY() + dy[i];
+
         if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY)) {
             if (battlefield.getRobotAt(newX, newY) == nullptr) {
                 battlefield.removeRobotFromGrid(this);
@@ -482,8 +478,7 @@ void GenericRobot::look(Battlefield &battlefield)
     logger << ">> " << name << " is scanning surroundings...." << endl;
     int cx = getX();
     int cy = getY();
-    int cx = getX();
-    int cy = getY();
+
     enemyDetectedNearby = false;
     //detectedTargets.clear();
     for (int dx = -1; dx <= 1; ++dx) {
@@ -1148,6 +1143,131 @@ class QueenBot : public GenericRobot{
       }
     }
 
+};
+
+
+//******************************************
+//******************************************
+bool upgradesConflict(const std::string& type1,const std::string& type2){
+    static const std::unordered_map<std::string,std::string> categoryMap={
+        {"HideBot","move"},{"JumpBot","move"},
+        
+        {"LongShot","fire"},{"SemiAutoBot","fire"}, {"ThirtyShotBot", "fire"}, {"KnightBot", "fire"}, {"QueenBot", "fire"},
+        {"ScoutBot", "see"}, {"TrackBot", "see"}
+    };
+
+    auto cat1 = categoryMap.find(type1);
+    auto cat2 = categoryMap.find(type2);
+
+    if (cat1 == categoryMap.end() || cat2 == categoryMap.end()){
+        throw std :: runtime_error("unkwon upgrade type: " + (cat1 == categoryMap.end() ? type1 : type2));
+    }
+
+    return cat1->second == cat2->second;
+}
+
+//******************************************
+//LevelThreeRobot
+//******************************************
+
+class LevelThreeRobot : public GenericRobot{
+    private:
+    std::string upgradeType1;
+    std::string upgradeType2;
+
+    public:
+    LevelThreeRobot(const std::string &name, int x, int y, const std::string& type1, const std::string& type2)
+    : Robot(name, x, y),
+      GenericRobot(name, x, y),
+      upgradeType1(type1),
+      upgradeType2(type2)
+    {
+        if (upgradesConflict(type1, type2)) {
+            throw std::runtime_error("cannot upgrade two same category");
+        }
+    }
+
+    void act() override{
+        if(upgradeType1 == "HideBot")HideBot::move(*battlefield);
+        else if(upgradeType1 == "JumpBot") JumpBot::move(*battlefield);
+        else if(upgradeType1 == "ScoutBot") ScoutBot::look(*battlefield);
+        else if(upgradeType1 == "TrackBot") TrackBot::look(*battlefield);
+        else if(upgradeType1 == "LongShotBot") LongShotBot::fire(*battlefield);
+        else if(upgradeType1 == "SemiAutoBot") SemiAutoBot::fire(*battlefield);
+        else if(upgradeType1 == "ThirtyShotBot") ThirtyShotBot::fire(*battlefield);
+        else if(upgradeType1 == "KnightBot") KnightBot::fire(*battlefield);
+        else if(upgradeType1 == "QueenBot") QueenBot::fire(*battlefield);
+
+        if(upgradeType2 == "HideBot") HideBot::move(*battlefield);
+        else if(upgradeType2 == "JumpBot") JumpBot::move(*battlefield);
+        else if(upgradeType2 == "ScoutBot") ScoutBot::look(*battlefield);
+        else if(upgradeType2 == "TrackBot") TrackBot::look(*battlefield);
+        else if(upgradeType2 == "LongShotBot") LongShotBot::fire(*battlefield);
+        else if(upgradeType2 == "SemiAutoBot") SemiAutoBot::fire(*battlefield);
+        else if(upgradeType2 == "ThirtyShotBot") ThirtyShotBot::fire(*battlefield);
+        else if(upgradeType2 == "KnightBot") KnightBot::fire(*battlefield);
+        else if(upgradeType2 == "QueenBot") QueenBot::fire(*battlefield);
+
+        GenericRobot::act();
+
+    }
+};
+//******************************************
+//LevelFourRobot
+//******************************************
+
+class LevelFourRobot : public GenericRobot{
+    private:
+    std::string upgradeType1;
+    std::string upgradeType2;
+    std::string upgradeType3;
+
+    public:
+    LevelFourRobot(const std::string &name,int x,int y, const std::string& type1,const std::string& type2, const std::string& type3)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      upgradeType1(type1),
+      upgradeType2(type2), 
+      upgradeType3(type3){
+        if (upgradesConflict(type1,type2) || upgradesConflict(type1, type3) || upgradesConflict(type2, type3)){
+            throw std::runtime_error("cannot upgrade two same category ");
+        }
+    }
+
+    void act() override{
+
+        if(upgradeType1 == "HideBot") HideBot::move(*battlefield);
+        else if(upgradeType1 == "JumpBot") JumpBot::move(*battlefield);
+        else if(upgradeType1 == "ScoutBot") ScoutBot::look(*battlefield);
+        else if(upgradeType1 == "TrackBot") TrackBot::look(*battlefield);
+        else if(upgradeType1 == "LongShotBot") LongShotBot::fire(*battlefield);
+        else if(upgradeType1 == "SemiAutoBot") SemiAutoBot::fire(*battlefield);
+        else if(upgradeType1 == "ThirtyShotBot") ThirtyShotBot::fire(*battlefield);
+        else if(upgradeType1 == "KnightBot") KnightBot::fire(*battlefield);
+        else if(upgradeType1 == "QueenBot") QueenBot::fire(*battlefield);
+
+        if(upgradeType2 == "HideBot") HideBot::move(*battlefield);
+        else if(upgradeType2 == "JumpBot") JumpBot::move(*battlefield);
+        else if(upgradeType2 == "ScoutBot") ScoutBot::look(*battlefield);
+        else if(upgradeType2 == "TrackBot") TrackBot::look(*battlefield);
+        else if(upgradeType2 == "LongShotBot") LongShotBot::fire(*battlefield);
+        else if(upgradeType2 == "SemiAutoBot") SemiAutoBot::fire(*battlefield);
+        else if(upgradeType2 == "ThirtyShotBot") ThirtyShotBot::fire(*battlefield);
+        else if(upgradeType2 == "KnightBot") KnightBot::fire(*battlefield);
+        else if(upgradeType2 == "QueenBot") QueenBot::fire(*battlefield);
+
+        if(upgradeType3 == "HideBot") HideBot::move(*battlefield);
+        else if(upgradeType3 == "JumpBot") JumpBot::move(*battlefield);
+        else if(upgradeType3 == "ScoutBot") ScoutBot::look(*battlefield);
+        else if(upgradeType3 == "TrackBot") TrackBot::look(*battlefield);
+        else if(upgradeType3 == "LongShotBot") LongShotBot::fire(*battlefield);
+        else if(upgradeType3 == "SemiAutoBot") SemiAutoBot::fire(*battlefield);
+        else if(upgradeType3 == "ThirtyShotBot") ThirtyShotBot::fire(*battlefield);
+        else if(upgradeType3 == "KnightBot") KnightBot::fire(*battlefield);
+        else if(upgradeType3 == "QueenBot") QueenBot::fire(*battlefield);
+
+        GenericRobot::act();
+    }
 };
 
 //******************************************
