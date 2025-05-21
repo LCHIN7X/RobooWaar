@@ -371,6 +371,14 @@ public:
     std::string getUpgradeType() const;
     void clearPendingUpgrade();
     bool getEnemyDetectedNearby() const;
+
+    // Reset all action flags (call at start/end of each round)
+    void resetActionFlags() {
+        hasLooked = false;
+        hasMoved = false;
+        hasThought = false;
+        hasFired = false;
+    }
 };
 
 // Definitions outside the class body
@@ -389,6 +397,8 @@ void GenericRobot::setBattlefield(Battlefield* bf) { battlefield = bf; }
 
 void GenericRobot::think()
 {
+    if (hasThought) return;
+    hasThought = true;
     logger << ">> " << name << " is thinking...\n";
     if (getEnemyDetectedNearby()) {
         fire(*battlefield);
@@ -412,11 +422,24 @@ void GenericRobot::act()
 
 void GenericRobot::move(Battlefield &battlefield)
 {
+    if (hasMoved) return;
+    hasMoved = true;
     logger << ">> " << name << " is moving...\n";
+    // If availableSpaces (from look) is not empty, pick a random one
+    if (!availableSpaces.empty()) {
+        static std::random_device rd;
+        static std::mt19937 g(rd());
+        std::uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+        auto [newX, newY] = availableSpaces[dist(g)];
+        battlefield.removeRobotFromGrid(this);
+        battlefield.placeRobot(this, newX, newY);
+        incrementMoveCount();
+        logger << name << " moved to (" << newX << ", " << newY << ")\n";
+        return;
+    }
+    // Fallback: try the old adjacent logic if no availableSpaces (shouldn't happen)
     int dx[] = {0, 1, 0, -1};
     int dy[] = {1, 0, -1, 0};
-    static std::random_device rd;
-    static std::mt19937 g(rd());
     for (int i = 0; i < 4; ++i) {
         int newX = getX() + dx[i];
         int newY = getY() + dy[i];
@@ -436,6 +459,8 @@ void GenericRobot::move(Battlefield &battlefield)
 
 void GenericRobot::fire(Battlefield &battlefield)
 {
+    if (hasFired) return;
+    hasFired = true;
     if (hasAmmo()) {
         if (!detectedTargets.empty()) {
             int idx = rand() % detectedTargets.size();
@@ -475,11 +500,14 @@ void GenericRobot::fire(Battlefield &battlefield)
 
 void GenericRobot::look(Battlefield &battlefield)
 {
+    if (hasLooked) return;
+    hasLooked = true;
     logger << ">> " << name << " is scanning surroundings...." << endl;
     int cx = getX();
     int cy = getY();
 
     enemyDetectedNearby = false;
+    availableSpaces.clear(); // Clear previous available spaces
     //detectedTargets.clear();
     for (int dx = -1; dx <= 1; ++dx) {
         for (int dy = -1; dy <= 1; ++dy) {
@@ -494,6 +522,7 @@ void GenericRobot::look(Battlefield &battlefield)
                 Robot* r = battlefield.getRobotAt(nx, ny);
                 if (r == nullptr) {
                     logger << "In Boundary but Empty" << endl;
+                    availableSpaces.push_back({nx, ny}); // Add to available spaces
                 } else if (r->getLives() > 0 && !r->getIsDie()){
                     logger << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
                     enemyDetectedNearby = true;
@@ -591,7 +620,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
@@ -618,6 +648,7 @@ public:
 
     void move(Battlefield &battlefield) override
     {
+
         if (jump_count < 3 && rand() % 2 == 0)
         {
             jump_count++;
@@ -641,7 +672,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
@@ -1428,6 +1460,7 @@ void Battlefield::simulationStep()
         if (auto gen = dynamic_cast<GenericRobot *>(robot))
         {
             gen->setBattlefield(this);
+            gen->resetActionFlags(); // Reset action flags for the new round
         }
         logger << "----------------------------------------" << endl;
         logger << robot->getName() << "'s turn: " << endl;
