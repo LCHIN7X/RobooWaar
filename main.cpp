@@ -347,6 +347,7 @@ protected:
     std::string upgradeType = "";
     bool enemyDetectedNearby = false; // Flag for detecting nearby enemies
     std::vector<Robot*> detectedTargets; // <-- Add this line
+    std::vector<std::pair<int, int>> availableSpaces; // Stores available empty adjacent spaces
 
 public:
     GenericRobot(const string &name, int x, int y);
@@ -408,10 +409,21 @@ void GenericRobot::act()
 void GenericRobot::move(Battlefield &battlefield)
 {
     logger << ">> " << name << " is moving...\n";
+    // If availableSpaces (from look) is not empty, pick a random one
+    if (!availableSpaces.empty()) {
+        static std::random_device rd;
+        static std::mt19937 g(rd());
+        std::uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+        auto [newX, newY] = availableSpaces[dist(g)];
+        battlefield.removeRobotFromGrid(this);
+        battlefield.placeRobot(this, newX, newY);
+        incrementMoveCount();
+        logger << name << " moved to (" << newX << ", " << newY << ")\n";
+        return;
+    }
+    // Fallback: try the old adjacent logic if no availableSpaces (shouldn't happen)
     int dx[] = {0, 1, 0, -1};
     int dy[] = {1, 0, -1, 0};
-    static std::random_device rd;
-    static std::mt19937 g(rd());
     for (int i = 0; i < 4; ++i) {
         int newX = getX() + dx[i];
         int newY = getY() + dy[i];
@@ -473,6 +485,7 @@ void GenericRobot::look(Battlefield &battlefield)
     int cx = getX();
     int cy = getY();
     enemyDetectedNearby = false;
+    availableSpaces.clear(); // Clear previous available spaces
     //detectedTargets.clear();
     for (int dx = -1; dx <= 1; ++dx) {
         for (int dy = -1; dy <= 1; ++dy) {
@@ -487,6 +500,7 @@ void GenericRobot::look(Battlefield &battlefield)
                 Robot* r = battlefield.getRobotAt(nx, ny);
                 if (r == nullptr) {
                     logger << "In Boundary but Empty" << endl;
+                    availableSpaces.push_back({nx, ny}); // Add to available spaces
                 } else if (r->getLives() > 0 && !r->getIsDie()){
                     logger << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
                     enemyDetectedNearby = true;
