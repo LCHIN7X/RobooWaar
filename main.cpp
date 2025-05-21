@@ -171,10 +171,11 @@ public:
 
 class Robot
 {
-protected:
-    string name;
+private:
     int positionX;
     int positionY;
+protected:
+    string name;
     int lives;
     bool hidden;
     bool isDie = false;
@@ -188,6 +189,8 @@ public:
 
     virtual void think() = 0;
     virtual void act() = 0;
+    virtual void move(Battlefield &battlefield) = 0;
+    virtual void fire(Battlefield &battlefield) = 0;
 
     // Common robot functions
     string getName() const { return name; }
@@ -240,8 +243,8 @@ public:
     bool isValidMove(int newX, int newY, const Battlefield &battlefield) const
     {
         // Only allow moving to adjacent cell (1 step in any direction)
-        int dx = abs(newX - positionX);
-        int dy = abs(newY - positionY);
+        int dx = abs(newX - getX());
+        int dy = abs(newY - getY());
         bool oneStep = (dx + dy == 1); // Manhattan distance of 1 (no diagonal)
         return oneStep && newX >= 0 && newX < battlefield.getWidth() &&
                newY >= 0 && newY < battlefield.getHeight();
@@ -410,8 +413,8 @@ void GenericRobot::move(Battlefield &battlefield)
     static std::random_device rd;
     static std::mt19937 g(rd());
     for (int i = 0; i < 4; ++i) {
-        int newX = positionX + dx[i];
-        int newY = positionY + dy[i];
+        int newX = getX() + dx[i];
+        int newY = getY() + dy[i];
         if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY)) {
             if (battlefield.getRobotAt(newX, newY) == nullptr) {
                 battlefield.removeRobotFromGrid(this);
@@ -465,8 +468,8 @@ void GenericRobot::fire(Battlefield &battlefield)
 void GenericRobot::look(Battlefield &battlefield)
 {
     logger << ">> " << name << " is scanning surroundings...." << endl;
-    int cx = positionX;
-    int cy = positionY;
+    int cx = getX();
+    int cy = getY();
     enemyDetectedNearby = false;
     //detectedTargets.clear();
     for (int dx = -1; dx <= 1; ++dx) {
@@ -820,7 +823,7 @@ public:
                     {
                         gtarget->takeDamage();
                         shell_count--;
-                        logger << getName() << " fire at (" << targetX << "," << targetY << "), shell left: " << shell_count << "\n";
+                        logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
                         fired = true;
 
                         // Display target that be hitted
