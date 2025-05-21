@@ -349,6 +349,13 @@ protected:
     std::vector<Robot*> detectedTargets; // <-- Add this line
     std::vector<std::pair<int, int>> availableSpaces; // Stores available empty adjacent spaces
 
+    // Action flags for per-round limitation
+    bool hasLooked = false;
+    bool hasMoved = false;
+    bool hasThought = false;
+    bool hasFired = false;
+    bool hasJumped = false; // For JumpBot
+
 public:
     GenericRobot(const string &name, int x, int y);
     ~GenericRobot() override;
@@ -367,6 +374,15 @@ public:
     std::string getUpgradeType() const;
     void clearPendingUpgrade();
     bool getEnemyDetectedNearby() const;
+
+    // Reset all action flags (call at start/end of each round)
+    void resetActionFlags() {
+        hasLooked = false;
+        hasMoved = false;
+        hasThought = false;
+        hasFired = false;
+        hasJumped = false;
+    }
 };
 
 // Definitions outside the class body
@@ -385,6 +401,8 @@ void GenericRobot::setBattlefield(Battlefield* bf) { battlefield = bf; }
 
 void GenericRobot::think()
 {
+    if (hasThought) return;
+    hasThought = true;
     logger << ">> " << name << " is thinking...\n";
     if (getEnemyDetectedNearby()) {
         fire(*battlefield);
@@ -408,6 +426,8 @@ void GenericRobot::act()
 
 void GenericRobot::move(Battlefield &battlefield)
 {
+    if (hasMoved) return;
+    hasMoved = true;
     logger << ">> " << name << " is moving...\n";
     // If availableSpaces (from look) is not empty, pick a random one
     if (!availableSpaces.empty()) {
@@ -442,6 +462,8 @@ void GenericRobot::move(Battlefield &battlefield)
 
 void GenericRobot::fire(Battlefield &battlefield)
 {
+    if (hasFired) return;
+    hasFired = true;
     if (hasAmmo()) {
         if (!detectedTargets.empty()) {
             int idx = rand() % detectedTargets.size();
@@ -481,6 +503,8 @@ void GenericRobot::fire(Battlefield &battlefield)
 
 void GenericRobot::look(Battlefield &battlefield)
 {
+    if (hasLooked) return;
+    hasLooked = true;
     logger << ">> " << name << " is scanning surroundings...." << endl;
     int cx = getX();
     int cy = getY();
@@ -598,7 +622,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
@@ -625,6 +650,8 @@ public:
 
     void move(Battlefield &battlefield) override
     {
+        if (hasJumped) return;
+        hasJumped = true;
         if (jump_count < 3 && rand() % 2 == 0)
         {
             jump_count++;
@@ -642,7 +669,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
@@ -1180,6 +1208,7 @@ void Battlefield::simulationStep()
         if (auto gen = dynamic_cast<GenericRobot *>(robot))
         {
             gen->setBattlefield(this);
+            gen->resetActionFlags(); // Reset action flags for the new round
         }
         logger << "----------------------------------------" << endl;
         logger << robot->getName() << "'s turn: " << endl;
