@@ -127,6 +127,7 @@ protected:
     bool hidden;
     bool isDie = false;
     virtual bool isHit() = 0;
+
     
 
 public:
@@ -396,7 +397,7 @@ public:
             else if (hitProbability()) {
                 std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
                 target->takeDamage();
-                static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
+                static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot","QueenBot"};
                 int t = rand() % types.size();
                 setPendingUpgrade(types[t]);
                 std::cout << name << " will upgrade into " << types[t] << " next turn!" << std::endl;
@@ -668,7 +669,7 @@ class SemiAutoBot : public GenericRobot{
         for (int i = 0;i <3;i ++){
             double chance = (double)rand()/RAND_MAX;
             if (chance < 0.7) {
-                cout << "shot " << (i + 1) <<" successful hit the robot\n"<< gtarget->getName() << "!\n";
+                cout << "shot " << (i + 1) <<" successful hit the "<< gtarget->getName() << "\n";
                 if (gtarget->isHit()){
                     gtarget->takeDamage();
                     fire_count++;
@@ -938,6 +939,70 @@ class TrackBot: public GenericRobot{
 
 
 //******************************************
+//QueenBot
+//******************************************
+
+class QueenBot : public GenericRobot{
+    private:
+
+    const std::vector <std::pair<int,int>>directions = {
+        {0,1},
+        {1,0},
+        {0,-1},
+        {-1,0},
+        {1,1},
+        {1,-1},
+        {-1,1},
+        {-1,-1}
+    };
+
+    public:
+    QueenBot(const string& name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y) {}
+
+      void fire(Battlefield &battlefield)override{
+        int x = getX();
+        int y = getY();
+        bool fired = false;
+
+        for (const auto& dir : directions){
+            int dx = dir.first;
+            int dy = dir.second;
+
+            for (int dist = 1; ; dist++){
+                int targetX = x+dx*dist;
+                int targetY = y+dy*dist;
+            
+                if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight()) {
+                    break;
+                }
+
+            Robot* target = battlefield.getRobotAt(targetX,targetY);
+
+            if (target && target != this){
+                GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
+                if (gtarget->isHit()){
+                    cout << getName()<< " fire at ("<<targetX<<","<< targetY<<")\n";
+
+                    gtarget->takeDamage();
+                    cout<<getName()<< " hit "<<gtarget->getName()<< endl;
+                    fired = true;
+                }
+            }
+        }
+      }
+
+
+      if (!fired){
+        cout<<"sadly "<<getName()<< " found no target in straight line\n";
+      }
+    }
+
+};
+
+
+//******************************************
 //Testbot
 //******************************************
 
@@ -1025,6 +1090,7 @@ void Battlefield::simulationStep()
             else if (type == "ThirtyShotBot") upgraded = new ThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ScoutBot") upgraded = new ScoutBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "TrackBot") upgraded = new TrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "QueenBot") upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
             if (upgraded) {
                 upgraded->setLives(gen->getLives());
                 // Fix: clear the upgrade flag so the new bot doesn't try to upgrade again
@@ -1574,6 +1640,24 @@ void parseInputFile(const string &line, Battlefield &battlefield) {
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
     }
+    else if (tokens[0] == "QueenBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random"){
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else{
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot* newRobot = new QueenBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
 }
 
 //*****************************************************************************************
@@ -1670,6 +1754,7 @@ int main()
             else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
             else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
             else if (dynamic_cast<TrackBot*>(robot)) type = "TrackBot";
+            else if (dynamic_cast<QueenBot*>(robot)) type = "QueenBot";
             else if (dynamic_cast<GenericRobot*>(robot)) type = "GenericRobot";
             else type = "Robot";
             //TO DO :able to display current robot type
