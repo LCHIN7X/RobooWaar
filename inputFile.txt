@@ -7,4 +7,3 @@ GenericRobot Jet 2 4
 GenericRobot Alpha 3 9
 GenericRobot Beta 3 10
 GenericRobot Star random random
-LongShotBot Gila 6 6

@@ -399,7 +399,7 @@ public:
                 static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
                 int t = rand() % types.size();
                 setPendingUpgrade(types[t]);
-                std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
+                std::cout << name << " will upgrade into " << types[t] << " next turn!" << std::endl;
                 
             }
             else {
@@ -578,6 +578,7 @@ class JumpBot : public GenericRobot{
 class LongShotBot : public GenericRobot{
     private:
     int fire_count = 0;
+    const std::vector<std::string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
 
     public:
     LongShotBot(const string &name,int x,int y)
@@ -607,8 +608,13 @@ class LongShotBot : public GenericRobot{
                     cout << getName() << " fire ("<< targetX<<","<<targetY<<")"<<endl;
                     if (gtarget->isHit()){
                         gtarget->takeDamage();
+                        cout << getName() << " hit the target " <<gtarget->getName()<< endl;
                         fire_count++;
                         fired= true;
+                        int t = rand() % upgradeTypes.size();
+                        string newType = upgradeTypes[t];
+                        setPendingUpgrade(newType);
+                        cout << getName() << " will upgrade into " << newType << " next turn!" << endl;
                         break;
                     }
                 }
@@ -630,7 +636,7 @@ class LongShotBot : public GenericRobot{
 class SemiAutoBot : public GenericRobot{
     private:
     int fire_count = 0;
-
+    const std::vector<std::string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
 
     public:
     SemiAutoBot(const string &name,int x,int y)
@@ -658,13 +664,15 @@ class SemiAutoBot : public GenericRobot{
 
         cout << getName() << "fire 3 consecutive shoot at ("<<x<<","<<y<<")\n";
 
+        bool hitSuccessful = false;
         for (int i = 0;i <3;i ++){
             double chance = (double)rand()/RAND_MAX;
             if (chance < 0.7) {
-                cout << "shot " << (i + 1) <<" successful hit the robot\n";
+                cout << "shot " << (i + 1) <<" successful hit the robot\n"<< gtarget->getName() << "!\n";
                 if (gtarget->isHit()){
                     gtarget->takeDamage();
                     fire_count++;
+                    hitSuccessful = true;
                 }
                 
             }
@@ -673,7 +681,12 @@ class SemiAutoBot : public GenericRobot{
                     
                 }
         }
-
+        if (hitSuccessful) {
+            int t= rand() % upgradeTypes.size();
+            string newType = upgradeTypes[t];
+            setPendingUpgrade(newType);
+            cout << getName() << " will upgrade into " << newType << " next turn!\n";
+        }
     }
     int getFireCount() const{
         return fire_count;
@@ -686,6 +699,7 @@ class SemiAutoBot : public GenericRobot{
 class ThirtyShotBot : public GenericRobot {
 private:
     int shell_count;
+    const std::vector<std::string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
 
 public:
     ThirtyShotBot(const string &name, int x, int y)
@@ -705,6 +719,7 @@ public:
         int x = getX();
         int y = getY();
         bool fired = false;
+        bool hitSuccessful = false;
 
         for (int dx = -1; dx <= 1 && !fired; dx++) {
             for (int dy = -1; dy <= 1 && !fired; dy++) {
@@ -719,6 +734,18 @@ public:
                         shell_count--;
                         cout << getName() << " fire at (" << targetX << "," << targetY<< "), shell left: " << shell_count << "\n";
                         fired = true;
+
+                        //Display target that be hitted
+                        if (gtarget->isHit()) {
+                            gtarget->takeDamage();
+                            hitSuccessful = true;
+                            cout << "Successful hit on " << gtarget->getName() << "!\n";
+
+                            int t = rand() % upgradeTypes.size();
+                            string newType = upgradeTypes[t];
+                            setPendingUpgrade(newType);
+                            cout << getName() << " will upgrade into " << newType << " next turn!\n";
+                        }
                     }
                 }
             }
@@ -741,6 +768,7 @@ public:
 class KnightBot : public GenericRobot {
 private:
     int fire_count = 0;
+     const std::vector<std::string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
 
 public:
     KnightBot(const string &name, int x, int y)
@@ -751,6 +779,7 @@ public:
         int x = getX();
         int y = getY();
         bool anyFired = false;
+        bool hitSuccessful = false;
         std::vector<std::string> hitRobots;
 
         for (Robot* target : battlefield.getListOfRobots()) {
@@ -761,10 +790,11 @@ public:
                 if (distance <= 8.0) {
                     GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
                     cout << getName() << " fires at (" << target->getX() << "," << target->getY() << ")" << endl;
+                    anyFired = true;
                     if (gtarget && gtarget->isHit()) {
                         gtarget->takeDamage();
                         fire_count++;
-                        anyFired = true;
+                        hitSuccessful = true;
                         hitRobots.push_back(gtarget->getName());
                     }
                 }
@@ -779,6 +809,10 @@ public:
                 if (i != hitRobots.size() - 1) cout << ", ";
             }
             cout << endl;
+            int t = rand() % upgradeTypes.size();
+            string newType = upgradeTypes[t];
+            setPendingUpgrade(newType);
+            cout << getName() << " will upgrade into " << newType << " next turn!" << endl;
         }
     }
 };
