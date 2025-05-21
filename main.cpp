@@ -471,7 +471,7 @@ public:
     }
 
     void setPendingUpgrade(const std::string& type) { pendingUpgrade = true; upgradeType = type; }
-    bool isPendingUpgrade() const { return pendingUpgrade; }
+    bool PendingUpgrade() const { return pendingUpgrade; }
     std::string getUpgradeType() const { return upgradeType; }
     void clearPendingUpgrade() { pendingUpgrade = false; upgradeType = ""; }
     bool getEnemyDetectedNearby() const { return enemyDetectedNearby; }
@@ -938,27 +938,8 @@ class TrackBot: public GenericRobot{
 
 
 //******************************************
-//Testbot
+//Queue , Respawnn and Reentry Logic
 //******************************************
-
-class TestRobot : public Robot
-{
-public:
-    TestRobot(const string &name, int x, int y) : Robot(name, x, y)
-    {
-        cout << "TestRobot " << name << " created at (" << x << ", " << y << ")" << endl;
-    }
-
-    void think() override
-    {
-        cout << getName() << "TestRobot is thinking...";
-    }
-
-    void act() override
-    {
-        cout << getName() << "TestRobot is acting. It will take 1 damage here for testing purposes" << endl;
-        takeDamage();
-    }
 
     // void requeue(Robot* robot) {
         
@@ -999,12 +980,6 @@ public:
     //     cout << "No place put " << robot->getName() << ", try it next time.\n";
     // }
 
-    bool isHit() override{
-        return true;
-    }
-};
-
-
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
@@ -1014,7 +989,7 @@ void Battlefield::simulationStep()
     // Handle upgrades first
     for (size_t i = 0; i < listOfRobots.size(); ++i) {
         GenericRobot* gen = dynamic_cast<GenericRobot*>(listOfRobots[i]);
-        if (gen && gen->isPendingUpgrade()) {
+        if (gen && gen->PendingUpgrade()) {
             std::string type = gen->getUpgradeType();
             Robot* upgraded = nullptr;
             if (type == "HideBot") upgraded = new HideBot(gen->getName(), gen->getX(), gen->getY());
@@ -1662,16 +1637,25 @@ int main()
         cout << "Robot Status before Step" << currentStep + 1 << ":" << endl;
         for (Robot* robot : battlefield.getListOfRobots()) {
             string type;
-            if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
-            else if (dynamic_cast<JumpBot*>(robot)) type = "JumpBot";
-            else if (dynamic_cast<LongShotBot*>(robot)) type = "LongShotBot";
-            else if (dynamic_cast<KnightBot*>(robot)) type = "KnightBot";
-            else if (dynamic_cast<SemiAutoBot*>(robot)) type = "SemiAutoBot";
-            else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
-            else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
-            else if (dynamic_cast<TrackBot*>(robot)) type = "TrackBot";
-            else if (dynamic_cast<GenericRobot*>(robot)) type = "GenericRobot";
-            else type = "Robot";
+            GenericRobot* gen = dynamic_cast<GenericRobot*>(robot);
+        
+        if (gen) {
+            if (gen->PendingUpgrade()) {
+                type = gen->getUpgradeType() + " (Pending Upgrade)";
+            } else {
+                if (dynamic_cast<HideBot*>(robot)) type = "HideBot";
+                else if (dynamic_cast<JumpBot*>(robot)) type = "JumpBot";
+                else if (dynamic_cast<LongShotBot*>(robot)) type = "LongShotBot";
+                else if (dynamic_cast<KnightBot*>(robot)) type = "KnightBot";
+                else if (dynamic_cast<SemiAutoBot*>(robot)) type = "SemiAutoBot";
+                else if (dynamic_cast<ThirtyShotBot*>(robot)) type = "ThirtyShotBot";
+                else if (dynamic_cast<ScoutBot*>(robot)) type = "ScoutBot";
+                else if (dynamic_cast<TrackBot*>(robot)) type = "TrackBot";
+                else type = "GenericRobot";
+            }
+        } else {
+            type = "Robot";
+        }
             //TO DO :able to display current robot type
             cout << "  Type: " << type
                  << ", Name: " << robot->getName()
