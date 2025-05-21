@@ -346,6 +346,8 @@ public:
 
 class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobot, public ThinkingRobot
 {
+private:
+    vector<Robot *> possibleTargets; // List of possible targets
 protected:
     bool hasUpgraded[3] = {false, false, false}; // Track upgrades for moving, shooting, seeing
     Battlefield *battlefield = nullptr;          // Pointer to current battlefield
@@ -403,14 +405,13 @@ public:
         logger << ">> " << name << " is moving...\n";
         int dx[] = {0, 1, 0, -1};
         int dy[] = {1, 0, -1, 0};
-        vector<int> directions = {0, 1, 2, 3};
+       
         static std::random_device rd;
         static std::mt19937 g(rd());
-        std::shuffle(directions.begin(), directions.end(), g);
-        for (int dir : directions)
-        {
-            int newX = positionX + dx[dir];
-            int newY = positionY + dy[dir];
+        
+        for (int i = 0; i < 8; ++i) {
+            int newX = positionX + dx[i];
+            int newY = positionY + dy[i];
             // Ensure only one robot at (newX, newY)
             if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY))
             {
@@ -429,53 +430,73 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
-        if (hasAmmo())
-        {
-            // Collect all possible targets (other robots, not self, and alive)
-            vector<Robot *> possibleTargets;
-            for (Robot *r : battlefield.getListOfRobots())
-            {
-                if (r != nullptr && r != this && r->getLives() > 0 && !r->getIsDie())
-                {
-                    possibleTargets.push_back(r);
+        if (hasAmmo()) {
+            //Call look() to populate the 'detectedTargets' list.
+            vector<Robot*> TargetsInFiringRange; // This list will hold targets after the second check
+            int selfX = getX();
+            int selfY = getY();
+
+            // Define the 8 directions for the second range check
+            int dx[] = {0, 1, 0, -1};
+            int dy[] = {1, 0, -1, 0};
+
+            // Iterate through the targets already found by 'look()'
+            for (Robot* r : possibleTargets) { // Iterate through the list populated by look()
+                if (r != nullptr && r->getLives() > 0 && !r->getIsDie()) { // Basic validity check
+                    int targetX = r->getX();
+                    int targetY = r->getY();
+
+                    bool inInRange = false;
+                    // Perform the *second* check: is this robot within 1 unit in 8 directions?
+                    for (int i = 0; i < 8; ++i) {
+                        if (targetX == selfX + dx[i] && targetY == selfY + dy[i]) {
+                            inInRange = true;
+                            break;
+                        }
+                    }
+
+                    if (inInRange) {
+                        TargetsInFiringRange.push_back(r); // Add to the final list if it passes the second check
+                    }
                 }
             }
-            if (!possibleTargets.empty())
-            {
-                // Pick a random target from the list
-                int idx = rand() % possibleTargets.size();
-                Robot *target = possibleTargets[idx];
+
+            // Proceed with firing using the 'actualTargetsInFiringRange' list
+            if (!TargetsInFiringRange.empty()) {
+                // Pick a random target from the list that passed both checks
+                int idx = rand() % TargetsInFiringRange.size();
+                Robot* target = TargetsInFiringRange[idx];
                 int targetX = target->getX();
                 int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
 
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hide, attack miss." << endl;
+                std::cout <<">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+                useAmmo(); 
+
+                if (target->isHidden()) {
+                    std::cout << target->getName() << " is hidden, attack miss." << std::endl;
                 }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                else if (hitProbability()) {
+                    std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
                     target->takeDamage();
-                    static const vector<string> types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot"};
+                    static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
                     int t = rand() % types.size();
                     setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                    std::cout << name << " will upgrade into " << types[t] << " next turn!" << std::endl;
                 }
-                else
-                {
-                    logger << "Missed!" << endl;
+                else {
+                    std::cout << "Missed!" << std::endl;
                 }
             }
-            else
-            {
-                logger << name << " has no valid targets to fire at!" << endl;
+            else {
+                //TO DO: IF not robot within its range, can I choose not to fire?
+                // If no targets passed the second check
+                useAmmo(); // Still consume ammo even if no target is found
+                std::cout <<">> " << name << " fires."<<endl;
+                cout<<"However no robots within shooting range ." << std::endl;
             }
         }
-        else
-        {
-            logger << name << " has no ammo left!" << endl;
+        else {
+            std::cout << name << " has no ammo left!" << std::endl;
         }
     }
 
@@ -511,6 +532,11 @@ public:
                     {
                         logger << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
                         enemyDetectedNearby = true; // Set flag
+                        // Collect all possible targets (other robots, not self, and alive) 
+                        for (Robot* r : battlefield.getListOfRobots()) 
+                        { if (r != nullptr && r != this && r->getLives() > 0 && !r->getIsDie()) 
+                            { possibleTargets.push_back(r); } }
+                        
                     }
                 }
             }
