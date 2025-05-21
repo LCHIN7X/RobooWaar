@@ -1,7 +1,6 @@
-M by N : 10 10
-steps: 8
-robots: 12
-robots: 12
+M by N : 20 10 
+steps: 10
+robots: 5
 GenericRobot Kidd 3 6
 LongShotBot Jet 4 5
 GenericRobot Star random random
