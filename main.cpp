@@ -15,9 +15,6 @@ using namespace std;
 
 // Forward declarations
 class Robot;
-//**********************************************************
-// Battlefield class that keeps track of all activity
-//**********************************************************
 
 class Logger
 {
@@ -25,15 +22,19 @@ private:
     ofstream outputFile;
     string fileName = "outputFile.txt";
 
+//**********************************************************
+// Logger class that logs all activity (cout and output to file)
+//**********************************************************
 public:
     Logger()
     {
         cout << "Logger class starting up..." << endl;
+        open();
     };
 
     bool open()
     {
-        outputFile.open(fileName, ios::app);
+        outputFile.open(fileName);
         if (outputFile.is_open())
         {
             return true;
@@ -72,6 +73,9 @@ public:
 
 Logger logger;
 
+//**********************************************************
+// Battlefield class that keeps track of all activity
+//**********************************************************
 class Battlefield
 {
 private:
@@ -88,14 +92,10 @@ private:
     // - fix bugs if any
 
     // TODO others:
-    // - write output to .txt file
-    // - log more details to text file and output
     // - Detailed comments
     // - More error handling
 
 public:
-    // bool checkOccupied(int a, int y);
-    // void placeRobot(Robot *r);
     Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {};
     ~Battlefield();
     void setDimensions(int h, int w)
@@ -181,16 +181,11 @@ protected:
     virtual bool isHit() = 0;
 
 public:
-    // bool isReentry();
-    // void onReenter();
-
     Robot(string name, int x, int y)
         : name(name), positionX(x), positionY(y), lives(3), hidden(false) {}
 
     virtual ~Robot() = default;
 
-    // NOTE: think() and act() were void. Kept as is per instruction.
-    // This means they cannot directly interact with the Battlefield passed to derived methods.
     virtual void think() = 0;
     virtual void act() = 0;
 
@@ -227,7 +222,7 @@ public:
 };
 
 //******************************************
-// Moving Robot class
+// MovingRobot class
 //*******************************************
 
 class MovingRobot : public virtual Robot
@@ -469,34 +464,34 @@ public:
                 int targetX = target->getX();
                 int targetY = target->getY();
 
-                std::cout <<">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
+                logger << ">> "<< name << " fires at (" << targetX << ", " << targetY << ")" << std::endl;
                 useAmmo(); 
 
                 if (target->isHidden()) {
-                    std::cout << target->getName() << " is hidden, attack miss." << std::endl;
+                    logger << target->getName() << " is hidden, attack miss." << std::endl;
                 }
                 else if (hitProbability()) {
-                    std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
+                    logger << "Hit! (" << target->getName() << ") be killed" << std::endl;
                     target->takeDamage();
                     static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
                     int t = rand() % types.size();
                     setPendingUpgrade(types[t]);
-                    std::cout << name << " will upgrade into " << types[t] << " next turn!" << std::endl;
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << std::endl;
                 }
                 else {
-                    std::cout << "Missed!" << std::endl;
+                    logger << "Missed!" << std::endl;
                 }
             }
             else {
                 //TO DO: IF not robot within its range, can I choose not to fire?
                 // If no targets passed the second check
                 useAmmo(); // Still consume ammo even if no target is found
-                std::cout <<">> " << name << " fires."<<endl;
-                cout<<"However no robots within shooting range ." << std::endl;
+                logger <<">> " << name << " fires."<<endl;
+                logger <<"However no robots within shooting range ." << std::endl;
             }
         }
         else {
-            std::cout << name << " has no ammo left!" << std::endl;
+            logger << name << " has no ammo left!" << std::endl;
         }
     }
 
@@ -699,7 +694,7 @@ class LongShotBot : public GenericRobot
 {
 private:
     int fire_count = 0;
-    const std::vector<std::string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+    const vector<string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
 
 public:
     LongShotBot(const string &name, int x, int y)
