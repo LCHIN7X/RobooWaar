@@ -460,7 +460,9 @@ void GenericRobot::fire(Battlefield &battlefield)
         }
     }
     else {
-        logger << name << " has no ammo left!" << std::endl;
+        logger << name << " has no ammo left. It will self destroy!" << std::endl;
+        lives = 0;
+        isDie = true;
     }
     detectedTargets.clear();
 }
