@@ -317,6 +317,8 @@ public:
 
     void setBattlefield(Battlefield* bf) { battlefield = bf; }
 
+
+    //Think Logic here
     void think() override
     {
         cout <<">> "<< name << " is thinking...\n";
@@ -394,12 +396,10 @@ public:
             else if (hitProbability()) {
                 std::cout << "Hit! (" << target->getName() << ") be killed" << std::endl;
                 target->takeDamage();
-                
-                    // Only upgrade once per robot
-                    static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
+                static const std::vector<std::string> types = {"HideBot","JumpBot","LongShotBot","SemiAutoBot","ThirtyShotBot","ScoutBot","TrackBot","KnightBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                std::cout << name << " will upgrade to " << types[t] << " next turn!" << std::endl;
                 
             }
             else {
@@ -603,10 +603,10 @@ class LongShotBot : public GenericRobot{
 
                 if (target && target != this){
 
-                    GenericRobot* target = dynamic_cast<GenericRobot*>(target);
+                    GenericRobot* gtarget = dynamic_cast<GenericRobot*>(target);
                     cout << getName() << " fire ("<< targetX<<","<<targetY<<")"<<endl;
-                    if (target->isHit()){
-                        target->takeDamage();
+                    if (gtarget->isHit()){
+                        gtarget->takeDamage();
                         fire_count++;
                         fired= true;
                         break;
@@ -1425,6 +1425,14 @@ void parseInputFile(const string &line, Battlefield &battlefield) {
             robotXCoordinates = stoi(tokens[2]);
             robotYCoordinates = stoi(tokens[3]);
         }
+        Robot* newRobot = new JumpBot(robotName,robotXCoordinates,robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot,robotXCoordinates,robotYCoordinates);
+    }
+    else if (tokens[0] == "LongShotBot" && tokens.size() >= 4){
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
         if (tokens[2] == "random" && tokens[3] == "random"){
             robotXCoordinates = rand() % battlefield.getWidth();
             robotYCoordinates = rand() % battlefield.getHeight();
