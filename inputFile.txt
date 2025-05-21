@@ -1,7 +1,6 @@
-M by N : 40 50
-steps: 3
-robots: 12
-robots: 12
+M by N : 20 10 
+steps: 50
+robots: 5 
 GenericRobot Kidd 3 6
 GenericRobot Jet 2 4
 GenericRobot Alpha 3 9
