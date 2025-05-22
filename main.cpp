@@ -715,16 +715,39 @@ public:
 
     void move(Battlefield &battlefield) override
     {
-
         if (jump_count < 3 && rand() % 2 == 0)
         {
-            jump_count++;
-            int jumpx = rand() % battlefield.getWidth();
-            int jumpy = rand() % battlefield.getHeight();
-
-            battlefield.removeRobotFromGrid(this);
-            setPosition(jumpx, jumpy);
-            logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
+            int jumpx, jumpy;
+            bool positionFound = false;
+            int attempts = 0;
+            const int maxAttempt = 10; 
+            
+            while (!positionFound && attempts < maxAttempt)
+            {
+                attempts++;
+                jumpx = rand() % battlefield.getWidth();
+                jumpy = rand() % battlefield.getHeight();
+                
+                
+                if (!battlefield.getRobotAt(jumpx, jumpy))
+                {
+                    positionFound = true;
+                }
+            }
+            
+          
+            if (positionFound)
+            {
+                jump_count++;
+                battlefield.removeRobotFromGrid(this);
+                setPosition(jumpx, jumpy);
+                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
+            }
+            else
+            {
+       
+                logger << getName() << " could not find empty position to jump\n";
+            }
         }
         else
         {
@@ -734,7 +757,7 @@ public:
             }
             else
             {
-                logger << getName() << "did not jump this turn, keep moving\n";
+                logger << getName() << " did not jump this turn, keep moving\n";
             }
         }
     }
@@ -771,10 +794,23 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
 
         bool fired = false;
         int x = getX();
         int y = getY();
+
+        useAmmo(); 
 
         for (int dx = -3; dx <= 3; dx++)
         {
@@ -792,29 +828,41 @@ public:
 
                 if (target && target != this)
                 {
-
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << getName() << " fire (" << targetX << "," << targetY << ")" << endl;
-                    if (gtarget->isHit())
+                    logger << ">> " << getName() << " fires at (" << targetX << "," << targetY << ")" << endl;
+                    
+                    if (gtarget->isHidden())
+                    {
+                        logger << gtarget->getName() << " is hidden, attack miss." << endl;
+                        fired = true;
+                    }
+                    else if (hitProbability())
                     {
                         gtarget->takeDamage();
-                        logger << getName() << " hit the target " << gtarget->getName() << endl;
+                        logger << "Hit! (" << gtarget->getName() << ") be killed" << endl;
                         fire_count++;
                         fired = true;
                         int t = rand() % upgradeTypes.size();
                         string newType = upgradeTypes[t];
                         setPendingUpgrade(newType);
-                        logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
-                        break;
+                        logger << getName() << " will upgrade into " << newType << " next turn" << endl;
                     }
+                    else
+                    {
+                        logger << "Missed!" << endl;
+                        fired = true;
+                    }
+                    break;
                 }
             }
             if (fired)
                 break;
         }
+
         if (!fired)
         {
-            logger << getName() << " no robot there\n";
+            logger << ">> " << getName() << " fires." << endl;
+            logger << "no robot there " << endl;
         }
     }
 };
@@ -836,6 +884,18 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
+
         int x = getX();
         int y = getY();
 
@@ -851,42 +911,50 @@ public:
 
         if (!target)
         {
-            logger << getName() << " sadly didn't hit any robot\n";
+            useAmmo(); 
+            logger << ">> " << getName() << " fires." << endl;
+            logger << "However no robots available to target." << endl;
             return;
         }
 
         GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
+        useAmmo(); 
 
-        logger << getName() << "fire 3 consecutive shot at (" << x << "," << y << ")\n";
+        logger << ">> " << getName() << " fires 3 consecutive shots at (" 
+               << gtarget->getX() << "," << gtarget->getY() << ")" << endl;
 
         bool hitSuccessful = false;
         for (int i = 0; i < 3; i++)
         {
-            double chance = (double)rand() / RAND_MAX;
-            if (chance < 0.7)
+            if (gtarget->isHidden())
             {
-                logger << "shot " << (i + 1) << " successful hit the robot\n"
-                       << gtarget->getName() << "!\n";
-                if (gtarget->isHit())
-                {
-                    gtarget->takeDamage();
-                    fire_count++;
-                    hitSuccessful = true;
-                }
+                logger << "Shot " << (i + 1) << ": " << gtarget->getName() 
+                       << " is hidden, attack missed." << endl;
+                continue;
+            }
+
+            if (hitProbability())
+            {
+                logger << "Shot " << (i + 1) << " hit " << gtarget->getName() << "!" << endl;
+                gtarget->takeDamage();
+                fire_count++;
+                hitSuccessful = true;
             }
             else
             {
-                logger << "shot " << (i + 1) << " is miss\n";
+                logger << "Shot " << (i + 1) << " missed!" << endl;
             }
         }
+
         if (hitSuccessful)
         {
             int t = rand() % upgradeTypes.size();
             string newType = upgradeTypes[t];
             setPendingUpgrade(newType);
-            logger << getName() << " will upgrade into " << newType << " next turn!\n";
+            logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
         }
     }
+
     int getFireCount() const
     {
         return fire_count;
@@ -1201,8 +1269,20 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override
-    {
+    void fire(Battlefield &battlefield) override{
+
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << getName() << " has no ammo left. It will self destruct!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
+
         int x = getX();
         int y = getY();
         bool fired = false;
@@ -1212,43 +1292,49 @@ public:
             int dx = dir.first;
             int dy = dir.second;
 
-            for (int dist = 1;; dist++)
-            {
-                int targetX = x + dx * dist;
-                int targetY = y + dy * dist;
+                for (int dist = 1;; dist++) {
+                    int targetX = x + dx * dist;
+                    int targetY = y + dy * dist;
 
-                if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight())
-                {
-                    break;
-                }
+                    if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight())
+                        break;
 
                 Robot *target = battlefield.getRobotAt(targetX, targetY);
 
-                if (target && target != this)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    if (gtarget->isHit())
-                    {
-                        logger << getName() << " fire at (" << targetX << "," << targetY << ")\n";
+                if (target && target != this){
 
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
+                    if (gtarget->isHit()){
+
+                        logger << getName() << " fires at (" << targetX << "," << targetY << ")\n";
                         gtarget->takeDamage();
                         logger << getName() << " hit " << gtarget->getName() << endl;
-                        fired = true;
 
                         static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
                         int t = rand() % types.size();
                         setPendingUpgrade(types[t]);
-                        logger << getName() << " will upgrade in to " << types[t] << "next turn" << endl;
-                    }
+                        logger << getName() << " will upgrade into " << types[t] << " next turn" << endl;
+
+                        fired = true;
+                        break;  
                 }
             }
         }
 
-        if (!fired)
-        {
-            logger << "sadly " << getName() << " found no target in straight line\n";
-        }
+        if (fired)
+            break; 
     }
+
+    if (fired){
+        useAmmo();
+    }
+    else
+    {
+        logger << "sadly, " << getName() << " found no target in straight line\n";
+        useAmmo(); 
+    }
+}
+
 };
 
 //******************************************
