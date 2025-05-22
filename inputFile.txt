@@ -1,4 +1,4 @@
-M by N : 10 10 
+M by N : 20 30
 steps: 50
 robots: 6 
 GenericRobot Kidd 3 6

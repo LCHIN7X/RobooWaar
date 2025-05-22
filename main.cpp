@@ -493,6 +493,7 @@ void GenericRobot::fire(Battlefield &battlefield)
     {
         if (!detectedTargets.empty())
         {
+            //else if (r->getLives() > 0 || !r->getIsDie() || !r->getIsHurt())
             int idx = rand() % detectedTargets.size();
             Robot *target = detectedTargets[idx];
             int targetX = target->getX();
@@ -523,14 +524,17 @@ void GenericRobot::fire(Battlefield &battlefield)
             logger << ">> " << name << " fires." << endl;
             logger << "However no robots within shooting range ." << endl;
         }
-        if (getAmmo() == 0)
-        {
-            logger << getName() << " is out of ammo and will self-destruct." << endl;
-            isDie = true; // Out of ammo, robot is dead
-        }
+
     }
     else
     {
+        //Unecessary check for ammo
+        //if (getAmmo() == 0)
+        //{
+           // logger << getName() << " is out of ammo and will self-destruct." << endl;
+           //lives = 0;
+           //isDie = true; // Out of ammo, robot is dead
+        //}
         logger << name << " has no ammo left. It will self destroy!" << endl;
         lives = 0;
         isDie = true;
