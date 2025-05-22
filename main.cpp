@@ -1269,8 +1269,20 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override
-    {
+    void fire(Battlefield &battlefield) override{
+
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << getName() << " has no ammo left. It will self destruct!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
+
         int x = getX();
         int y = getY();
         bool fired = false;
@@ -1280,43 +1292,49 @@ public:
             int dx = dir.first;
             int dy = dir.second;
 
-            for (int dist = 1;; dist++)
-            {
-                int targetX = x + dx * dist;
-                int targetY = y + dy * dist;
+                for (int dist = 1;; dist++) {
+                    int targetX = x + dx * dist;
+                    int targetY = y + dy * dist;
 
-                if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight())
-                {
-                    break;
-                }
+                    if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight())
+                        break;
 
                 Robot *target = battlefield.getRobotAt(targetX, targetY);
 
-                if (target && target != this)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    if (gtarget->isHit())
-                    {
-                        logger << getName() << " fire at (" << targetX << "," << targetY << ")\n";
+                if (target && target != this){
 
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
+                    if (gtarget->isHit()){
+
+                        logger << getName() << " fires at (" << targetX << "," << targetY << ")\n";
                         gtarget->takeDamage();
                         logger << getName() << " hit " << gtarget->getName() << endl;
-                        fired = true;
 
                         static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
                         int t = rand() % types.size();
                         setPendingUpgrade(types[t]);
-                        logger << getName() << " will upgrade in to " << types[t] << "next turn" << endl;
-                    }
+                        logger << getName() << " will upgrade into " << types[t] << " next turn" << endl;
+
+                        fired = true;
+                        break;  
                 }
             }
         }
 
-        if (!fired)
-        {
-            logger << "sadly " << getName() << " found no target in straight line\n";
-        }
+        if (fired)
+            break; 
     }
+
+    if (fired){
+        useAmmo();
+    }
+    else
+    {
+        logger << "sadly, " << getName() << " found no target in straight line\n";
+        useAmmo(); 
+    }
+}
+
 };
 
 //******************************************
