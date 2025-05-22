@@ -1249,7 +1249,7 @@ public:
 
 //******************************************
 // VampireBot
-// Upgrade description: After killing a robot (has to be the killing blow), gain 1 life
+// Upgrade description: After killing a robot, gain 1 life, can gain life maximum 3 times
 //******************************************
 class VampireBot : public GenericRobot
 {
