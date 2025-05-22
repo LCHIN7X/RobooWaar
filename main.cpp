@@ -1034,7 +1034,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
@@ -1099,7 +1100,8 @@ public:
 
     void act() override
     {
-        think();
+        cout << "JumpBot is thinking..." << endl;
+        //TO DO : the logic will be implemented later
         look(*battlefield);
         fire(*battlefield);
         move(*battlefield);
