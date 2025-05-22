@@ -11,16 +11,16 @@ Robot Name: Jet, Coords: (4,5), Lives: 3
 Robot Name: Harry, Coords: (5,5), Lives: 3
 Robot Name: Lockwood, Coords: (0,0), Lives: 3
 Robot Name: Chase, Coords: (5,4), Lives: 3
-Robot Name: Star, Coords: (1,4), Lives: 3
+Robot Name: Star, Coords: (0,1), Lives: 3
 
 Initial Battlefield State:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |L . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
+1 |S . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. S . . . C . . . . | 4
+4 |. . . . . C . . . . | 4
 5 |. . . . J H . . . . | 5
 6 |. . . K . . . . . . | 6
 7 |. . . . . . . . . . | 7
@@ -45,7 +45,7 @@ Robot Status before Step1:
   Type: GenericRobot, Name: Harry, Coords: (5,5), Life: 3
   Type: GenericRobot, Name: Lockwood, Coords: (0,0), Life: 3
   Type: GenericRobot, Name: Chase, Coords: (5,4), Life: 3
-  Type: GenericRobot, Name: Star, Coords: (1,4), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (0,1), Life: 3
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
@@ -62,7 +62,7 @@ Checking (4, 7): In Boundary but Empty
 >> Kidd fires at (4, 5)
 Missed!
 >> Kidd is moving...
-Kidd moved to (2, 7)
+Kidd moved to (2, 5)
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
@@ -77,30 +77,14 @@ Checking (5, 4): Enemy detected: Chase at (5,4)
 Checking (5, 5): Enemy detected: Harry at (5,5)
 Checking (5, 6): In Boundary but Empty
 >> Jet is thinking...
->> Jet fires at (5, 4)
-Hit! (Chase) be killed
-Jet will upgrade into ThirtyShotBot next turn!
+>> Jet fires at (5, 5)
+Hit! (Harry) be killed
+Jet will upgrade into HideBot next turn!
 >> Jet is moving...
 Jet moved to (3, 4)
 Jet is done.
 ----------------------------------------
 Harry's turn: 
->> Harry is scanning surroundings....
-Checking (4, 4): In Boundary but Empty
-Checking (4, 5): In Boundary but Empty
-Checking (4, 6): In Boundary but Empty
-Checking (5, 4): Enemy detected: Chase at (5,4)
-Checking (5, 5): Current Position
-Checking (5, 6): In Boundary but Empty
-Checking (6, 4): In Boundary but Empty
-Checking (6, 5): In Boundary but Empty
-Checking (6, 6): In Boundary but Empty
->> Harry is thinking...
->> Harry fires at (5, 4)
-Hit! (Chase) be killed
-Harry will upgrade into JumpBot next turn!
->> Harry is moving...
-Harry moved to (4, 4)
 Harry is done.
 ----------------------------------------
 Lockwood's turn: 
@@ -110,43 +94,45 @@ Checking (-1, 0): Exceed Boundary
 Checking (-1, 1): Exceed Boundary
 Checking (0, -1): Exceed Boundary
 Checking (0, 0): Current Position
-Checking (0, 1): In Boundary but Empty
+Checking (0, 1): Enemy detected: Star at (0,1)
 Checking (1, -1): Exceed Boundary
 Checking (1, 0): In Boundary but Empty
 Checking (1, 1): In Boundary but Empty
 >> Lockwood is thinking...
+>> Lockwood fires at (0, 1)
+Hit! (Star) be killed
+Lockwood will upgrade into LongShotBot next turn!
 >> Lockwood is moving...
 Lockwood moved to (1, 1)
->> Lockwood fires.
-However no robots within shooting range .
 Lockwood is done.
 ----------------------------------------
 Chase's turn: 
+>> Chase is scanning surroundings....
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): In Boundary but Empty
+Checking (5, 3): In Boundary but Empty
+Checking (5, 4): Current Position
+Checking (5, 5): Enemy detected: Harry at (5,5)
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): In Boundary but Empty
+Checking (6, 5): In Boundary but Empty
+>> Chase is thinking...
+>> Chase fires at (5, 5)
+Missed!
+>> Chase is moving...
+Chase moved to (6, 3)
 Chase is done.
 ----------------------------------------
 Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 3): In Boundary but Empty
-Checking (0, 4): In Boundary but Empty
-Checking (0, 5): In Boundary but Empty
-Checking (1, 3): In Boundary but Empty
-Checking (1, 4): Current Position
-Checking (1, 5): In Boundary but Empty
-Checking (2, 3): In Boundary but Empty
-Checking (2, 4): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 5)
->> Star fires.
-However no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Chase has been removed from the battlefield.
+Harry has been removed from the battlefield.
+Star has been removed from the battlefield.
 ----------------------------------------
-Reentering Chase
-Chase reentered as GenericRobot at (0, 8) with 1 lives next turn.
+Reentering Harry
+Harry reentered as GenericRobot at (0, 5) with 2 lives next turn.
 
 Battlefield State after Step 1:
    0 1 2 3 4 5 6 7 8 9 
@@ -154,12 +140,12 @@ Battlefield State after Step 1:
 0 |. . . . . . . . . . | 0
 1 |. L . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . J H . . . . . | 4
-5 |. S . . . . . . . . | 5
+3 |. . . . . . C . . . | 3
+4 |. . . J . . . . . . | 4
+5 |H . K . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . K . . . . . . . | 7
-8 |C . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -173,35 +159,35 @@ LEGEND:
 
 --- Simulation Step 2 ---
 Robot Status before Step2:
-  Type: GenericRobot, Name: Kidd, Coords: (2,7), Life: 3
-  Type: ThirtyShotBot, Name: Jet, Coords: (3,4), Life: 3
-  Type: JumpBot, Name: Harry, Coords: (4,4), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (1,1), Life: 3
-  Type: GenericRobot, Name: Star, Coords: (1,5), Life: 3
-  Type: GenericRobot, Name: Chase, Coords: (0,8), Life: 1
-Jet got 30 shells replace current shells 
-Jet has upgraded to ThirtyShotBot!
-Harry has upgraded to JumpBot!
+  Type: GenericRobot, Name: Kidd, Coords: (2,5), Life: 3
+  Type: HideBot, Name: Jet, Coords: (3,4), Life: 3
+  Type: LongShotBot, Name: Lockwood, Coords: (1,1), Life: 3
+  Type: GenericRobot, Name: Chase, Coords: (6,3), Life: 3
+  Type: GenericRobot, Name: Harry, Coords: (0,5), Life: 2
+Jet has upgraded to HideBot!
+Lockwood has upgraded to LongShotBot!
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
+Checking (1, 4): In Boundary but Empty
+Checking (1, 5): In Boundary but Empty
 Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): Current Position
 Checking (2, 6): In Boundary but Empty
-Checking (2, 7): Current Position
-Checking (2, 8): In Boundary but Empty
+Checking (3, 4): Enemy detected: Jet at (3,4)
+Checking (3, 5): In Boundary but Empty
 Checking (3, 6): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
-Checking (3, 8): In Boundary but Empty
 >> Kidd is thinking...
+>> Kidd fires at (3, 4)
+Hit! (Jet) be killed
+Kidd will upgrade into ScoutBot next turn!
 >> Kidd is moving...
-Kidd moved to (2, 6)
->> Kidd fires.
-However no robots within shooting range .
+Kidd moved to (1, 4)
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
+JumpBot is thinking...
 >> Jet is scanning surroundings....
 Checking (2, 3): In Boundary but Empty
 Checking (2, 4): In Boundary but Empty
@@ -210,33 +196,12 @@ Checking (3, 3): In Boundary but Empty
 Checking (3, 4): Current Position
 Checking (3, 5): In Boundary but Empty
 Checking (4, 3): In Boundary but Empty
-Checking (4, 4): Enemy detected: Harry at (4,4)
+Checking (4, 4): In Boundary but Empty
 Checking (4, 5): In Boundary but Empty
->> Jet is thinking...
-Jet fire at (4, 4), shell left: 29
-Jet fire at (4, 4), shell left: 29
-Successful hit on Harry!
-Jet will upgrade into TrackBot next turn!
->> Jet is moving...
-Jet moved to (2, 4)
-Jet is done.
-----------------------------------------
-Harry's turn: 
-JumpBot is thinking...
->> Harry is scanning surroundings....
-Checking (3, 3): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (4, 3): In Boundary but Empty
-Checking (4, 4): Current Position
-Checking (4, 5): In Boundary but Empty
-Checking (5, 3): In Boundary but Empty
-Checking (5, 4): In Boundary but Empty
-Checking (5, 5): In Boundary but Empty
->> Harry fires.
+>> Jet fires.
 However no robots within shooting range .
-Harrydid not jump this turn, keep moving
-Harry is done.
+Jet hide,(1/3)
+Jet is done.
 ----------------------------------------
 Lockwood's turn: 
 >> Lockwood is scanning surroundings....
@@ -251,66 +216,67 @@ Checking (2, 1): In Boundary but Empty
 Checking (2, 2): In Boundary but Empty
 >> Lockwood is thinking...
 >> Lockwood is moving...
-Lockwood moved to (1, 2)
->> Lockwood fires.
-However no robots within shooting range .
+Lockwood moved to (2, 2)
+Lockwood fire (1,4)
+Lockwood hit the target Kidd
+Lockwood will upgrade into ScoutBot next turn!
 Lockwood is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 4): In Boundary but Empty
-Checking (0, 5): In Boundary but Empty
-Checking (0, 6): In Boundary but Empty
-Checking (1, 4): In Boundary but Empty
-Checking (1, 5): Current Position
-Checking (1, 6): In Boundary but Empty
-Checking (2, 4): Enemy detected: Jet at (2,4)
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): Enemy detected: Kidd at (2,6)
->> Star is thinking...
->> Star fires at (2, 4)
-Hit! (Jet) be killed
-Star will upgrade into SemiAutoBot next turn!
->> Star is moving...
-Star moved to (2, 5)
-Star is done.
 ----------------------------------------
 Chase's turn: 
 >> Chase is scanning surroundings....
-Checking (-1, 7): Exceed Boundary
-Checking (-1, 8): Exceed Boundary
-Checking (-1, 9): Exceed Boundary
-Checking (0, 7): In Boundary but Empty
-Checking (0, 8): Current Position
-Checking (0, 9): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
+Checking (5, 2): In Boundary but Empty
+Checking (5, 3): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): Current Position
+Checking (6, 4): In Boundary but Empty
+Checking (7, 2): In Boundary but Empty
+Checking (7, 3): In Boundary but Empty
+Checking (7, 4): In Boundary but Empty
 >> Chase is thinking...
 >> Chase is moving...
-Chase moved to (0, 7)
+Chase moved to (5, 3)
 >> Chase fires.
 However no robots within shooting range .
 Chase is done.
 ----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-Jet has been removed from the battlefield.
-Harry has been removed from the battlefield.
+Harry's turn: 
+>> Harry is scanning surroundings....
+Checking (-1, 4): Exceed Boundary
+Checking (-1, 5): Exceed Boundary
+Checking (-1, 6): Exceed Boundary
+Checking (0, 4): In Boundary but Empty
+Checking (0, 5): Current Position
+Checking (0, 6): In Boundary but Empty
+Checking (1, 4): Enemy detected: Kidd at (1,4)
+Checking (1, 5): In Boundary but Empty
+Checking (1, 6): In Boundary but Empty
+>> Harry is thinking...
+>> Harry fires at (1, 4)
+Hit! (Kidd) be killed
+Harry will upgrade into JumpBot next turn!
+>> Harry is moving...
+Harry moved to (1, 6)
+Harry is done.
 ----------------------------------------
-Reentering Jet
-Jet reentered as GenericRobot at (3, 0) with 2 lives next turn.
+Battlefield::cleanupDestroyedRobots()
+Kidd has been removed from the battlefield.
+Jet has been removed from the battlefield.
+----------------------------------------
+Reentering Star
+Star reentered as GenericRobot at (3, 4) with 2 lives next turn.
 
 Battlefield State after Step 2:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . J . . . . . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. L . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . S . . . . . . . | 5
-6 |. . K . . . . . . . | 6
-7 |C . . . . . . . . . | 7
+2 |. . L . . . . . . . | 2
+3 |. . . . . C . . . . | 3
+4 |. . . S . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. H . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
 8 |. . . . . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
@@ -325,108 +291,95 @@ LEGEND:
 
 --- Simulation Step 3 ---
 Robot Status before Step3:
-  Type: GenericRobot, Name: Kidd, Coords: (2,6), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (1,2), Life: 3
-  Type: SemiAutoBot, Name: Star, Coords: (2,5), Life: 3
-  Type: GenericRobot, Name: Chase, Coords: (0,7), Life: 1
-  Type: GenericRobot, Name: Jet, Coords: (3,0), Life: 2
-Star has upgraded to SemiAutoBot!
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (1, 5): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (2, 5): Enemy detected: Star at (2,5)
-Checking (2, 6): Current Position
-Checking (2, 7): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
->> Kidd is thinking...
->> Kidd fires at (2, 5)
-Hit! (Star) be killed
-Kidd will upgrade into KnightBot next turn!
->> Kidd is moving...
-Kidd moved to (3, 6)
-Kidd is done.
+  Type: ScoutBot, Name: Lockwood, Coords: (2,2), Life: 3
+  Type: GenericRobot, Name: Chase, Coords: (5,3), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (1,6), Life: 2
+  Type: GenericRobot, Name: Star, Coords: (3,4), Life: 2
+Lockwood has upgraded to ScoutBot!
+Harry has upgraded to JumpBot!
 ----------------------------------------
 Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (0, 1): In Boundary but Empty
-Checking (0, 2): In Boundary but Empty
-Checking (0, 3): In Boundary but Empty
-Checking (1, 1): In Boundary but Empty
-Checking (1, 2): Current Position
-Checking (1, 3): In Boundary but Empty
-Checking (2, 1): In Boundary but Empty
-Checking (2, 2): In Boundary but Empty
-Checking (2, 3): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (2, 2)
+JumpBot is thinking...
+Lockwood try scan it next round 
 >> Lockwood fires.
 However no robots within shooting range .
+>> Lockwood is moving...
+Lockwood moved to (2, 3)
 Lockwood is done.
-----------------------------------------
-Star's turn: 
-Star is done.
 ----------------------------------------
 Chase's turn: 
 >> Chase is scanning surroundings....
-Checking (-1, 6): Exceed Boundary
-Checking (-1, 7): Exceed Boundary
-Checking (-1, 8): Exceed Boundary
-Checking (0, 6): In Boundary but Empty
-Checking (0, 7): Current Position
-Checking (0, 8): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (5, 2): In Boundary but Empty
+Checking (5, 3): Current Position
+Checking (5, 4): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): In Boundary but Empty
 >> Chase is thinking...
 >> Chase is moving...
-Chase moved to (1, 6)
+Chase moved to (6, 4)
 >> Chase fires.
 However no robots within shooting range .
 Chase is done.
 ----------------------------------------
-Jet's turn: 
->> Jet is scanning surroundings....
-Checking (2, -1): Exceed Boundary
-Checking (2, 0): In Boundary but Empty
-Checking (2, 1): In Boundary but Empty
-Checking (3, -1): Exceed Boundary
-Checking (3, 0): Current Position
-Checking (3, 1): In Boundary but Empty
-Checking (4, -1): Exceed Boundary
-Checking (4, 0): In Boundary but Empty
-Checking (4, 1): In Boundary but Empty
->> Jet is thinking...
->> Jet is moving...
-Jet moved to (4, 1)
->> Jet fires.
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (0, 5): In Boundary but Empty
+Checking (0, 6): In Boundary but Empty
+Checking (0, 7): In Boundary but Empty
+Checking (1, 5): In Boundary but Empty
+Checking (1, 6): Current Position
+Checking (1, 7): In Boundary but Empty
+Checking (2, 5): In Boundary but Empty
+Checking (2, 6): In Boundary but Empty
+Checking (2, 7): In Boundary but Empty
+>> Harry fires.
 However no robots within shooting range .
-Jet is done.
+Harrydid not jump this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+>> Star is scanning surroundings....
+Checking (2, 3): Enemy detected: Lockwood at (2,3)
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+Checking (3, 4): Current Position
+Checking (3, 5): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): In Boundary but Empty
+>> Star is thinking...
+>> Star fires at (2, 3)
+Hit! (Lockwood) be killed
+Star will upgrade into QueenBot next turn!
+>> Star is moving...
+Star moved to (2, 5)
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Star has been removed from the battlefield.
+Lockwood has been removed from the battlefield.
 ----------------------------------------
-Reentering Harry
-Harry reentered as GenericRobot at (5, 8) with 1 lives next turn.
+Reentering Kidd
+Kidd reentered as GenericRobot at (5, 9) with 1 lives next turn.
 
 Battlefield State after Step 3:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . J . . . . . | 1
-2 |. . L . . . . . . . | 2
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. C . K . . . . . . | 6
+4 |. . . . . . C . . . | 4
+5 |. . S . . . . . . . | 5
+6 |. H . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . H . . . . | 8
-9 |. . . . . . . . . . | 9
+8 |. . . . . . . . . . | 8
+9 |. . . . . K . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -439,70 +392,99 @@ LEGEND:
 
 --- Simulation Step 4 ---
 Robot Status before Step4:
-  Type: KnightBot, Name: Kidd, Coords: (3,6), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (2,2), Life: 3
-  Type: GenericRobot, Name: Chase, Coords: (1,6), Life: 1
-  Type: GenericRobot, Name: Jet, Coords: (4,1), Life: 2
-  Type: GenericRobot, Name: Harry, Coords: (5,8), Life: 1
-Kidd has upgraded to KnightBot!
+  Type: GenericRobot, Name: Chase, Coords: (6,4), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (1,6), Life: 2
+  Type: QueenBot, Name: Star, Coords: (2,5), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (5,9), Life: 1
+Star has upgraded to QueenBot!
+----------------------------------------
+Chase's turn: 
+>> Chase is scanning surroundings....
+Checking (5, 3): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): Current Position
+Checking (6, 5): In Boundary but Empty
+Checking (7, 3): In Boundary but Empty
+Checking (7, 4): In Boundary but Empty
+Checking (7, 5): In Boundary but Empty
+>> Chase is thinking...
+>> Chase is moving...
+Chase moved to (5, 3)
+>> Chase fires.
+However no robots within shooting range .
+Chase is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (0, 5): In Boundary but Empty
+Checking (0, 6): In Boundary but Empty
+Checking (0, 7): In Boundary but Empty
+Checking (1, 5): In Boundary but Empty
+Checking (1, 6): Current Position
+Checking (1, 7): In Boundary but Empty
+Checking (2, 5): Enemy detected: Star at (2,5)
+Checking (2, 6): In Boundary but Empty
+Checking (2, 7): In Boundary but Empty
+>> Harry fires at (2, 5)
+Missed!
+Harry jump to (9,6), (1/3)
+Harry is done.
+----------------------------------------
+Star's turn: 
+>> Star is scanning surroundings....
+Checking (1, 4): In Boundary but Empty
+Checking (1, 5): In Boundary but Empty
+Checking (1, 6): In Boundary but Empty
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): Current Position
+Checking (2, 6): In Boundary but Empty
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
+Checking (3, 6): In Boundary but Empty
+>> Star is thinking...
+>> Star is moving...
+Star moved to (2, 4)
+sadly Star found no target in straight line
+Star is done.
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): Current Position
-Checking (3, 7): In Boundary but Empty
-Checking (4, 5): In Boundary but Empty
-Checking (4, 6): In Boundary but Empty
-Checking (4, 7): In Boundary but Empty
+Checking (4, 8): In Boundary but Empty
+Checking (4, 9): In Boundary but Empty
+Checking (4, 10): Exceed Boundary
+Checking (5, 8): In Boundary but Empty
+Checking (5, 9): Current Position
+Checking (5, 10): Exceed Boundary
+Checking (6, 8): In Boundary but Empty
+Checking (6, 9): In Boundary but Empty
+Checking (6, 10): Exceed Boundary
 >> Kidd is thinking...
 >> Kidd is moving...
-Kidd moved to (2, 5)
-Kidd fires at (2,2)
-Kidd fires at (1,6)
-Chase has been destroyed!
-Kidd fires at (4,1)
-Kidd fires at (5,8)
-Harry has been destroyed!
-Kidd hit the following robots: Lockwood, Chase, Jet, Harry
-Kidd will upgrade into TrackBot next turn!
+Kidd moved to (4, 8)
+>> Kidd fires.
+However no robots within shooting range .
 Kidd is done.
 ----------------------------------------
-Lockwood's turn: 
-Lockwood is done.
-----------------------------------------
-Chase's turn: 
-Chase is done.
-----------------------------------------
-Jet's turn: 
-Jet is done.
-----------------------------------------
-Harry's turn: 
-Harry is done.
-----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Lockwood has been removed from the battlefield.
-Chase has been removed from the battlefield.
-Jet has been removed from the battlefield.
-Harry has been removed from the battlefield.
 ----------------------------------------
-Reentering Star
-Star reentered as GenericRobot at (2, 7) with 2 lives next turn.
+Reentering Jet
+Jet reentered as GenericRobot at (4, 2) with 2 lives next turn.
 
 Battlefield State after Step 4:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . K . . . . . . . | 5
+2 |. . . . J . . . . . | 2
+3 |. . . . . C . . . . | 3
+4 |. . S . . . . . . . | 4
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . S . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . . . K . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -516,55 +498,103 @@ LEGEND:
 
 --- Simulation Step 5 ---
 Robot Status before Step5:
-  Type: TrackBot, Name: Kidd, Coords: (2,5), Life: 3
-  Type: GenericRobot, Name: Star, Coords: (2,7), Life: 2
-Kidd has upgraded to TrackBot!
+  Type: GenericRobot, Name: Chase, Coords: (5,3), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (9,6), Life: 2
+  Type: QueenBot, Name: Star, Coords: (2,4), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (4,8), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (4,2), Life: 2
 ----------------------------------------
-Kidd's turn: 
+Chase's turn: 
+>> Chase is scanning surroundings....
+Checking (4, 2): Enemy detected: Jet at (4,2)
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (5, 2): In Boundary but Empty
+Checking (5, 3): Current Position
+Checking (5, 4): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): In Boundary but Empty
+>> Chase is thinking...
+>> Chase fires at (4, 2)
+Hit! (Jet) be killed
+Chase will upgrade into HideBot next turn!
+>> Chase is moving...
+Chase moved to (5, 2)
+Chase is done.
+----------------------------------------
+Harry's turn: 
 JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
+>> Harry is scanning surroundings....
+Checking (8, 5): In Boundary but Empty
+Checking (8, 6): In Boundary but Empty
+Checking (8, 7): In Boundary but Empty
+Checking (9, 5): In Boundary but Empty
+Checking (9, 6): Current Position
+Checking (9, 7): In Boundary but Empty
+Checking (10, 5): Exceed Boundary
+Checking (10, 6): Exceed Boundary
+Checking (10, 7): Exceed Boundary
+>> Harry fires.
 However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (2, 6)
-Kidd is done.
+Harry jump to (6,4), (2/3)
+Harry is done.
 ----------------------------------------
 Star's turn: 
 >> Star is scanning surroundings....
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
-Checking (2, 6): Enemy detected: Kidd at (2,6)
-Checking (2, 7): Current Position
-Checking (2, 8): In Boundary but Empty
-Checking (3, 6): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
-Checking (3, 8): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (1, 4): In Boundary but Empty
+Checking (1, 5): In Boundary but Empty
+Checking (2, 3): In Boundary but Empty
+Checking (2, 4): Current Position
+Checking (2, 5): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
 >> Star is thinking...
->> Star fires at (2, 6)
-Hit! (Kidd) be killed
-Star will upgrade into VampireBot next turn!
 >> Star is moving...
-Star moved to (1, 7)
+Star moved to (2, 3)
+sadly Star found no target in straight line
 Star is done.
 ----------------------------------------
+Kidd's turn: 
+>> Kidd is scanning surroundings....
+Checking (3, 7): In Boundary but Empty
+Checking (3, 8): In Boundary but Empty
+Checking (3, 9): In Boundary but Empty
+Checking (4, 7): In Boundary but Empty
+Checking (4, 8): Current Position
+Checking (4, 9): In Boundary but Empty
+Checking (5, 7): In Boundary but Empty
+Checking (5, 8): In Boundary but Empty
+Checking (5, 9): In Boundary but Empty
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (4, 7)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet is done.
+----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Kidd has been removed from the battlefield.
+Jet has been removed from the battlefield.
 ----------------------------------------
 Reentering Lockwood
-Lockwood reentered as GenericRobot at (7, 2) with 2 lives next turn.
+Lockwood reentered as GenericRobot at (3, 1) with 2 lives next turn.
 
 Battlefield State after Step 5:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . L . . | 2
-3 |. . . . . . . . . . | 3
+1 |. . . L . . . . . . | 1
+2 |. . . . . C . . . . | 2
+3 |. . S . . . . . . . | 3
 4 |. . . . . . . . . . | 4
 5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. S . . . . . . . . | 7
+7 |. . . . K . . . . . | 7
 8 |. . . . . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
@@ -579,62 +609,105 @@ LEGEND:
 
 --- Simulation Step 6 ---
 Robot Status before Step6:
-  Type: VampireBot, Name: Star, Coords: (1,7), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (7,2), Life: 2
-Star has upgraded to VampireBot!
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (6,4), Life: 2
+  Type: QueenBot, Name: Star, Coords: (2,3), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (4,7), Life: 1
+  Type: GenericRobot, Name: Lockwood, Coords: (3,1), Life: 2
+Chase has upgraded to HideBot!
 ----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 6): In Boundary but Empty
-Checking (0, 7): In Boundary but Empty
-Checking (0, 8): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): Current Position
-Checking (1, 8): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (2, 8): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (2, 7)
-Star has no valid targets to fire at!
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
 Checking (6, 1): In Boundary but Empty
 Checking (6, 2): In Boundary but Empty
 Checking (6, 3): In Boundary but Empty
-Checking (7, 1): In Boundary but Empty
-Checking (7, 2): Current Position
-Checking (7, 3): In Boundary but Empty
-Checking (8, 1): In Boundary but Empty
-Checking (8, 2): In Boundary but Empty
-Checking (8, 3): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (8, 1)
->> Lockwood fires.
+>> Chase fires.
 However no robots within shooting range .
+Chase hide,(1/3)
+Chase is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (5, 3): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): Current Position
+Checking (6, 5): In Boundary but Empty
+Checking (7, 3): In Boundary but Empty
+Checking (7, 4): In Boundary but Empty
+Checking (7, 5): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harrydid not jump this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+>> Star is scanning surroundings....
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (1, 4): In Boundary but Empty
+Checking (2, 2): In Boundary but Empty
+Checking (2, 3): Current Position
+Checking (2, 4): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+Checking (3, 4): In Boundary but Empty
+>> Star is thinking...
+>> Star is moving...
+Star moved to (2, 2)
+Star fire at (3,1)
+Star hit Lockwood
+Star will upgrade in to HideBotnext turn
+Star is done.
+----------------------------------------
+Kidd's turn: 
+>> Kidd is scanning surroundings....
+Checking (3, 6): In Boundary but Empty
+Checking (3, 7): In Boundary but Empty
+Checking (3, 8): In Boundary but Empty
+Checking (4, 6): In Boundary but Empty
+Checking (4, 7): Current Position
+Checking (4, 8): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+Checking (5, 7): In Boundary but Empty
+Checking (5, 8): In Boundary but Empty
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (4, 8)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Lockwood's turn: 
 Lockwood is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
+Lockwood has been removed from the battlefield.
 ----------------------------------------
 Reentering Jet
-Jet reentered as GenericRobot at (4, 4) with 1 lives next turn.
+Jet reentered as GenericRobot at (9, 3) with 1 lives next turn.
 
 Battlefield State after Step 6:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . . . . . L . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . J . . . . . | 4
+1 |. . . . . . . . . . | 1
+2 |. . S . . H . . . . | 2
+3 |. . . . . . . . . J | 3
+4 |. . . . . . . . . . | 4
 5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . S . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . . . K . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -648,80 +721,117 @@ LEGEND:
 
 --- Simulation Step 7 ---
 Robot Status before Step7:
-  Type: VampireBot, Name: Star, Coords: (2,7), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (8,1), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (4,4), Life: 1
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (6,4), Life: 2
+  Type: HideBot, Name: Star, Coords: (2,2), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (4,8), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (9,3), Life: 1
+Star has upgraded to HideBot!
 ----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): Current Position
-Checking (2, 8): In Boundary but Empty
-Checking (3, 6): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
-Checking (3, 8): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 7)
-Star has no valid targets to fire at!
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (7, 0): In Boundary but Empty
-Checking (7, 1): In Boundary but Empty
-Checking (7, 2): In Boundary but Empty
-Checking (8, 0): In Boundary but Empty
-Checking (8, 1): Current Position
-Checking (8, 2): In Boundary but Empty
-Checking (9, 0): In Boundary but Empty
-Checking (9, 1): In Boundary but Empty
-Checking (9, 2): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (7, 0)
->> Lockwood fires.
-However no robots within shooting range .
-Lockwood is done.
-----------------------------------------
-Jet's turn: 
->> Jet is scanning surroundings....
-Checking (3, 3): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
 Checking (4, 3): In Boundary but Empty
-Checking (4, 4): Current Position
-Checking (4, 5): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase hide,(2/3)
+Chase is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
 Checking (5, 3): In Boundary but Empty
 Checking (5, 4): In Boundary but Empty
 Checking (5, 5): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): Current Position
+Checking (6, 5): In Boundary but Empty
+Checking (7, 3): In Boundary but Empty
+Checking (7, 4): In Boundary but Empty
+Checking (7, 5): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harry jump to (4,5), (3/3)
+Harry is done.
+----------------------------------------
+Star's turn: 
+JumpBot is thinking...
+>> Star is scanning surroundings....
+Checking (1, 1): In Boundary but Empty
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (2, 1): In Boundary but Empty
+Checking (2, 2): Current Position
+Checking (2, 3): In Boundary but Empty
+Checking (3, 1): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+>> Star fires.
+However no robots within shooting range .
+Star hide,(1/3)
+Star is done.
+----------------------------------------
+Kidd's turn: 
+>> Kidd is scanning surroundings....
+Checking (3, 7): In Boundary but Empty
+Checking (3, 8): In Boundary but Empty
+Checking (3, 9): In Boundary but Empty
+Checking (4, 7): In Boundary but Empty
+Checking (4, 8): Current Position
+Checking (4, 9): In Boundary but Empty
+Checking (5, 7): In Boundary but Empty
+Checking (5, 8): In Boundary but Empty
+Checking (5, 9): In Boundary but Empty
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (3, 8)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+>> Jet is scanning surroundings....
+Checking (8, 2): In Boundary but Empty
+Checking (8, 3): In Boundary but Empty
+Checking (8, 4): In Boundary but Empty
+Checking (9, 2): In Boundary but Empty
+Checking (9, 3): Current Position
+Checking (9, 4): In Boundary but Empty
+Checking (10, 2): Exceed Boundary
+Checking (10, 3): Exceed Boundary
+Checking (10, 4): Exceed Boundary
 >> Jet is thinking...
 >> Jet is moving...
-Jet moved to (4, 5)
+Jet moved to (9, 4)
 >> Jet fires.
 However no robots within shooting range .
 Jet is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
-Reentering Kidd
-Kidd reentered as GenericRobot at (4, 3) with 2 lives next turn.
+Reentering Lockwood
+Lockwood reentered as GenericRobot at (1, 4) with 1 lives next turn.
 
 Battlefield State after Step 7:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . L . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . K . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . J . . . . . | 5
+2 |. . H . . H . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. L . . . . . . . J | 4
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. S . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . . K . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -735,48 +845,33 @@ LEGEND:
 
 --- Simulation Step 8 ---
 Robot Status before Step8:
-  Type: VampireBot, Name: Star, Coords: (1,7), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (7,0), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (4,5), Life: 1
-  Type: GenericRobot, Name: Kidd, Coords: (4,3), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (4,5), Life: 2
+  Type: HideBot, Name: Star, Coords: (2,2), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (3,8), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (9,4), Life: 1
+  Type: GenericRobot, Name: Lockwood, Coords: (1,4), Life: 1
 ----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 6): In Boundary but Empty
-Checking (0, 7): In Boundary but Empty
-Checking (0, 8): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): Current Position
-Checking (1, 8): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (2, 8): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 8)
-Star has no valid targets to fire at!
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (6, -1): Exceed Boundary
-Checking (6, 0): In Boundary but Empty
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
 Checking (6, 1): In Boundary but Empty
-Checking (7, -1): Exceed Boundary
-Checking (7, 0): Current Position
-Checking (7, 1): In Boundary but Empty
-Checking (8, -1): Exceed Boundary
-Checking (8, 0): In Boundary but Empty
-Checking (8, 1): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (8, 1)
->> Lockwood fires.
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
 However no robots within shooting range .
-Lockwood is done.
+Chase did not hide this turn, keep moving
+Chase is done.
 ----------------------------------------
-Jet's turn: 
->> Jet is scanning surroundings....
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
 Checking (3, 4): In Boundary but Empty
 Checking (3, 5): In Boundary but Empty
 Checking (3, 6): In Boundary but Empty
@@ -786,30 +881,81 @@ Checking (4, 6): In Boundary but Empty
 Checking (5, 4): In Boundary but Empty
 Checking (5, 5): In Boundary but Empty
 Checking (5, 6): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harry cannot jump already 
+Harry is done.
+----------------------------------------
+Star's turn: 
+JumpBot is thinking...
+>> Star is scanning surroundings....
+Checking (1, 1): In Boundary but Empty
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (2, 1): In Boundary but Empty
+Checking (2, 2): Current Position
+Checking (2, 3): In Boundary but Empty
+Checking (3, 1): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+>> Star fires.
+However no robots within shooting range .
+Star did not hide this turn, keep moving
+Star is done.
+----------------------------------------
+Kidd's turn: 
+>> Kidd is scanning surroundings....
+Checking (2, 7): In Boundary but Empty
+Checking (2, 8): In Boundary but Empty
+Checking (2, 9): In Boundary but Empty
+Checking (3, 7): In Boundary but Empty
+Checking (3, 8): Current Position
+Checking (3, 9): In Boundary but Empty
+Checking (4, 7): In Boundary but Empty
+Checking (4, 8): In Boundary but Empty
+Checking (4, 9): In Boundary but Empty
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (4, 8)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+>> Jet is scanning surroundings....
+Checking (8, 3): In Boundary but Empty
+Checking (8, 4): In Boundary but Empty
+Checking (8, 5): In Boundary but Empty
+Checking (9, 3): In Boundary but Empty
+Checking (9, 4): Current Position
+Checking (9, 5): In Boundary but Empty
+Checking (10, 3): Exceed Boundary
+Checking (10, 4): Exceed Boundary
+Checking (10, 5): Exceed Boundary
 >> Jet is thinking...
 >> Jet is moving...
-Jet moved to (5, 5)
+Jet moved to (9, 3)
 >> Jet fires.
 However no robots within shooting range .
 Jet is done.
 ----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (3, 2): In Boundary but Empty
-Checking (3, 3): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
-Checking (4, 2): In Boundary but Empty
-Checking (4, 3): Current Position
-Checking (4, 4): In Boundary but Empty
-Checking (5, 2): In Boundary but Empty
-Checking (5, 3): In Boundary but Empty
-Checking (5, 4): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (3, 2)
->> Kidd fires.
+Lockwood's turn: 
+>> Lockwood is scanning surroundings....
+Checking (0, 3): In Boundary but Empty
+Checking (0, 4): In Boundary but Empty
+Checking (0, 5): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (1, 4): Current Position
+Checking (1, 5): In Boundary but Empty
+Checking (2, 3): In Boundary but Empty
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): In Boundary but Empty
+>> Lockwood is thinking...
+>> Lockwood is moving...
+Lockwood moved to (2, 3)
+>> Lockwood fires.
 However no robots within shooting range .
-Kidd is done.
+Lockwood is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -818,14 +964,14 @@ Battlefield State after Step 8:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . . . . . L . | 1
-2 |. . . K . . . . . . | 2
-3 |. . . . . . . . . . | 3
+1 |. . . . . . . . . . | 1
+2 |. . S . . C . . . . | 2
+3 |. . L . . . . . . J | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . J . . . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. S . . . . . . . . | 8
+8 |. . . . K . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -839,81 +985,117 @@ LEGEND:
 
 --- Simulation Step 9 ---
 Robot Status before Step9:
-  Type: VampireBot, Name: Star, Coords: (1,8), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (8,1), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (5,5), Life: 1
-  Type: GenericRobot, Name: Kidd, Coords: (3,2), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (4,5), Life: 2
+  Type: HideBot, Name: Star, Coords: (2,2), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (4,8), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (9,3), Life: 1
+  Type: GenericRobot, Name: Lockwood, Coords: (2,3), Life: 1
+----------------------------------------
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase hide,(3/3)
+Chase is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
+Checking (3, 6): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): Current Position
+Checking (4, 6): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harry cannot jump already 
+Harry is done.
 ----------------------------------------
 Star's turn: 
+JumpBot is thinking...
 >> Star is scanning surroundings....
-Checking (0, 7): In Boundary but Empty
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): Current Position
-Checking (1, 9): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (2, 9)
-Star has no valid targets to fire at!
+Checking (1, 1): In Boundary but Empty
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (2, 1): In Boundary but Empty
+Checking (2, 2): Current Position
+Checking (2, 3): Enemy detected: Lockwood at (2,3)
+Checking (3, 1): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+>> Star fires at (2, 3)
+Missed!
+Star hide,(2/3)
 Star is done.
 ----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (7, 0): In Boundary but Empty
-Checking (7, 1): In Boundary but Empty
-Checking (7, 2): In Boundary but Empty
-Checking (8, 0): In Boundary but Empty
-Checking (8, 1): Current Position
-Checking (8, 2): In Boundary but Empty
-Checking (9, 0): In Boundary but Empty
-Checking (9, 1): In Boundary but Empty
-Checking (9, 2): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (9, 2)
->> Lockwood fires.
+Kidd's turn: 
+>> Kidd is scanning surroundings....
+Checking (3, 7): In Boundary but Empty
+Checking (3, 8): In Boundary but Empty
+Checking (3, 9): In Boundary but Empty
+Checking (4, 7): In Boundary but Empty
+Checking (4, 8): Current Position
+Checking (4, 9): In Boundary but Empty
+Checking (5, 7): In Boundary but Empty
+Checking (5, 8): In Boundary but Empty
+Checking (5, 9): In Boundary but Empty
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (5, 7)
+>> Kidd fires.
 However no robots within shooting range .
-Lockwood is done.
+Kidd is done.
 ----------------------------------------
 Jet's turn: 
 >> Jet is scanning surroundings....
-Checking (4, 4): In Boundary but Empty
-Checking (4, 5): In Boundary but Empty
-Checking (4, 6): In Boundary but Empty
-Checking (5, 4): In Boundary but Empty
-Checking (5, 5): Current Position
-Checking (5, 6): In Boundary but Empty
-Checking (6, 4): In Boundary but Empty
-Checking (6, 5): In Boundary but Empty
-Checking (6, 6): In Boundary but Empty
+Checking (8, 2): In Boundary but Empty
+Checking (8, 3): In Boundary but Empty
+Checking (8, 4): In Boundary but Empty
+Checking (9, 2): In Boundary but Empty
+Checking (9, 3): Current Position
+Checking (9, 4): In Boundary but Empty
+Checking (10, 2): Exceed Boundary
+Checking (10, 3): Exceed Boundary
+Checking (10, 4): Exceed Boundary
 >> Jet is thinking...
 >> Jet is moving...
-Jet moved to (6, 5)
+Jet moved to (8, 2)
 >> Jet fires.
 However no robots within shooting range .
 Jet is done.
 ----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (2, 1): In Boundary but Empty
-Checking (2, 2): In Boundary but Empty
-Checking (2, 3): In Boundary but Empty
-Checking (3, 1): In Boundary but Empty
-Checking (3, 2): Current Position
+Lockwood's turn: 
+>> Lockwood is scanning surroundings....
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (1, 4): In Boundary but Empty
+Checking (2, 2): Enemy detected: Star at (2,2)
+Checking (2, 3): Current Position
+Checking (2, 4): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
 Checking (3, 3): In Boundary but Empty
-Checking (4, 1): In Boundary but Empty
-Checking (4, 2): In Boundary but Empty
-Checking (4, 3): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (2, 3)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
+Checking (3, 4): In Boundary but Empty
+>> Lockwood is thinking...
+>> Lockwood fires at (2, 2)
+Star is hidden, attack miss.
+>> Lockwood is moving...
+Lockwood moved to (1, 3)
+Lockwood is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -923,14 +1105,14 @@ Battlefield State after Step 9:
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . L | 2
-3 |. . K . . . . . . . | 3
+2 |. . H . . H . . J . | 2
+3 |. L . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . J . . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
+7 |. . . . . K . . . . | 7
 8 |. . . . . . . . . . | 8
-9 |. . S . . . . . . . | 9
+9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -943,98 +1125,122 @@ LEGEND:
 
 --- Simulation Step 10 ---
 Robot Status before Step10:
-  Type: VampireBot, Name: Star, Coords: (2,9), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (9,2), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (6,5), Life: 1
-  Type: GenericRobot, Name: Kidd, Coords: (2,3), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (4,5), Life: 2
+  Type: HideBot, Name: Star, Coords: (2,2), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (5,7), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (8,2), Life: 1
+  Type: GenericRobot, Name: Lockwood, Coords: (1,3), Life: 1
 ----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): Current Position
-Checking (2, 10): Exceed Boundary
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): In Boundary but Empty
-Checking (3, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (3, 9)
-Star has no valid targets to fire at!
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (8, 1): In Boundary but Empty
-Checking (8, 2): In Boundary but Empty
-Checking (8, 3): In Boundary but Empty
-Checking (9, 1): In Boundary but Empty
-Checking (9, 2): Current Position
-Checking (9, 3): In Boundary but Empty
-Checking (10, 1): Exceed Boundary
-Checking (10, 2): Exceed Boundary
-Checking (10, 3): Exceed Boundary
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (8, 2)
->> Lockwood fires.
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
 However no robots within shooting range .
-Lockwood is done.
+Chase finish use hide , keep moving
+Chase is done.
 ----------------------------------------
-Jet's turn: 
->> Jet is scanning surroundings....
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
+Checking (3, 6): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): Current Position
+Checking (4, 6): In Boundary but Empty
 Checking (5, 4): In Boundary but Empty
 Checking (5, 5): In Boundary but Empty
 Checking (5, 6): In Boundary but Empty
-Checking (6, 4): In Boundary but Empty
-Checking (6, 5): Current Position
-Checking (6, 6): In Boundary but Empty
-Checking (7, 4): In Boundary but Empty
-Checking (7, 5): In Boundary but Empty
-Checking (7, 6): In Boundary but Empty
->> Jet is thinking...
->> Jet is moving...
-Jet moved to (6, 6)
->> Jet fires.
+>> Harry fires.
 However no robots within shooting range .
-Jet is done.
+Harry cannot jump already 
+Harry is done.
+----------------------------------------
+Star's turn: 
+JumpBot is thinking...
+>> Star is scanning surroundings....
+Checking (1, 1): In Boundary but Empty
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): Enemy detected: Lockwood at (1,3)
+Checking (2, 1): In Boundary but Empty
+Checking (2, 2): Current Position
+Checking (2, 3): In Boundary but Empty
+Checking (3, 1): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+>> Star fires at (1, 3)
+Hit! (Lockwood) be killed
+Lockwood has been destroyed!
+Star will upgrade into JumpBot next turn!
+Star did not hide this turn, keep moving
+Star is done.
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
-Checking (1, 2): In Boundary but Empty
-Checking (1, 3): In Boundary but Empty
-Checking (1, 4): In Boundary but Empty
-Checking (2, 2): In Boundary but Empty
-Checking (2, 3): Current Position
-Checking (2, 4): In Boundary but Empty
-Checking (3, 2): In Boundary but Empty
-Checking (3, 3): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
+Checking (4, 6): In Boundary but Empty
+Checking (4, 7): In Boundary but Empty
+Checking (4, 8): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+Checking (5, 7): Current Position
+Checking (5, 8): In Boundary but Empty
+Checking (6, 6): In Boundary but Empty
+Checking (6, 7): In Boundary but Empty
+Checking (6, 8): In Boundary but Empty
 >> Kidd is thinking...
 >> Kidd is moving...
-Kidd moved to (3, 4)
+Kidd moved to (6, 6)
 >> Kidd fires.
 However no robots within shooting range .
 Kidd is done.
 ----------------------------------------
+Jet's turn: 
+>> Jet is scanning surroundings....
+Checking (7, 1): In Boundary but Empty
+Checking (7, 2): In Boundary but Empty
+Checking (7, 3): In Boundary but Empty
+Checking (8, 1): In Boundary but Empty
+Checking (8, 2): Current Position
+Checking (8, 3): In Boundary but Empty
+Checking (9, 1): In Boundary but Empty
+Checking (9, 2): In Boundary but Empty
+Checking (9, 3): In Boundary but Empty
+>> Jet is thinking...
+>> Jet is moving...
+Jet moved to (8, 1)
+>> Jet fires.
+However no robots within shooting range .
+Jet is done.
+----------------------------------------
+Lockwood's turn: 
+Lockwood is done.
+----------------------------------------
 Battlefield::cleanupDestroyedRobots()
+Lockwood has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 10:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . L . | 2
+1 |. . . . . . . . J . | 1
+2 |. . S . . C . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . K . . . . . . | 4
+4 |. . . . . . . . . . | 4
 5 |. . . . . . . . . . | 5
-6 |. . . . . . J . . . | 6
+6 |. . . . . . K . . . | 6
 7 |. . . . . . . . . . | 7
 8 |. . . . . . . . . . | 8
-9 |. . . S . . . . . . | 9
+9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -1047,48 +1253,66 @@ LEGEND:
 
 --- Simulation Step 11 ---
 Robot Status before Step11:
-  Type: VampireBot, Name: Star, Coords: (3,9), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (8,2), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (6,6), Life: 1
-  Type: GenericRobot, Name: Kidd, Coords: (3,4), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (4,5), Life: 2
+  Type: JumpBot, Name: Star, Coords: (2,2), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (6,6), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (8,1), Life: 1
+Star has upgraded to JumpBot!
+----------------------------------------
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase finish use hide , keep moving
+Chase is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
+Checking (3, 6): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): Current Position
+Checking (4, 6): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harry cannot jump already 
+Harry is done.
 ----------------------------------------
 Star's turn: 
+JumpBot is thinking...
 >> Star is scanning surroundings....
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
-Checking (2, 10): Exceed Boundary
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): Current Position
-Checking (3, 10): Exceed Boundary
-Checking (4, 8): In Boundary but Empty
-Checking (4, 9): In Boundary but Empty
-Checking (4, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (4, 8)
-Star has no valid targets to fire at!
+Checking (1, 1): In Boundary but Empty
+Checking (1, 2): In Boundary but Empty
+Checking (1, 3): In Boundary but Empty
+Checking (2, 1): In Boundary but Empty
+Checking (2, 2): Current Position
+Checking (2, 3): In Boundary but Empty
+Checking (3, 1): In Boundary but Empty
+Checking (3, 2): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+>> Star fires.
+However no robots within shooting range .
+Star jump to (1,9), (1/3)
 Star is done.
 ----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (7, 1): In Boundary but Empty
-Checking (7, 2): In Boundary but Empty
-Checking (7, 3): In Boundary but Empty
-Checking (8, 1): In Boundary but Empty
-Checking (8, 2): Current Position
-Checking (8, 3): In Boundary but Empty
-Checking (9, 1): In Boundary but Empty
-Checking (9, 2): In Boundary but Empty
-Checking (9, 3): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (7, 3)
->> Lockwood fires.
-However no robots within shooting range .
-Lockwood is done.
-----------------------------------------
-Jet's turn: 
->> Jet is scanning surroundings....
+Kidd's turn: 
+>> Kidd is scanning surroundings....
 Checking (5, 5): In Boundary but Empty
 Checking (5, 6): In Boundary but Empty
 Checking (5, 7): In Boundary but Empty
@@ -1098,30 +1322,30 @@ Checking (6, 7): In Boundary but Empty
 Checking (7, 5): In Boundary but Empty
 Checking (7, 6): In Boundary but Empty
 Checking (7, 7): In Boundary but Empty
->> Jet is thinking...
->> Jet is moving...
-Jet moved to (5, 7)
->> Jet fires.
-However no robots within shooting range .
-Jet is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (2, 3): In Boundary but Empty
-Checking (2, 4): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
-Checking (3, 3): In Boundary but Empty
-Checking (3, 4): Current Position
-Checking (3, 5): In Boundary but Empty
-Checking (4, 3): In Boundary but Empty
-Checking (4, 4): In Boundary but Empty
-Checking (4, 5): In Boundary but Empty
 >> Kidd is thinking...
 >> Kidd is moving...
-Kidd moved to (3, 5)
+Kidd moved to (6, 5)
 >> Kidd fires.
 However no robots within shooting range .
 Kidd is done.
+----------------------------------------
+Jet's turn: 
+>> Jet is scanning surroundings....
+Checking (7, 0): In Boundary but Empty
+Checking (7, 1): In Boundary but Empty
+Checking (7, 2): In Boundary but Empty
+Checking (8, 0): In Boundary but Empty
+Checking (8, 1): Current Position
+Checking (8, 2): In Boundary but Empty
+Checking (9, 0): In Boundary but Empty
+Checking (9, 1): In Boundary but Empty
+Checking (9, 2): In Boundary but Empty
+>> Jet is thinking...
+>> Jet is moving...
+Jet moved to (9, 2)
+>> Jet fires.
+However no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -1131,13 +1355,13 @@ Battlefield State after Step 11:
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . L . . | 3
+2 |. . . . . C . . . J | 2
+3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . K . . . . . . | 5
+5 |. . . . . . K . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . J . . . . | 7
-8 |. . . . S . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1151,74 +1375,102 @@ LEGEND:
 
 --- Simulation Step 12 ---
 Robot Status before Step12:
-  Type: VampireBot, Name: Star, Coords: (4,8), Life: 2
-  Type: GenericRobot, Name: Lockwood, Coords: (7,3), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (5,7), Life: 1
-  Type: GenericRobot, Name: Kidd, Coords: (3,5), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (4,5), Life: 2
+  Type: JumpBot, Name: Star, Coords: (1,9), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (6,5), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (9,2), Life: 1
 ----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (3, 7): In Boundary but Empty
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): In Boundary but Empty
-Checking (4, 7): In Boundary but Empty
-Checking (4, 8): Current Position
-Checking (4, 9): In Boundary but Empty
-Checking (5, 7): Enemy detected: Jet at (5,7)
-Checking (5, 8): In Boundary but Empty
-Checking (5, 9): In Boundary but Empty
->> Star is thinking...
->> Star fires at (5, 7)
-Hit! (Jet) be killed
-Jet has been destroyed!
-Star killed Jet!
-Star gained 1 life from killing Jet! (1/3)
-Star will upgrade in to JumpBotnext turn
->> Star is moving...
-Star moved to (5, 9)
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
 Checking (6, 2): In Boundary but Empty
 Checking (6, 3): In Boundary but Empty
-Checking (6, 4): In Boundary but Empty
-Checking (7, 2): In Boundary but Empty
-Checking (7, 3): Current Position
-Checking (7, 4): In Boundary but Empty
-Checking (8, 2): In Boundary but Empty
-Checking (8, 3): In Boundary but Empty
-Checking (8, 4): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (7, 4)
->> Lockwood fires.
+>> Chase fires.
 However no robots within shooting range .
-Lockwood is done.
+Chase finish use hide , keep moving
+Chase is done.
 ----------------------------------------
-Jet's turn: 
-Jet is done.
+Harry's turn: 
+JumpBot is thinking...
+>> Harry is scanning surroundings....
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): In Boundary but Empty
+Checking (3, 6): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): Current Position
+Checking (4, 6): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+>> Harry fires.
+However no robots within shooting range .
+Harry is out of ammo and will self-destruct.
+Harry cannot jump already 
+Harry is done.
+----------------------------------------
+Star's turn: 
+JumpBot is thinking...
+>> Star is scanning surroundings....
+Checking (0, 8): In Boundary but Empty
+Checking (0, 9): In Boundary but Empty
+Checking (0, 10): Exceed Boundary
+Checking (1, 8): In Boundary but Empty
+Checking (1, 9): Current Position
+Checking (1, 10): Exceed Boundary
+Checking (2, 8): In Boundary but Empty
+Checking (2, 9): In Boundary but Empty
+Checking (2, 10): Exceed Boundary
+>> Star fires.
+However no robots within shooting range .
+Star jump to (8,4), (2/3)
+Star is done.
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
-Checking (2, 4): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
-Checking (3, 5): Current Position
-Checking (3, 6): In Boundary but Empty
-Checking (4, 4): In Boundary but Empty
-Checking (4, 5): In Boundary but Empty
-Checking (4, 6): In Boundary but Empty
+Checking (5, 4): In Boundary but Empty
+Checking (5, 5): In Boundary but Empty
+Checking (5, 6): In Boundary but Empty
+Checking (6, 4): In Boundary but Empty
+Checking (6, 5): Current Position
+Checking (6, 6): In Boundary but Empty
+Checking (7, 4): In Boundary but Empty
+Checking (7, 5): In Boundary but Empty
+Checking (7, 6): In Boundary but Empty
 >> Kidd is thinking...
 >> Kidd is moving...
-Kidd moved to (2, 6)
+Kidd moved to (5, 4)
 >> Kidd fires.
 However no robots within shooting range .
 Kidd is done.
 ----------------------------------------
+Jet's turn: 
+>> Jet is scanning surroundings....
+Checking (8, 1): In Boundary but Empty
+Checking (8, 2): In Boundary but Empty
+Checking (8, 3): In Boundary but Empty
+Checking (9, 1): In Boundary but Empty
+Checking (9, 2): Current Position
+Checking (9, 3): In Boundary but Empty
+Checking (10, 1): Exceed Boundary
+Checking (10, 2): Exceed Boundary
+Checking (10, 3): Exceed Boundary
+>> Jet is thinking...
+>> Jet is moving...
+Jet moved to (9, 3)
+>> Jet fires.
+However no robots within shooting range .
+Jet is done.
+----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Jet has been removed from the battlefield.
+Harry has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 12:
@@ -1226,14 +1478,14 @@ Battlefield State after Step 12:
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . L . . | 4
+2 |. . . . . C . . . . | 2
+3 |. . . . . . . . . J | 3
+4 |. . . . . K . . . . | 4
 5 |. . . . . . . . . . | 5
-6 |. . K . . . . . . . | 6
+6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
 8 |. . . . . . . . . . | 8
-9 |. . . . . S . . . . | 9
+9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -1246,65 +1498,72 @@ LEGEND:
 
 --- Simulation Step 13 ---
 Robot Status before Step13:
-  Type: JumpBot, Name: Star, Coords: (5,9), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (7,4), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (2,6), Life: 2
-Star has upgraded to JumpBot!
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: JumpBot, Name: Star, Coords: (8,4), Life: 2
+  Type: GenericRobot, Name: Kidd, Coords: (5,4), Life: 1
+  Type: GenericRobot, Name: Jet, Coords: (9,3), Life: 1
+----------------------------------------
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase finish use hide , keep moving
+Chase is done.
 ----------------------------------------
 Star's turn: 
 JumpBot is thinking...
 >> Star is scanning surroundings....
-Checking (4, 8): In Boundary but Empty
-Checking (4, 9): In Boundary but Empty
-Checking (4, 10): Exceed Boundary
-Checking (5, 8): In Boundary but Empty
-Checking (5, 9): Current Position
-Checking (5, 10): Exceed Boundary
-Checking (6, 8): In Boundary but Empty
-Checking (6, 9): In Boundary but Empty
-Checking (6, 10): Exceed Boundary
->> Star fires.
-However no robots within shooting range .
-Star jump to (3,6), (1/3)
-Star is done.
-----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (6, 3): In Boundary but Empty
-Checking (6, 4): In Boundary but Empty
-Checking (6, 5): In Boundary but Empty
 Checking (7, 3): In Boundary but Empty
-Checking (7, 4): Current Position
+Checking (7, 4): In Boundary but Empty
 Checking (7, 5): In Boundary but Empty
 Checking (8, 3): In Boundary but Empty
-Checking (8, 4): In Boundary but Empty
+Checking (8, 4): Current Position
 Checking (8, 5): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (8, 3)
->> Lockwood fires.
-However no robots within shooting range .
-Lockwood is done.
+Checking (9, 3): Enemy detected: Jet at (9,3)
+Checking (9, 4): In Boundary but Empty
+Checking (9, 5): In Boundary but Empty
+>> Star fires at (9, 3)
+Hit! (Jet) be killed
+Jet has been destroyed!
+Star will upgrade into VampireBot next turn!
+Star jump to (3,5), (3/3)
+Star is done.
 ----------------------------------------
 Kidd's turn: 
 >> Kidd is scanning surroundings....
-Checking (1, 5): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): Current Position
-Checking (2, 7): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): In Boundary but Empty
+Checking (5, 3): In Boundary but Empty
+Checking (5, 4): Current Position
+Checking (5, 5): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+Checking (6, 4): In Boundary but Empty
+Checking (6, 5): In Boundary but Empty
 >> Kidd is thinking...
 >> Kidd is moving...
-Kidd moved to (2, 5)
+Kidd moved to (6, 4)
 >> Kidd fires.
 However no robots within shooting range .
+Kidd is out of ammo and will self-destruct.
 Kidd is done.
 ----------------------------------------
+Jet's turn: 
+Jet is done.
+----------------------------------------
 Battlefield::cleanupDestroyedRobots()
+Kidd has been removed from the battlefield.
+Jet has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 13:
@@ -1312,10 +1571,10 @@ Battlefield State after Step 13:
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . L . | 3
+2 |. . . . . C . . . . | 2
+3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . K . . . . . . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
 8 |. . . . . . . . . . | 8
@@ -1332,65 +1591,57 @@ LEGEND:
 
 --- Simulation Step 14 ---
 Robot Status before Step14:
-  Type: JumpBot, Name: Star, Coords: (3,6), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (8,3), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (2,5), Life: 2
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: VampireBot, Name: Star, Coords: (3,5), Life: 2
+Star has upgraded to VampireBot!
+----------------------------------------
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase finish use hide , keep moving
+Chase is done.
 ----------------------------------------
 Star's turn: 
-JumpBot is thinking...
 >> Star is scanning surroundings....
-Checking (2, 5): Enemy detected: Kidd at (2,5)
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): In Boundary but Empty
 Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): Current Position
-Checking (3, 7): In Boundary but Empty
+Checking (3, 4): In Boundary but Empty
+Checking (3, 5): Current Position
+Checking (3, 6): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
 Checking (4, 5): In Boundary but Empty
 Checking (4, 6): In Boundary but Empty
-Checking (4, 7): In Boundary but Empty
->> Star fires at (2, 5)
-Hit! (Kidd) be killed
-Star will upgrade into SemiAutoBot next turn!
-Star jump to (4,0), (2/3)
+>> Star is thinking...
+>> Star is moving...
+Star moved to (3, 4)
+Star has no valid targets to fire at!
 Star is done.
 ----------------------------------------
-Lockwood's turn: 
->> Lockwood is scanning surroundings....
-Checking (7, 2): In Boundary but Empty
-Checking (7, 3): In Boundary but Empty
-Checking (7, 4): In Boundary but Empty
-Checking (8, 2): In Boundary but Empty
-Checking (8, 3): Current Position
-Checking (8, 4): In Boundary but Empty
-Checking (9, 2): In Boundary but Empty
-Checking (9, 3): In Boundary but Empty
-Checking (9, 4): In Boundary but Empty
->> Lockwood is thinking...
->> Lockwood is moving...
-Lockwood moved to (7, 4)
->> Lockwood fires.
-However no robots within shooting range .
-Lockwood is done.
-----------------------------------------
-Kidd's turn: 
-Kidd is done.
-----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Kidd has been removed from the battlefield.
 ----------------------------------------
-Reentering Kidd
-Kidd reentered as GenericRobot at (1, 6) with 1 lives next turn.
 
 Battlefield State after Step 14:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |. . . . . C . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . . . . . L . . | 4
+4 |. . . S . . . . . . | 4
 5 |. . . . . . . . . . | 5
-6 |. K . . . . . . . . | 6
+6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
 8 |. . . . . . . . . . | 8
 9 |. . . . . . . . . . | 9
@@ -1406,890 +1657,56 @@ LEGEND:
 
 --- Simulation Step 15 ---
 Robot Status before Step15:
-  Type: SemiAutoBot, Name: Star, Coords: (4,0), Life: 3
-  Type: GenericRobot, Name: Lockwood, Coords: (7,4), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (1,6), Life: 1
-Star has upgraded to SemiAutoBot!
+  Type: HideBot, Name: Chase, Coords: (5,2), Life: 3
+  Type: VampireBot, Name: Star, Coords: (3,4), Life: 2
+----------------------------------------
+Chase's turn: 
+JumpBot is thinking...
+>> Chase is scanning surroundings....
+Checking (4, 1): In Boundary but Empty
+Checking (4, 2): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (5, 1): In Boundary but Empty
+Checking (5, 2): Current Position
+Checking (5, 3): In Boundary but Empty
+Checking (6, 1): In Boundary but Empty
+Checking (6, 2): In Boundary but Empty
+Checking (6, 3): In Boundary but Empty
+>> Chase fires.
+However no robots within shooting range .
+Chase is out of ammo and will self-destruct.
+Chase finish use hide , keep moving
+Chase is done.
 ----------------------------------------
 Star's turn: 
 >> Star is scanning surroundings....
-Checking (3, -1): Exceed Boundary
-Checking (3, 0): In Boundary but Empty
-Checking (3, 1): In Boundary but Empty
-Checking (4, -1): Exceed Boundary
-Checking (4, 0): Current Position
-Checking (4, 1): In Boundary but Empty
-Checking (5, -1): Exceed Boundary
-Checking (5, 0): In Boundary but Empty
-Checking (5, 1): In Boundary but Empty
+Checking (2, 3): In Boundary but Empty
+Checking (2, 4): In Boundary but Empty
+Checking (2, 5): In Boundary but Empty
+Checking (3, 3): In Boundary but Empty
+Checking (3, 4): Current Position
+Checking (3, 5): In Boundary but Empty
+Checking (4, 3): In Boundary but Empty
+Checking (4, 4): In Boundary but Empty
+Checking (4, 5): In Boundary but Empty
 >> Star is thinking...
 >> Star is moving...
-Star moved to (4, 1)
-Starfire 3 consecutive shot at (4,1)
-shot 1 is miss
-shot 2 successful hit the robot
-Lockwood!
-shot 3 successful hit the robot
-Lockwood!
-Lockwood has been destroyed!
-Star will upgrade into TrackBot next turn!
+Star moved to (2, 4)
+Star has no valid targets to fire at!
 Star is done.
 ----------------------------------------
-Lockwood's turn: 
-Lockwood is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (0, 5): In Boundary but Empty
-Checking (0, 6): In Boundary but Empty
-Checking (0, 7): In Boundary but Empty
-Checking (1, 5): In Boundary but Empty
-Checking (1, 6): Current Position
-Checking (1, 7): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (0, 5)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
-----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Lockwood has been removed from the battlefield.
+Chase has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 15:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . S . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |K . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 16 ---
-Robot Status before Step16:
-  Type: TrackBot, Name: Star, Coords: (4,1), Life: 3
-  Type: GenericRobot, Name: Kidd, Coords: (0,5), Life: 1
-Star has upgraded to TrackBot!
-----------------------------------------
-Star's turn: 
-JumpBot is thinking...
-Star no target can track
->> Star fires.
-However no robots within shooting range .
->> Star is moving...
-Star moved to (4, 2)
-Star is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (-1, 4): Exceed Boundary
-Checking (-1, 5): Exceed Boundary
-Checking (-1, 6): Exceed Boundary
-Checking (0, 4): In Boundary but Empty
-Checking (0, 5): Current Position
-Checking (0, 6): In Boundary but Empty
-Checking (1, 4): In Boundary but Empty
-Checking (1, 5): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (1, 4)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 16:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . S . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. K . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 17 ---
-Robot Status before Step17:
-  Type: TrackBot, Name: Star, Coords: (4,2), Life: 3
-  Type: GenericRobot, Name: Kidd, Coords: (1,4), Life: 1
-----------------------------------------
-Star's turn: 
-JumpBot is thinking...
-Star no target can track
->> Star fires.
-However no robots within shooting range .
->> Star is moving...
-Star moved to (4, 3)
-Star is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (0, 3): In Boundary but Empty
-Checking (0, 4): In Boundary but Empty
-Checking (0, 5): In Boundary but Empty
-Checking (1, 3): In Boundary but Empty
-Checking (1, 4): Current Position
-Checking (1, 5): In Boundary but Empty
-Checking (2, 3): In Boundary but Empty
-Checking (2, 4): In Boundary but Empty
-Checking (2, 5): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (2, 5)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 17:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . S . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . K . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 18 ---
-Robot Status before Step18:
-  Type: TrackBot, Name: Star, Coords: (4,3), Life: 3
-  Type: GenericRobot, Name: Kidd, Coords: (2,5), Life: 1
-----------------------------------------
-Star's turn: 
-JumpBot is thinking...
-Star no target can track
->> Star fires.
-However no robots within shooting range .
->> Star is moving...
-Star moved to (4, 4)
-Star is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (1, 4): In Boundary but Empty
-Checking (1, 5): In Boundary but Empty
-Checking (1, 6): In Boundary but Empty
-Checking (2, 4): In Boundary but Empty
-Checking (2, 5): Current Position
-Checking (2, 6): In Boundary but Empty
-Checking (3, 4): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): In Boundary but Empty
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (3, 6)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 18:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . . S . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . K . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 19 ---
-Robot Status before Step19:
-  Type: TrackBot, Name: Star, Coords: (4,4), Life: 3
-  Type: GenericRobot, Name: Kidd, Coords: (3,6), Life: 1
-----------------------------------------
-Star's turn: 
-JumpBot is thinking...
-Star no target can track
->> Star fires.
-However no robots within shooting range .
->> Star is moving...
-Star moved to (4, 5)
-Star is done.
-----------------------------------------
-Kidd's turn: 
->> Kidd is scanning surroundings....
-Checking (2, 5): In Boundary but Empty
-Checking (2, 6): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (3, 5): In Boundary but Empty
-Checking (3, 6): Current Position
-Checking (3, 7): In Boundary but Empty
-Checking (4, 5): Enemy detected: Star at (4,5)
-Checking (4, 6): In Boundary but Empty
-Checking (4, 7): In Boundary but Empty
->> Kidd is thinking...
->> Kidd fires at (4, 5)
-Hit! (Star) be killed
-Kidd will upgrade into TrackBot next turn!
->> Kidd is moving...
-Kidd moved to (4, 6)
-Kidd is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-Star has been removed from the battlefield.
-----------------------------------------
-Reentering Star
-Star reentered as GenericRobot at (1, 9) with 2 lives next turn.
-
-Battlefield State after Step 19:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . K . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. S . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 20 ---
-Robot Status before Step20:
-  Type: TrackBot, Name: Kidd, Coords: (4,6), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (1,9), Life: 2
-Kidd has upgraded to TrackBot!
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (4, 7)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): In Boundary but Empty
-Checking (0, 10): Exceed Boundary
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): Current Position
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
-Checking (2, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (0, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 20:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . K . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |S . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 21 ---
-Robot Status before Step21:
-  Type: TrackBot, Name: Kidd, Coords: (4,7), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (0,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (4, 8)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (-1, 8): Exceed Boundary
-Checking (-1, 9): Exceed Boundary
-Checking (-1, 10): Exceed Boundary
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): Current Position
-Checking (0, 10): Exceed Boundary
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (1, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 8)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 21:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. S . . K . . . . . | 8
-9 |. . . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 22 ---
-Robot Status before Step22:
-  Type: TrackBot, Name: Kidd, Coords: (4,8), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (1,8), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (4, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 7): In Boundary but Empty
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): In Boundary but Empty
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): Current Position
-Checking (1, 9): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (2, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 22:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . S . K . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 23 ---
-Robot Status before Step23:
-  Type: TrackBot, Name: Kidd, Coords: (4,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (2,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (5, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): Current Position
-Checking (2, 10): Exceed Boundary
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): In Boundary but Empty
-Checking (3, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (3, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 23:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . S . K . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 24 ---
-Robot Status before Step24:
-  Type: TrackBot, Name: Kidd, Coords: (5,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (3,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (6, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
-Checking (2, 10): Exceed Boundary
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): Current Position
-Checking (3, 10): Exceed Boundary
-Checking (4, 8): In Boundary but Empty
-Checking (4, 9): In Boundary but Empty
-Checking (4, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (2, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 24:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . S . . . K . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 25 ---
-Robot Status before Step25:
-  Type: TrackBot, Name: Kidd, Coords: (6,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (2,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (7, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): Current Position
-Checking (2, 10): Exceed Boundary
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): In Boundary but Empty
-Checking (3, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (2, 8)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 25:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . S . . . . . . . | 8
-9 |. . . . . . . K . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 26 ---
-Robot Status before Step26:
-  Type: TrackBot, Name: Kidd, Coords: (7,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (2,8), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (8, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (1, 7): In Boundary but Empty
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (2, 7): In Boundary but Empty
-Checking (2, 8): Current Position
-Checking (2, 9): In Boundary but Empty
-Checking (3, 7): In Boundary but Empty
-Checking (3, 8): In Boundary but Empty
-Checking (3, 9): In Boundary but Empty
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 26:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. S . . . . . . K . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 27 ---
-Robot Status before Step27:
-  Type: TrackBot, Name: Kidd, Coords: (8,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (1,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (9, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): In Boundary but Empty
-Checking (0, 10): Exceed Boundary
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): Current Position
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
-Checking (2, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (0, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 27:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |S . . . . . . . . K | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 28 ---
-Robot Status before Step28:
-  Type: TrackBot, Name: Kidd, Coords: (9,9), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (0,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
->> Kidd is moving...
-Kidd moved to (9, 8)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (-1, 8): Exceed Boundary
-Checking (-1, 9): Exceed Boundary
-Checking (-1, 10): Exceed Boundary
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): Current Position
-Checking (0, 10): Exceed Boundary
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): In Boundary but Empty
-Checking (1, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (1, 9)
->> Star fires.
-However no robots within shooting range .
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-----------------------------------------
-
-Battlefield State after Step 28:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
-5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . K | 8
-9 |. S . . . . . . . . | 9
-  +--------------------+
-   0 1 2 3 4 5 6 7 8 9 
-
-LEGEND:
-  . - Empty space
-  X - Destroyed robot
-  H - Hidden robot
-  [Letter] - First letter of robot's name
-
-
---- Simulation Step 29 ---
-Robot Status before Step29:
-  Type: TrackBot, Name: Kidd, Coords: (9,8), Life: 1
-  Type: GenericRobot, Name: Star, Coords: (1,9), Life: 2
-----------------------------------------
-Kidd's turn: 
-JumpBot is thinking...
-Kidd no target can track
->> Kidd fires.
-However no robots within shooting range .
-Kidd is out of ammo and will self-destruct.
->> Kidd is moving...
-Kidd moved to (9, 9)
-Kidd is done.
-----------------------------------------
-Star's turn: 
->> Star is scanning surroundings....
-Checking (0, 8): In Boundary but Empty
-Checking (0, 9): In Boundary but Empty
-Checking (0, 10): Exceed Boundary
-Checking (1, 8): In Boundary but Empty
-Checking (1, 9): Current Position
-Checking (1, 10): Exceed Boundary
-Checking (2, 8): In Boundary but Empty
-Checking (2, 9): In Boundary but Empty
-Checking (2, 10): Exceed Boundary
->> Star is thinking...
->> Star is moving...
-Star moved to (0, 8)
->> Star fires.
-However no robots within shooting range .
-Star is out of ammo and will self-destruct.
-Star is done.
-----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-Kidd has been removed from the battlefield.
-Star has been removed from the battlefield.
-----------------------------------------
-
-Battlefield State after Step 29:
-   0 1 2 3 4 5 6 7 8 9 
-  +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
+4 |. . S . . . . . . . | 4
 5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
@@ -2306,5 +1723,5 @@ LEGEND:
 
 
 --- Simulation Ended ---
-Result: All robots destroyed!
+Result: Star is the last one standing!
 Battlefield: Destructor

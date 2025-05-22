@@ -573,7 +573,7 @@ void GenericRobot::look(Battlefield &battlefield)
                     logger << "In Boundary but Empty" << endl;
                     availableSpaces.push_back({nx, ny}); // Add to available spaces
                 }
-                else if (r->getLives() > 0 && !r->getIsDie())
+                else if (r->getLives() > 0 || !r->getIsDie() || !r->getIsHurt())
                 {
                     logger << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
                     enemyDetectedNearby = true;
@@ -593,7 +593,7 @@ void GenericRobot::look(Battlefield &battlefield)
                 }
                 else
                 {
-                    logger << "Dead Robot" << endl;
+                    logger << "Dead or Hurt Robot State" << endl;
                 }
             }
         }
