@@ -715,16 +715,39 @@ public:
 
     void move(Battlefield &battlefield) override
     {
-
         if (jump_count < 3 && rand() % 2 == 0)
         {
-            jump_count++;
-            int jumpx = rand() % battlefield.getWidth();
-            int jumpy = rand() % battlefield.getHeight();
-
-            battlefield.removeRobotFromGrid(this);
-            setPosition(jumpx, jumpy);
-            logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
+            int jumpx, jumpy;
+            bool positionFound = false;
+            int attempts = 0;
+            const int maxAttempt = 10; 
+            
+            while (!positionFound && attempts < maxAttempt)
+            {
+                attempts++;
+                jumpx = rand() % battlefield.getWidth();
+                jumpy = rand() % battlefield.getHeight();
+                
+                
+                if (!battlefield.getRobotAt(jumpx, jumpy))
+                {
+                    positionFound = true;
+                }
+            }
+            
+          
+            if (positionFound)
+            {
+                jump_count++;
+                battlefield.removeRobotFromGrid(this);
+                setPosition(jumpx, jumpy);
+                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
+            }
+            else
+            {
+       
+                logger << getName() << " could not find empty position to jump\n";
+            }
         }
         else
         {
@@ -734,7 +757,7 @@ public:
             }
             else
             {
-                logger << getName() << "did not jump this turn, keep moving\n";
+                logger << getName() << " did not jump this turn, keep moving\n";
             }
         }
     }
