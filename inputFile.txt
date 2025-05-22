@@ -1,6 +1,8 @@
 M by N : 10 10 
-steps: 10
+steps: 200
 robots: 5
 GenericRobot Kidd 3 6
 JumpBot Jet 4 5
+GenericRobot Harry 5 5
+GenericRobot Jessy 5 4
 GenericRobot Star random random
