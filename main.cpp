@@ -1565,7 +1565,7 @@ void Battlefield::respawnRobots()
             placeRobot(newRobot, randomX, randomY);
             listOfRobots.push_back(newRobot);
             logger << nameOfRobotToRespawn << " reentered as GenericRobot at (" << randomX << ", " << randomY << ") with ";
-            logger << livesLeft << " lives." << std::endl;
+            logger << livesLeft << " lives" <<" next turn."<< std::endl;
         }
         else
         {
@@ -1588,7 +1588,7 @@ void Battlefield::cleanupDestroyedRobots()
         if (robot != nullptr && (robot->getLives() <= 0 || robot->getIsDie() || robot->getIsHurt()))
         {
             removeRobotFromGrid(robot);
-            logger << robot->getName() << " has been deleted from the grid." << endl;
+            logger << robot->getName() << " has been removed from the battlefield." << endl;
             if (robot->getIsHurt())
                 queueForReentry(robot);
             delete robot;
