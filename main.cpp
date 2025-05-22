@@ -884,6 +884,18 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
+
         int x = getX();
         int y = getY();
 
@@ -899,42 +911,50 @@ public:
 
         if (!target)
         {
-            logger << getName() << " sadly didn't hit any robot\n";
+            useAmmo(); 
+            logger << ">> " << getName() << " fires." << endl;
+            logger << "However no robots available to target." << endl;
             return;
         }
 
         GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
+        useAmmo(); 
 
-        logger << getName() << "fire 3 consecutive shot at (" << x << "," << y << ")\n";
+        logger << ">> " << getName() << " fires 3 consecutive shots at (" 
+               << gtarget->getX() << "," << gtarget->getY() << ")" << endl;
 
         bool hitSuccessful = false;
         for (int i = 0; i < 3; i++)
         {
-            double chance = (double)rand() / RAND_MAX;
-            if (chance < 0.7)
+            if (gtarget->isHidden())
             {
-                logger << "shot " << (i + 1) << " successful hit the robot\n"
-                       << gtarget->getName() << "!\n";
-                if (gtarget->isHit())
-                {
-                    gtarget->takeDamage();
-                    fire_count++;
-                    hitSuccessful = true;
-                }
+                logger << "Shot " << (i + 1) << ": " << gtarget->getName() 
+                       << " is hidden, attack missed." << endl;
+                continue;
+            }
+
+            if (hitProbability())
+            {
+                logger << "Shot " << (i + 1) << " hit " << gtarget->getName() << "!" << endl;
+                gtarget->takeDamage();
+                fire_count++;
+                hitSuccessful = true;
             }
             else
             {
-                logger << "shot " << (i + 1) << " is miss\n";
+                logger << "Shot " << (i + 1) << " missed!" << endl;
             }
         }
+
         if (hitSuccessful)
         {
             int t = rand() % upgradeTypes.size();
             string newType = upgradeTypes[t];
             setPendingUpgrade(newType);
-            logger << getName() << " will upgrade into " << newType << " next turn!\n";
+            logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
         }
     }
+
     int getFireCount() const
     {
         return fire_count;
