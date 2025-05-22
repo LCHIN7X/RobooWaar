@@ -794,10 +794,23 @@ public:
 
     void fire(Battlefield &battlefield) override
     {
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
 
         bool fired = false;
         int x = getX();
         int y = getY();
+
+        useAmmo(); 
 
         for (int dx = -3; dx <= 3; dx++)
         {
@@ -815,29 +828,41 @@ public:
 
                 if (target && target != this)
                 {
-
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << getName() << " fire (" << targetX << "," << targetY << ")" << endl;
-                    if (gtarget->isHit())
+                    logger << ">> " << getName() << " fires at (" << targetX << "," << targetY << ")" << endl;
+                    
+                    if (gtarget->isHidden())
+                    {
+                        logger << gtarget->getName() << " is hidden, attack miss." << endl;
+                        fired = true;
+                    }
+                    else if (hitProbability())
                     {
                         gtarget->takeDamage();
-                        logger << getName() << " hit the target " << gtarget->getName() << endl;
+                        logger << "Hit! (" << gtarget->getName() << ") be killed" << endl;
                         fire_count++;
                         fired = true;
                         int t = rand() % upgradeTypes.size();
                         string newType = upgradeTypes[t];
                         setPendingUpgrade(newType);
-                        logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
-                        break;
+                        logger << getName() << " will upgrade into " << newType << " next turn" << endl;
                     }
+                    else
+                    {
+                        logger << "Missed!" << endl;
+                        fired = true;
+                    }
+                    break;
                 }
             }
             if (fired)
                 break;
         }
+
         if (!fired)
         {
-            logger << getName() << " no robot there\n";
+            logger << ">> " << getName() << " fires." << endl;
+            logger << "no robot there " << endl;
         }
     }
 };
