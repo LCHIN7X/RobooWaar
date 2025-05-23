@@ -675,12 +675,62 @@ public:
     }
 
     void fire() override {
-        GenericRobot::fire();
-        // HideBot always upgrades to HideLongShotBot after a hit
-        if (PendingUpgrade()) {
-            setPendingUpgrade("HideLongShotBot");
-            logger << getName() << " will upgrade into HideLongShotBot next turn!" << endl;
+    if (hasFired)
+        return;
+    hasFired = true;
+    if (hasAmmo())
+    {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        vector<Robot*> validTargets;
+        for (Robot* r : detectedTargets) {
+            if (r && r != this) {
+                GenericRobot* gtarget = dynamic_cast<GenericRobot*>(r);
+                if (gtarget && gtarget->isHit()) {
+                    validTargets.push_back(r);
+                }
+            }
         }
+        if (!validTargets.empty())
+        {
+            int idx = rand() % validTargets.size();
+            Robot *target = validTargets[idx];
+            int targetX = target->getX();
+            int targetY = target->getY();
+            logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+            useAmmo();
+            if (target->isHidden())
+            {
+                logger << target->getName() << " is hidden, attack miss." << endl;
+            }
+            else if (hitProbability())
+            {
+                logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                target->takeDamage();
+                static const vector<string> types = {"HideLongShotBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+            }
+            else
+            {
+                logger << "Missed!" << endl;
+            }
+        }
+        else
+        {
+            useAmmo();
+            logger << ">> " << name << " fires." << endl;
+            logger << "However no robots within shooting range ." << endl;
+        }
+
+    }
+    else
+    {
+        logger << name << " has no ammo left. It will self destroy!" << endl;
+        lives = 0;
+        isDie = true;
+    }
+    detectedTargets.clear();
     }
 
     bool isHit() override
