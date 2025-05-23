@@ -622,7 +622,7 @@ bool GenericRobot::getEnemyDetectedNearby() const { return enemyDetectedNearby; 
 // HideBot
 //******************************************
 
-class HideBot : public virtual GenericRobot
+class HideBot : public GenericRobot
 {
 
 private:
@@ -667,7 +667,7 @@ public:
 
     void act() override
     {
-        logger << "HideBot is thinking..." << endl;
+        logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire();
@@ -676,11 +676,6 @@ public:
 
     void fire() override {
         GenericRobot::fire();
-        // HideBot always upgrades to HideLongShotBot after a hit
-        if (PendingUpgrade()) {
-            setPendingUpgrade("HideLongShotBot");
-            logger << getName() << " will upgrade into HideLongShotBot next turn!" << endl;
-        }
     }
 
     bool isHit() override
@@ -774,7 +769,7 @@ public:
 // LongShotBot
 //******************************************
 
-class LongShotBot : public virtual GenericRobot
+class LongShotBot : public GenericRobot
 {
 private:
     int fire_count = 0;
@@ -822,7 +817,7 @@ public:
                 if (target && target != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << ">> " << getName() << " firesssss at (" << targetX << "," << targetY << ")" << endl;
+                    logger << ">> " << getName() << " fires at (" << targetX << "," << targetY << ")" << endl;
                     
                     if (gtarget->isHidden())
                     {
@@ -1436,46 +1431,222 @@ public:
 };
 
 //******************************************
-// HideLongShotBot (inherits from HideBot and LongShotBot)
+// upgradesConflict (know each robot category)
 //******************************************
-class HideLongShotBot : public HideBot, public LongShotBot {
+
+bool upgradesConflict(const string &type1, const string &type2)
+{
+    static const unordered_map<string, string> categoryMap = {
+        {"HideBot", "move"}, {"JumpBot", "move"}, {"LongShotBot", "fire"}, {"SemiAutoBot", "fire"}, {"ThirtyShotBot", "fire"}, {"KnightBot", "fire"}, {"QueenBot", "fire"}, {"VampireBot", "fire"}, {"ScoutBot", "see"}, {"TrackBot", "see"}};
+
+    auto cat1 = categoryMap.find(type1);
+    auto cat2 = categoryMap.find(type2);
+
+    if (cat1 == categoryMap.end() || cat2 == categoryMap.end())
+    {
+        throw runtime_error("unknow upgrade type: " + (cat1 == categoryMap.end() ? type1 : type2));
+    }
+
+    return cat1->second == cat2->second;
+}
+
+//******************************************
+// LevelThreeRobot
+//******************************************
+class LevelThreeRobot : public GenericRobot
+{
+private:
+    string upgradeType1;
+    string upgradeType2;
+
 public:
-    HideLongShotBot(const string &name, int x, int y)
+    LevelThreeRobot(const string &name, int x, int y, const string &type1, const string &type2)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
-          HideBot(name, x, y),
-          LongShotBot(name, x, y) {}
-
-    void move() override {
-        HideBot::move();
+          upgradeType1(type1),
+          upgradeType2(type2)
+    {
+        if (upgradesConflict(type1, type2))
+        {
+            throw runtime_error("cannot upgrade same category");
+        }
+        upgrades.push_back(type1);
+        upgrades.push_back(type2);
     }
 
-    void fire() override {
-        LongShotBot::fire();
+    void move() override
+    {
+
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "HideBot")
+            {
+                HideBot temp(name, getX(), getY());
+                temp.move();
+            }
+            else if (upgrade == "JumpBot")
+            {
+                JumpBot temp(name, getX(), getY());
+                temp.move();
+            }
+        }
+        GenericRobot::move();
     }
 
-    void think() override {
-        // Disambiguate GenericRobot base
-        HideBot::think();
+    void fire() override
+    {
+
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "LongShotBot")
+            {
+                LongShotBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "SemiAutoBot")
+            {
+                SemiAutoBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "ThirtyShotBot")
+            {
+                ThirtyShotBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "KnightBot")
+            {
+                KnightBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "QueenBot")
+            {
+                QueenBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "VampireBot")
+            {
+                VampireBot temp(name, getX(), getY());
+                temp.fire();
+            }
+        }
+        GenericRobot::fire();
     }
 
-    void act() override {
-        LongShotBot::look(0, 0); // Use long-range look for targeting
-        think();
-        fire();
-        move();
+    void look(int X, int Y) override
+    {
+
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "ScoutBot")
+            {
+                ScoutBot temp(name, getX(), getY());
+                temp.look(X, Y);
+            }
+            else if (upgrade == "TrackBot")
+            {
+                TrackBot temp(name, getX(), getY());
+                temp.look(X, Y);
+            }
+        }
+        GenericRobot::look(X, Y);
+    }
+};
+
+//******************************************
+// LevelFourRobot
+//******************************************
+class LevelFourRobot : public GenericRobot
+{
+private:
+    vector<string> upgrades;
+
+public:
+    LevelFourRobot(const string &name, int x, int y,
+                   const string &type1, const string &type2, const string &type3)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y)
+    {
+        upgrades = {type1, type2, type3};
+
+        if (upgradesConflict(type1, type2) || upgradesConflict(type1, type3) || upgradesConflict(type2, type3))
+        {
+            throw runtime_error("cannot upgrade same category");
+        }
     }
 
-    void look(int X, int Y) override {
-        LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
+    void move() override
+    {
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "HideBot")
+            {
+                HideBot temp(name, getX(), getY());
+                temp.move();
+            }
+            else if (upgrade == "JumpBot")
+            {
+                JumpBot temp(name, getX(), getY());
+                temp.move();
+            }
+        }
+        GenericRobot::move();
     }
 
-    bool isHit() override {
-        return HideBot::isHit();
+    void fire() override
+    {
+
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "LongShotBot")
+            {
+                LongShotBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "SemiAutoBot")
+            {
+                SemiAutoBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "ThirtyShotBot")
+            {
+                ThirtyShotBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "KnightBot")
+            {
+                KnightBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "QueenBot")
+            {
+                QueenBot temp(name, getX(), getY());
+                temp.fire();
+            }
+            else if (upgrade == "VampireBot")
+            {
+                VampireBot temp(name, getX(), getY());
+                temp.fire();
+            }
+        }
+        GenericRobot::fire();
     }
 
-    void setBattlefield(Battlefield* bf) {
-        GenericRobot::setBattlefield(bf);
+     void look(int X, int Y) override
+    {
+        for (const auto &upgrade : upgrades)
+        {
+            if (upgrade == "ScoutBot")
+            {
+                ScoutBot temp(name, getX(), getY());
+                temp.look(X, Y);
+            }
+            else if (upgrade == "TrackBot")
+            {
+                TrackBot temp(name, getX(), getY());
+                temp.look(X, Y);
+            }
+        }
+        GenericRobot::look(X, Y);
     }
 };
 
@@ -1499,8 +1670,6 @@ void Battlefield::simulationStep()
                 upgraded = new JumpBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "LongShotBot")
                 upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideLongShotBot")
-                upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "KnightBot")
                 upgraded = new KnightBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "SemiAutoBot")
@@ -1515,14 +1684,13 @@ void Battlefield::simulationStep()
                 upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireBot")
                 upgraded = new VampireBot(gen->getName(), gen->getX(), gen->getY());
-            if (upgraded) {
+            if (upgraded)
+            {
                 upgraded->setLives(gen->getLives());
+                // Fix: clear the upgrade flag so the new bot doesn't try to upgrade again
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
-                if (upGen) {
+                if (upGen)
                     upGen->clearPendingUpgrade();
-                    upGen->setBattlefield(this); // Ensure battlefield context is set
-                    upGen->resetActionFlags();
-                }
                 removeRobotFromGrid(gen);
                 placeRobot(upgraded, gen->getX(), gen->getY());
                 delete gen;
@@ -2185,8 +2353,6 @@ int main()
                         type = "QueenBot";
                     else if (dynamic_cast<VampireBot *>(robot))
                         type = "VampireBot";
-                    else if (dynamic_cast<HideLongShotBot *>(robot))
-                        type = "HideLongShotBot";
                     else
                         type = "GenericRobot";
                 }
@@ -2251,3 +2417,57 @@ int main()
 
     return 0; // Battlefield object goes out of scope here, destructor is called.
 }
+
+
+//******************************************
+// HideLongShotBot (inherits from HideBot and LongShotBot)
+//******************************************
+class HideLongShotBot : public HideBot, public LongShotBot {
+public:
+    HideLongShotBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          HideBot(name, x, y),
+          LongShotBot(name, x, y) {}
+
+    void move() override {
+        HideBot::move();
+    }
+
+    void fire() override {
+        LongShotBot::fire();
+    }
+
+    void think() override {
+        // Disambiguate GenericRobot base
+        HideBot::think();
+    }
+
+    void act() override {
+        LongShotBot::look(0, 0); // Use long-range look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
+    }
+
+    bool isHit() override {
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        GenericRobot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
+//******************************************
+else if (type == "HideLongShotBot")
+                upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
+int main()
+ else if (dynamic_cast<HideLongShotBot *>(robot))
+                        type = "HideLongShotBot";
