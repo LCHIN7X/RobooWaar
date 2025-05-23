@@ -198,7 +198,8 @@ public:
     virtual void think() = 0;
     virtual void act() = 0;
     virtual void move(Battlefield &battlefield) = 0;
-    virtual void fire(Battlefield &battlefield) = 0;
+    virtual void fire() = 0;
+    virtual void look(int X, int Y) = 0;
 
     // Common robot functions
     string getName() const { return name; }
@@ -278,7 +279,7 @@ public:
         : Robot(name, x, y), ammo(initialAmmo) {}
 
     virtual ~ShootingRobot() = default;
-    virtual void fire(Battlefield &battlefield) = 0;
+    virtual void fire() = 0;
     bool hasAmmo() const { return ammo > 0; }
 
     void useAmmo()
@@ -376,7 +377,7 @@ public:
     void act() override;
     // string decideAction() const override;
     void move(Battlefield &battlefield) override;
-    void fire(Battlefield &battlefield) override;
+    void fire() override;
     void look(int X, int Y) override;
     bool canUpgrade(int area) const;
     void setUpgraded(int area);
@@ -419,13 +420,13 @@ void GenericRobot::think()
     logger << ">> " << name << " is thinking...\n";
     if (getEnemyDetectedNearby())
     {
-        fire(*battlefield);
+        fire();
         move(*battlefield);
     }
     else
     {
         move(*battlefield);
-        fire(*battlefield);
+        fire();
     }
 }
 void GenericRobot::act()
@@ -484,18 +485,27 @@ void GenericRobot::move(Battlefield &battlefield)
     logger << name << " could not move (no available adjacent cell).\n";
 }
 
-void GenericRobot::fire(Battlefield &battlefield)
+void GenericRobot::fire()
 {
     if (hasFired)
         return;
     hasFired = true;
     if (hasAmmo())
     {
-        if (!detectedTargets.empty())
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        vector<Robot*> validTargets;
+        for (Robot* r : detectedTargets) {
+            if (r && r != this) {
+                GenericRobot* gtarget = dynamic_cast<GenericRobot*>(r);
+                if (gtarget && gtarget->isHit()) {
+                    validTargets.push_back(r);
+                }
+            }
+        }
+        if (!validTargets.empty())
         {
-            //else if (r->getLives() > 0 || !r->getIsDie() || !r->getIsHurt())
-            int idx = rand() % detectedTargets.size();
-            Robot *target = detectedTargets[idx];
+            int idx = rand() % validTargets.size();
+            Robot *target = validTargets[idx];
             int targetX = target->getX();
             int targetY = target->getY();
             logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
@@ -528,13 +538,6 @@ void GenericRobot::fire(Battlefield &battlefield)
     }
     else
     {
-        //Unecessary check for ammo
-        //if (getAmmo() == 0)
-        //{
-           // logger << getName() << " is out of ammo and will self-destruct." << endl;
-           //lives = 0;
-           //isDie = true; // Out of ammo, robot is dead
-        //}
         logger << name << " has no ammo left. It will self destroy!" << endl;
         lives = 0;
         isDie = true;
@@ -683,8 +686,12 @@ public:
         logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire(*battlefield);
+        fire();
         move(*battlefield);
+    }
+
+    void fire() override {
+        GenericRobot::fire();
     }
 
     bool isHit() override
@@ -760,8 +767,12 @@ public:
         logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire(*battlefield);
+        fire();
         move(*battlefield);
+    }
+
+    void fire() override {
+        GenericRobot::fire();
     }
 
     int getJumpCount() const
@@ -785,7 +796,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
         if (hasFired)
             return;
@@ -817,7 +828,7 @@ public:
                 int targetX = x + dx;
                 int targetY = y + dy;
 
-                Robot *target = battlefield.getRobotAt(targetX, targetY);
+                Robot *target = battlefield->getRobotAt(targetX, targetY);
 
                 if (target && target != this)
                 {
@@ -875,7 +886,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
         if (hasFired)
             return;
@@ -893,7 +904,7 @@ public:
         int y = getY();
 
         Robot *target = nullptr;
-        for (Robot *r : battlefield.getListOfRobots())
+        for (Robot *r : battlefield->getListOfRobots())
         {
             if (r != nullptr && r != this && r->getLives() > 0)
             {
@@ -972,7 +983,7 @@ public:
         logger << name << " got 30 shells replace current shells \n";
     }
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
         if (shell_count <= 0)
         {
@@ -989,33 +1000,32 @@ public:
         {
             for (int dy = -1; dy <= 1 && !fired; dy++)
             {
+                if (dx == 0 && dy == 0) continue; // Do not fire at self
                 int targetX = x + dx;
                 int targetY = y + dy;
 
-                Robot *target = battlefield.getRobotAt(targetX, targetY);
+                Robot *target = battlefield->getRobotAt(targetX, targetY);
                 if (target && target != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     if (gtarget && gtarget->isHit())
                     {
-                        gtarget->takeDamage();
-                        shell_count--;
-                        logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
-                        logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
-                        fired = true;
-
-                        // Display target that be hitted
-                        if (gtarget->isHit())
-                        {
+                        if (hitProbability()) {
                             gtarget->takeDamage();
+                            shell_count--;
+                            logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
                             hitSuccessful = true;
                             logger << "Successful hit on " << gtarget->getName() << "!\n";
-
                             int t = rand() % upgradeTypes.size();
                             string newType = upgradeTypes[t];
                             setPendingUpgrade(newType);
                             logger << getName() << " will upgrade into " << newType << " next turn!\n";
+                        } else {
+                            shell_count--;
+                            logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
+                            logger << "Missed!\n";
                         }
+                        fired = true;
                     }
                 }
             }
@@ -1048,7 +1058,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
         int x = getX();
         int y = getY();
@@ -1056,13 +1066,14 @@ public:
         bool hitSuccessful = false;
         vector<string> hitRobots;
 
-        for (Robot *target : battlefield.getListOfRobots())
+        for (Robot *target : battlefield->getListOfRobots())
         {
             if (target && target != this && target->getLives() > 0)
             {
                 int dx = target->getX() - x;
                 int dy = target->getY() - y;
                 double distance = sqrt(dx * dx + dy * dy);
+                if (dx == 0 && dy == 0) continue; // Do not fire at self
                 if (distance <= 8.0)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
@@ -1070,10 +1081,14 @@ public:
                     anyFired = true;
                     if (gtarget && gtarget->isHit())
                     {
-                        gtarget->takeDamage();
-                        fire_count++;
-                        hitSuccessful = true;
-                        hitRobots.push_back(gtarget->getName());
+                        if (hitProbability()) {
+                            gtarget->takeDamage();
+                            fire_count++;
+                            hitSuccessful = true;
+                            hitRobots.push_back(gtarget->getName());
+                        } else {
+                            logger << "Missed!" << endl;
+                        }
                     }
                 }
             }
@@ -1082,7 +1097,7 @@ public:
         {
             logger << getName() << " no robots in range to fire at\n";
         }
-        else
+        else if (hitSuccessful)
         {
             logger << getName() << " hit the following robots: ";
             for (size_t i = 0; i < hitRobots.size(); ++i)
@@ -1146,13 +1161,43 @@ public:
         }
     }
 
+    void fire() override
+    {
+        if (scout_count >= 3)
+        {
+            logger << getName() << " reach the limit,cannot fire already\n";
+            return;
+        }
+
+        if (rand() % 2 == 0)
+        {
+            logger << getName() << " fires (scout style)\n";
+            // Example: just log all visible robots (like scan)
+            for (int y = 0; y < battlefield->getHeight(); ++y)
+            {
+                for (int x = 0; x < battlefield->getWidth(); ++x)
+                {
+                    Robot *r = battlefield->getRobotAt(x, y);
+                    if (r && r != this)
+                    {
+                        logger << "target: " << r->getName() << " at (" << x << "," << y << ")\n";
+                    }
+                }
+            }
+            scout_count++;
+        }
+        else
+        {
+            logger << getName() << " try fire next round \n";
+        }
+    }
 
     void act() override
     {
         logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire(*battlefield);
+        fire();
         move(*battlefield);
     }
 
@@ -1218,7 +1263,7 @@ public:
         logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire(*battlefield);
+        fire();
         move(*battlefield);
     }
 
@@ -1263,8 +1308,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire(Battlefield &battlefield) override{
-
+    void fire() override{
         if (hasFired)
             return;
         hasFired = true;
@@ -1285,50 +1329,40 @@ public:
         {
             int dx = dir.first;
             int dy = dir.second;
-
-                for (int dist = 1;; dist++) {
-                    int targetX = x + dx * dist;
-                    int targetY = y + dy * dist;
-
-                    if (targetX < 0 || targetY < 0 || targetX >= battlefield.getWidth() || targetY >= battlefield.getHeight())
-                        break;
-
-                Robot *target = battlefield.getRobotAt(targetX, targetY);
-
+            for (int dist = 1;; dist++) {
+                int targetX = x + dx * dist;
+                int targetY = y + dy * dist;
+                if (targetX < 0 || targetY < 0 || targetX >= battlefield->getWidth() || targetY >= battlefield->getHeight())
+                    break;
+                if (targetX == x && targetY == y) continue; // Do not fire at self
+                Robot *target = battlefield->getRobotAt(targetX, targetY);
                 if (target && target != this){
-
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     if (gtarget->isHit()){
-
                         logger << getName() << " fires at (" << targetX << "," << targetY << ")\n";
-                        gtarget->takeDamage();
-                        logger << getName() << " hit " << gtarget->getName() << endl;
-
-                        static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
-                        int t = rand() % types.size();
-                        setPendingUpgrade(types[t]);
-                        logger << getName() << " will upgrade into " << types[t] << " next turn" << endl;
-
+                        if (hitProbability()) {
+                            gtarget->takeDamage();
+                            logger << getName() << " hit " << gtarget->getName() << endl;
+                            static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+                            int t = rand() % types.size();
+                            setPendingUpgrade(types[t]);
+                            logger << getName() << " will upgrade into " << types[t] << " next turn" << endl;
+                        } else {
+                            logger << "Missed!" << endl;
+                        }
                         fired = true;
-                        break;  
+                        break;
+                    }
                 }
             }
+            if (fired)
+                break;
         }
-
-        if (fired)
-            break; 
-    }
-
-    if (fired){
         useAmmo();
+        if (!fired){
+            logger << "sadly, " << getName() << " found no target in straight line\n";
+        }
     }
-    else
-    {
-        logger << "sadly, " << getName() << " found no target in straight line\n";
-        useAmmo(); 
-    }
-}
-
 };
 
 //******************************************
@@ -1346,7 +1380,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {};
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
         if (!hasAmmo())
         {
@@ -1476,7 +1510,7 @@ public:
         GenericRobot::move(battlefield);
     }
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
 
         for (const auto &upgrade : upgrades)
@@ -1484,35 +1518,35 @@ public:
             if (upgrade == "LongShotBot")
             {
                 LongShotBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "SemiAutoBot")
             {
                 SemiAutoBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "ThirtyShotBot")
             {
                 ThirtyShotBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "KnightBot")
             {
                 KnightBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "QueenBot")
             {
                 QueenBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "VampireBot")
             {
                 VampireBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
         }
-        GenericRobot::fire(battlefield);
+        GenericRobot::fire();
     }
 
     void look(int X, int Y) override
@@ -1575,7 +1609,7 @@ public:
         GenericRobot::move(battlefield);
     }
 
-    void fire(Battlefield &battlefield) override
+    void fire() override
     {
 
         for (const auto &upgrade : upgrades)
@@ -1583,35 +1617,35 @@ public:
             if (upgrade == "LongShotBot")
             {
                 LongShotBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "SemiAutoBot")
             {
                 SemiAutoBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "ThirtyShotBot")
             {
                 ThirtyShotBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "KnightBot")
             {
                 KnightBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "QueenBot")
             {
                 QueenBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
             else if (upgrade == "VampireBot")
             {
                 VampireBot temp(name, getX(), getY());
-                temp.fire(battlefield);
+                temp.fire();
             }
         }
-        GenericRobot::fire(battlefield);
+        GenericRobot::fire();
     }
 
      void look(int X, int Y) override
