@@ -1,9 +1,9 @@
-M by N : 20 30
-steps: 50
+M by N : 10 10
+steps: 30
 robots: 6 
 GenericRobot Kidd 3 6
-GenericRobot Jet 4 5
-GenericRobot Harry 5 5
+GenericRobot Jet 3 7
+GenericRobot Harry 3 8
 GenericRobot Lockwood 0 0
-GenericRobot Chase 5 4
+GenericRobot Chase 3 9
 GenericRobot Star random random
