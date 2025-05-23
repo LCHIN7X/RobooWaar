@@ -544,61 +544,60 @@ void GenericRobot::fire(Battlefield &battlefield)
 
 void GenericRobot::look(Battlefield &battlefield)
 {
-    if (hasLooked)
-        return;
-    hasLooked = true;
-    logger << ">> " << name << " is scanning surroundings...." << endl;
-    int cx = getX();
-    int cy = getY();
-
+    // Clear previous state
     enemyDetectedNearby = false;
-    availableSpaces.clear(); // Clear previous available spaces
-    // detectedTargets.clear();
+    availableSpaces.clear();
+    detectedTargets.clear();
+
+    int x = getX();
+    int y = getY();
+
+    // Scan 3x3 area centered on robot's current position
     for (int dx = -1; dx <= 1; ++dx)
     {
         for (int dy = -1; dy <= 1; ++dy)
         {
-            int nx = cx + dx;
-            int ny = cy + dy;
-            logger << "Checking (" << nx << ", " << ny << "): ";
-            if (!battlefield.isPositionWithinGrid(nx, ny))
+            int lookX = x + dx;
+            int lookY = y + dy;
+
+            logger << "Revealing (" << lookX << ", " << lookY << "): ";
+
+            // 1. Reveal whether location is in battlefield
+            if (!battlefield.isPositionWithinGrid(lookX, lookY))
             {
-                logger << "Exceed Boundary" << endl;
+                logger << "Out of bounds" << endl;
+                continue;
             }
-            else if (nx == cx && ny == cy)
+
+            Robot *occupant = battlefield.getRobotAt(lookX, lookY);
+
+            // 2. Current position will not be considered available
+            if (lookX == x && lookY == y)
             {
-                logger << "Current Position" << endl;
+                logger << "Current position" << endl;
+                continue;
+            }
+
+            // 3. Reveal whether location contains an enemy robot
+            if (occupant == nullptr)
+            {
+                logger << "Empty space" << endl;
+                availableSpaces.emplace_back(lookX, lookY);
+            }
+            else if (occupant != this)  // Treat all other robots as enemies for now
+            {
+                logger << "Enemy " << occupant->getName() << endl;
+                enemyDetectedNearby = true;
+
+                // 4. Prevent duplicate entries in detectedTargets
+                if (std::find(detectedTargets.begin(), detectedTargets.end(), occupant) == detectedTargets.end())
+                {
+                    detectedTargets.push_back(occupant);
+                }
             }
             else
             {
-                Robot *r = battlefield.getRobotAt(nx, ny);
-                if (r == nullptr)
-                {
-                    logger << "In Boundary but Empty" << endl;
-                    availableSpaces.push_back({nx, ny}); // Add to available spaces
-                }
-                else if (r->getLives() > 0 || !r->getIsDie() || !r->getIsHurt())
-                {
-                    logger << "Enemy detected: " << r->getName() << " at (" << nx << "," << ny << ")" << endl;
-                    enemyDetectedNearby = true;
-                    bool alreadyDetected = false;
-                    for (Robot *existingRobot : detectedTargets)
-                    {
-                        if (existingRobot == r)
-                        {
-                            alreadyDetected = true;
-                            break;
-                        }
-                    }
-                    if (!alreadyDetected)
-                    {
-                        detectedTargets.push_back(r);
-                    }
-                }
-                else
-                {
-                    logger << "Dead or Hurt Robot State" << endl;
-                }
+                logger << "Dead robot" << endl;
             }
         }
     }
