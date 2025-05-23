@@ -197,7 +197,7 @@ public:
 
     virtual void think() = 0;
     virtual void act() = 0;
-    virtual void move(Battlefield &battlefield) = 0;
+    virtual void move() = 0;
     virtual void fire() = 0;
     virtual void look(int X, int Y) = 0;
 
@@ -250,7 +250,7 @@ public:
         : Robot(name, x, y), moveCount(0) {}
 
     virtual ~MovingRobot() = default;
-    virtual void move(Battlefield &battlefield) = 0;
+    virtual void move() = 0;
 
     bool isValidMove(int newX, int newY, const Battlefield &battlefield) const
     {
@@ -375,8 +375,7 @@ public:
     void setBattlefield(Battlefield *bf);
     void think() override;
     void act() override;
-    // string decideAction() const override;
-    void move(Battlefield &battlefield) override;
+    void move() override;
     void fire() override;
     void look(int X, int Y) override;
     bool canUpgrade(int area) const;
@@ -421,11 +420,11 @@ void GenericRobot::think()
     if (getEnemyDetectedNearby())
     {
         fire();
-        move(*battlefield);
+        move();
     }
     else
     {
-        move(*battlefield);
+        move();
         fire();
     }
 }
@@ -443,12 +442,16 @@ void GenericRobot::act()
     detectedTargets.clear();
 }
 
-void GenericRobot::move(Battlefield &battlefield)
+void GenericRobot::move()
 {
     if (hasMoved)
         return;
     hasMoved = true;
     logger << ">> " << name << " is moving...\n";
+    if (!battlefield) {
+        logger << name << " has no battlefield context!" << endl;
+        return;
+    }
     // If availableSpaces (from look) is not empty, pick a random one
     if (!availableSpaces.empty())
     {
@@ -456,32 +459,13 @@ void GenericRobot::move(Battlefield &battlefield)
         static mt19937 g(rd());
         uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
         auto [newX, newY] = availableSpaces[dist(g)];
-        battlefield.removeRobotFromGrid(this);
-        battlefield.placeRobot(this, newX, newY);
+        battlefield->removeRobotFromGrid(this);
+        battlefield->placeRobot(this, newX, newY);
         incrementMoveCount();
         logger << name << " moved to (" << newX << ", " << newY << ")\n";
         return;
     }
-    // Fallback: try the old adjacent logic if no availableSpaces (shouldn't happen)
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {1, 0, -1, 0};
-    for (int i = 0; i < 4; ++i)
-    {
-        int newX = getX() + dx[i];
-        int newY = getY() + dy[i];
-
-        if (isValidMove(newX, newY, battlefield) && battlefield.isPositionAvailable(newX, newY))
-        {
-            if (battlefield.getRobotAt(newX, newY) == nullptr)
-            {
-                battlefield.removeRobotFromGrid(this);
-                battlefield.placeRobot(this, newX, newY);
-                incrementMoveCount();
-                logger << name << " moved to (" << newX << ", " << newY << ")\n";
-                return;
-            }
-        }
-    }
+    
     logger << name << " could not move (no available adjacent cell).\n";
 }
 
@@ -650,7 +634,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void move(Battlefield &battlefield) override
+    void move() override
     {
         if (hide_count < 3 && rand() % 2 == 0)
         {
@@ -687,7 +671,7 @@ public:
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire();
-        move(*battlefield);
+        move();
     }
 
     void fire() override {
@@ -713,7 +697,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void move(Battlefield &battlefield) override
+    void move() override
     {
         if (jump_count < 3 && rand() % 2 == 0)
         {
@@ -725,11 +709,11 @@ public:
             while (!positionFound && attempts < maxAttempt)
             {
                 attempts++;
-                jumpx = rand() % battlefield.getWidth();
-                jumpy = rand() % battlefield.getHeight();
+                jumpx = rand() % battlefield->getWidth();
+                jumpy = rand() % battlefield->getHeight();
                 
                 
-                if (!battlefield.getRobotAt(jumpx, jumpy))
+                if (!battlefield->getRobotAt(jumpx, jumpy))
                 {
                     positionFound = true;
                 }
@@ -739,7 +723,7 @@ public:
             if (positionFound)
             {
                 jump_count++;
-                battlefield.removeRobotFromGrid(this);
+                battlefield->removeRobotFromGrid(this);
                 setPosition(jumpx, jumpy);
                 logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
             }
@@ -768,7 +752,7 @@ public:
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire();
-        move(*battlefield);
+        move();
     }
 
     void fire() override {
@@ -1198,7 +1182,7 @@ public:
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire();
-        move(*battlefield);
+        move();
     }
 
     int getScoutCount() const
@@ -1261,10 +1245,9 @@ public:
     void act() override
     {
         logger << "JumpBot is thinking..." << endl;
-        // TO DO : the logic will be implemented later
         look(0, 0);
         fire();
-        move(*battlefield);
+        move();
     }
 
     void showTrackTarget()
@@ -1491,7 +1474,7 @@ public:
         upgrades.push_back(type2);
     }
 
-    void move(Battlefield &battlefield) override
+    void move() override
     {
 
         for (const auto &upgrade : upgrades)
@@ -1499,15 +1482,15 @@ public:
             if (upgrade == "HideBot")
             {
                 HideBot temp(name, getX(), getY());
-                temp.move(battlefield);
+                temp.move();
             }
             else if (upgrade == "JumpBot")
             {
                 JumpBot temp(name, getX(), getY());
-                temp.move(battlefield);
+                temp.move();
             }
         }
-        GenericRobot::move(battlefield);
+        GenericRobot::move();
     }
 
     void fire() override
@@ -1591,22 +1574,22 @@ public:
         }
     }
 
-    void move(Battlefield &battlefield) override
+    void move() override
     {
         for (const auto &upgrade : upgrades)
         {
             if (upgrade == "HideBot")
             {
                 HideBot temp(name, getX(), getY());
-                temp.move(battlefield);
+                temp.move();
             }
             else if (upgrade == "JumpBot")
             {
                 JumpBot temp(name, getX(), getY());
-                temp.move(battlefield);
+                temp.move();
             }
         }
-        GenericRobot::move(battlefield);
+        GenericRobot::move();
     }
 
     void fire() override
