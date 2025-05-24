@@ -1274,6 +1274,7 @@ public:
             return;
         }
 
+        bool hitTarget = false;
         if (rand() % 2 == 0)
         {
             logger << getName() << " fires (scout style)\n";
@@ -1282,14 +1283,24 @@ public:
             {
                 for (int x = 0; x < battlefield->getWidth(); ++x)
                 {
-                    Robot *r = battlefield->getRobotAt(x, y);
-                    if (r && r != this)
+                    Robot *target = battlefield->getRobotAt(x, y);
+                    if (target && target != this && target->getLives() > 0 && !target->isHidden())
                     {
-                        logger << "target: " << r->getName() << " at (" << x << "," << y << ")\n";
+                        logger << getName() << " spots and fires at " << target->getName() << " at (" << x << "," << y << ")\n";
+                        hitTarget = true;
+                        // Optionally, you could reduce target's life or mark as hit here
                     }
                 }
             }
             scout_count++;
+            if (hitTarget)
+            {
+                // Randomly choose between HideScoutBot and JumpScoutBot
+                static const vector<string> types = {"HideScoutBot", "JumpScoutBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
+            }
         }
         else
         {
@@ -1387,6 +1398,41 @@ public:
     int getTracker() const
     {
         return tracker;
+    }
+
+    void fire() override
+    {
+        if (tracker == 0)
+        {
+            logger << getName() << " cannot fire, no tracker left\n";
+            return;
+        }
+        bool hitTarget = false;
+        if (rand() % 2 == 0)
+        {
+            logger << getName() << " fires (track style)\n";
+            for (Robot *target : track_target)
+            {
+                if (target && target != this && target->getLives() > 0 && !target->isHidden())
+                {
+                    logger << getName() << " tracks and fires at " << target->getName() << " at (" << target->getX() << "," << target->getY() << ")\n";
+                    hitTarget = true;
+                    // Optionally, you could reduce target's life or mark as hit here
+                }
+            }
+            tracker--;
+            if (hitTarget)
+            {
+                static const vector<string> types = {"HideTrackBot", "JumpTrackBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
+            }
+        }
+        else
+        {
+            logger << getName() << " try fire next round \n";
+        }
     }
 };
 
@@ -2476,7 +2522,7 @@ void Battlefield::respawnRobots()
             placeRobot(newRobot, randomX, randomY);
             listOfRobots.push_back(newRobot);
             logger << nameOfRobotToRespawn << " reentered as GenericRobot at (" << randomX << ", " << randomY << ") with ";
-            logger << livesLeft << " lives" << " next turn." << endl;
+                       logger << livesLeft << " lives" << " next turn." << endl;
         }
         else
         {
