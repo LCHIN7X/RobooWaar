@@ -3661,8 +3661,103 @@ public:
     
 };
 
+//******************************************
+//JumpSemiAutoScoutBot
+//******************************************
+class JumpSemiAutoScoutBot: public JumpSemiAutoBot,public ScoutBot
+{
+public:
+    JumpSemiAutoScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpSemiAutoBot(name,x,y),
+      ScoutBot(name,x,y) {}
 
+    void move() override{
+        JumpBot::move();
+    }
 
+    void fire() override{
+        SemiAutoBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        SemiAutoBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
+
+//******************************************
+//JumpThirtyShotScoutBot
+//******************************************
+class JumpThirtyShotScoutBot: public JumpThirtyShotBot,public ScoutBot
+{
+public:
+    JumpThirtyShotScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpThirtyShotBot(name,x,y),
+      ScoutBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        ThirtyShotBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        ThirtyShotBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
 
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
