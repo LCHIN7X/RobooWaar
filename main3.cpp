@@ -3417,6 +3417,55 @@ public:
     
 };
 
+//******************************************
+//HideThirtyShotTrackBot
+//******************************************
+class HideThirtyShotTrackBot: public HideThirtyShotBot,public TrackBot
+{
+public:
+    HideThirtyShotTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideThirtyShotBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        ThirtyShotBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        ThirtyShotBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+
 
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
