@@ -3321,10 +3321,60 @@ public:
 //******************************************
 //HideLongShotTrackBot
 //******************************************
-class HideLongShotTrackBot: public HideSemiAutoBot,public TrackBot
+class HideLongShotTrackBot: public HideLongShotBot,public TrackBot
 {
 public:
     HideLongShotTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideLongShotBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        LongShotBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        LongShotBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+
+
+//******************************************
+//HideSemiAutoTrackBot
+//******************************************
+class HideSemiAutoTrackBot: public HideSemiAutoBot,public TrackBot
+{
+public:
+    HideSemiAutoTrackBot(const string &name, int x,int y)
     : Robot(name,x,y),
       GenericRobot(name,x,y),
       HideSemiAutoBot(name,x,y),
@@ -3366,12 +3416,6 @@ public:
     }
     
 };
-
-
-//******************************************
-//HideSemiAutoTrackBot
-//******************************************
-
 
 
 //******************************************
