@@ -3170,7 +3170,104 @@ public:
     
 };
 
+//******************************************
+//HideKnightScoutBot
+//******************************************
+class HideKnightScoutBot: public HideKnightBot,public ScoutBot
+{
+public:
+    HideKnightScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideKnightBot(name,x,y),
+      ScoutBot(name,x,y) {}
 
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        KnightBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        KnightBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
+
+//******************************************
+//HideQueenScoutBot
+//******************************************
+
+class HideQueenScoutBot: public HideQueenBot,public ScoutBot
+{
+public:
+    HideQueenScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideQueenBot(name,x,y),
+      ScoutBot(name,x,y) {}
+
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        QueenBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        QueenBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
 
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
