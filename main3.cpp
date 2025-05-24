@@ -3612,6 +3612,57 @@ public:
     
 };
 
+//******************************************
+//JumpLongShotScoutBot
+//******************************************
+class JumpLongShotScoutBot: public JumpLongShotBot,public ScoutBot
+{
+public:
+    JumpLongShotScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpLongShotBot(name,x,y),
+      ScoutBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        LongShotBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        LongShotBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
+
+
+
 
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
