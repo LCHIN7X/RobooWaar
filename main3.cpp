@@ -504,6 +504,13 @@ void GenericRobot::fire()
             {
                 logger << "Hit! (" << target->getName() << ") be killed" << endl;
                 target->takeDamage();
+                //Alternate upgrade types
+                 // If the robot's class name starts with "Hide" (for HideBot and all Hide* hybrids)
+                 //if (typeid(*this).name() && std::string(typeid(*this).name()).find("Hide") != std::string::npos) {
+                    //types = {"HideLongShotBot","HideSemiAutoBot","HideThirtyShotBot","HideKnightBot","HideQueenBot","HideVampireBot","HideScoutBot","HideTrackBot"};
+                //} else {
+                    //types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot", "QueenBot", "VampireBot"};
+                //}
                 static const vector<string> types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot", "QueenBot", "VampireBot"};
                 int t = rand() % types.size();
                 setPendingUpgrade(types[t]);
@@ -708,7 +715,7 @@ public:
             {
                 logger << "Hit! (" << target->getName() << ") be killed" << endl;
                 target->takeDamage();
-                static const vector<string> types = {"HideLongShotBot","HideBotSemiAutoBot","HideThirtyShotBot","HideKnightBot","HideQueenBot","HideVampireBot","HideScoutBot","HideTrackBot"};
+                static const vector<string> types = {"HideLongShotBot","HideSemiAutoBot","HideThirtyShotBot","HideKnightBot","HideQueenBot","HideVampireBot","HideScoutBot","HideTrackBot"};
                 int t = rand() % types.size();
                 setPendingUpgrade(types[t]);
                 logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
@@ -744,7 +751,7 @@ public:
 //******************************************
 // Jumpbot
 //******************************************
-class JumpBot : public GenericRobot
+class JumpBot : public virtual GenericRobot
 {
 private:
     int jump_count = 0;
@@ -813,7 +820,62 @@ public:
     }
 
     void fire() override {
-        GenericRobot::fire();
+    if (hasFired)
+        return;
+    hasFired = true;
+    if (hasAmmo())
+    {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        vector<Robot*> validTargets;
+        for (Robot* r : detectedTargets) {
+            if (r && r != this) {
+                GenericRobot* gtarget = dynamic_cast<GenericRobot*>(r);
+                if (gtarget && gtarget->isHit()) {
+                    validTargets.push_back(r);
+                }
+            }
+        }
+        if (!validTargets.empty())
+        {
+            int idx = rand() % validTargets.size();
+            Robot *target = validTargets[idx];
+            int targetX = target->getX();
+            int targetY = target->getY();
+            logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+            useAmmo();
+            if (target->isHidden())
+            {
+                logger << target->getName() << " is hidden, attack miss." << endl;
+            }
+            else if (hitProbability())
+            {
+                logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                target->takeDamage();
+                static const vector<string> types = {"JumpLongShotBot","JumpSemiAutoBot","JumpThirtyShotBot","JumpKnightBot","JumpQueenBot","JumpVampireBot","JumpScoutBot","JumpTrackBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+            }
+            else
+            {
+                logger << "Missed!" << endl;
+            }
+        }
+        else
+        {
+            useAmmo();
+            logger << ">> " << name << " fires." << endl;
+            logger << "However no robots within shooting range ." << endl;
+        }
+
+    }
+    else
+    {
+        logger << name << " has no ammo left. It will self destroy!" << endl;
+        lives = 0;
+        isDie = true;
+    }
+    detectedTargets.clear();
     }
 
     int getJumpCount() const
@@ -830,7 +892,7 @@ class LongShotBot : public virtual GenericRobot
 {
 private:
     int fire_count = 0;
-    const vector<string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+    const vector<string> upgradeTypes = {"HideLongShotBot", "JumpLongShotBot"};
 
 public:
     LongShotBot(const string &name, int x, int y)
@@ -920,7 +982,7 @@ class SemiAutoBot : public virtual GenericRobot
 {
 private:
     int fire_count = 0;
-    const vector<string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+    const vector<string> upgradeTypes = {"HideSemiAutoBot", "JumpSemiAutoBot"};
 
 public:
     SemiAutoBot(const string &name, int x, int y)
@@ -1013,7 +1075,7 @@ class ThirtyShotBot : public virtual GenericRobot
 {
 private:
     int shell_count;
-    const vector<string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+    const vector<string> upgradeTypes = {"HideThirtyShotBot", "JumpThirtyShotBot"};
 
 public:
     ThirtyShotBot(const string &name, int x, int y)
@@ -1092,7 +1154,7 @@ class KnightBot : public virtual GenericRobot
 {
 private:
     int fire_count = 0;
-    const vector<string> upgradeTypes = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+    const vector<string> upgradeTypes = {"HideKnightBot", "JumpKnightBot"};
 
 public:
     KnightBot(const string &name, int x, int y)
@@ -1385,7 +1447,7 @@ public:
                         if (hitProbability()) {
                             gtarget->takeDamage();
                             logger << getName() << " hit " << gtarget->getName() << endl;
-                            static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+                            static const vector<string> types = {"HideQueenBot","JumpQueenBot"};
                             int t = rand() % types.size();
                             setPendingUpgrade(types[t]);
                             logger << getName() << " will upgrade into " << types[t] << " next turn" << endl;
@@ -1472,7 +1534,7 @@ public:
                     }
                 }
 
-                static const vector<string> types = {"HideBot", "JumpBot", "ScoutBot", "TrackBot"};
+                static const vector<string> types = {"HideVampireBot", "JumpVampireBot"};
                 int t = rand() % types.size();
                 setPendingUpgrade(types[t]);
                 logger << getName() << " will upgrade in to " << types[t] << "next turn" << endl;
@@ -1534,11 +1596,11 @@ public:
 };
 
 //******************************************
-// HideBotSemiAutoBot (inherits from HideBot and SemiAutoBot)
+// HideSemiAutoBot (inherits from HideBot and SemiAutoBot)
 //******************************************
-class HideBotSemiAutoBot : public HideBot, public SemiAutoBot {
+class HideSemiAutoBot : public HideBot, public SemiAutoBot {
 public:
-    HideBotSemiAutoBot(const string &name, int x, int y)
+    HideSemiAutoBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideBot(name, x, y),
@@ -1835,6 +1897,349 @@ public:
 };
 
 //******************************************
+// JumpLongShotBot (inherits from JumpBot and LongShotBot)
+//******************************************
+class JumpLongShotBot : public JumpBot, public LongShotBot {
+public:
+    JumpLongShotBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          LongShotBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        LongShotBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        LongShotBot::look(0, 0); // Use long-range look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        LongShotBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        LongShotBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpSemiAutoBot (inherits from JumpBot and SemiAutoBot)
+//******************************************
+class JumpSemiAutoBot : public JumpBot, public SemiAutoBot {
+public:
+    JumpSemiAutoBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          SemiAutoBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        SemiAutoBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        SemiAutoBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        SemiAutoBot::setBattlefield(bf);
+    }
+};
+//******************************************
+// JumpThirtyShotBot (inherits from JumpBot and ThirtyShotBot)
+//******************************************
+class JumpThirtyShotBot : public JumpBot, public ThirtyShotBot {
+public:
+    JumpThirtyShotBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          ThirtyShotBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        ThirtyShotBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        ThirtyShotBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        ThirtyShotBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpKnightBot (inherits from JumpBot and KnightBot)
+//******************************************
+class JumpKnightBot : public JumpBot, public KnightBot {
+public:
+    JumpKnightBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          KnightBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        KnightBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        KnightBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        KnightBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpQueenBot (inherits from JumpBot and QueenBot)
+//******************************************
+class JumpQueenBot : public JumpBot, public QueenBot {
+public:
+    JumpQueenBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          QueenBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        QueenBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        QueenBot::look(0, 0); // Use QueenBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        QueenBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        QueenBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpVampireBot (inherits from JumpBot and VampireBot)
+//******************************************
+class JumpVampireBot : public JumpBot, public VampireBot {
+public:
+    JumpVampireBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          VampireBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        VampireBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        VampireBot::look(0, 0); // Use QueenBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        VampireBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        VampireBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpScoutBot (inherits from JumpBot and ScoutBot)
+//******************************************
+class JumpScoutBot : public JumpBot, public ScoutBot {
+public:
+    JumpScoutBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          ScoutBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        ScoutBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        ScoutBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        ScoutBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
+// JumpTrackBot (inherits from JumpBot and TrackBot)
+//******************************************
+class JumpTrackBot : public JumpBot, public TrackBot {
+public:
+    JumpTrackBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y),
+          JumpBot(name, x, y),
+          TrackBot(name, x, y) {}
+
+    void move() override {
+        JumpBot::move();
+    }
+
+    void fire() override {
+        TrackBot::fire();
+    }
+
+    void think() override {
+        JumpBot::think();
+    }
+
+    void act() override {
+        TrackBot::look(0, 0); // Use ScoutBot's look for targeting
+        think();
+        fire();
+        move();
+    }
+
+    void look(int X, int Y) override {
+        TrackBot::look(X, Y);
+    }
+
+    bool isHit() override {
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield* bf) {
+        TrackBot::setBattlefield(bf);
+    }
+};
+
+//******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
@@ -1854,22 +2259,6 @@ void Battlefield::simulationStep()
                 upgraded = new JumpBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "LongShotBot")
                 upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideLongShotBot")
-                upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideBotSemiAutoBot")
-                upgraded = new HideBotSemiAutoBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideThirtyShotBot")
-                upgraded = new HideThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideKnightBot")
-                upgraded = new HideKnightBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideQueenBot")
-                upgraded = new HideQueenBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideVampireBot")
-                upgraded = new HideVampireBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideScoutBot")
-                upgraded = new HideScoutBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "HideTrackBot")
-                upgraded = new HideTrackBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "KnightBot")
                 upgraded = new KnightBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "SemiAutoBot")
@@ -1884,6 +2273,39 @@ void Battlefield::simulationStep()
                 upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireBot")
                 upgraded = new VampireBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideLongShotBot")
+                upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideSemiAutoBot")
+                upgraded = new HideSemiAutoBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideThirtyShotBot")
+                upgraded = new HideThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideKnightBot")
+                upgraded = new HideKnightBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideQueenBot")
+                upgraded = new HideQueenBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideVampireBot")
+                upgraded = new HideVampireBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideScoutBot")
+                upgraded = new HideScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideTrackBot")
+                upgraded = new HideTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpLongShotBot")
+                upgraded = new JumpLongShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpSemiAutoBot")
+                upgraded = new JumpSemiAutoBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpThirtyShotBot")
+                upgraded = new JumpThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpKnightBot")
+                upgraded = new JumpKnightBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpQueenBot")
+                upgraded = new JumpQueenBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpVampireBot")
+                upgraded = new JumpVampireBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpScoutBot")
+                upgraded = new JumpScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "JumpTrackBot")
+                upgraded = new JumpTrackBot(gen->getName(), gen->getX(), gen->getY());
+            
             if (upgraded) {
                 upgraded->setLives(gen->getLives());
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
@@ -2562,8 +2984,8 @@ int main()
                         type = "VampireBot";
                     else if (dynamic_cast<HideLongShotBot *>(robot))
                         type = "HideLongShotBot";
-                    else if (dynamic_cast<HideBotSemiAutoBot *>(robot))
-                        type = "HideBotSemiAutoBot";
+                    else if (dynamic_cast<HideSemiAutoBot *>(robot))
+                        type = "HideSemiAutoBot";
                     else if (dynamic_cast<HideThirtyShotBot *>(robot))
                         type = "HideThirtyShotBot";
                     else if (dynamic_cast<HideKnightBot *>(robot))
@@ -2576,7 +2998,23 @@ int main()
                         type = "HideScoutBot";
                     else if (dynamic_cast<HideTrackBot *>(robot))
                         type = "HideTrackBot";
-                    else
+                    else if (dynamic_cast<JumpLongShotBot *>(robot))
+                        type = "JumpLongShotBot";
+                    else if (dynamic_cast<JumpSemiAutoBot *>(robot))
+                        type = "JumpSemiAutoBot";
+                    else if (dynamic_cast<JumpThirtyShotBot *>(robot))
+                        type = "JumpThirtyShotBot";
+                    else if (dynamic_cast<JumpKnightBot *>(robot))
+                        type = "JumpKnightBot";
+                    else if (dynamic_cast<JumpQueenBot *>(robot))
+                        type = "JumpQueenBot";
+                    else if (dynamic_cast<JumpVampireBot *>(robot))
+                        type = "JumpVampireBot";
+                    else if (dynamic_cast<JumpScoutBot *>(robot))
+                        type = "JumpScoutBot";
+                    else if (dynamic_cast<JumpTrackBot *>(robot))
+                        type = "JumpTrackBot";
+                    else if (dynamic_cast<GenericRobot *>(robot))
                         type = "GenericRobot";
                 }
             }
