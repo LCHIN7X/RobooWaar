@@ -1,7 +1,7 @@
 M by N : 10 10
 steps: 30
-robots: 6 
-JumpBot Kidd 3 6
-JumpBot Jet 3 7
-JumpBot Harry 3 8
+robots: 4 
+LongShotBot Kidd 3 6
+SemiAutoBot Jet 3 7
+QueenBot Harry 3 8
 GenericRobot Star random random
