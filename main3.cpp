@@ -3514,7 +3514,103 @@ public:
     }
     
 };
+//******************************************
+//HideQueenTrackBot
+//******************************************
+class HideQueenTrackBot: public HideQueenBot,public TrackBot
+{
+public:
+    HideQueenTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideQueenBot(name,x,y),
+      TrackBot(name,x,y) {}
 
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        QueenBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        QueenBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+
+//******************************************
+//HideVampireTrackBot
+//******************************************
+class HideVampireTrackBot: public HideVampireBot,public TrackBot
+{
+public:
+    HideVampireTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideVampireBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        VampireBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        VampireBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
 
 
 //******************************************
