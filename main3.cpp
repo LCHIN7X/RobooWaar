@@ -3270,6 +3270,56 @@ public:
 };
 
 //******************************************
+//HideVampireScoutBot
+//******************************************
+class HideVampireScoutBot: public HideVampireBot,public ScoutBot
+{
+public:
+    HideVampireScoutBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      HideVampireBot(name,x,y),
+      ScoutBot(name,x,y) {}
+
+    void move() override{
+        HideBot::move();
+    }
+
+    void fire() override{
+        VampireBot::fire();
+    }
+
+    void think() override{
+        HideBot::think();
+    }
+
+    void act() override{
+        ScoutBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        ScoutBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return HideBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        HideBot::setBattlefield(bf);
+        VampireBot::setBattlefield(bf);
+        ScoutBot::setBattlefield(bf);
+    }
+    
+};
+
+
+//******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
