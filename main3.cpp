@@ -3088,6 +3088,30 @@ void Battlefield::simulationStep()
                 upgraded = new JumpScoutBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "JumpTrackBot")
                 upgraded = new JumpTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "LongShotScoutBot")
+                upgraded = new LongShotScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "LongShotTrackBot")
+                upgraded = new LongShotTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "SemiAutoScoutBot")
+                upgraded = new SemiAutoScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "SemiAutoTrackBot")
+                upgraded = new SemiAutoTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "ThirtyShotScoutBot")
+                upgraded = new ThirtyShotScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "ThirtyShotTrackBot")
+                upgraded = new ThirtyShotTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "KnightScoutBot")
+                upgraded = new KnightScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "KnightTrackBot")
+                upgraded = new KnightTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "QueenScoutBot")
+                upgraded = new QueenScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "QueenTrackBot")
+                upgraded = new QueenTrackBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "VampireScoutBot")
+                upgraded = new VampireScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "VampireTrackBot")
+                upgraded = new VampireTrackBot(gen->getName(), gen->getX(), gen->getY());
 
             if (upgraded)
             {
@@ -3800,8 +3824,34 @@ int main()
                         type = "JumpScoutBot";
                     else if (dynamic_cast<JumpTrackBot *>(robot))
                         type = "JumpTrackBot";
+                    else if (dynamic_cast<LongShotScoutBot *>(robot))
+                        type = "LongShotScoutBot";
+                    else if (dynamic_cast<LongShotTrackBot *>(robot))
+                        type = "LongShotTrackBot";
+                    else if (dynamic_cast<SemiAutoScoutBot *>(robot))
+                        type = "SemiAutoScoutBot";
+                    else if (dynamic_cast<SemiAutoTrackBot *>(robot))
+                        type = "SemiAutoTrackBot";
+                    else if (dynamic_cast<ThirtyShotScoutBot *>(robot))
+                        type = "ThirtyShotScoutBot";
+                    else if (dynamic_cast<ThirtyShotTrackBot *>(robot))
+                        type = "ThirtyShotTrackBot";
+                    else if (dynamic_cast<QueenScoutBot *>(robot))
+                        type = "QueenScoutBot";
+                    else if (dynamic_cast<QueenTrackBot *>(robot))
+                        type = "QueenTrackBot";
+                    else if (dynamic_cast<VampireScoutBot *>(robot))
+                        type = "VampireScoutBot";
+                    else if (dynamic_cast<VampireTrackBot *>(robot))
+                        type = "VampireTrackBot";
+                    else if (dynamic_cast<KnightScoutBot *>(robot))
+                        type = "KnightScoutBot";
+                    else if (dynamic_cast<KnightTrackBot *>(robot))
+                        type = "KnightTrackBot";
                     else if (dynamic_cast<GenericRobot *>(robot))
-                        type = "GenericRobot";
+                         type = "GenericRobot";
+                    else
+                        type = "UnknownType"; // Fallback for any unrecognized types
                 }
             }
             else
