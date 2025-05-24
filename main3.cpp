@@ -4008,6 +4008,200 @@ public:
     
 };
 
+//******************************************
+//JumpThirtyShotTrackBot
+//******************************************
+class JumpThirtyShotTrackBot: public JumpThirtyShotBot,public TrackBot
+{
+public:
+    JumpThirtyShotTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpThirtyShotBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        ThirtyShotBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        ThirtyShotBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+
+//******************************************
+//JumpKnightTrackBot
+//******************************************
+class JumpKnightTrackBot: public JumpKnightBot,public TrackBot
+{
+public:
+    JumpKnightTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpKnightBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        KnightBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        KnightBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+//******************************************
+//JumpQueenTrackBot
+//******************************************
+class JumpQueenTrackBot: public JumpQueenBot,public TrackBot
+{
+public:
+    JumpQueenTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpQueenBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        QueenBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        QueenBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
+
+//******************************************
+//JumpVampireTrackBot
+//******************************************
+class JumpVampireTrackBot: public JumpVampireBot,public TrackBot
+{
+public:
+    JumpVampireTrackBot(const string &name, int x,int y)
+    : Robot(name,x,y),
+      GenericRobot(name,x,y),
+      JumpVampireBot(name,x,y),
+      TrackBot(name,x,y) {}
+
+    void move() override{
+        JumpBot::move();
+    }
+
+    void fire() override{
+        VampireBot::fire();
+    }
+
+    void think() override{
+        JumpBot::think();
+    }
+
+    void act() override{
+        TrackBot::look(0,0);
+        think();
+        fire();
+        move();
+       
+    }
+
+    void look(int X,int Y) override{
+        TrackBot::look(X,Y);
+    }
+
+    bool isHit() override{
+        return JumpBot::isHit();
+    }
+
+    void setBattlefield(Battlefield *bf){
+        GenericRobot::setBattlefield(bf);
+        JumpBot::setBattlefield(bf);
+        VampireBot::setBattlefield(bf);
+        TrackBot::setBattlefield(bf);
+    }
+    
+};
 
 //******************************************
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
