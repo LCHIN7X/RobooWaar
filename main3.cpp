@@ -372,7 +372,7 @@ protected:
 
 public:
     GenericRobot(const string &name, int x, int y);
-    ~GenericRobot() override;
+    virtual ~GenericRobot() override;
     void setBattlefield(Battlefield *bf);
     void think() override;
     void act() override;
