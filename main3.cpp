@@ -1722,7 +1722,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -1835,7 +1835,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -1948,7 +1948,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2061,7 +2061,7 @@ public:
         KnightBot::look(0, 0); // Use KnightBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -2174,7 +2174,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -2287,7 +2287,7 @@ public:
         VampireBot::look(0, 0); // Use VampireBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2403,7 +2403,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2519,7 +2519,7 @@ public:
         TrackBot::look(0, 0); // Use TrackBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2632,7 +2632,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2745,7 +2745,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2857,7 +2857,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -2970,7 +2970,7 @@ public:
         KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -3083,7 +3083,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -3196,7 +3196,7 @@ public:
         VampireBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -3313,7 +3313,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -3430,7 +3430,7 @@ public:
         TrackBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+
     }
 
     void look(int X, int Y) override
@@ -4800,7 +4800,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -4849,7 +4849,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -4898,7 +4898,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+        
        
     }
 
@@ -4947,7 +4947,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -4997,7 +4997,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5046,7 +5046,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -5095,8 +5095,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
-       
+      
     }
 
     void look(int X,int Y) override{
@@ -5145,7 +5144,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -5194,7 +5193,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5243,7 +5242,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5291,7 +5290,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5340,7 +5339,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -5389,7 +5388,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -5438,7 +5437,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -5487,7 +5486,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5536,7 +5535,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
@@ -5587,7 +5586,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -5636,7 +5635,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -5686,7 +5685,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5736,7 +5735,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5785,7 +5784,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5834,7 +5833,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -5882,7 +5881,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5931,7 +5930,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
@@ -6702,6 +6701,778 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
     }
+
+    else if (tokens[0] == "HideThirtyShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpLongShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpLongShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpSemiAutoBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpSemiAutoBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpThirtyShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpThirtyShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpKnightBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpKnightBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpQueenBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpQueenBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpVampireBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpVampireBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "LongShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new LongShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "LongShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new LongShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "SemiAutoScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new SemiAutoScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "SemiAutoTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new SemiAutoTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "ThirtyShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new ThirtyShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "ThirtyShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new ThirtyShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "KnightScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new KnightScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "QueenScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new QueenScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "VampireScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new VampireScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideLongShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideLongShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideLongShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideLongShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideSemiAutoScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideSemiAutoScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideSemiAutoTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideSemiAutoTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideThirtySHotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideThirtyShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    
 }
 
 //*****************************************************************************************
