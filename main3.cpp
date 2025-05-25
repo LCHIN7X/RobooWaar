@@ -1722,7 +1722,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -1835,7 +1835,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -1948,7 +1948,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2061,7 +2061,7 @@ public:
         KnightBot::look(0, 0); // Use KnightBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -2174,7 +2174,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -2287,7 +2287,7 @@ public:
         VampireBot::look(0, 0); // Use VampireBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2403,7 +2403,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2519,7 +2519,7 @@ public:
         TrackBot::look(0, 0); // Use TrackBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2632,7 +2632,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2745,7 +2745,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2857,7 +2857,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -2970,7 +2970,7 @@ public:
         KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -3083,7 +3083,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -3196,7 +3196,7 @@ public:
         VampireBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -3313,7 +3313,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -3430,7 +3430,7 @@ public:
         TrackBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+
     }
 
     void look(int X, int Y) override
@@ -4800,7 +4800,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -4849,7 +4849,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -4898,7 +4898,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+        
        
     }
 
@@ -4947,7 +4947,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -4997,7 +4997,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5046,7 +5046,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -5095,8 +5095,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
-       
+      
     }
 
     void look(int X,int Y) override{
@@ -5145,7 +5144,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -5194,7 +5193,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5243,7 +5242,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5291,7 +5290,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5340,7 +5339,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -5389,7 +5388,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -5438,7 +5437,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -5487,7 +5486,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5536,7 +5535,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
@@ -5587,7 +5586,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -5636,7 +5635,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -5686,7 +5685,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5736,7 +5735,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5785,7 +5784,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -5834,7 +5833,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -5882,7 +5881,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -5931,7 +5930,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
