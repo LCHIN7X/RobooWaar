@@ -1,0 +1,1088 @@
+READING INPUT FILE
+TESTING BATTLEFIELD CLASS
+Battlefield Dimensions: Height: 10
+Width: 10
+
+Battlefield steps: 30
+Battlefield number of robots: 4
+Initial Robots on battlefield: 
+Robot Name: Kidd, Coords: (3,6), Lives: 3
+Robot Name: Jet, Coords: (3,7), Lives: 3
+Robot Name: Harry, Coords: (3,8), Lives: 3
+Robot Name: Star, Coords: (6,1), Lives: 3
+
+Initial Battlefield State:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . S . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . K . . . . . . | 6
+7 |. . . J . . . . . . | 7
+8 |. . . H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Starting Simulation ---
+
+--- Simulation Step 1 ---
+Robot Status before Step1:
+  Type: HideBot, Name: Kidd, Coords: (3,6), Life: 3
+  Type: JumpBot, Name: Jet, Coords: (3,7), Life: 3
+  Type: QueenBot, Name: Harry, Coords: (3,8), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (6,1), Life: 3
+----------------------------------------
+Kidd's turn: 
+HideBot is thinking...
+Revealing (2, 5): Empty space
+Revealing (2, 6): Empty space
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Current position
+Revealing (3, 7): Enemy Jet
+Revealing (4, 5): Empty space
+Revealing (4, 6): Empty space
+Revealing (4, 7): Empty space
+>> Kidd fires at (3, 7)
+Missed!
+Kidd did not hide this turn, keep moving
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (2, 6): Empty space
+Revealing (2, 7): Empty space
+Revealing (2, 8): Empty space
+Revealing (3, 6): Enemy Kidd
+Revealing (3, 7): Current position
+Revealing (3, 8): Enemy Harry
+Revealing (4, 6): Empty space
+Revealing (4, 7): Empty space
+Revealing (4, 8): Empty space
+>> Jet fires at (3, 6)
+Missed!
+Jet jump to (7,3), (1/3)
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Empty space
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (3, 7): Empty space
+Revealing (3, 8): Current position
+Revealing (3, 9): Empty space
+Revealing (4, 7): Empty space
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+>> Harry is thinking...
+>> Harry is moving...
+Harry moved to (3, 9)
+Harry Queen fires at (3,6)
+Harry hit Kidd
+Harry will upgrade into HideQueenBot next turn
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (5, 0): Empty space
+Revealing (5, 1): Empty space
+Revealing (5, 2): Empty space
+Revealing (6, 0): Empty space
+Revealing (6, 1): Current position
+Revealing (6, 2): Empty space
+Revealing (7, 0): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 0)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+Kidd has been removed from the battlefield.
+----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (2, 4) with 2 lives next turn.
+
+Battlefield State after Step 1:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . S . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . J . . | 3
+4 |. . K . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 2 ---
+Robot Status before Step2:
+  Type: JumpBot, Name: Jet, Coords: (7,3), Life: 3
+  Type: HideQueenBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (7,0), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (2,4), Life: 2
+Harry has upgraded to HideQueenBot!
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (6, 2): Empty space
+Revealing (6, 3): Empty space
+Revealing (6, 4): Empty space
+Revealing (7, 2): Empty space
+Revealing (7, 3): Current position
+Revealing (7, 4): Empty space
+Revealing (8, 2): Empty space
+Revealing (8, 3): Empty space
+Revealing (8, 4): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet did not jump this turn, keep moving
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Harry is thinking...
+Harry hide,(1/3)
+>> Harry fires.
+However no robots within shooting range .
+Harry did not hide this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (6, -1): Out of bounds
+Revealing (6, 0): Empty space
+Revealing (6, 1): Empty space
+Revealing (7, -1): Out of bounds
+Revealing (7, 0): Current position
+Revealing (7, 1): Empty space
+Revealing (8, -1): Out of bounds
+Revealing (8, 0): Empty space
+Revealing (8, 1): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (6, 1)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (1, 5): Empty space
+Revealing (2, 3): Empty space
+Revealing (2, 4): Current position
+Revealing (2, 5): Empty space
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (3, 5)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 2:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . S . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . J . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . K . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 3 ---
+Robot Status before Step3:
+  Type: JumpBot, Name: Jet, Coords: (7,3), Life: 3
+  Type: HideBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (6,1), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (3,5), Life: 2
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (6, 2): Empty space
+Revealing (6, 3): Empty space
+Revealing (6, 4): Empty space
+Revealing (7, 2): Empty space
+Revealing (7, 3): Current position
+Revealing (7, 4): Empty space
+Revealing (8, 2): Empty space
+Revealing (8, 3): Empty space
+Revealing (8, 4): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet did not jump this turn, keep moving
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Harry is thinking...
+Harry hide,(2/3)
+>> Harry fires.
+However no robots within shooting range .
+Harry did not hide this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (5, 0): Empty space
+Revealing (5, 1): Empty space
+Revealing (5, 2): Empty space
+Revealing (6, 0): Empty space
+Revealing (6, 1): Current position
+Revealing (6, 2): Empty space
+Revealing (7, 0): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (5, 0)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (2, 4): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Current position
+Revealing (3, 6): Empty space
+Revealing (4, 4): Empty space
+Revealing (4, 5): Empty space
+Revealing (4, 6): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (3, 6)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 3:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . S . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . J . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . K . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 4 ---
+Robot Status before Step4:
+  Type: JumpBot, Name: Jet, Coords: (7,3), Life: 3
+  Type: HideBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (5,0), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (3,6), Life: 2
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (6, 2): Empty space
+Revealing (6, 3): Empty space
+Revealing (6, 4): Empty space
+Revealing (7, 2): Empty space
+Revealing (7, 3): Current position
+Revealing (7, 4): Empty space
+Revealing (8, 2): Empty space
+Revealing (8, 3): Empty space
+Revealing (8, 4): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet jump to (1,9), (2/3)
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Harry is thinking...
+Harry hide,(3/3)
+>> Harry fires.
+However no robots within shooting range .
+Harry finish use hide , keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Empty space
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Current position
+Revealing (5, 1): Empty space
+Revealing (6, -1): Out of bounds
+Revealing (6, 0): Empty space
+Revealing (6, 1): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (6, 1)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (2, 5): Empty space
+Revealing (2, 6): Empty space
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Current position
+Revealing (3, 7): Empty space
+Revealing (4, 5): Empty space
+Revealing (4, 6): Empty space
+Revealing (4, 7): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (3, 7)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 4:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . S . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . K . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. J . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 5 ---
+Robot Status before Step5:
+  Type: JumpBot, Name: Jet, Coords: (1,9), Life: 3
+  Type: HideBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (6,1), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (3,7), Life: 2
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (0, 8): Empty space
+Revealing (0, 9): Empty space
+Revealing (0, 10): Out of bounds
+Revealing (1, 8): Empty space
+Revealing (1, 9): Current position
+Revealing (1, 10): Out of bounds
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+>> Jet fires.
+However no robots within shooting range .
+Jet did not jump this turn, keep moving
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Harry is thinking...
+Harry finish use hide , keep moving
+>> Harry fires.
+However no robots within shooting range .
+Harry finish use hide , keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (5, 0): Empty space
+Revealing (5, 1): Empty space
+Revealing (5, 2): Empty space
+Revealing (6, 0): Empty space
+Revealing (6, 1): Current position
+Revealing (6, 2): Empty space
+Revealing (7, 0): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 2)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (2, 6): Empty space
+Revealing (2, 7): Empty space
+Revealing (2, 8): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Current position
+Revealing (3, 8): Empty space
+Revealing (4, 6): Empty space
+Revealing (4, 7): Empty space
+Revealing (4, 8): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (4, 8)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 5:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . S . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . K . . . . . | 8
+9 |. J . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 6 ---
+Robot Status before Step6:
+  Type: JumpBot, Name: Jet, Coords: (1,9), Life: 3
+  Type: HideBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (7,2), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (4,8), Life: 2
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (0, 8): Empty space
+Revealing (0, 9): Empty space
+Revealing (0, 10): Out of bounds
+Revealing (1, 8): Empty space
+Revealing (1, 9): Current position
+Revealing (1, 10): Out of bounds
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+>> Jet fires.
+However no robots within shooting range .
+Jet jump to (2,6), (3/3)
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Enemy Kidd
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Harry is thinking...
+>> Harry fires at (4, 8)
+Hit! (Kidd) be killed
+Harry will upgrade into HideQueenTrackBot next turn!
+Harry finish use hide , keep moving
+Harry finish use hide , keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (6, 1): Empty space
+Revealing (6, 2): Empty space
+Revealing (6, 3): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Current position
+Revealing (7, 3): Empty space
+Revealing (8, 1): Empty space
+Revealing (8, 2): Empty space
+Revealing (8, 3): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (6, 2)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+-----------------------------------
+Kidd was hit and skips this turn.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+Kidd has been removed from the battlefield.
+----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (5, 8) with 1 lives next turn.
+
+Battlefield State after Step 6:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . S . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . J . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . K . . . . | 8
+9 |. . . H . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 7 ---
+Robot Status before Step7:
+  Type: JumpBot, Name: Jet, Coords: (2,6), Life: 3
+  Type: HideQueenTrackBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (6,2), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (5,8), Life: 1
+Harry has upgraded to HideQueenTrackBot!
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (1, 5): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Current position
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet cannot jump already 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Harry no target can track
+>> Harry is thinking...
+Harry hide,(1/3)
+sadly, Harry found no target in straight line
+Harry did not hide this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (5, 1): Empty space
+Revealing (5, 2): Empty space
+Revealing (5, 3): Empty space
+Revealing (6, 1): Empty space
+Revealing (6, 2): Current position
+Revealing (6, 3): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Empty space
+Revealing (7, 3): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 1)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (4, 7): Empty space
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (5, 7): Empty space
+Revealing (5, 8): Current position
+Revealing (5, 9): Empty space
+Revealing (6, 7): Empty space
+Revealing (6, 8): Empty space
+Revealing (6, 9): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (4, 9)
+>> Kidd fires.
+However no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 7:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . S . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . J . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . H K . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 8 ---
+Robot Status before Step8:
+  Type: JumpBot, Name: Jet, Coords: (2,6), Life: 3
+  Type: HideBot, Name: Harry, Coords: (3,9), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (7,1), Life: 3
+  Type: GenericRobot, Name: Kidd, Coords: (4,9), Life: 1
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (1, 5): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Current position
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet cannot jump already 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Harry track Kidd at (4,9)
+>> Harry is thinking...
+Harry did not hide this turn, keep moving
+Harry Queen fires at (4,9)
+Missed!
+Harry did not hide this turn, keep moving
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (6, 0): Empty space
+Revealing (6, 1): Empty space
+Revealing (6, 2): Empty space
+Revealing (7, 0): Empty space
+Revealing (7, 1): Current position
+Revealing (7, 2): Empty space
+Revealing (8, 0): Empty space
+Revealing (8, 1): Empty space
+Revealing (8, 2): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 2)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (3, 8): Empty space
+Revealing (3, 9): Enemy Harry
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Current position
+Revealing (4, 10): Out of bounds
+Revealing (5, 8): Empty space
+Revealing (5, 9): Empty space
+Revealing (5, 10): Out of bounds
+>> Kidd is thinking...
+>> Kidd fires at (3, 9)
+Hit! (Harry) be killed
+Kidd will upgrade into ScoutBot next turn!
+>> Kidd is moving...
+Kidd moved to (5, 8)
+Kidd is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+Harry has been removed from the battlefield.
+----------------------------------------
+Reentering Harry
+Harry reentered as GenericRobot at (6, 7) with 2 lives next turn.
+
+Battlefield State after Step 8:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . S . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . J . . . . . . . | 6
+7 |. . . . . . H . . . | 7
+8 |. . . . . K . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 9 ---
+Robot Status before Step9:
+  Type: JumpBot, Name: Jet, Coords: (2,6), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (7,2), Life: 3
+  Type: ScoutBot, Name: Kidd, Coords: (5,8), Life: 1
+  Type: GenericRobot, Name: Harry, Coords: (6,7), Life: 2
+Kidd has upgraded to ScoutBot!
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (1, 5): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Current position
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet cannot jump already 
+Jet is done.
+----------------------------------------
+Star's turn: 
+Revealing (6, 1): Empty space
+Revealing (6, 2): Empty space
+Revealing (6, 3): Empty space
+Revealing (7, 1): Empty space
+Revealing (7, 2): Current position
+Revealing (7, 3): Empty space
+Revealing (8, 1): Empty space
+Revealing (8, 2): Empty space
+Revealing (8, 3): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (8, 2)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Kidd's turn: 
+ScoutBot is thinking...
+Kidd scan the battlefield
+got robot: Star at (8,2)
+got robot: Jet at (2,6)
+got robot: Harry at (6,7)
+got robot: Kidd at (5,8)
+Kidd fires (scout style)
+Kidd spots and fires at Star at (8,2)
+Kidd spots and fires at Jet at (2,6)
+Kidd spots and fires at Harry at (6,7)
+Kidd will upgrade to JumpScoutBot next turn!
+>> Kidd is moving...
+Kidd could not move (no available adjacent cell).
+Kidd is done.
+----------------------------------------
+Harry's turn: 
+Revealing (5, 6): Empty space
+Revealing (5, 7): Empty space
+Revealing (5, 8): Enemy Kidd
+Revealing (6, 6): Empty space
+Revealing (6, 7): Current position
+Revealing (6, 8): Empty space
+Revealing (7, 6): Empty space
+Revealing (7, 7): Empty space
+Revealing (7, 8): Empty space
+>> Harry is thinking...
+>> Harry fires at (5, 8)
+Hit! (Kidd) be killed
+Kidd has been destroyed!
+Harry will upgrade into JumpBot next turn!
+>> Harry is moving...
+Harry moved to (5, 7)
+Harry is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+Kidd has been removed from the battlefield.
+----------------------------------------
+
+Battlefield State after Step 9:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . . S . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . J . . . . . . . | 6
+7 |. . . . . H . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 10 ---
+Robot Status before Step10:
+  Type: JumpBot, Name: Jet, Coords: (2,6), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (8,2), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (5,7), Life: 2
+Harry has upgraded to JumpBot!
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (1, 5): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Current position
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Empty space
+>> Jet fires.
+However no robots within shooting range .
+Jet cannot jump already 
+Jet is done.
+----------------------------------------
+Star's turn: 
+Revealing (7, 1): Empty space
+Revealing (7, 2): Empty space
+Revealing (7, 3): Empty space
+Revealing (8, 1): Empty space
+Revealing (8, 2): Current position
+Revealing (8, 3): Empty space
+Revealing (9, 1): Empty space
+Revealing (9, 2): Empty space
+Revealing (9, 3): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 1)
+>> Star fires.
+However no robots within shooting range .
+Star is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+Revealing (4, 6): Empty space
+Revealing (4, 7): Empty space
+Revealing (4, 8): Empty space
+Revealing (5, 6): Empty space
+Revealing (5, 7): Current position
+Revealing (5, 8): Empty space
+Revealing (6, 6): Empty space
+Revealing (6, 7): Empty space
+Revealing (6, 8): Empty space
+>> Harry fires.
+However no robots within shooting range .
+Harry jump to (1,1), (1/3)
+Harry is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 10:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. H . . . . . S . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . J . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . . . . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 11 ---
+Robot Status before Step11:
+  Type: JumpBot, Name: Jet, Coords: (2,6), Life: 3
+  Type: GenericRobot, Name: Star, Coords: (7,1), Life: 3
+  Type: JumpBot, Name: Harry, Coords: (1,1), Life: 2
+----------------------------------------
+Jet's turn: 
+JumpBot is thinking...
+Revealing (1, 5): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Current position
+Revealing (2, 7): Empty space
+Revealing (3, 5): Empty space
+Revealing (3, 6): Empty space
+Revealing (3, 7): Empty space
+Jet has no ammo left. It will self destroy!
+Jet cannot jump already 
+Jet is done.
+----------------------------------------
+Star's turn: 
+Revealing (6, 0): Empty space
+Revealing (6, 1): Empty space
+Revealing (6, 2): Empty space
+Revealing (7, 0): Empty space
+Revealing (7, 1): Current position
+Revealing (7, 2): Empty space
+Revealing (8, 0): Empty space
+Revealing (8, 1): Empty space
+Revealing (8, 2): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (7, 2)
+Star has no ammo left. It will self destroy!
+Star is done.
+----------------------------------------
+Harry's turn: 
+JumpBot is thinking...
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (0, 2): Empty space
+Revealing (1, 0): Empty space
+Revealing (1, 1): Current position
+Revealing (1, 2): Empty space
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+Revealing (2, 2): Empty space
+>> Harry fires.
+However no robots within shooting range .
+Harry jump to (2,8), (2/3)
+Harry is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+Jet has been removed from the battlefield.
+Star has been removed from the battlefield.
+----------------------------------------
+
+Battlefield State after Step 11:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |. . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . H . . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Ended ---
+Result: Harry is the last one standing!
+Battlefield: Destructor
