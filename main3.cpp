@@ -1647,7 +1647,68 @@ public:
 
     void fire() override
     {
-        LongShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideLongShotScoutBot", 
+                        "HideLongShotTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
 
     void think() override
@@ -1661,7 +1722,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -1699,8 +1760,70 @@ public:
 
     void fire() override
     {
-        SemiAutoBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideSemiAutoScoutBot", 
+                        "HideSemiAutoTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -1712,7 +1835,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -1750,8 +1873,70 @@ public:
 
     void fire() override
     {
-        ThirtyShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideThirtyShotScoutBot", 
+                        "HideThirtyShotTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -1763,7 +1948,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -1801,8 +1986,70 @@ public:
 
     void fire() override
     {
-        KnightBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideKnightScoutBot", 
+                        "HideKnightTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -1814,7 +2061,7 @@ public:
         KnightBot::look(0, 0); // Use KnightBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -1852,8 +2099,70 @@ public:
 
     void fire() override
     {
-        QueenBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideQueenScoutBot", 
+                        "HideQueenTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -1865,7 +2174,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -1903,8 +2212,70 @@ public:
 
     void fire() override
     {
-        VampireBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideVampireScoutBot", 
+                        "HideVampireTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -1916,7 +2287,7 @@ public:
         VampireBot::look(0, 0); // Use VampireBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -1954,7 +2325,72 @@ public:
 
     void fire() override
     {
-        ScoutBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideVampireScoutBot", 
+                        "HideLongShotScoutBot",
+                        "HideSemiAutoScoutBot",
+                        "HideThirtyShotScoutBot",
+                        "HideKnightScoutBot",
+                        "HideQueenScoutBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
 
     void think() override
@@ -1967,7 +2403,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2005,7 +2441,72 @@ public:
 
     void fire() override
     {
-        TrackBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "HideVampireTrackBot", 
+                        "HideLongShotTrackBot",
+                        "HideSemiAutoTrackBot",
+                        "HideThirtyShotScoutBot",
+                        "HideKnightScoutBot",
+                        "HideQueenScoutBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
 
     void think() override
@@ -2018,7 +2519,7 @@ public:
         TrackBot::look(0, 0); // Use TrackBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2056,8 +2557,70 @@ public:
 
     void fire() override
     {
-        LongShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotScoutBot", 
+                        "JumpLongShotTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2069,7 +2632,7 @@ public:
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2107,8 +2670,70 @@ public:
 
     void fire() override
     {
-        SemiAutoBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpSemiAutoScoutBot", 
+                        "JumpSemiAutoTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2120,7 +2745,7 @@ public:
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2157,8 +2782,70 @@ public:
 
     void fire() override
     {
-        ThirtyShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpThirtyShotScoutBot", 
+                        "JumpThirtyShotTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2170,7 +2857,7 @@ public:
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+     
     }
 
     void look(int X, int Y) override
@@ -2208,8 +2895,70 @@ public:
 
     void fire() override
     {
-        KnightBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpKnightScoutBot", 
+                        "JumpKnightTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2221,7 +2970,7 @@ public:
         KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
         fire();
-        move();
+        
     }
 
     void look(int X, int Y) override
@@ -2259,8 +3008,70 @@ public:
 
     void fire() override
     {
-        QueenBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpQueenScoutBot", 
+                        "JumpQueenTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2272,7 +3083,7 @@ public:
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -2310,8 +3121,70 @@ public:
 
     void fire() override
     {
-        VampireBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpVampireScoutBot", 
+                        "JumpVampireTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2323,7 +3196,7 @@ public:
         VampireBot::look(0, 0); // Use QueenBot's look for targeting
         think();
         fire();
-        move();
+       
     }
 
     void look(int X, int Y) override
@@ -2361,8 +3234,74 @@ public:
 
     void fire() override
     {
-        ScoutBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotScoutBot", 
+                        "JumpSemiAutoScoutBot",
+                        "JumpThirtyShotScoutBot",
+                        "JumpKnightScoutBot",
+                        "JumpQueenScoutBot",
+                        "JumpVampireScoutBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2374,7 +3313,7 @@ public:
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+      
     }
 
     void look(int X, int Y) override
@@ -2412,8 +3351,74 @@ public:
 
     void fire() override
     {
-        TrackBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotTrackBot", 
+                        "JumpSemiAutoTrackBot",
+                        "JumpThirtyShotTrackBot",
+                        "JumpKnightTrackBot",
+                        "JumpQueenTrackBot",
+                        "JumpVampireTrackBot"
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2425,7 +3430,7 @@ public:
         TrackBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
         fire();
-        move();
+
     }
 
     void look(int X, int Y) override
@@ -2464,7 +3469,68 @@ public:
 
     void fire() override
     {
-        LongShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotScoutBot", 
+                        "HideLongShotScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
 
     void think() override
@@ -2516,8 +3582,70 @@ public:
 
     void fire() override
     {
-        LongShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotTrackBot", 
+                        "HideLongShotTrackBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2567,8 +3695,70 @@ public:
 
     void fire() override
     {
-        SemiAutoBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpSemiAutoScoutBot", 
+                        "HideSemiAutoScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2615,8 +3805,70 @@ public:
 
     void fire() override
     {
-        SemiAutoBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpSemiAutoTrackBot", 
+                        "HideSemiAutoTrackBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2662,8 +3914,70 @@ public:
 
     void fire() override
     {
-        ThirtyShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpThirtyShotScoutBot", 
+                        "HideThirtyShotScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2709,8 +4023,70 @@ public:
 
     void fire() override
     {
-        ThirtyShotBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpThirtyShotTrackBot", 
+                        "HideThirtyShotTrackBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2756,8 +4132,70 @@ public:
 
     void fire() override
     {
-        KnightBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpKnightScoutBot", 
+                        "HideKnightScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2803,8 +4241,70 @@ public:
 
     void fire() override
     {
-        KnightBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpKnightTrackBot", 
+                        "HideKnightTrackBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2850,8 +4350,70 @@ public:
 
     void fire() override
     {
-        QueenBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpQueenScoutBot", 
+                        "HideQueenScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2897,8 +4459,70 @@ public:
 
     void fire() override
     {
-        QueenBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpLongShotScoutBot", 
+                        "HideLongShotScoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2934,6 +4558,7 @@ public:
 // inherits from VampireBot and ScoutBot 
 //******************************************
 class VampireScoutBot: public VampireBot, public ScoutBot {
+
 public:
     VampireScoutBot(const string& name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), VampireBot(name, x, y), ScoutBot(name, x, y) {}
 
@@ -2944,8 +4569,70 @@ public:
 
     void fire() override
     {
-        VampireBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpVampireScoutBot", 
+                        "HideVampirecoutBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -2991,8 +4678,70 @@ public:
 
     void fire() override
     {
-        VampireBot::fire();
+        if (hasFired)
+            return;
+        hasFired = true;
+        if (hasAmmo())
+        {
+        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
+            {
+                if (r && r != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->isHit())
+                    {
+                        validTargets.push_back(r);
+                    }
+                }
+            }
+            if (!validTargets.empty())
+            {
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    // Updated to only upgrade to these two specific types
+                    static const vector<string> types = {
+                        "JumpVampireTrackBot", 
+                        "HideVampireTrackBot"   
+                    };
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+            }
+            else
+            {
+                useAmmo();
+                logger << ">> " << name << " fires." << endl;
+                logger << "However no robots within shooting range ." << endl;
+            }
+        }
+        else
+        {
+            logger << name << " has no ammo left. It will self destroy!" << endl;
+            lives = 0;
+            isDie = true;
+        }
+        detectedTargets.clear();
     }
+
 
     void think() override
     {
@@ -3051,7 +4800,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -3100,7 +4849,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -3149,7 +4898,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+        
        
     }
 
@@ -3198,7 +4947,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -3248,7 +4997,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -3297,7 +5046,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -3346,8 +5095,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
-       
+      
     }
 
     void look(int X,int Y) override{
@@ -3396,7 +5144,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -3445,7 +5193,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -3494,7 +5242,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -3542,7 +5290,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -3591,7 +5339,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -3640,7 +5388,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -3689,7 +5437,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+    
        
     }
 
@@ -3738,7 +5486,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -3787,7 +5535,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
@@ -3838,7 +5586,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+  
        
     }
 
@@ -3887,7 +5635,7 @@ public:
         ScoutBot::look(0,0);
         think();
         fire();
-        move();
+      
        
     }
 
@@ -3937,7 +5685,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -3987,7 +5735,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -4036,7 +5784,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+
        
     }
 
@@ -4085,7 +5833,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+       
        
     }
 
@@ -4133,7 +5881,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+     
        
     }
 
@@ -4182,7 +5930,7 @@ public:
         TrackBot::look(0,0);
         think();
         fire();
-        move();
+ 
        
     }
 
@@ -4910,6 +6658,821 @@ void parseInputFile(const string &line, Battlefield &battlefield)
         battlefield.addNewRobot(newRobot);
         battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
     }
+    else if (tokens[0] == "HideLongShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideLongShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideSemiAutoBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideSemiAutoBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideThirtyShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpLongShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpLongShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpSemiAutoBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpSemiAutoBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpThirtyShotBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpThirtyShotBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpKnightBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpKnightBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpQueenBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpQueenBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpVampireBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpVampireBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "JumpTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new JumpTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "LongShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new LongShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "LongShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new LongShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "SemiAutoScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new SemiAutoScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "SemiAutoTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new SemiAutoTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "ThirtyShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new ThirtyShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "ThirtyShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new ThirtyShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "KnightScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new KnightScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "QueenScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new QueenScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "VampireScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new VampireScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideLongShotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideLongShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideLongShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideLongShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideSemiAutoScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideSemiAutoScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideSemiAutoTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideSemiAutoTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideThirtySHotScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideThirtyShotTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideThirtyShotTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideKnightTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideKnightTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideQueenTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideQueenTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireScoutBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireScoutBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    else if (tokens[0] == "HideVampireTrackBot" && tokens.size() >= 4)
+    {
+        string robotName = tokens[1];
+        int robotXCoordinates;
+        int robotYCoordinates;
+
+        if (tokens[2] == "random" && tokens[3] == "random")
+        {
+            robotXCoordinates = rand() % battlefield.getWidth();
+            robotYCoordinates = rand() % battlefield.getHeight();
+        }
+        else
+        {
+            robotXCoordinates = stoi(tokens[2]);
+            robotYCoordinates = stoi(tokens[3]);
+        }
+
+        Robot *newRobot = new HideVampireTrackBot(robotName, robotXCoordinates, robotYCoordinates);
+        battlefield.addNewRobot(newRobot);
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+    }
+
+    
 }
 
 //*****************************************************************************************
