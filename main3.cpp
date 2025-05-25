@@ -187,7 +187,7 @@ protected:
     bool hidden;
     bool isDie = false;  // true if robot is out of the game (no lives or no ammo)
     bool isHurt = false; // true if robot is hit this turn and should be requeued
-    virtual bool isHit() = 0;
+    virtual bool canBeHit() = 0;
     bool getEnemyDetectedNearby() const;
 
 public:
@@ -381,7 +381,7 @@ public:
     void look(int X, int Y) override;
     bool canUpgrade(int area) const;
     void setUpgraded(int area);
-    bool isHit() override;
+    bool canBeHit() override;
     void setPendingUpgrade(const string &type);
     bool PendingUpgrade() const;
     string getUpgradeType() const;
@@ -478,14 +478,14 @@ void GenericRobot::fire(int X, int Y)
     hasFired = true;
     if (hasAmmo())
     {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
         vector<Robot *> validTargets;
         for (Robot *r : detectedTargets)
         {
             if (r && r != this)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                if (gtarget && gtarget->isHit())
+                if (gtarget && gtarget->canBeHit())
                 {
                     validTargets.push_back(r);
                 }
@@ -610,7 +610,7 @@ void GenericRobot::setUpgraded(int area)
     }
 }
 
-bool GenericRobot::isHit()
+bool GenericRobot::canBeHit()
 {
     return true;
 }
@@ -692,14 +692,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-            // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -747,7 +747,7 @@ public:
         detectedTargets.clear();
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
         return !isHidden;
     }
@@ -829,14 +829,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-            // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -1118,7 +1118,7 @@ public:
                 if (target && target != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         if (hitProbability())
                         {
@@ -1200,7 +1200,7 @@ public:
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                 logger << getName() << "Knight fires at (" << targetX << "," << targetY << ")" << endl;
                 fired = true;
-                if (gtarget && gtarget->isHit())
+                if (gtarget && gtarget->canBeHit())
                 {
                     if (hitProbability())
                     {
@@ -1513,7 +1513,7 @@ public:
                 if (target && target != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    if (gtarget->isHit())
+                    if (gtarget->canBeHit())
                     {
                         logger << getName() << " Queen fires at (" << targetX << "," << targetY << ")\n";
                         if (hitProbability())
@@ -1652,14 +1652,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -1730,9 +1730,9 @@ public:
         LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -1765,14 +1765,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -1843,9 +1843,9 @@ public:
         SemiAutoBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -1878,14 +1878,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -1956,9 +1956,9 @@ public:
         ThirtyShotBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -1991,14 +1991,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2069,9 +2069,9 @@ public:
         KnightBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2104,14 +2104,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2182,9 +2182,9 @@ public:
         QueenBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2217,14 +2217,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2295,9 +2295,9 @@ public:
         VampireBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2330,14 +2330,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2411,9 +2411,9 @@ public:
         ScoutBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2446,14 +2446,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2527,9 +2527,9 @@ public:
         TrackBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return HideBot::isHit();
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2562,14 +2562,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2640,9 +2640,9 @@ public:
         LongShotBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2675,14 +2675,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2753,9 +2753,9 @@ public:
         SemiAutoBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2787,14 +2787,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2865,9 +2865,9 @@ public:
         ThirtyShotBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -2900,14 +2900,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -2978,9 +2978,9 @@ public:
         KnightBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3013,14 +3013,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3091,9 +3091,9 @@ public:
         QueenBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3126,14 +3126,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3204,9 +3204,9 @@ public:
         VampireBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3239,14 +3239,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3321,9 +3321,9 @@ public:
         ScoutBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3356,14 +3356,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3438,9 +3438,9 @@ public:
         TrackBot::look(X, Y);
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return JumpBot::isHit();
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3474,14 +3474,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3552,9 +3552,9 @@ public:
         LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3587,14 +3587,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3665,9 +3665,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3700,14 +3700,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3778,9 +3778,9 @@ public:
         ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3810,14 +3810,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3888,9 +3888,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3919,14 +3919,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -3997,9 +3997,9 @@ public:
         ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4028,14 +4028,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4106,9 +4106,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4137,14 +4137,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4215,9 +4215,9 @@ public:
         ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4246,14 +4246,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4324,9 +4324,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4355,14 +4355,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4433,9 +4433,9 @@ public:
         ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4464,14 +4464,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4542,9 +4542,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4574,14 +4574,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4652,9 +4652,9 @@ public:
         ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return ScoutBot::isHit();
+        return ScoutBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4683,14 +4683,14 @@ public:
         hasFired = true;
         if (hasAmmo())
         {
-        // Filter detectedTargets to only include robots that are hittable (isHit() == true)
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
                 if (r && r != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->isHit())
+                    if (gtarget && gtarget->canBeHit())
                     {
                         validTargets.push_back(r);
                     }
@@ -4761,9 +4761,9 @@ public:
         TrackBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
-    bool isHit() override
+    bool canBeHit() override
     {
-        return TrackBot::isHit();
+        return TrackBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4808,8 +4808,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -4857,8 +4857,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -4906,8 +4906,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -4955,8 +4955,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5005,8 +5005,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5054,8 +5054,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5102,8 +5102,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5152,8 +5152,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5201,8 +5201,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5250,8 +5250,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5298,8 +5298,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5347,8 +5347,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return HideBot::isHit();
+    bool canBeHit() override{
+        return HideBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5396,8 +5396,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5445,8 +5445,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5494,8 +5494,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5543,8 +5543,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5594,8 +5594,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5643,8 +5643,8 @@ public:
         ScoutBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5693,8 +5693,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5743,8 +5743,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5792,8 +5792,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5841,8 +5841,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5889,8 +5889,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
@@ -5938,8 +5938,8 @@ public:
         TrackBot::look(X,Y);
     }
 
-    bool isHit() override{
-        return JumpBot::isHit();
+    bool canBeHit() override{
+        return JumpBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf){
