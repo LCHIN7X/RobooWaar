@@ -199,7 +199,7 @@ public:
     virtual void think() = 0;
     virtual void act() = 0;
     virtual void move() = 0;
-    virtual void fire() = 0;
+    virtual void fire(int X, int Y) = 0;
     virtual void look(int X, int Y) = 0;
 
     // Common robot functions
@@ -280,7 +280,7 @@ public:
         : Robot(name, x, y), ammo(initialAmmo) {}
 
     virtual ~ShootingRobot() = default;
-    virtual void fire() = 0;
+    virtual void fire(int X, int Y) = 0;
     bool hasAmmo() const { return ammo > 0; }
 
     void useAmmo()
@@ -377,7 +377,7 @@ public:
     void think() override;
     void act() override;
     void move() override;
-    void fire() override;
+    void fire(int X, int Y) override;
     void look(int X, int Y) override;
     bool canUpgrade(int area) const;
     void setUpgraded(int area);
@@ -420,13 +420,13 @@ void GenericRobot::think()
     logger << ">> " << name << " is thinking...\n";
     if (getEnemyDetectedNearby())
     {
-        fire();
+        fire(0,0);
         move();
     }
     else
     {
         move();
-        fire();
+        fire(0,0);
     }
 }
 void GenericRobot::act()
@@ -471,7 +471,7 @@ void GenericRobot::move()
     logger << name << " could not move (no available adjacent cell).\n";
 }
 
-void GenericRobot::fire()
+void GenericRobot::fire(int X, int Y)
 {
     if (hasFired)
         return;
@@ -495,8 +495,8 @@ void GenericRobot::fire()
         {
             int idx = rand() % validTargets.size();
             Robot *target = validTargets[idx];
-            int targetX = target->getX();
-            int targetY = target->getY();
+            int targetX = target->getX()+X;
+            int targetY = target->getY()+Y;
             logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
             useAmmo();
             if (target->isHidden())
@@ -681,11 +681,11 @@ public:
         logger << "HideBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire();
+        fire(0, 0);
         move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -818,11 +818,11 @@ public:
         logger << "JumpBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire();
+        fire(0, 0);
         move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -905,7 +905,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -995,7 +995,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1092,7 +1092,7 @@ public:
         logger << name << " got 30 shells replace current shells \n";
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (shell_count <= 0)
         {
@@ -1171,7 +1171,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1287,7 +1287,7 @@ public:
         }
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (scout_count >= 3)
         {
@@ -1334,7 +1334,7 @@ public:
         logger << "ScoutBot is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
-        fire();
+        fire(0, 0);
         move();
     }
 
@@ -1399,7 +1399,7 @@ public:
     {
         logger << "TrackBot is thinking..." << endl;
         look(0, 0);
-        fire();
+        fire(0, 0);
         move();
     }
 
@@ -1421,7 +1421,7 @@ public:
         return tracker;
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (tracker == 0)
         {
@@ -1479,7 +1479,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1560,7 +1560,7 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {};
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (!hasAmmo())
         {
@@ -1645,7 +1645,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1721,7 +1721,7 @@ public:
     {
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -1758,7 +1758,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1834,7 +1834,7 @@ public:
     {
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
-        fire();
+        fire(0,0);
        
     }
 
@@ -1871,7 +1871,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -1947,7 +1947,7 @@ public:
     {
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
-        fire();
+        fire(0,0);
        
     }
 
@@ -1984,7 +1984,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2060,7 +2060,7 @@ public:
     {
         KnightBot::look(0, 0); // Use KnightBot's look for targeting
         think();
-        fire();
+        fire(0,0);
      
     }
 
@@ -2097,7 +2097,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2173,7 +2173,7 @@ public:
     {
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
-        fire();
+        fire(0,0);
       
     }
 
@@ -2210,7 +2210,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2286,7 +2286,7 @@ public:
     {
         VampireBot::look(0, 0); // Use VampireBot's look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -2323,7 +2323,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2402,7 +2402,7 @@ public:
     {
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -2439,7 +2439,7 @@ public:
         HideBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2518,7 +2518,7 @@ public:
     {
         TrackBot::look(0, 0); // Use TrackBot's look for targeting
         think();
-        fire();
+        fire(0,0);
        
     }
 
@@ -2555,7 +2555,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2631,7 +2631,7 @@ public:
     {
         LongShotBot::look(0, 0); // Use long-range look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -2668,7 +2668,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2744,7 +2744,7 @@ public:
     {
         SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -2780,7 +2780,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2856,7 +2856,7 @@ public:
     {
         ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
-        fire();
+        fire(0,0);
      
     }
 
@@ -2893,7 +2893,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -2969,7 +2969,7 @@ public:
     {
         KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
         think();
-        fire();
+        fire(0,0);
         
     }
 
@@ -3006,7 +3006,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3082,7 +3082,7 @@ public:
     {
         QueenBot::look(0, 0); // Use QueenBot's look for targeting
         think();
-        fire();
+        fire(0,0);
       
     }
 
@@ -3119,7 +3119,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3195,7 +3195,7 @@ public:
     {
         VampireBot::look(0, 0); // Use QueenBot's look for targeting
         think();
-        fire();
+        fire(0,0);
        
     }
 
@@ -3232,7 +3232,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3312,7 +3312,7 @@ public:
     {
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
-        fire();
+        fire(0,0);
       
     }
 
@@ -3349,7 +3349,7 @@ public:
         JumpBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3429,7 +3429,7 @@ public:
     {
         TrackBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
-        fire();
+        fire(0,0);
 
     }
 
@@ -3467,7 +3467,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3543,7 +3543,7 @@ public:
     {
         LongShotBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -3580,7 +3580,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3656,7 +3656,7 @@ public:
     {
         LongShotBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -3693,7 +3693,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3769,7 +3769,7 @@ public:
     {
         SemiAutoBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -3803,7 +3803,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3879,7 +3879,7 @@ public:
     {
         SemiAutoBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -3912,7 +3912,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -3988,7 +3988,7 @@ public:
     {
         ScoutBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4021,7 +4021,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4097,7 +4097,7 @@ public:
     {
         TrackBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4130,7 +4130,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4206,7 +4206,7 @@ public:
     {
         ScoutBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4239,7 +4239,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4315,7 +4315,7 @@ public:
     {
         TrackBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4348,7 +4348,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4424,7 +4424,7 @@ public:
     {
         ScoutBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4457,7 +4457,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4533,7 +4533,7 @@ public:
     {
         TrackBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4567,7 +4567,7 @@ public:
         ScoutBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4643,7 +4643,7 @@ public:
     {
         ScoutBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4676,7 +4676,7 @@ public:
         TrackBot::move();
     }
 
-    void fire() override
+    void fire(int X, int Y) override
     {
         if (hasFired)
             return;
@@ -4752,7 +4752,7 @@ public:
     {
         TrackBot::look(0, 0);
         think();
-        fire();
+        fire(0,0);
         move();
     }
 
@@ -4788,8 +4788,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        LongShotBot::fire();
+    void fire(int X, int Y) override{
+        LongShotBot::fire(0,0);
     }
 
     void think() override{
@@ -4799,7 +4799,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
     
        
     }
@@ -4837,8 +4837,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        SemiAutoBot::fire();
+    void fire(int X, int Y) override{
+        SemiAutoBot::fire(0,0);
     }
 
     void think() override{
@@ -4848,7 +4848,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
        
        
     }
@@ -4886,8 +4886,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        ThirtyShotBot::fire();
+    void fire(int X, int Y) override{
+        ThirtyShotBot::fire(0,0);
     }
 
     void think() override{
@@ -4897,7 +4897,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
         
        
     }
@@ -4935,8 +4935,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        KnightBot::fire();
+    void fire(int X, int Y) override{
+        KnightBot::fire(0,0);
     }
 
     void think() override{
@@ -4946,7 +4946,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
       
        
     }
@@ -4985,8 +4985,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        QueenBot::fire();
+    void fire(int X, int Y) override{
+        QueenBot::fire(0,0);
     }
 
     void think() override{
@@ -4996,7 +4996,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
      
        
     }
@@ -5034,8 +5034,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        VampireBot::fire();
+    void fire(int X, int Y) override{
+        VampireBot::fire(0,0);
     }
 
     void think() override{
@@ -5045,7 +5045,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
        
        
     }
@@ -5083,8 +5083,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        LongShotBot::fire();
+    void fire(int X, int Y) override{
+        LongShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5094,7 +5094,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
       
     }
 
@@ -5132,8 +5132,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        SemiAutoBot::fire();
+    void fire(int X, int Y) override{
+        SemiAutoBot::fire(0,0);
     }
 
     void think() override{
@@ -5143,7 +5143,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
     
        
     }
@@ -5181,8 +5181,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        ThirtyShotBot::fire();
+    void fire(int X, int Y) override{
+        ThirtyShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5192,7 +5192,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
      
        
     }
@@ -5230,8 +5230,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        KnightBot::fire();
+    void fire(int X, int Y) override{
+        KnightBot::fire(0,0);
     }
 
     void think() override{
@@ -5241,7 +5241,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5278,8 +5278,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        QueenBot::fire();
+    void fire(int X, int Y) override{
+        QueenBot::fire(0,0);
     }
 
     void think() override{
@@ -5289,7 +5289,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5327,8 +5327,8 @@ public:
         HideBot::move();
     }
 
-    void fire() override{
-        VampireBot::fire();
+    void fire(int X, int Y) override{
+        VampireBot::fire(0,0);
     }
 
     void think() override{
@@ -5338,7 +5338,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
   
        
     }
@@ -5376,8 +5376,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        LongShotBot::fire();
+    void fire(int X, int Y) override{
+        LongShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5387,7 +5387,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
       
        
     }
@@ -5425,8 +5425,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        SemiAutoBot::fire();
+    void fire(int X, int Y) override{
+        SemiAutoBot::fire(0,0);
     }
 
     void think() override{
@@ -5436,7 +5436,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
     
        
     }
@@ -5474,8 +5474,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        ThirtyShotBot::fire();
+    void fire(int X, int Y) override{
+        ThirtyShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5485,7 +5485,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5523,8 +5523,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        KnightBot::fire();
+    void fire(int X, int Y) override{
+        KnightBot::fire(0,0);
     }
 
     void think() override{
@@ -5534,7 +5534,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
  
        
     }
@@ -5574,8 +5574,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        QueenBot::fire();
+    void fire(int X, int Y) override{
+        QueenBot::fire(0,0);
     }
 
     void think() override{
@@ -5585,7 +5585,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
   
        
     }
@@ -5623,8 +5623,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        VampireBot::fire();
+    void fire(int X, int Y) override{
+        VampireBot::fire(0,0);
     }
 
     void think() override{
@@ -5634,7 +5634,7 @@ public:
     void act() override{
         ScoutBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
       
        
     }
@@ -5673,8 +5673,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        LongShotBot::fire();
+    void fire(int X, int Y) override{
+        LongShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5684,7 +5684,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5723,8 +5723,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        SemiAutoBot::fire();
+    void fire(int X, int Y) override{
+        SemiAutoBot::fire(0,0);
     }
 
     void think() override{
@@ -5734,7 +5734,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5772,8 +5772,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        ThirtyShotBot::fire();
+    void fire(int X, int Y) override{
+        ThirtyShotBot::fire(0,0);
     }
 
     void think() override{
@@ -5783,7 +5783,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
 
        
     }
@@ -5821,8 +5821,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        KnightBot::fire();
+    void fire(int X, int Y) override{
+        KnightBot::fire(0,0);
     }
 
     void think() override{
@@ -5832,7 +5832,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
        
        
     }
@@ -5869,8 +5869,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        QueenBot::fire();
+    void fire(int X, int Y) override{
+        QueenBot::fire(0,0);
     }
 
     void think() override{
@@ -5880,7 +5880,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
      
        
     }
@@ -5918,8 +5918,8 @@ public:
         JumpBot::move();
     }
 
-    void fire() override{
-        VampireBot::fire();
+    void fire(int X, int Y) override{
+        VampireBot::fire(0,0);
     }
 
     void think() override{
@@ -5929,7 +5929,7 @@ public:
     void act() override{
         TrackBot::look(0,0);
         think();
-        fire();
+        fire(0,0);
  
        
     }
