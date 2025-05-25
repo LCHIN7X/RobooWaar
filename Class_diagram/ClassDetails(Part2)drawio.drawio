@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.9">
+  <diagram name="Page-1" id="7hEuU5L8WPl_ntsHJS8Y">
+    <mxGraphModel dx="902" dy="464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CGvUghyQHNpQq5ck0WqS-1" value="Hidebot" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="110" width="280" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="CGvUghyQHNpQq5ck0WqS-2" value="&lt;div&gt;&amp;nbsp; &amp;nbsp; -int hide_count = 0;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; -bool isHidden = false;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="CGvUghyQHNpQq5ck0WqS-1">
+          <mxGeometry x="-10" y="30" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CGvUghyQHNpQq5ck0WqS-3" value="&lt;div style=&quot;text-align: left;&quot;&gt;+HideBot(const string &amp;amp;name, int x, int y)&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;: Robot(name, x, y),&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;GenericRobot(name, x, y) {}&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+void move() override&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ bool getHiddenStatus() const&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+void appear()&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+void act() override&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ void fire() override&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+bool isHit() override&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="CGvUghyQHNpQq5ck0WqS-1">
+          <mxGeometry x="10" y="150" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CGvUghyQHNpQq5ck0WqS-4" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="110" y="190" as="sourcePoint" />
+            <mxPoint x="390" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
