@@ -517,9 +517,7 @@ void GenericRobot::fire(int X, int Y)
         }
         else
         {
-            useAmmo();
-            logger << ">> " << name << " fires." << endl;
-            logger << "However no robots within shooting range ." << endl;
+            logger << "No shooting as no robots within shooting range ." << endl;
         }
     }
     else
@@ -730,9 +728,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
         }
         else
@@ -874,9 +870,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
         }
         else
@@ -995,8 +989,7 @@ public:
 
         if (!fired)
         {
-            logger << ">> " << getName() << " fires." << endl;
-            logger << "no robot there " << endl;
+            logger << "No shooting as no robots within shooting range . " << endl;
         }
     }
 };
@@ -1051,9 +1044,7 @@ public:
 
         if (!target)
         {
-            useAmmo();
-            logger << ">> " << getName() << "SemiAuto fires." << endl;
-            logger << "However no robots available to target." << endl;
+            logger << "No shooting as no robots within shooting range ." << endl;
             return;
         }
 
@@ -1188,7 +1179,7 @@ public:
 
         if (!fired)
         {
-            logger << getName() << " no target to shoot\n";
+            logger  << " No shooting as no robots within shooting range .";
         }
     }
 
@@ -1269,7 +1260,7 @@ public:
         }
         if (!fired)
         {
-            logger << getName() << " no robots in diagonal to fire at\n";
+            logger <<" No shooting as no robots in diagonal to fire at\n";
         }
         else if (hitSuccessful)
         {
@@ -2098,9 +2089,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
 
             if (!hasAmmo())
@@ -2219,9 +2208,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
 
             if (!hasAmmo())
@@ -2681,9 +2668,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
             if (!hasAmmo())
             {
@@ -2801,9 +2786,7 @@ public:
             }
             else
             {
-                useAmmo();
-                logger << ">> " << name << " fires." << endl;
-                logger << "However no robots within shooting range ." << endl;
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
             if (!hasAmmo())
             {
