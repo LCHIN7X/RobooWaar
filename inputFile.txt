@@ -1,5 +1,5 @@
 M by N : 10 10
-steps: 30
+steps: 100
 robots: 4 
 LongShotBot Kidd 3 6
 HideLongShotBot Jet 3 7
