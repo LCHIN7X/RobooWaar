@@ -507,6 +507,13 @@ void GenericRobot::fire(int X, int Y)
             {
                 logger << "Missed!" << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -714,6 +721,12 @@ public:
                 {
                     logger << "Missed!" << endl;
                 }
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
+                }
             }
             else
             {
@@ -851,6 +864,13 @@ public:
                 {
                     logger << "Missed!" << endl;
                 }
+
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
+                }
             }
             else
             {
@@ -861,7 +881,7 @@ public:
         }
         else
         {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
+            logger << name << " has no ammo left. It will self destruct!" << endl;
             lives = 0;
             isDie = true;
         }
@@ -949,6 +969,14 @@ public:
                         logger << "Missed!" << endl;
                         fired = true;
                     }
+
+                    if (!hasAmmo())
+                    {
+                        logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                        lives = 0;
+                        isDie = true;
+                    }
+
                     break;
                 }
             }
@@ -1040,6 +1068,13 @@ public:
             else
             {
                 logger << "Shot " << (i + 1) << " missed!" << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
 
@@ -1183,6 +1218,7 @@ public:
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                 logger << getName() << "Knight fires at (" << targetX << "," << targetY << ")" << endl;
+                useAmmo();
                 fired = true;
                 if (gtarget && gtarget->canBeHit())
                 {
@@ -1674,6 +1710,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -1785,6 +1827,13 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -1894,6 +1943,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2005,6 +2060,13 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -2115,6 +2177,13 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -2224,6 +2293,13 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2339,6 +2415,13 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -2453,6 +2536,13 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -2562,6 +2652,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2673,6 +2769,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -2781,6 +2883,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2892,6 +3000,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3002,6 +3116,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3111,6 +3231,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3226,6 +3352,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3340,6 +3472,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3450,6 +3588,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3563,6 +3707,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0; 
+                isDie = true;
+            }
         }
         else
         {
@@ -3674,6 +3824,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3781,6 +3937,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3890,6 +4052,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -3997,6 +4165,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4106,6 +4280,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -4213,6 +4393,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4322,6 +4508,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -4429,6 +4621,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4539,6 +4737,12 @@ public:
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
             }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
+            }
         }
         else
         {
@@ -4646,6 +4850,12 @@ public:
                 useAmmo();
                 logger << ">> " << name << " fires." << endl;
                 logger << "However no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -7709,6 +7919,7 @@ int main()
                    << ", Name: " << robot->getName()
                    << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
                    << ", Life: " << robot->getLives();
+
             // Check if robot is a shooter
             ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
             if (shooter)
