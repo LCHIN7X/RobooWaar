@@ -1132,6 +1132,10 @@ public:
             return;
         }
 
+        if (hasFired)
+            return;
+        hasFired = true;
+
         int x = getX();
         int y = getY();
         bool fired = false;
@@ -1179,7 +1183,7 @@ public:
 
         if (!fired)
         {
-            logger  << " No shooting as no robots within shooting range .";
+            logger << " No shooting as no robots within shooting range .";
         }
     }
 
@@ -1260,7 +1264,7 @@ public:
         }
         if (!fired)
         {
-            logger <<" No shooting as no robots in diagonal to fire at\n";
+            logger << " No shooting as no robots in diagonal to fire at\n";
         }
         else if (hitSuccessful)
         {
@@ -1624,6 +1628,10 @@ public:
             isDie = true;
             return;
         }
+
+        if (hasFired)
+            return;
+        hasFired = true;
 
         if (!detectedTargets.empty())
         {
@@ -3306,7 +3314,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        QueenScoutBot::fire(X, Y);
+        QueenBot::fire(X, Y);
     }
 
     void think() override
