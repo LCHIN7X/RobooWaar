@@ -7708,7 +7708,14 @@ int main()
             logger << "  Type: " << type
                    << ", Name: " << robot->getName()
                    << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
-                   << ", Life: " << robot->getLives() << endl;
+                   << ", Life: " << robot->getLives();
+            // Check if robot is a shooter
+            ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
+            if (shooter)
+            {
+                logger << ", Ammo: " << shooter->getAmmo();
+            }
+            logger << endl;
         }
 
         battlefield.simulationStep(); // Executes turns, cleans up, respawns
