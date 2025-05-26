@@ -1571,6 +1571,10 @@ public:
                 logger << "Hit! (" << target->getName() << ") be killed" << endl;
 
                 target->takeDamage();
+                static const vector<string> types = {"HideVampireBot", "JumpVampireBot", "VampireScoutBot", "VampireTrackBot"};
+                int t = rand() % types.size();
+                setPendingUpgrade(types[t]);
+                logger << getName() << " will upgrade in to " << types[t] << "next turn" << endl;
 
                 if (getLives() < 3)
                 {
@@ -1590,11 +1594,6 @@ public:
                     logger << getName() << " is already at max lives (" << getLives() << "), cannot gain extra life from this kill." << endl;
                 }
             }
-
-            static const vector<string> types = {"HideVampireBot", "JumpVampireBot", "VampireScoutBot", "VampireTrackBot"};
-            int t = rand() % types.size();
-            setPendingUpgrade(types[t]);
-            logger << getName() << " will upgrade in to " << types[t] << "next turn" << endl;
         }
         else
         {
