@@ -466,7 +466,7 @@ void GenericRobot::fire(int X, int Y)
         vector<Robot *> validTargets;
         for (Robot *r : detectedTargets)
         {
-            if (r && r != this)
+            if ((r && r != this)&&!isHurt)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                 if (gtarget && gtarget->canBeHit())
@@ -506,6 +506,13 @@ void GenericRobot::fire(int X, int Y)
             else
             {
                 logger << "Missed!" << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -678,7 +685,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -711,6 +718,12 @@ public:
                 else
                 {
                     logger << "Missed!" << endl;
+                }
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
                 }
             }
             else
@@ -813,7 +826,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -847,6 +860,13 @@ public:
                 {
                     logger << "Missed!" << endl;
                 }
+
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
+                }
             }
             else
             {
@@ -855,7 +875,7 @@ public:
         }
         else
         {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
+            logger << name << " has no ammo left. It will self destruct!" << endl;
             lives = 0;
             isDie = true;
         }
@@ -943,6 +963,14 @@ public:
                         logger << "Missed!" << endl;
                         fired = true;
                     }
+
+                    if (!hasAmmo())
+                    {
+                        logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                        lives = 0;
+                        isDie = true;
+                    }
+
                     break;
                 }
             }
@@ -1031,6 +1059,13 @@ public:
             else
             {
                 logger << "Shot " << (i + 1) << " missed!" << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
 
@@ -1174,6 +1209,7 @@ public:
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                 logger << getName() << "Knight fires at (" << targetX << "," << targetY << ")" << endl;
+                useAmmo();
                 fired = true;
                 if (gtarget && gtarget->canBeHit())
                 {
@@ -1612,16 +1648,18 @@ public:
 
     void fire(int X, int Y) override
     {
+
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1662,6 +1700,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -1721,16 +1765,19 @@ public:
 
     void fire(int X, int Y) override
     {
+        
+
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1771,6 +1818,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -1829,16 +1883,18 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1879,6 +1935,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -1937,16 +1999,18 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1987,6 +2051,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2045,16 +2116,18 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2095,6 +2168,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2153,16 +2233,18 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2203,6 +2285,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2270,7 +2359,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2315,6 +2404,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2382,7 +2478,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2427,6 +2523,13 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2488,13 +2591,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2535,6 +2639,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2596,13 +2706,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2643,6 +2754,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2703,13 +2820,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2750,6 +2868,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2811,13 +2935,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2858,6 +2983,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -2919,13 +3050,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2966,6 +3098,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3027,13 +3165,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3074,6 +3213,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3141,7 +3286,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3186,6 +3331,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3253,7 +3404,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3298,6 +3449,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3360,13 +3517,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3407,6 +3565,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3470,13 +3634,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3517,6 +3682,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0; 
+                isDie = true;
             }
         }
         else
@@ -3579,13 +3750,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3626,6 +3798,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3685,13 +3863,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3732,6 +3911,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3791,13 +3976,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3838,6 +4024,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -3897,13 +4089,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3944,6 +4137,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4003,13 +4202,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4050,6 +4250,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4109,13 +4315,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4156,6 +4363,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4215,13 +4428,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4262,6 +4476,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4321,13 +4541,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4368,6 +4589,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4428,13 +4655,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4475,6 +4703,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -4534,13 +4768,14 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4581,6 +4816,12 @@ public:
             else
             {
                 logger << "No shooting as no robots within shooting range ." << endl;
+            }
+            if (!hasAmmo())
+            {
+                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                lives = 0;
+                isDie = true;
             }
         }
         else
@@ -7643,7 +7884,15 @@ int main()
             logger << "  Type: " << type
                    << ", Name: " << robot->getName()
                    << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
-                   << ", Life: " << robot->getLives() << endl;
+                   << ", Life: " << robot->getLives();
+
+            // Check if robot is a shooter
+            ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
+            if (shooter)
+            {
+                logger << ", Ammo: " << shooter->getAmmo();
+            }
+            logger << endl;
         }
 
         battlefield.simulationStep(); // Executes turns, cleans up, respawns
