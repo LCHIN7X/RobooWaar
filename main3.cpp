@@ -466,7 +466,7 @@ void GenericRobot::fire(int X, int Y)
         vector<Robot *> validTargets;
         for (Robot *r : detectedTargets)
         {
-            if (r && r != this)
+            if ((r && r != this)&&!isHurt)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                 if (gtarget && gtarget->canBeHit())
@@ -685,7 +685,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -826,7 +826,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1659,7 +1659,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1777,7 +1777,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -1894,7 +1894,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2010,7 +2010,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2127,7 +2127,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2244,7 +2244,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2359,7 +2359,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2478,7 +2478,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2598,7 +2598,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2713,7 +2713,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2827,7 +2827,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -2942,7 +2942,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3057,7 +3057,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3172,7 +3172,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3286,7 +3286,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3404,7 +3404,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3524,7 +3524,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3641,7 +3641,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3757,7 +3757,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3870,7 +3870,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -3983,7 +3983,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4096,7 +4096,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4209,7 +4209,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4322,7 +4322,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4435,7 +4435,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4548,7 +4548,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4662,7 +4662,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())
@@ -4775,7 +4775,7 @@ public:
             vector<Robot *> validTargets;
             for (Robot *r : detectedTargets)
             {
-                if (r && r != this)
+                if ((r && r != this)&&!isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                     if (gtarget && gtarget->canBeHit())

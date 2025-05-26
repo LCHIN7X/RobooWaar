@@ -72,6 +72,39 @@ Harry try fire next round
 Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
+King's turn: 
+Revealing (2, 4): Empty space
+Revealing (2, 5): Empty space
+Revealing (2, 6): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Current position
+Revealing (3, 6): Enemy Kidd
+Revealing (4, 4): Empty space
+Revealing (4, 5): Empty space
+Revealing (4, 6): Empty space
+>> King is thinking...
+>> King fires at (3, 6)
+Missed!
+>> King is moving...
+King moved to (4, 5)
+King is done.
+----------------------------------------
+Queen's turn: 
+Revealing (2, 8): Empty space
+Revealing (2, 9): Empty space
+Revealing (2, 10): Out of bounds
+Revealing (3, 8): Empty space
+Revealing (3, 9): Current position
+Revealing (3, 10): Out of bounds
+Revealing (4, 8): Empty space
+Revealing (4, 9): Empty space
+Revealing (4, 10): Out of bounds
+>> Queen is thinking...
+>> Queen is moving...
+Queen moved to (2, 8)
+No shooting as no robots within shooting range .
+Queen is done.
+----------------------------------------
 Star's turn: 
 ScoutBot is thinking...
 Star try scan it next round 
@@ -163,7 +196,7 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 2:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . . . . . . . H . | 0
 1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . S . . . . | 3
@@ -223,11 +256,29 @@ Star try scan it next round
 Star jump to (2,6), (2/3)
 No shooting as no robots within shooting range .
 Star is done.
+-----------------------------------
+King was hit and skips this turn.
+----------------------------------------
+Jet's turn: 
+Revealing (8, 6): Empty space
+Revealing (8, 7): Empty space
+Revealing (8, 8): Empty space
+Revealing (9, 6): Empty space
+Revealing (9, 7): Current position
+Revealing (9, 8): Empty space
+Revealing (10, 6): Out of bounds
+Revealing (10, 7): Out of bounds
+Revealing (10, 8): Out of bounds
+>> Jet is thinking...
+>> Jet is moving...
+Jet moved to (8, 6)
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 3:
+Battlefield State after Step 5:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . K . . . . . | 0
@@ -283,6 +334,22 @@ Harry cannot fire, no tracker left
 Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
+Queen's turn: 
+Revealing (0, 6): Empty space
+Revealing (0, 7): Empty space
+Revealing (0, 8): Empty space
+Revealing (1, 6): Empty space
+Revealing (1, 7): Current position
+Revealing (1, 8): Empty space
+Revealing (2, 6): Empty space
+Revealing (2, 7): Empty space
+Revealing (2, 8): Empty space
+>> Queen is thinking...
+>> Queen is moving...
+Queen moved to (2, 7)
+No shooting as no robots within shooting range .
+Queen is done.
+----------------------------------------
 Star's turn: 
 Star scan the battlefield
 got robot: Kidd at (0,2)
@@ -295,9 +362,10 @@ No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
+Jet has been removed from the battlefield.
 ----------------------------------------
 
-Battlefield State after Step 4:
+Battlefield State after Step 6:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
@@ -363,7 +431,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 5:
+Battlefield State after Step 8:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
@@ -433,7 +501,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 6:
+Battlefield State after Step 9:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. J . . . . . . . . | 0
@@ -495,7 +563,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 7:
+Battlefield State after Step 10:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
@@ -557,7 +625,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 8:
+Battlefield State after Step 11:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
@@ -619,7 +687,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 9:
+Battlefield State after Step 12:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
@@ -681,7 +749,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 10:
+Battlefield State after Step 16:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -743,7 +811,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 11:
+Battlefield State after Step 24:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -805,7 +873,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 12:
+Battlefield State after Step 28:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -867,7 +935,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 13:
+Battlefield State after Step 31:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -929,7 +997,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 14:
+Battlefield State after Step 33:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -991,7 +1059,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 15:
+Battlefield State after Step 34:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1053,7 +1121,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 16:
+Battlefield State after Step 36:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1115,7 +1183,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 17:
+Battlefield State after Step 50:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1177,7 +1245,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 18:
+Battlefield State after Step 59:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1239,7 +1307,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 19:
+Battlefield State after Step 68:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1301,7 +1369,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 20:
+Battlefield State after Step 71:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1363,7 +1431,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 21:
+Battlefield State after Step 73:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1425,7 +1493,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 22:
+Battlefield State after Step 75:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1487,7 +1555,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 23:
+Battlefield State after Step 79:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1549,7 +1617,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 24:
+Battlefield State after Step 82:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
@@ -1611,7 +1679,7 @@ Star is done.
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
 
-Battlefield State after Step 25:
+Battlefield State after Step 84:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . J . . . . . . . | 0
