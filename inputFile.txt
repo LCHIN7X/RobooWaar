@@ -1,7 +1,7 @@
 M by N : 10 10
 steps: 30
 robots: 4 
-TrackBot Kidd 3 6
+SemiAutoBot Kidd 3 6
 ScoutBot Jet 3 7
 TrackBot Harry 3 8
 ScoutBot Star random random
