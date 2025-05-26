@@ -1300,18 +1300,19 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void look(int X, int Y)
+    void look(int X, int Y) override  
     {
+    
+        availableSpaces.clear();
+
+  
         if (scout_count >= 3)
         {
             logger << getName() << " reach the limit,cannot scan already\n";
-            return;
         }
-
-        if (rand() % 2 == 0)
+        else if (rand() % 2 == 0)
         {
             logger << getName() << " scan the battlefield\n";
-
             for (int y = 0; y < battlefield->getHeight(); ++y)
             {
                 for (int x = 0; x < battlefield->getWidth(); ++x)
@@ -1324,55 +1325,103 @@ public:
                     }
                 }
             }
-
             scout_count++;
         }
         else
         {
             logger << getName() << " try scan it next round \n";
         }
+
+       
+        int x = getX();
+        int y = getY();
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                if (dx == 0 && dy == 0) continue; 
+                
+                int newX = x + dx;
+                int newY = y + dy;
+                
+                if (battlefield->isPositionAvailable(newX, newY))
+                {
+                    availableSpaces.emplace_back(newX, newY);
+                }
+            }
+        }
     }
 
     void fire(int X, int Y) override
     {
-        if (scout_count >= 3)
-        {
-            logger << getName() << " reach the limit,cannot fire already\n";
+        if (hasFired)
             return;
-        }
-
-        bool hitTarget = false;
-        if (rand() % 2 == 0)
+        hasFired = true;
+        if (hasAmmo())
         {
-            logger << getName() << " fires (scout style)\n";
-            // Example: just log all visible robots (like scan)
-            for (int y = 0; y < battlefield->getHeight(); ++y)
+            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
             {
-                for (int x = 0; x < battlefield->getWidth(); ++x)
+                if (r && r != this)
                 {
-                    Robot *target = battlefield->getRobotAt(x, y);
-                    if (target && target != this && target->getLives() > 0 && !target->isHidden())
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->canBeHit())
                     {
-                        logger << getName() << " spots and fires at " << target->getName() << " at (" << x << "," << y << ")\n";
-                        hitTarget = true;
-                        // Optionally, you could reduce target's life or mark as hit here
+                        validTargets.push_back(r);
                     }
                 }
             }
-            scout_count++;
-            if (hitTarget)
+            if (!validTargets.empty())
             {
-                // Randomly choose between HideScoutBot and JumpScoutBot
-                static const vector<string> types = {"HideScoutBot", "JumpScoutBot"};
-                int t = rand() % types.size();
-                setPendingUpgrade(types[t]);
-                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    static const vector<string> types = {"JumpScoutBot", "HideScoutBot", "LongShotScoutBot", "SemiAutoScoutBot", "ThirtyShotScoutBot", "KnightScoutBot", "QueenScoutBot", "VampireScoutBot"};
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
+                }
+            }
+            else
+            {
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
         }
         else
         {
-            logger << getName() << " try fire next round \n";
+            logger << name << " has no ammo left. It will self destruct!" << endl;
+            lives = 0;
+            isDie = true;
         }
+        detectedTargets.clear();
+    }
+
+
+    void move() override{
+        GenericRobot::move();
     }
 
     void act() override
@@ -1405,39 +1454,63 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void look(int X, int Y)
+    void look(int X, int Y) override  
     {
+
+        availableSpaces.clear();
+
+      
         if (tracker == 0)
         {
             logger << getName() << " cannot track robot already\n";
-            return;
         }
-
-        int x = getX();
-        int y = getY();
-        bool plant = false;
-
-        for (int dx = -1; dx <= 1 && !plant; dx++)
+        else
         {
-            for (int dy = -1; dy <= 1 && !plant; dy++)
+            int x = getX();
+            int y = getY();
+            bool plant = false;
+
+            for (int dx = -1; dx <= 1 && !plant; dx++)
             {
-                int targetX = x + dx;
-                int targetY = y + dy;
-
-                Robot *target = battlefield->getRobotAt(targetX, targetY);
-
-                if (target && target != this)
+                for (int dy = -1; dy <= 1 && !plant; dy++)
                 {
-                    track_target.push_back(target);
-                    tracker--;
-                    logger << getName() << " track " << target->getName() << " at (" << targetX << "," << targetY << ")\n";
-                    plant = true;
+                    int targetX = x + dx;
+                    int targetY = y + dy;
+
+                    Robot *target = battlefield->getRobotAt(targetX, targetY);
+                    if (target && target != this)
+                    {
+                        track_target.push_back(target);
+                        tracker--;
+                        logger << getName() << " track " << target->getName() 
+                               << " at (" << targetX << "," << targetY << ")\n";
+                        plant = true;
+                    }
                 }
             }
+            if (!plant)
+            {
+                logger << getName() << " no target can track\n";
+            }
         }
-        if (!plant)
+
+        // movement space(like GenericRobot)
+        int x = getX();
+        int y = getY();
+        for (int dx = -1; dx <= 1; dx++)
         {
-            logger << getName() << " no target can track\n";
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                if (dx == 0 && dy == 0) continue; 
+                
+                int newX = x + dx;
+                int newY = y + dy;
+                
+                if (battlefield->isPositionAvailable(newX, newY))
+                {
+                    availableSpaces.emplace_back(newX, newY);
+                }
+            }
         }
     }
 
@@ -1445,7 +1518,7 @@ public:
     {
         logger << "TrackBot is thinking..." << endl;
         look(0, 0);
-        fire(0, 0);
+        fire(0,0);
         move();
     }
 
@@ -1469,39 +1542,73 @@ public:
 
     void fire(int X, int Y) override
     {
-        if (tracker == 0)
-        {
-            logger << getName() << " cannot fire, no tracker left\n";
+        if (hasFired)
             return;
-        }
-        bool hitTarget = false;
-        if (rand() % 2 == 0)
+        hasFired = true;
+        if (hasAmmo())
         {
-            logger << getName() << " fires (track style)\n";
-            for (Robot *target : track_target)
+            
+            vector<Robot *> validTargets;
+            for (Robot *r : detectedTargets)
             {
-                if (target && target != this && target->getLives() > 0 && !target->isHidden())
+                if (r && r != this)
                 {
-                    logger << getName() << " tracks and fires at " << target->getName() << " at (" << target->getX() << "," << target->getY() << ")\n";
-                    hitTarget = true;
-                    // Optionally, you could reduce target's life or mark as hit here
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                    if (gtarget && gtarget->canBeHit())
+                    {
+                        validTargets.push_back(r);
+                    }
                 }
             }
-            tracker--;
-            if (hitTarget)
+            if (!validTargets.empty())
             {
-                static const vector<string> types = {"HideTrackBot", "JumpTrackBot"};
-                int t = rand() % types.size();
-                setPendingUpgrade(types[t]);
-                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
+                int idx = rand() % validTargets.size();
+                Robot *target = validTargets[idx];
+                int targetX = target->getX();
+                int targetY = target->getY();
+                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+                useAmmo();
+                if (target->isHidden())
+                {
+                    logger << target->getName() << " is hidden, attack miss." << endl;
+                }
+                else if (hitProbability())
+                {
+                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                    target->takeDamage();
+                    static const vector<string> types = {"JumpTrackBot", "HideTrackBot", "LongShotTrackBot", "SemiAutoTrackBot", "ThirtyShotTrackBot", "KnightTrackBot", "QueenTrackBot", "VampireTrackBot"};
+                    int t = rand() % types.size();
+                    setPendingUpgrade(types[t]);
+                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                }
+                else
+                {
+                    logger << "Missed!" << endl;
+                }
+
+                if (!hasAmmo())
+                {
+                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
+                    lives = 0;
+                    isDie = true;
+                }
+            }
+            else
+            {
+                logger << "No shooting as no robots within shooting range ." << endl;
             }
         }
         else
         {
-            logger << getName() << " try fire next round \n";
+            logger << name << " has no ammo left. It will self destruct!" << endl;
+            lives = 0;
+            isDie = true;
         }
+        detectedTargets.clear();
     }
+
 };
+
 
 //******************************************
 // QueenBot
