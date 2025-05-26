@@ -1,15 +1,14 @@
 READING INPUT FILE
 TESTING BATTLEFIELD CLASS
-Battlefield Dimensions: Height: 10
-Width: 10
-
+Battlefield Dimensions: Width: 10
+Height: 10
 Battlefield steps: 30
 Battlefield number of robots: 4
 Initial Robots on battlefield: 
 Robot Name: Kidd, Coords: (3,6), Lives: 3
 Robot Name: Jet, Coords: (3,7), Lives: 3
 Robot Name: Harry, Coords: (3,8), Lives: 3
-Robot Name: Star, Coords: (8,8), Lives: 3
+Robot Name: Star, Coords: (3,4), Lives: 3
 
 Initial Battlefield State:
    0 1 2 3 4 5 6 7 8 9 
@@ -18,11 +17,11 @@ Initial Battlefield State:
 1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . . . . . . . . | 4
+4 |. . . S . . . . . . | 4
 5 |. . . . . . . . . . | 5
 6 |. . . K . . . . . . | 6
 7 |. . . J . . . . . . | 7
-8 |. . . H . . . . S . | 8
+8 |. . . H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -38,80 +37,68 @@ LEGEND:
 
 --- Simulation Step 1 ---
 Robot Status before Step1:
-  Type: JumpBot, Name: Kidd, Coords: (3,6), Life: 3
-  Type: JumpBot, Name: Jet, Coords: (3,7), Life: 3
-  Type: JumpBot, Name: Harry, Coords: (3,8), Life: 3
-  Type: JumpBot, Name: Star, Coords: (8,8), Life: 3
+  Type: TrackBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (3,4), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-JumpBot is thinking...
-Revealing (2, 5): Empty space
-Revealing (2, 6): Empty space
-Revealing (2, 7): Empty space
-Revealing (3, 5): Empty space
-Revealing (3, 6): Current position
-Revealing (3, 7): Enemy Jet
-Revealing (4, 5): Empty space
-Revealing (4, 6): Empty space
-Revealing (4, 7): Empty space
->> Kidd fires at (3, 7)
-Hit! (Jet) be killed
-Kidd will upgrade into JumpScoutBot next turn!
-Kidd jump to (4,8), (1/3)
+TrackBot is thinking...
+Kidd track Jet at (3,7)
+Kidd fires (track style)
+Kidd tracks and fires at Jet at (3,7)
+Kidd will upgrade to JumpTrackBot next turn!
+>> Kidd is moving...
+Kidd could not move (no available adjacent cell).
 Kidd is done.
------------------------------------
-Jet was hit and skips this turn.
+----------------------------------------
+Jet's turn: 
+ScoutBot is thinking...
+Jet scan the battlefield
+got robot: Star at (3,4)
+got robot: Kidd at (3,6)
+got robot: Jet at (3,7)
+got robot: Harry at (3,8)
+Jet try fire next round 
+>> Jet is moving...
+Jet could not move (no available adjacent cell).
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-JumpBot is thinking...
-Revealing (2, 7): Empty space
-Revealing (2, 8): Empty space
-Revealing (2, 9): Empty space
-Revealing (3, 7): Enemy Jet
-Revealing (3, 8): Current position
-Revealing (3, 9): Empty space
-Revealing (4, 7): Empty space
-Revealing (4, 8): Enemy Kidd
-Revealing (4, 9): Empty space
->> Harry fires at (4, 8)
-Missed!
-Harry jump to (4,1), (1/3)
+TrackBot is thinking...
+Harry track Jet at (3,7)
+Harry try fire next round 
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-JumpBot is thinking...
-Revealing (7, 7): Empty space
-Revealing (7, 8): Empty space
-Revealing (7, 9): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Current position
-Revealing (8, 9): Empty space
-Revealing (9, 7): Empty space
-Revealing (9, 8): Empty space
-Revealing (9, 9): Empty space
->> Star fires.
-However no robots within shooting range .
-Star jump to (5,1), (1/3)
+ScoutBot is thinking...
+Star try scan it next round 
+Star fires (scout style)
+Star spots and fires at Kidd at (3,6)
+Star spots and fires at Jet at (3,7)
+Star spots and fires at Harry at (3,8)
+Star will upgrade to JumpScoutBot next turn!
+>> Star is moving...
+Star could not move (no available adjacent cell).
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Jet has been removed from the battlefield.
 ----------------------------------------
-Reentering Jet
-Jet reentered as GenericRobot at (0, 4) with 2 lives next turn.
 
 Battlefield State after Step 1:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. . . . H S . . . . | 1
+1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |J . . . . . . . . . | 4
+4 |. . . S . . . . . . | 4
 5 |. . . . . . . . . . | 5
-6 |. . . . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . K . . . . . | 8
+6 |. . . K . . . . . . | 6
+7 |. . . J . . . . . . | 7
+8 |. . . H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -125,65 +112,53 @@ LEGEND:
 
 --- Simulation Step 2 ---
 Robot Status before Step2:
-  Type: JumpScoutBot, Name: Kidd, Coords: (4,8), Life: 3
-  Type: JumpBot, Name: Harry, Coords: (4,1), Life: 3
-  Type: JumpBot, Name: Star, Coords: (5,1), Life: 3
-  Type: GenericRobot, Name: Jet, Coords: (0,4), Life: 2
-Kidd has upgraded to JumpScoutBot!
+  Type: JumpTrackBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpScoutBot, Name: Star, Coords: (3,4), Life: 3, Ammo: 10
+Kidd has upgraded to JumpTrackBot!
+Star has upgraded to JumpScoutBot!
 ----------------------------------------
 Kidd's turn: 
-Kidd scan the battlefield
-got robot: Harry at (4,1)
-got robot: Star at (5,1)
-got robot: Jet at (0,4)
-got robot: Kidd at (4,8)
+Kidd track Jet at (3,7)
 >> Kidd is thinking...
-Kidd did not jump this turn, keep moving
->> Kidd fires.
-However no robots within shooting range .
+Kidd jump to (5,6), (1/3)
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
-Harry's turn: 
-JumpBot is thinking...
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Empty space
-Revealing (4, 0): Empty space
-Revealing (4, 1): Current position
-Revealing (4, 2): Empty space
-Revealing (5, 0): Empty space
-Revealing (5, 1): Enemy Star
-Revealing (5, 2): Empty space
->> Harry fires at (5, 1)
-Hit! (Star) be killed
-Harry will upgrade into JumpKnightBot next turn!
-Harry jump to (2,6), (2/3)
-Harry is done.
------------------------------------
-Star was hit and skips this turn.
-----------------------------------------
 Jet's turn: 
-Revealing (-1, 3): Out of bounds
-Revealing (-1, 4): Out of bounds
-Revealing (-1, 5): Out of bounds
-Revealing (0, 3): Empty space
-Revealing (0, 4): Current position
-Revealing (0, 5): Empty space
-Revealing (1, 3): Empty space
-Revealing (1, 4): Empty space
-Revealing (1, 5): Empty space
->> Jet is thinking...
+ScoutBot is thinking...
+Jet scan the battlefield
+got robot: Star at (3,4)
+got robot: Kidd at (5,6)
+got robot: Jet at (3,7)
+got robot: Harry at (3,8)
+Jet fires (scout style)
+Jet spots and fires at Star at (3,4)
+Jet spots and fires at Kidd at (5,6)
+Jet spots and fires at Harry at (3,8)
+Jet will upgrade to JumpScoutBot next turn!
 >> Jet is moving...
-Jet moved to (1, 5)
->> Jet fires.
-However no robots within shooting range .
+Jet could not move (no available adjacent cell).
 Jet is done.
 ----------------------------------------
-Battlefield::cleanupDestroyedRobots()
-Star has been removed from the battlefield.
+Harry's turn: 
+TrackBot is thinking...
+Harry track Jet at (3,7)
+Harry try fire next round 
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
 ----------------------------------------
-Reentering Star
-Star reentered as GenericRobot at (7, 6) with 2 lives next turn.
+Star's turn: 
+Star try scan it next round 
+>> Star is thinking...
+Star jump to (5,3), (1/3)
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
 
 Battlefield State after Step 2:
    0 1 2 3 4 5 6 7 8 9 
@@ -191,12 +166,12 @@ Battlefield State after Step 2:
 0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
-3 |. . . . . . . . . . | 3
+3 |. . . . . S . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. J . . . . . . . . | 5
-6 |. . H . . . . S . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . K . . . . . | 8
+5 |. . . . . . . . . . | 5
+6 |. . . . . K . . . . | 6
+7 |. . . J . . . . . . | 7
+8 |. . . H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -210,76 +185,60 @@ LEGEND:
 
 --- Simulation Step 3 ---
 Robot Status before Step3:
-  Type: JumpBot, Name: Kidd, Coords: (4,8), Life: 3
-  Type: JumpKnightBot, Name: Harry, Coords: (2,6), Life: 3
-  Type: GenericRobot, Name: Jet, Coords: (1,5), Life: 2
-  Type: GenericRobot, Name: Star, Coords: (7,6), Life: 2
-Harry has upgraded to JumpKnightBot!
+  Type: JumpBot, Name: Kidd, Coords: (5,6), Life: 3, Ammo: 10
+  Type: JumpScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (5,3), Life: 3, Ammo: 10
+Jet has upgraded to JumpScoutBot!
 ----------------------------------------
 Kidd's turn: 
-Kidd try scan it next round 
+Kidd no target can track
 >> Kidd is thinking...
-Kidd jump to (6,6), (1/3)
->> Kidd fires.
-However no robots within shooting range .
+Kidd jump to (4,0), (2/3)
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
+Jet's turn: 
+Jet scan the battlefield
+got robot: Kidd at (4,0)
+got robot: Star at (5,3)
+got robot: Jet at (3,7)
+got robot: Harry at (3,8)
+>> Jet is thinking...
+Jet did not jump this turn, keep moving
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
 Harry's turn: 
-Revealing (1, 5): Enemy Jet
-Revealing (1, 6): Empty space
-Revealing (1, 7): Empty space
-Revealing (2, 5): Empty space
-Revealing (2, 6): Current position
-Revealing (2, 7): Empty space
-Revealing (3, 5): Empty space
-Revealing (3, 6): Empty space
-Revealing (3, 7): Empty space
->> Harry is thinking...
->> Harry fires at (1, 5)
-Hit! (Jet) be killed
-Harry will upgrade into JumpKnightTrackBot next turn!
-Harry did not jump this turn, keep moving
+TrackBot is thinking...
+Harry track Jet at (3,7)
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
------------------------------------
-Jet was hit and skips this turn.
 ----------------------------------------
 Star's turn: 
-Revealing (6, 5): Empty space
-Revealing (6, 6): Enemy Kidd
-Revealing (6, 7): Empty space
-Revealing (7, 5): Empty space
-Revealing (7, 6): Current position
-Revealing (7, 7): Empty space
-Revealing (8, 5): Empty space
-Revealing (8, 6): Empty space
-Revealing (8, 7): Empty space
+Star try scan it next round 
 >> Star is thinking...
->> Star fires at (6, 6)
-Hit! (Kidd) be killed
-Star will upgrade into TrackBot next turn!
->> Star is moving...
-Star moved to (7, 5)
+Star jump to (2,6), (2/3)
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Kidd has been removed from the battlefield.
-Jet has been removed from the battlefield.
 ----------------------------------------
-Reentering Kidd
-Kidd reentered as GenericRobot at (5, 8) with 2 lives next turn.
 
 Battlefield State after Step 3:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . . . K . . . . . | 0
 1 |. . . . . . . . . . | 1
 2 |. . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
-6 |. . H . . . . . . . | 6
-7 |. . . . . . . . . . | 7
-8 |. . . . . K . . . . | 8
+5 |. . . . . . . . . . | 5
+6 |. . S . . . . . . . | 6
+7 |. . . J . . . . . . | 7
+8 |. . . H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -293,62 +252,63 @@ LEGEND:
 
 --- Simulation Step 4 ---
 Robot Status before Step4:
-  Type: JumpKnightTrackBot, Name: Harry, Coords: (2,6), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (5,8), Life: 2
-Harry has upgraded to JumpKnightTrackBot!
-Star has upgraded to TrackBot!
+  Type: JumpBot, Name: Kidd, Coords: (4,0), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,6), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd jump to (0,2), (3/3)
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet scan the battlefield
+got robot: Kidd at (0,2)
+got robot: Star at (2,6)
+got robot: Jet at (3,7)
+got robot: Harry at (3,8)
+>> Jet is thinking...
+Jet did not jump this turn, keep moving
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry jump to (0,4), (1/3)
-Harry selects diagonal (1,1) for attack (length 5)
-Harry no robots in diagonal to fire at
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star no target can track
-Star fires (track style)
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star scan the battlefield
+got robot: Kidd at (0,2)
+got robot: Star at (2,6)
+got robot: Jet at (3,7)
+got robot: Harry at (3,8)
+>> Star is thinking...
+Star jump to (2,8), (3/3)
+No shooting as no robots within shooting range .
 Star is done.
-----------------------------------------
-Kidd's turn: 
-Revealing (4, 7): Empty space
-Revealing (4, 8): Empty space
-Revealing (4, 9): Empty space
-Revealing (5, 7): Empty space
-Revealing (5, 8): Current position
-Revealing (5, 9): Empty space
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (6, 9): Empty space
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (6, 7)
->> Kidd fires.
-However no robots within shooting range .
-Kidd is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
-Reentering Jet
-Jet reentered as GenericRobot at (1, 1) with 1 lives next turn.
 
 Battlefield State after Step 4:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
 0 |. . . . . . . . . . | 0
-1 |. J . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |H . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . K . . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . J . . . . . . | 7
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -362,60 +322,43 @@ LEGEND:
 
 --- Simulation Step 5 ---
 Robot Status before Step5:
-  Type: JumpBot, Name: Harry, Coords: (0,4), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (6,7), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (1,1), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry jump to (1,9), (2/3)
-Harry selects diagonal (-1,1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star no target can track
-Star fires (track style)
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (5, 6): Empty space
-Revealing (5, 7): Empty space
-Revealing (5, 8): Empty space
-Revealing (6, 6): Empty space
-Revealing (6, 7): Current position
-Revealing (6, 8): Empty space
-Revealing (7, 6): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 7)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (0, 0): Empty space
-Revealing (0, 1): Empty space
-Revealing (0, 2): Empty space
-Revealing (1, 0): Empty space
-Revealing (1, 1): Current position
-Revealing (1, 2): Empty space
-Revealing (2, 0): Empty space
-Revealing (2, 1): Empty space
-Revealing (2, 2): Empty space
+Jet try scan it next round 
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (0, 0)
->> Jet fires.
-However no robots within shooting range .
+Jet did not jump this turn, keep moving
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star scan the battlefield
+got robot: Kidd at (0,2)
+got robot: Jet at (3,7)
+got robot: Star at (2,8)
+got robot: Harry at (3,8)
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -423,16 +366,16 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 5:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |J . . . . . . . . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . . K . . | 7
-8 |. . . . . . . . . . | 8
-9 |. H . . . . . . . . | 9
+7 |. . . J . . . . . . | 7
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -445,60 +388,47 @@ LEGEND:
 
 --- Simulation Step 6 ---
 Robot Status before Step6:
-  Type: JumpBot, Name: Harry, Coords: (1,9), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,7), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (0,0), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry jump to (5,2), (3/3)
-Harry selects diagonal (1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star no target can track
-Star fires (track style)
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (6, 6): Empty space
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (7, 6): Empty space
-Revealing (7, 7): Current position
-Revealing (7, 8): Empty space
-Revealing (8, 6): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 8)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (-1, -1): Out of bounds
-Revealing (-1, 0): Out of bounds
-Revealing (-1, 1): Out of bounds
-Revealing (0, -1): Out of bounds
-Revealing (0, 0): Current position
-Revealing (0, 1): Empty space
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
+Jet scan the battlefield
+got robot: Kidd at (0,2)
+got robot: Jet at (3,7)
+got robot: Star at (2,8)
+got robot: Harry at (3,8)
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (0, 1)
->> Jet fires.
-However no robots within shooting range .
+Jet jump to (1,0), (1/3)
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star scan the battlefield
+got robot: Jet at (1,0)
+got robot: Kidd at (0,2)
+got robot: Star at (2,8)
+got robot: Harry at (3,8)
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -506,15 +436,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 6:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
-1 |J . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+0 |. J . . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . K . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -528,60 +458,39 @@ LEGEND:
 
 --- Simulation Step 7 ---
 Robot Status before Step7:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,8), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (0,1), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (-1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (1,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (6, 9): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Current position
-Revealing (7, 9): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
-Revealing (8, 9): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (6, 9)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (-1, 0): Out of bounds
-Revealing (-1, 1): Out of bounds
-Revealing (-1, 2): Out of bounds
-Revealing (0, 0): Empty space
-Revealing (0, 1): Current position
-Revealing (0, 2): Empty space
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (1, 2): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (1, 0)
->> Jet fires.
-However no robots within shooting range .
+Jet jump to (6,9), (2/3)
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -589,16 +498,16 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 7:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. J . . . . . . . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . K . . . | 9
+8 |. . S H . . . . . . | 8
+9 |. . . . . . J . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -611,60 +520,39 @@ LEGEND:
 
 --- Simulation Step 8 ---
 Robot Status before Step8:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (6,9), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (1,0), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (1,1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (6,9), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (5, 8): Empty space
-Revealing (5, 9): Empty space
-Revealing (5, 10): Out of bounds
-Revealing (6, 8): Empty space
-Revealing (6, 9): Current position
-Revealing (6, 10): Out of bounds
-Revealing (7, 8): Empty space
-Revealing (7, 9): Empty space
-Revealing (7, 10): Out of bounds
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 9)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (0, -1): Out of bounds
-Revealing (0, 0): Empty space
-Revealing (0, 1): Empty space
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Current position
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Empty space
-Revealing (2, 1): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (2, 0)
->> Jet fires.
-However no robots within shooting range .
+Jet did not jump this turn, keep moving
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -672,16 +560,16 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 8:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . J . . . . . . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
-9 |. . . . . . . K . . | 9
+8 |. . S H . . . . . . | 8
+9 |. . . . . . J . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -694,60 +582,39 @@ LEGEND:
 
 --- Simulation Step 9 ---
 Robot Status before Step9:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,9), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (2,0), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (6,9), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (6, 8): Empty space
-Revealing (6, 9): Empty space
-Revealing (6, 10): Out of bounds
-Revealing (7, 8): Empty space
-Revealing (7, 9): Current position
-Revealing (7, 10): Out of bounds
-Revealing (8, 8): Empty space
-Revealing (8, 9): Empty space
-Revealing (8, 10): Out of bounds
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 8)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (3, 0)
->> Jet fires.
-However no robots within shooting range .
+Jet did not jump this turn, keep moving
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -755,16 +622,16 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 9:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . J . . . . . . | 0
+0 |. . . . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . K . . | 8
-9 |. . . . . . . . . . | 9
+8 |. . S H . . . . . . | 8
+9 |. . . . . . J . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
 
@@ -777,60 +644,39 @@ LEGEND:
 
 --- Simulation Step 10 ---
 Robot Status before Step10:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,8), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (3,0), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (-1,1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (6,9), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (6, 9): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Current position
-Revealing (7, 9): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
-Revealing (8, 9): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (6, 8)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Empty space
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Current position
-Revealing (3, 1): Empty space
-Revealing (4, -1): Out of bounds
-Revealing (4, 0): Empty space
-Revealing (4, 1): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (2, 1)
->> Jet fires.
-However no robots within shooting range .
+Jet jump to (2,0), (3/3)
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -838,15 +684,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 10:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
-1 |. . J . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . K . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -860,60 +706,39 @@ LEGEND:
 
 --- Simulation Step 11 ---
 Robot Status before Step11:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (6,8), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (2,1), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (5, 7): Empty space
-Revealing (5, 8): Empty space
-Revealing (5, 9): Empty space
-Revealing (6, 7): Empty space
-Revealing (6, 8): Current position
-Revealing (6, 9): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Empty space
-Revealing (7, 9): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 8)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (1, 2): Empty space
-Revealing (2, 0): Empty space
-Revealing (2, 1): Current position
-Revealing (2, 2): Empty space
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (3, 2)
->> Jet fires.
-However no robots within shooting range .
+Jet cannot jump already 
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -921,15 +746,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 11:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . J . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . K . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -943,60 +768,39 @@ LEGEND:
 
 --- Simulation Step 12 ---
 Robot Status before Step12:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,8), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (3,2), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (6, 9): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Current position
-Revealing (7, 9): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
-Revealing (8, 9): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (6, 7)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (2, 1): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Current position
-Revealing (3, 3): Empty space
-Revealing (4, 1): Empty space
-Revealing (4, 2): Empty space
-Revealing (4, 3): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (2, 3)
->> Jet fires.
-However no robots within shooting range .
+Jet cannot jump already 
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -1004,15 +808,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 12:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
-3 |. . J . . . . . . . | 3
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . K . . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1026,60 +830,39 @@ LEGEND:
 
 --- Simulation Step 13 ---
 Robot Status before Step13:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (6,7), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (2,3), Life: 1
-----------------------------------------
-Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (-1,-1) for attack (length 5)
-Harry no robots in diagonal to fire at
-Harry is done.
-----------------------------------------
-Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
-Star is done.
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Revealing (5, 6): Empty space
-Revealing (5, 7): Empty space
-Revealing (5, 8): Empty space
-Revealing (6, 6): Empty space
-Revealing (6, 7): Current position
-Revealing (6, 8): Empty space
-Revealing (7, 6): Empty space
-Revealing (7, 7): Empty space
-Revealing (7, 8): Empty space
+Kidd no target can track
 >> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 7)
->> Kidd fires.
-However no robots within shooting range .
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Revealing (1, 2): Empty space
-Revealing (1, 3): Empty space
-Revealing (1, 4): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Current position
-Revealing (2, 4): Empty space
-Revealing (3, 2): Empty space
-Revealing (3, 3): Empty space
-Revealing (3, 4): Empty space
+Jet reach the limit,cannot scan already
 >> Jet is thinking...
->> Jet is moving...
-Jet moved to (3, 4)
->> Jet fires.
-However no robots within shooting range .
+Jet cannot jump already 
+No shooting as no robots within shooting range .
 Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
 ----------------------------------------
@@ -1087,15 +870,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 13:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
-4 |. . . J . . . . . . | 4
-5 |. . . . . . . S . . | 5
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . . K . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1109,66 +892,55 @@ LEGEND:
 
 --- Simulation Step 14 ---
 Robot Status before Step14:
-  Type: JumpBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-  Type: GenericRobot, Name: Kidd, Coords: (7,7), Life: 2
-  Type: GenericRobot, Name: Jet, Coords: (3,4), Life: 1
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Harry no target can track
->> Harry is thinking...
-Harry cannot jump already 
-Harry selects diagonal (-1,1) for attack (length 5)
-HarryKnight fires at (3,4)
-Jet has been destroyed!
-Hit! (Jet) be killed
-Harry hit the following robots: Jet
-Harry will upgrade into JumpKnightBot next turn!
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
-Kidd's turn: 
-Revealing (6, 6): Empty space
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (7, 6): Empty space
-Revealing (7, 7): Current position
-Revealing (7, 8): Empty space
-Revealing (8, 6): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
->> Kidd is thinking...
->> Kidd is moving...
-Kidd moved to (7, 6)
-Kidd has no ammo left. It will self destroy!
-Kidd is done.
------------------------------------
-Jet was hit and skips this turn.
-----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Kidd has been removed from the battlefield.
-Jet has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 14:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . H . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1182,32 +954,38 @@ LEGEND:
 
 --- Simulation Step 15 ---
 Robot Status before Step15:
-  Type: JumpKnightBot, Name: Harry, Coords: (5,2), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
-Harry has upgraded to JumpKnightBot!
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (4, 1): Empty space
-Revealing (4, 2): Empty space
-Revealing (4, 3): Empty space
-Revealing (5, 1): Empty space
-Revealing (5, 2): Current position
-Revealing (5, 3): Empty space
-Revealing (6, 1): Empty space
-Revealing (6, 2): Empty space
-Revealing (6, 3): Empty space
->> Harry is thinking...
-Harry jump to (7,7), (1/3)
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1216,15 +994,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 15:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
-7 |. . . . . . . H . . | 7
-8 |. . . . . . . . . . | 8
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1238,31 +1016,38 @@ LEGEND:
 
 --- Simulation Step 16 ---
 Robot Status before Step16:
-  Type: JumpBot, Name: Harry, Coords: (7,7), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (6, 6): Empty space
-Revealing (6, 7): Empty space
-Revealing (6, 8): Empty space
-Revealing (7, 6): Empty space
-Revealing (7, 7): Current position
-Revealing (7, 8): Empty space
-Revealing (8, 6): Empty space
-Revealing (8, 7): Empty space
-Revealing (8, 8): Empty space
->> Harry is thinking...
-Harry jump to (2,6), (2/3)
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1271,15 +1056,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 16:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
-6 |. . H . . . . . . . | 6
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1293,31 +1078,38 @@ LEGEND:
 
 --- Simulation Step 17 ---
 Robot Status before Step17:
-  Type: JumpBot, Name: Harry, Coords: (2,6), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, 5): Empty space
-Revealing (1, 6): Empty space
-Revealing (1, 7): Empty space
-Revealing (2, 5): Empty space
-Revealing (2, 6): Current position
-Revealing (2, 7): Empty space
-Revealing (3, 5): Empty space
-Revealing (3, 6): Empty space
-Revealing (3, 7): Empty space
->> Harry is thinking...
-Harry did not jump this turn, keep moving
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1326,15 +1118,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 17:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
-6 |. . H . . . . . . . | 6
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1348,31 +1140,38 @@ LEGEND:
 
 --- Simulation Step 18 ---
 Robot Status before Step18:
-  Type: JumpBot, Name: Harry, Coords: (2,6), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, 5): Empty space
-Revealing (1, 6): Empty space
-Revealing (1, 7): Empty space
-Revealing (2, 5): Empty space
-Revealing (2, 6): Current position
-Revealing (2, 7): Empty space
-Revealing (3, 5): Empty space
-Revealing (3, 6): Empty space
-Revealing (3, 7): Empty space
->> Harry is thinking...
-Harry jump to (2,0), (3/3)
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1381,15 +1180,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 18:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1403,31 +1202,38 @@ LEGEND:
 
 --- Simulation Step 19 ---
 Robot Status before Step19:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1436,15 +1242,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 19:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1458,31 +1264,38 @@ LEGEND:
 
 --- Simulation Step 20 ---
 Robot Status before Step20:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1491,15 +1304,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 20:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1513,31 +1326,38 @@ LEGEND:
 
 --- Simulation Step 21 ---
 Robot Status before Step21:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1546,15 +1366,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 21:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1568,31 +1388,38 @@ LEGEND:
 
 --- Simulation Step 22 ---
 Robot Status before Step22:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1601,15 +1428,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 22:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1623,31 +1450,38 @@ LEGEND:
 
 --- Simulation Step 23 ---
 Robot Status before Step23:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1656,15 +1490,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 23:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1678,31 +1512,38 @@ LEGEND:
 
 --- Simulation Step 24 ---
 Robot Status before Step24:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
->> Harry fires.
-However no robots within shooting range .
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
@@ -1711,15 +1552,15 @@ Battlefield::cleanupDestroyedRobots()
 Battlefield State after Step 24:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . H . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1733,48 +1574,365 @@ LEGEND:
 
 --- Simulation Step 25 ---
 Robot Status before Step25:
-  Type: JumpBot, Name: Harry, Coords: (2,0), Life: 3
-  Type: TrackBot, Name: Star, Coords: (7,5), Life: 2
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
 ----------------------------------------
 Harry's turn: 
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
-Revealing (2, -1): Out of bounds
-Revealing (2, 0): Current position
-Revealing (2, 1): Empty space
-Revealing (3, -1): Out of bounds
-Revealing (3, 0): Empty space
-Revealing (3, 1): Empty space
->> Harry is thinking...
-Harry cannot jump already 
-Harry has no ammo left. It will self destroy!
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
 Harry is done.
 ----------------------------------------
 Star's turn: 
-TrackBot is thinking...
-Star cannot track robot already
-Star cannot fire, no tracker left
->> Star is moving...
-Star could not move (no available adjacent cell).
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
 Star is done.
 ----------------------------------------
 Battlefield::cleanupDestroyedRobots()
-Harry has been removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 25:
    0 1 2 3 4 5 6 7 8 9 
   +--------------------+
-0 |. . . . . . . . . . | 0
+0 |. . J . . . . . . . | 0
 1 |. . . . . . . . . . | 1
-2 |. . . . . . . . . . | 2
+2 |K . . . . . . . . . | 2
 3 |. . . . . . . . . . | 3
 4 |. . . . . . . . . . | 4
-5 |. . . . . . . S . . | 5
+5 |. . . . . . . . . . | 5
 6 |. . . . . . . . . . | 6
 7 |. . . . . . . . . . | 7
-8 |. . . . . . . . . . | 8
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 26 ---
+Robot Status before Step26:
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 26:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 27 ---
+Robot Status before Step27:
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 27:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 28 ---
+Robot Status before Step28:
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 28:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 29 ---
+Robot Status before Step29:
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 29:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
+9 |. . . . . . . . . . | 9
+  +--------------------+
+   0 1 2 3 4 5 6 7 8 9 
+
+LEGEND:
+  . - Empty space
+  X - Destroyed robot
+  H - Hidden robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 30 ---
+Robot Status before Step30:
+  Type: JumpBot, Name: Kidd, Coords: (0,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Jet, Coords: (2,0), Life: 3, Ammo: 10
+  Type: TrackBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (2,8), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd no target can track
+>> Kidd is thinking...
+Kidd cannot jump already 
+No shooting as no robots within shooting range .
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet cannot jump already 
+No shooting as no robots within shooting range .
+Jet is done.
+----------------------------------------
+Harry's turn: 
+TrackBot is thinking...
+Harry cannot track robot already
+Harry cannot fire, no tracker left
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star reach the limit,cannot scan already
+>> Star is thinking...
+Star cannot jump already 
+No shooting as no robots within shooting range .
+Star is done.
+----------------------------------------
+Battlefield::cleanupDestroyedRobots()
+----------------------------------------
+
+Battlefield State after Step 30:
+   0 1 2 3 4 5 6 7 8 9 
+  +--------------------+
+0 |. . J . . . . . . . | 0
+1 |. . . . . . . . . . | 1
+2 |K . . . . . . . . . | 2
+3 |. . . . . . . . . . | 3
+4 |. . . . . . . . . . | 4
+5 |. . . . . . . . . . | 5
+6 |. . . . . . . . . . | 6
+7 |. . . . . . . . . . | 7
+8 |. . S H . . . . . . | 8
 9 |. . . . . . . . . . | 9
   +--------------------+
    0 1 2 3 4 5 6 7 8 9 
@@ -1787,5 +1945,6 @@ LEGEND:
 
 
 --- Simulation Ended ---
-Result: Star is the last one standing!
+Result: Maximum steps reached (30 steps).
+Remaining robots: 4
 Battlefield: Destructor

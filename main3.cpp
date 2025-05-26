@@ -1648,9 +1648,11 @@ public:
 
     void fire(int X, int Y) override
     {
+
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -1763,9 +1765,12 @@ public:
 
     void fire(int X, int Y) override
     {
+        
+
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -1878,9 +1883,11 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -1992,9 +1999,11 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2107,9 +2116,11 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2222,9 +2233,11 @@ public:
 
     void fire(int X, int Y) override
     {
+        
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2578,6 +2591,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2692,6 +2706,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2805,6 +2820,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -2919,6 +2935,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3033,6 +3050,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3147,6 +3165,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3498,6 +3517,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3614,6 +3634,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        LongShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3729,6 +3750,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3841,6 +3863,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        SemiAutoBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -3953,6 +3976,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4065,6 +4089,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        ThirtyShotBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4177,6 +4202,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4289,6 +4315,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        KnightBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4401,6 +4428,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4513,6 +4541,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        QueenBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4626,6 +4655,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
@@ -4738,6 +4768,7 @@ public:
         if (hasFired)
             return;
         hasFired = true;
+        VampireBot::fire(X,Y);
         if (hasAmmo())
         {
             // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
