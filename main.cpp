@@ -877,7 +877,7 @@ public:
 
                 Robot *target = battlefield->getRobotAt(targetX, targetY);
 
-                if (target && target != this)
+                if (target && target != this&& !isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     logger << ">> " << getName() << " firesssss at (" << targetX << "," << targetY << ")" << endl;
@@ -973,7 +973,7 @@ public:
         Robot *target = nullptr;
         for (Robot *r : battlefield->getListOfRobots())
         {
-            if (r != nullptr && r != this && r->getLives() > 0)
+            if (r != nullptr && r != this && r->getLives() > 0&& !isHurt)
             {
                 target = r;
                 break;
@@ -1110,7 +1110,7 @@ public:
                 int targetY = y + dy;
 
                 Robot *target = battlefield->getRobotAt(targetX, targetY);
-                if (target && target != this)
+                if (target && target != this&& !isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     if (gtarget && gtarget->canBeHit())
@@ -1201,7 +1201,7 @@ public:
             if (!battlefield->isPositionWithinGrid(targetX, targetY))
                 break;
             Robot *target = battlefield->getRobotAt(targetX, targetY);
-            if (target && target != this && target->getLives() > 0)
+            if (target && target != this && target->getLives() > 0&& !isHurt)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                 logger << getName() << "Knight fires at (" << targetX << "," << targetY << ")" << endl;
@@ -1311,7 +1311,7 @@ public:
                 if (targetX == x && targetY == y)
                     continue; // Do not fire at self
                 Robot *target = battlefield->getRobotAt(targetX, targetY);
-                if (target && target != this)
+                if (target && target != this&& !isHurt)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     if (gtarget->canBeHit())
