@@ -348,6 +348,12 @@ protected:
     vector<string> upgrades;
     vector<pair<int, int>> availableSpaces;
 
+    virtual const vector<string> &getUpgradeTypes() const
+    {
+        static const vector<string> defaultTypes = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "KnightBot", "QueenBot", "VampireBot", "ScoutBot", "TrackBot"};
+        return defaultTypes;
+    };
+
     // Action flags for per-round limitation
     bool hasLooked = false;
     bool hasMoved = false;
@@ -466,7 +472,7 @@ void GenericRobot::fire(int X, int Y)
         vector<Robot *> validTargets;
         for (Robot *r : detectedTargets)
         {
-            if ((r && r != this)&&!isHurt)
+            if ((r && r != this) && !isHurt)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
                 if (gtarget && gtarget->canBeHit())
@@ -498,10 +504,13 @@ void GenericRobot::fire(int X, int Y)
                 //} else {
                 // types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot", "QueenBot", "VampireBot"};
                 //}
-                static const vector<string> types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot", "QueenBot", "VampireBot"};
-                int t = rand() % types.size();
-                setPendingUpgrade(types[t]);
-                logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
+                vector<string> upgradeTypes = getUpgradeTypes();
+                if (!upgradeTypes.empty())
+                {
+                    int t = rand() % upgradeTypes.size();
+                    setPendingUpgrade(upgradeTypes[t]);
+                    logger << name << " will upgrade into " << upgradeTypes[t] << " next turn!" << endl;
+                }
             }
             else
             {
@@ -629,6 +638,13 @@ private:
     int hide_count = 0;
     bool isHidden = false;
 
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"HideLongShotBot", "HideSemiAutoBot", "HideThirtyShotBot", "HideKnightBot", "HideQueenBot", "HideVampireBot", "HideScoutBot", "HideTrackBot"};
+        return upgradeTypes;
+    }
+
 public:
     HideBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -674,72 +690,6 @@ public:
         move();
     }
 
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    static const vector<string> types = {"HideLongShotBot", "HideSemiAutoBot", "HideThirtyShotBot", "HideKnightBot", "HideQueenBot", "HideVampireBot", "HideScoutBot", "HideTrackBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-                if (!hasAmmo())
-                {
-                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                    lives = 0;
-                    isDie = true;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
-    }
-
     bool canBeHit() override
     {
         return !isHidden;
@@ -753,6 +703,13 @@ class JumpBot : public virtual GenericRobot
 {
 private:
     int jump_count = 0;
+
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"JumpLongShotBot", "JumpSemiAutoBot", "JumpThirtyShotBot", "JumpKnightBot", "JumpQueenBot", "JumpVampireBot", "JumpScoutBot", "JumpTrackBot"};
+        return upgradeTypes;
+    }
 
 public:
     JumpBot(const string &name, int x, int y)
@@ -815,73 +772,6 @@ public:
         move();
     }
 
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    static const vector<string> types = {"JumpLongShotBot", "JumpSemiAutoBot", "JumpThirtyShotBot", "JumpKnightBot", "JumpQueenBot", "JumpVampireBot", "JumpScoutBot", "JumpTrackBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-
-                if (!hasAmmo())
-                {
-                    logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                    lives = 0;
-                    isDie = true;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destruct!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
-    }
-
     int getJumpCount() const
     {
         return jump_count;
@@ -898,10 +788,10 @@ private:
     int fire_count = 0;
 
 protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
+    const vector<string> &getUpgradeTypes() const override
     {
-        static const vector<string> defaultTypes = {"HideLongShotBot", "JumpLongShotBot", "LongShotScoutBot", "LongShotTrackBot"};
-        return defaultTypes;
+        static const vector<string> upgradeTypes = {"HideLongShotBot", "JumpLongShotBot", "LongShotScoutBot", "LongShotTrackBot"};
+        return upgradeTypes;
     }
 
 public:
@@ -946,7 +836,7 @@ public:
                 if (target && target != this)
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << ">> " << getName() << "LongShot firesssss at (" << targetX << "," << targetY << ")" << endl;
+                    logger << ">> " << getName() << " firesssss at (" << targetX << "," << targetY << ")" << endl;
 
                     if (gtarget->isHidden())
                     {
@@ -960,7 +850,7 @@ public:
                         fire_count++;
                         fired = true;
 
-                        const vector<string> &upgradeTypes = getShootingUpgradeTypes();
+                        const vector<string> &upgradeTypes = getUpgradeTypes();
 
                         int t = rand() % upgradeTypes.size();
                         string newType = upgradeTypes[t];
@@ -1004,10 +894,10 @@ private:
     int fire_count = 0;
 
 protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
+    const vector<string> &getUpgradeTypes() const override
     {
-        static const vector<string> defaultTypes = {"HideSemiAutoBot", "JumpSemiAutoBot", "SemiAutoScoutBot", "SemiAutoTrackBot"};
-        return defaultTypes;
+        static const vector<string> upgradeTypes = {"HideSemiAutoBot", "JumpSemiAutoBot", "SemiAutoScoutBot", "SemiAutoTrackBot"};
+        return upgradeTypes;
     }
 
 public:
@@ -1086,7 +976,7 @@ public:
 
         if (hitSuccessful)
         {
-            const vector<string> &upgradeTypes = getShootingUpgradeTypes();
+            const vector<string> &upgradeTypes = getUpgradeTypes();
             int t = rand() % upgradeTypes.size();
             string newType = upgradeTypes[t];
             setPendingUpgrade(newType);
@@ -1109,10 +999,10 @@ private:
     int shell_count;
 
 protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
+    const vector<string> &getUpgradeTypes() const override
     {
-        static const vector<string> defaultTypes = {"HideThirtyShotBot", "JumpThirtyShotBot", "ThirtyShotScoutBot", "ThirtyShotTrackBot"};
-        return defaultTypes;
+        static const vector<string> upgradeTypes = {"HideThirtyShotBot", "JumpThirtyShotBot", "ThirtyShotScoutBot", "ThirtyShotTrackBot"};
+        return upgradeTypes;
     }
 
 public:
@@ -1163,7 +1053,7 @@ public:
                             logger << getName() << "ThirtyShot fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
                             hitSuccessful = true;
                             logger << "Successful hit on " << gtarget->getName() << "!\n";
-                            const vector<string> &upgradeTypes = getShootingUpgradeTypes();
+                            const vector<string> &upgradeTypes = getUpgradeTypes();
                             int t = rand() % upgradeTypes.size();
                             string newType = upgradeTypes[t];
                             setPendingUpgrade(newType);
@@ -1204,10 +1094,10 @@ private:
     const vector<string> upgradeTypes = {"HideKnightBot", "JumpKnightBot", "KnightScoutBot", "KnightTrackBot"};
 
 protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
+    const vector<string> &getUpgradeTypes() const override
     {
-        static const vector<string> defaultTypes = {"HideKnightBot", "JumpKnightBot", "KnightScoutBot", "KnightTrackBot"};
-        return defaultTypes;
+        static const vector<string> upgradeTypes = {"HideKnightBot", "JumpKnightBot", "KnightScoutBot", "KnightTrackBot"};
+        return upgradeTypes;
     }
 
 public:
@@ -1278,7 +1168,7 @@ public:
                 }
             }
             logger << endl;
-            const vector<string> &upgradeTypes = getShootingUpgradeTypes();
+            const vector<string> &upgradeTypes = getUpgradeTypes();
             int t = rand() % upgradeTypes.size();
             string newType = upgradeTypes[t];
             setPendingUpgrade(newType);
@@ -1288,12 +1178,196 @@ public:
 };
 
 //******************************************
+// QueenBot
+//******************************************
+class QueenBot : public virtual GenericRobot
+{
+private:
+    const vector<pair<int, int>> directions = {
+        {0, 1},
+        {1, 0},
+        {0, -1},
+        {-1, 0},
+        {1, 1},
+        {1, -1},
+        {-1, 1},
+        {-1, -1}};
+
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"HideQueenBot", "JumpQueenBot", "QueenScoutBot", "QueenTrackBot"};
+        return upgradeTypes;
+    }
+
+public:
+    QueenBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y) {}
+
+    void fire(int X, int Y) override
+    {
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!hasAmmo())
+        {
+            logger << getName() << " has no ammo left. It will self destruct!" << endl;
+            lives = 0;
+            isDie = true;
+            return;
+        }
+
+        int x = getX();
+        int y = getY();
+        bool fired = false;
+
+        for (const auto &dir : directions)
+        {
+            int dx = dir.first;
+            int dy = dir.second;
+            for (int dist = 1;; dist++)
+            {
+                int targetX = x + dx * dist;
+                int targetY = y + dy * dist;
+                if (targetX < 0 || targetY < 0 || targetX >= battlefield->getWidth() || targetY >= battlefield->getHeight())
+                    break;
+                if (targetX == x && targetY == y)
+                    continue; // Do not fire at self
+                Robot *target = battlefield->getRobotAt(targetX, targetY);
+                if (target && target != this)
+                {
+                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
+                    if (gtarget->canBeHit())
+                    {
+                        logger << getName() << " Queen fires at (" << targetX << "," << targetY << ")\n";
+                        if (hitProbability())
+                        {
+                            gtarget->takeDamage();
+                            logger << getName() << " hit " << gtarget->getName() << endl;
+                            const vector<string> upgradeTypes = getUpgradeTypes();
+                            int t = rand() % upgradeTypes.size();
+                            setPendingUpgrade(upgradeTypes[t]);
+                            logger << getName() << " will upgrade into " << upgradeTypes[t] << " next turn" << endl;
+                        }
+                        else
+                        {
+                            logger << "Missed!" << endl;
+                        }
+                        fired = true;
+                        break;
+                    }
+                }
+            }
+            if (fired)
+                break;
+        }
+        useAmmo();
+        if (!fired)
+        {
+            logger << "sadly, " << getName() << " found no target in straight line\n";
+        }
+    }
+};
+
+//******************************************
+// VampireBot
+// Upgrade description: After hitting a robot, gain 1 life, can gain life maximum 3 times
+//******************************************
+class VampireBot : public virtual GenericRobot
+{
+private:
+    int gainLivesCount = 0;
+
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"HideVampireBot", "JumpVampireBot", "VampireScoutBot", "VampireTrackBot"};
+        return upgradeTypes;
+    }
+
+public:
+    // Constructor
+    VampireBot(const string &name, int x, int y)
+        : Robot(name, x, y),
+          GenericRobot(name, x, y) {};
+
+    void fire(int X, int Y) override
+    {
+        if (!hasAmmo())
+        {
+            logger << getName() << " has no ammo left!" << endl;
+            isDie = true;
+            return;
+        }
+
+        if (hasFired)
+            return;
+        hasFired = true;
+
+        if (!detectedTargets.empty())
+        {
+            int randomIndex = rand() % detectedTargets.size();
+            Robot *target = detectedTargets[randomIndex];
+            int targetX = target->getX();
+            int targetY = target->getY();
+            logger << ">> " << getName() << "Vampire fires at (" << targetX << ", " << targetY << ")" << endl;
+            useAmmo();
+
+            if (target->isHidden())
+            {
+                logger << target->getName() << " is hide, attack miss." << endl;
+            }
+            else if (hitProbability())
+            {
+                logger << "Hit! (" << target->getName() << ") be killed" << endl;
+
+                target->takeDamage();
+                const vector<string> upgradeTypes = getUpgradeTypes();
+                int t = rand() % upgradeTypes.size();
+                setPendingUpgrade(upgradeTypes[t]);
+                logger << getName() << " will upgrade in to " << upgradeTypes[t] << "next turn" << endl;
+
+                if (getLives() < 3)
+                {
+                    if (gainLivesCount < 3)
+                    {
+                        setLives(getLives() + 1);
+                        logger << getName() << " gained 1 life from killing " << target->getName() << "! (" << gainLivesCount + 1 << "/3)" << endl;
+                        gainLivesCount++;
+                    }
+                    else
+                    {
+                        logger << getName() << " already gained lives 3 times, cannot gain anymore lives." << endl;
+                    }
+                }
+                else
+                {
+                    logger << getName() << " is already at max lives (" << getLives() << "), cannot gain extra life from this kill." << endl;
+                }
+            }
+        }
+        else
+        {
+            logger << "Missed!" << endl;
+        }
+    }
+};
+//******************************************
 // ScoutBot
 //******************************************
 class ScoutBot : public virtual GenericRobot
 {
 private:
     int scout_count = 0;
+
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"HideScoutBot", "JumpScoutBot"};
+        return upgradeTypes;
+    }
 
 public:
     ScoutBot(const string &name, int x, int y)
@@ -1333,48 +1407,6 @@ public:
         }
     }
 
-    void fire(int X, int Y) override
-    {
-        if (scout_count >= 3)
-        {
-            logger << getName() << " reach the limit,cannot fire already\n";
-            return;
-        }
-
-        bool hitTarget = false;
-        if (rand() % 2 == 0)
-        {
-            logger << getName() << " fires (scout style)\n";
-            // Example: just log all visible robots (like scan)
-            for (int y = 0; y < battlefield->getHeight(); ++y)
-            {
-                for (int x = 0; x < battlefield->getWidth(); ++x)
-                {
-                    Robot *target = battlefield->getRobotAt(x, y);
-                    if (target && target != this && target->getLives() > 0 && !target->isHidden())
-                    {
-                        logger << getName() << " spots and fires at " << target->getName() << " at (" << x << "," << y << ")\n";
-                        hitTarget = true;
-                        // Optionally, you could reduce target's life or mark as hit here
-                    }
-                }
-            }
-            scout_count++;
-            if (hitTarget)
-            {
-                // Randomly choose between HideScoutBot and JumpScoutBot
-                static const vector<string> types = {"HideScoutBot", "JumpScoutBot"};
-                int t = rand() % types.size();
-                setPendingUpgrade(types[t]);
-                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
-            }
-        }
-        else
-        {
-            logger << getName() << " try fire next round \n";
-        }
-    }
-
     void act() override
     {
         logger << "ScoutBot is thinking..." << endl;
@@ -1399,6 +1431,13 @@ class TrackBot : public virtual GenericRobot
 private:
     int tracker = 3;
     vector<Robot *> track_target;
+
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {"HideTrackBot", "JumpTrackBot"};
+        return upgradeTypes;
+    }
 
 public:
     TrackBot(const string &name, int x, int y)
@@ -1466,220 +1505,6 @@ public:
     {
         return tracker;
     }
-
-    void fire(int X, int Y) override
-    {
-        if (tracker == 0)
-        {
-            logger << getName() << " cannot fire, no tracker left\n";
-            return;
-        }
-        bool hitTarget = false;
-        if (rand() % 2 == 0)
-        {
-            logger << getName() << " fires (track style)\n";
-            for (Robot *target : track_target)
-            {
-                if (target && target != this && target->getLives() > 0 && !target->isHidden())
-                {
-                    logger << getName() << " tracks and fires at " << target->getName() << " at (" << target->getX() << "," << target->getY() << ")\n";
-                    hitTarget = true;
-                    // Optionally, you could reduce target's life or mark as hit here
-                }
-            }
-            tracker--;
-            if (hitTarget)
-            {
-                static const vector<string> types = {"HideTrackBot", "JumpTrackBot"};
-                int t = rand() % types.size();
-                setPendingUpgrade(types[t]);
-                logger << getName() << " will upgrade to " << types[t] << " next turn!\n";
-            }
-        }
-        else
-        {
-            logger << getName() << " try fire next round \n";
-        }
-    }
-};
-
-//******************************************
-// QueenBot
-//******************************************
-
-class QueenBot : public virtual GenericRobot
-{
-private:
-    const vector<pair<int, int>> directions = {
-        {0, 1},
-        {1, 0},
-        {0, -1},
-        {-1, 0},
-        {1, 1},
-        {1, -1},
-        {-1, 1},
-        {-1, -1}};
-
-protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
-    {
-        static const vector<string> defaultTypes = {"HideQueenBot", "JumpQueenBot", "QueenScoutBot", "QueenTrackBot"};
-        return defaultTypes;
-    }
-
-public:
-    QueenBot(const string &name, int x, int y)
-        : Robot(name, x, y),
-          GenericRobot(name, x, y) {}
-
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-
-        if (!hasAmmo())
-        {
-            logger << getName() << " has no ammo left. It will self destruct!" << endl;
-            lives = 0;
-            isDie = true;
-            return;
-        }
-
-        int x = getX();
-        int y = getY();
-        bool fired = false;
-
-        for (const auto &dir : directions)
-        {
-            int dx = dir.first;
-            int dy = dir.second;
-            for (int dist = 1;; dist++)
-            {
-                int targetX = x + dx * dist;
-                int targetY = y + dy * dist;
-                if (targetX < 0 || targetY < 0 || targetX >= battlefield->getWidth() || targetY >= battlefield->getHeight())
-                    break;
-                if (targetX == x && targetY == y)
-                    continue; // Do not fire at self
-                Robot *target = battlefield->getRobotAt(targetX, targetY);
-                if (target && target != this)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    if (gtarget->canBeHit())
-                    {
-                        logger << getName() << " Queen fires at (" << targetX << "," << targetY << ")\n";
-                        if (hitProbability())
-                        {
-                            gtarget->takeDamage();
-                            logger << getName() << " hit " << gtarget->getName() << endl;
-                            const vector<string> upgradeTypes = getShootingUpgradeTypes();
-                            int t = rand() % upgradeTypes.size();
-                            setPendingUpgrade(upgradeTypes[t]);
-                            logger << getName() << " will upgrade into " << upgradeTypes[t] << " next turn" << endl;
-                        }
-                        else
-                        {
-                            logger << "Missed!" << endl;
-                        }
-                        fired = true;
-                        break;
-                    }
-                }
-            }
-            if (fired)
-                break;
-        }
-        useAmmo();
-        if (!fired)
-        {
-            logger << "sadly, " << getName() << " found no target in straight line\n";
-        }
-    }
-};
-
-//******************************************
-// VampireBot
-// Upgrade description: After hitting a robot, gain 1 life, can gain life maximum 3 times
-//******************************************
-class VampireBot : public virtual GenericRobot
-{
-private:
-    int gainLivesCount = 0;
-
-protected:
-    virtual const vector<string> &getShootingUpgradeTypes() const
-    {
-        static const vector<string> defaultTypes = {"HideVampireBot", "JumpVampireBot", "VampireScoutBot", "VampireTrackBot"};
-        return defaultTypes;
-    }
-
-public:
-    // Constructor
-    VampireBot(const string &name, int x, int y)
-        : Robot(name, x, y),
-          GenericRobot(name, x, y) {};
-
-    void fire(int X, int Y) override
-    {
-        if (!hasAmmo())
-        {
-            logger << getName() << " has no ammo left!" << endl;
-            isDie = true;
-            return;
-        }
-
-        if (hasFired)
-            return;
-        hasFired = true;
-
-        if (!detectedTargets.empty())
-        {
-            int randomIndex = rand() % detectedTargets.size();
-            Robot *target = detectedTargets[randomIndex];
-            int targetX = target->getX();
-            int targetY = target->getY();
-            logger << ">> " << getName() << "Vampire fires at (" << targetX << ", " << targetY << ")" << endl;
-            useAmmo();
-
-            if (target->isHidden())
-            {
-                logger << target->getName() << " is hide, attack miss." << endl;
-            }
-            else if (hitProbability())
-            {
-                logger << "Hit! (" << target->getName() << ") be killed" << endl;
-
-                target->takeDamage();
-                const vector<string> upgradeTypes = getShootingUpgradeTypes();
-                int t = rand() % upgradeTypes.size();
-                setPendingUpgrade(upgradeTypes[t]);
-                logger << getName() << " will upgrade in to " << upgradeTypes[t] << "next turn" << endl;
-
-                if (getLives() < 3)
-                {
-                    if (gainLivesCount < 3)
-                    {
-                        setLives(getLives() + 1);
-                        logger << getName() << " gained 1 life from killing " << target->getName() << "! (" << gainLivesCount + 1 << "/3)" << endl;
-                        gainLivesCount++;
-                    }
-                    else
-                    {
-                        logger << getName() << " already gained lives 3 times, cannot gain anymore lives." << endl;
-                    }
-                }
-                else
-                {
-                    logger << getName() << " is already at max lives (" << getLives() << "), cannot gain extra life from this kill." << endl;
-                }
-            }
-        }
-        else
-        {
-            logger << "Missed!" << endl;
-        }
-    }
 };
 
 //******************************************
@@ -1688,7 +1513,7 @@ public:
 class HideLongShotBot : public HideBot, public LongShotBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideLongShotScoutBot", "HideLongShotTrackBot"};
         return upgradeTypes;
@@ -1746,7 +1571,7 @@ public:
 class HideSemiAutoBot : public HideBot, public SemiAutoBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideSemiAutoScoutBot", "HideSemiAutoTrackBot"};
         return upgradeTypes;
@@ -1803,7 +1628,7 @@ public:
 class HideThirtyShotBot : public HideBot, public ThirtyShotBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideThirtyShotScoutBot", "HideThirtyShotTrackBot"};
         return upgradeTypes;
@@ -1860,7 +1685,7 @@ public:
 class HideKnightBot : public HideBot, public KnightBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideKnightScoutBot", "HideKnightTrackBot"};
         return upgradeTypes;
@@ -1917,7 +1742,7 @@ public:
 class HideQueenBot : public HideBot, public QueenBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideQueenScoutBot", "HideQueenTrackBot"};
         return upgradeTypes;
@@ -1974,7 +1799,7 @@ public:
 class HideVampireBot : public HideBot, public VampireBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideVampireScoutBot", "HideVampireTrackBot"};
         return upgradeTypes;
@@ -2030,6 +1855,19 @@ public:
 //******************************************
 class HideScoutBot : public HideBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {
+            "HideVampireScoutBot",
+            "HideLongShotScoutBot",
+            "HideSemiAutoScoutBot",
+            "HideThirtyShotScoutBot",
+            "HideKnightScoutBot",
+            "HideQueenScoutBot"};
+        return upgradeTypes;
+    }
+
 public:
     HideScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -2040,80 +1878,6 @@ public:
     void move() override
     {
         HideBot::move();
-    }
-
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    // Updated to only upgrade to these two specific types
-                    static const vector<string> types = {
-                        "HideVampireScoutBot",
-                        "HideLongShotScoutBot",
-                        "HideSemiAutoScoutBot",
-                        "HideThirtyShotScoutBot",
-                        "HideKnightScoutBot",
-                        "HideQueenScoutBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-
-            if (!hasAmmo())
-            {
-                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                lives = 0;
-                isDie = true;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
     }
 
     void think() override
@@ -2149,6 +1913,19 @@ public:
 //******************************************
 class HideTrackBot : public HideBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {
+            "HideVampireTrackBot",
+            "HideLongShotTrackBot",
+            "HideSemiAutoTrackBot",
+            "HideThirtyShotScoutBot",
+            "HideKnightScoutBot",
+            "HideQueenScoutBot"};
+        return upgradeTypes;
+    }
+
 public:
     HideTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -2159,80 +1936,6 @@ public:
     void move() override
     {
         HideBot::move();
-    }
-
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    // Updated to only upgrade to these two specific types
-                    static const vector<string> types = {
-                        "HideVampireTrackBot",
-                        "HideLongShotTrackBot",
-                        "HideSemiAutoTrackBot",
-                        "HideThirtyShotScoutBot",
-                        "HideKnightScoutBot",
-                        "HideQueenScoutBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-
-            if (!hasAmmo())
-            {
-                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                lives = 0;
-                isDie = true;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
     }
 
     void think() override
@@ -2269,7 +1972,7 @@ public:
 class JumpLongShotBot : public JumpBot, public LongShotBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpLongShotScoutBot", "JumpLongShotTrackBot"};
         return upgradeTypes;
@@ -2326,7 +2029,7 @@ public:
 class JumpSemiAutoBot : public JumpBot, public SemiAutoBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpSemiAutoScoutBot", "JumpSemiAutoTrackBot"};
         return upgradeTypes;
@@ -2356,14 +2059,9 @@ public:
 
     void act() override
     {
-        SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        SemiAutoBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2382,7 +2080,7 @@ public:
 class JumpThirtyShotBot : public JumpBot, public ThirtyShotBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpThirtyShotScoutBot", "JumpThirtyShotTrackBot"};
         return upgradeTypes;
@@ -2412,14 +2110,9 @@ public:
 
     void act() override
     {
-        ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        ThirtyShotBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2439,7 +2132,7 @@ public:
 class JumpKnightBot : public JumpBot, public KnightBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpKnightScoutBot", "JumpKnightTrackBot"};
         return upgradeTypes;
@@ -2469,14 +2162,9 @@ public:
 
     void act() override
     {
-        KnightBot::look(0, 0); // Use ThirtyShotBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        KnightBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2496,7 +2184,7 @@ public:
 class JumpQueenBot : public JumpBot, public QueenBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpQueenScoutBot", "JumpQueenTrackBot"};
         return upgradeTypes;
@@ -2526,14 +2214,9 @@ public:
 
     void act() override
     {
-        QueenBot::look(0, 0); // Use QueenBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        QueenBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2553,7 +2236,7 @@ public:
 class JumpVampireBot : public JumpBot, public VampireBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"JumpVampireScoutBot", "JumpVampireTrackBot"};
         return upgradeTypes;
@@ -2583,14 +2266,9 @@ public:
 
     void act() override
     {
-        VampireBot::look(0, 0); // Use QueenBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        VampireBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2609,6 +2287,19 @@ public:
 //******************************************
 class JumpScoutBot : public JumpBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {
+            "JumpLongShotScoutBot",
+            "JumpSemiAutoScoutBot",
+            "JumpThirtyShotScoutBot",
+            "JumpKnightScoutBot",
+            "JumpQueenScoutBot",
+            "JumpVampireScoutBot"};
+        return upgradeTypes;
+    }
+
 public:
     JumpScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -2619,79 +2310,6 @@ public:
     void move() override
     {
         JumpBot::move();
-    }
-
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    // Updated to only upgrade to these two specific types
-                    static const vector<string> types = {
-                        "JumpLongShotScoutBot",
-                        "JumpSemiAutoScoutBot",
-                        "JumpThirtyShotScoutBot",
-                        "JumpKnightScoutBot",
-                        "JumpQueenScoutBot",
-                        "JumpVampireScoutBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-            if (!hasAmmo())
-            {
-                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                lives = 0;
-                isDie = true;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
     }
 
     void think() override
@@ -2727,6 +2345,19 @@ public:
 //******************************************
 class JumpTrackBot : public JumpBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {
+            "JumpLongShotTrackBot",
+            "JumpSemiAutoTrackBot",
+            "JumpThirtyShotTrackBot",
+            "JumpKnightTrackBot",
+            "JumpQueenTrackBot",
+            "JumpVampireTrackBot"};
+        return upgradeTypes;
+    }
+
 public:
     JumpTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -2737,79 +2368,6 @@ public:
     void move() override
     {
         JumpBot::move();
-    }
-
-    void fire(int X, int Y) override
-    {
-        if (hasFired)
-            return;
-        hasFired = true;
-        if (hasAmmo())
-        {
-            // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
-            vector<Robot *> validTargets;
-            for (Robot *r : detectedTargets)
-            {
-                if ((r && r != this)&&!isHurt)
-                {
-                    GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                    if (gtarget && gtarget->canBeHit())
-                    {
-                        validTargets.push_back(r);
-                    }
-                }
-            }
-            if (!validTargets.empty())
-            {
-                int idx = rand() % validTargets.size();
-                Robot *target = validTargets[idx];
-                int targetX = target->getX();
-                int targetY = target->getY();
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo();
-                if (target->isHidden())
-                {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
-                }
-                else if (hitProbability())
-                {
-                    logger << "Hit! (" << target->getName() << ") be killed" << endl;
-                    target->takeDamage();
-                    // Updated to only upgrade to these two specific types
-                    static const vector<string> types = {
-                        "JumpLongShotTrackBot",
-                        "JumpSemiAutoTrackBot",
-                        "JumpThirtyShotTrackBot",
-                        "JumpKnightTrackBot",
-                        "JumpQueenTrackBot",
-                        "JumpVampireTrackBot"};
-                    int t = rand() % types.size();
-                    setPendingUpgrade(types[t]);
-                    logger << name << " will upgrade into " << types[t] << " next turn!" << endl;
-                }
-                else
-                {
-                    logger << "Missed!" << endl;
-                }
-            }
-            else
-            {
-                logger << "No shooting as no robots within shooting range ." << endl;
-            }
-            if (!hasAmmo())
-            {
-                logger << getName() << " has no ammo left, it will self-destruct!" << endl;
-                lives = 0;
-                isDie = true;
-            }
-        }
-        else
-        {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
-            lives = 0;
-            isDie = true;
-        }
-        detectedTargets.clear();
     }
 
     void think() override
@@ -2847,7 +2405,7 @@ public:
 class LongShotScoutBot : public LongShotBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideLongShotScoutBot", "JumpLongShotScoutBot"};
         return upgradeTypes;
@@ -2859,10 +2417,6 @@ public:
                                                          LongShotBot(name, x, y),
                                                          ScoutBot(name, x, y)
     {
-    }
-    void move() override
-    {
-        ScoutBot::move();
     }
 
     void fire(int X, int Y) override
@@ -2878,7 +2432,7 @@ public:
 
     void act() override
     {
-        LongShotBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -2886,7 +2440,7 @@ public:
 
     void look(int X, int Y) override
     {
-        LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
+        ScoutBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2907,7 +2461,7 @@ public:
 class LongShotTrackBot : public LongShotBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideLongShotTrackBot", "JumpLongShotTrackBot"};
         return upgradeTypes;
@@ -2918,11 +2472,6 @@ public:
                                                          GenericRobot(name, x, y),
                                                          LongShotBot(name, x, y),
                                                          TrackBot(name, x, y) {}
-
-    void move() override
-    {
-        TrackBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -2936,7 +2485,7 @@ public:
 
     void act() override
     {
-        LongShotBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -2965,7 +2514,7 @@ public:
 class SemiAutoScoutBot : public SemiAutoBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideSemiAutoScoutBot", "JumpSemiAutoScoutBot"};
         return upgradeTypes;
@@ -2976,11 +2525,6 @@ public:
                                                          GenericRobot(name, x, y),
                                                          SemiAutoBot(name, x, y),
                                                          ScoutBot(name, x, y) {}
-
-    void move() override
-    {
-        ScoutBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -2994,7 +2538,7 @@ public:
 
     void act() override
     {
-        SemiAutoBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3023,7 +2567,7 @@ public:
 class SemiAutoTrackBot : public SemiAutoBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideSemiAutoTrackBot", "JumpSemiAutoTrackBot"};
         return upgradeTypes;
@@ -3032,11 +2576,6 @@ protected:
 public:
     SemiAutoTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), SemiAutoBot(name, x, y), TrackBot(name, x, y) {}
 
-    void move() override
-    {
-        TrackBot::move();
-    }
-
     void fire(int X, int Y) override
     {
         SemiAutoBot::fire(X, Y);
@@ -3044,12 +2583,12 @@ public:
 
     void think() override
     {
-        SemiAutoBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        SemiAutoBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3078,7 +2617,7 @@ public:
 class ThirtyShotScoutBot : public ThirtyShotBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideThirtyShotScoutBot", "JumpThirtyShotScoutBot"};
         return upgradeTypes;
@@ -3086,11 +2625,6 @@ protected:
 
 public:
     ThirtyShotScoutBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), ThirtyShotBot(name, x, y), ScoutBot(name, x, y) {}
-
-    void move() override
-    {
-        ScoutBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3104,7 +2638,7 @@ public:
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3133,7 +2667,7 @@ public:
 class ThirtyShotTrackBot : public ThirtyShotBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideThirtyShotTrackBot", "JumpThirtyShotTrackBot"};
         return upgradeTypes;
@@ -3141,11 +2675,6 @@ protected:
 
 public:
     ThirtyShotTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), ThirtyShotBot(name, x, y), TrackBot(name, x, y) {}
-
-    void move() override
-    {
-        TrackBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3159,7 +2688,7 @@ public:
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3188,7 +2717,7 @@ public:
 class KnightScoutBot : public KnightBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideKnightScoutBot", "JumpKnightScoutBot"};
         return upgradeTypes;
@@ -3196,11 +2725,6 @@ protected:
 
 public:
     KnightScoutBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), KnightBot(name, x, y), ScoutBot(name, x, y) {}
-
-    void move() override
-    {
-        ScoutBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3214,7 +2738,7 @@ public:
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3243,7 +2767,7 @@ public:
 class KnightTrackBot : public KnightBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideKnightTrackBot", "JumpKnightTrackBot"};
         return upgradeTypes;
@@ -3251,11 +2775,6 @@ protected:
 
 public:
     KnightTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), KnightBot(name, x, y), TrackBot(name, x, y) {}
-
-    void move() override
-    {
-        TrackBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3269,7 +2788,7 @@ public:
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3298,7 +2817,7 @@ public:
 class QueenScoutBot : public QueenBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideQueenScoutBot", "JumpQueenScoutBot"};
         return upgradeTypes;
@@ -3306,11 +2825,6 @@ protected:
 
 public:
     QueenScoutBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), QueenBot(name, x, y), ScoutBot(name, x, y) {}
-
-    void move() override
-    {
-        ScoutBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3324,7 +2838,7 @@ public:
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3353,7 +2867,7 @@ public:
 class QueenTrackBot : public QueenBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideQueenTrackBot", "JumpQueenTrackBot"};
         return upgradeTypes;
@@ -3361,11 +2875,6 @@ protected:
 
 public:
     QueenTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), QueenBot(name, x, y), TrackBot(name, x, y) {}
-
-    void move() override
-    {
-        TrackBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3379,7 +2888,7 @@ public:
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3408,7 +2917,7 @@ public:
 class VampireScoutBot : public VampireBot, public ScoutBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideVampireScoutBot", "JumpVampireScoutBot"};
         return upgradeTypes;
@@ -3416,11 +2925,6 @@ protected:
 
 public:
     VampireScoutBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), VampireBot(name, x, y), ScoutBot(name, x, y) {}
-
-    void move() override
-    {
-        ScoutBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3434,7 +2938,7 @@ public:
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3463,7 +2967,7 @@ public:
 class VampireTrackBot : public VampireBot, public TrackBot
 {
 protected:
-    const vector<string> &getShootingUpgradeTypes() const override
+    const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideVampireTrackBot", "JumpVampireTrackBot"};
         return upgradeTypes;
@@ -3471,11 +2975,6 @@ protected:
 
 public:
     VampireTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), VampireBot(name, x, y), TrackBot(name, x, y) {}
-
-    void move() override
-    {
-        TrackBot::move();
-    }
 
     void fire(int X, int Y) override
     {
@@ -3489,7 +2988,7 @@ public:
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
         move();
@@ -3508,6 +3007,7 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
+        VampireBot::setBattlefield(bf);
     }
 };
 
@@ -3516,6 +3016,13 @@ public:
 //******************************************
 class HideLongShotScoutBot : public HideLongShotBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideLongShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3525,22 +3032,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideLongShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        LongShotBot::fire(0, 0);
+        HideLongShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        HideLongShotBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3558,8 +3065,7 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        LongShotBot::setBattlefield(bf);
+        HideLongShotBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3569,6 +3075,13 @@ public:
 //******************************************
 class HideSemiAutoScoutBot : public HideSemiAutoBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideSemiAutoScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3578,22 +3091,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideSemiAutoBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(0, 0);
+        HideSemiAutoBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        HideSemiAutoBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3605,14 +3118,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideSemiAutoBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        SemiAutoBot::setBattlefield(bf);
+        HideSemiAutoBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3622,6 +3134,13 @@ public:
 //******************************************
 class HideThirtyShotScoutBot : public HideThirtyShotBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideThirtyShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3631,22 +3150,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideThirtyShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        ThirtyShotBot::fire(0, 0);
+        HideThirtyShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3658,14 +3177,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideThirtyShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        ThirtyShotBot::setBattlefield(bf);
+        HideThirtyShotBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3675,6 +3193,13 @@ public:
 //******************************************
 class HideKnightScoutBot : public HideKnightBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideKnightScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3684,22 +3209,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideKnightBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(0, 0);
+        HideKnightBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3711,14 +3236,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideKnightBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        KnightBot::setBattlefield(bf);
+        HideKnightBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3729,6 +3253,13 @@ public:
 
 class HideQueenScoutBot : public HideQueenBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideQueenScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3738,22 +3269,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideQueenBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(0, 0);
+        HideQueenBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3765,14 +3296,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideQueenBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        QueenBot::setBattlefield(bf);
+        HideQueenBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3782,6 +3312,13 @@ public:
 //******************************************
 class HideVampireScoutBot : public HideVampireBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideVampireScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3791,22 +3328,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideVampireBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(0, 0);
+        HideVampireBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3818,14 +3355,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideVampireBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        VampireBot::setBattlefield(bf);
+        HideVampireBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -3835,6 +3371,13 @@ public:
 //******************************************
 class HideLongShotTrackBot : public HideLongShotBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideLongShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3844,22 +3387,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideLongShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        LongShotBot::fire(0, 0);
+        HideLongShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3871,14 +3414,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideLongShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        LongShotBot::setBattlefield(bf);
+        HideLongShotBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -3888,6 +3430,13 @@ public:
 //******************************************
 class HideSemiAutoTrackBot : public HideSemiAutoBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideSemiAutoTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3897,22 +3446,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideSemiAutoBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(0, 0);
+        HideSemiAutoBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        HideSemiAutoBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3924,14 +3473,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideSemiAutoBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        SemiAutoBot::setBattlefield(bf);
+        HideSemiAutoBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -3941,6 +3489,13 @@ public:
 //******************************************
 class HideThirtyShotTrackBot : public HideThirtyShotBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideThirtyShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -3950,22 +3505,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideThirtyShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        ThirtyShotBot::fire(0, 0);
+        HideThirtyShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -3983,8 +3538,7 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        ThirtyShotBot::setBattlefield(bf);
+        HideThirtyShotBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -3994,6 +3548,13 @@ public:
 //******************************************
 class HideKnightTrackBot : public HideKnightBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideKnightTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4003,22 +3564,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideKnightBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(0, 0);
+        HideKnightBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4030,14 +3591,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideKnightBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        KnightBot::setBattlefield(bf);
+        HideKnightBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4046,6 +3606,13 @@ public:
 //******************************************
 class HideQueenTrackBot : public HideQueenBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideQueenTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4055,22 +3622,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideQueenBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(0, 0);
+        HideQueenBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4082,14 +3649,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideQueenBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        QueenBot::setBattlefield(bf);
+        HideQueenBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4099,6 +3665,13 @@ public:
 //******************************************
 class HideVampireTrackBot : public HideVampireBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     HideVampireTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4108,22 +3681,22 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideVampireBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(0, 0);
+        HideVampireBot::fire(0, 0);
     }
 
     void think() override
     {
-        HideBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4135,14 +3708,13 @@ public:
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideVampireBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideBot::setBattlefield(bf);
-        VampireBot::setBattlefield(bf);
+        HideVampireBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4152,6 +3724,13 @@ public:
 //******************************************
 class JumpLongShotScoutBot : public JumpLongShotBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpLongShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4161,22 +3740,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpLongShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        LongShotBot::fire(0, 0);
+        JumpLongShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4188,14 +3767,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpLongShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        LongShotBot::setBattlefield(bf);
+        JumpLongShotBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4205,6 +3783,13 @@ public:
 //******************************************
 class JumpSemiAutoScoutBot : public JumpSemiAutoBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpSemiAutoScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4214,22 +3799,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpSemiAutoBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(0, 0);
+        JumpSemiAutoBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4241,14 +3826,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpSemiAutoBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        SemiAutoBot::setBattlefield(bf);
+        JumpSemiAutoBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4258,6 +3842,13 @@ public:
 //******************************************
 class JumpThirtyShotScoutBot : public JumpThirtyShotBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpThirtyShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4267,22 +3858,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpThirtyShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        ThirtyShotBot::fire(0, 0);
+        JumpThirtyShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4294,14 +3885,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpThirtyShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        ThirtyShotBot::setBattlefield(bf);
+        JumpThirtyShotBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4311,6 +3901,13 @@ public:
 //******************************************
 class JumpKnightScoutBot : public JumpKnightBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpKnightScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4320,22 +3917,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpKnightBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(0, 0);
+        JumpKnightBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        JumpKnightBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4347,14 +3944,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpKnightBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        KnightBot::setBattlefield(bf);
+        JumpKnightBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4365,6 +3961,13 @@ public:
 
 class JumpQueenScoutBot : public JumpQueenBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpQueenScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4374,22 +3977,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpQueenBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(0, 0);
+        JumpQueenBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        JumpQueenBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4401,14 +4004,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpQueenBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        QueenBot::setBattlefield(bf);
+        JumpQueenBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4418,6 +4020,13 @@ public:
 //******************************************
 class JumpVampireScoutBot : public JumpVampireBot, public ScoutBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpVampireScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4427,22 +4036,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpVampireBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(0, 0);
+        JumpVampireBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        ScoutBot::think();
     }
 
     void act() override
     {
-        ScoutBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4454,14 +4063,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpVampireBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        VampireBot::setBattlefield(bf);
+        JumpVampireBot::setBattlefield(bf);
         ScoutBot::setBattlefield(bf);
     }
 };
@@ -4472,6 +4080,13 @@ public:
 
 class JumpLongShotTrackBot : public JumpLongShotBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpLongShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4481,22 +4096,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpLongShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        LongShotBot::fire(0, 0);
+        JumpLongShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4508,14 +4123,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpLongShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        LongShotBot::setBattlefield(bf);
+        JumpLongShotBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4526,6 +4140,13 @@ public:
 
 class JumpSemiAutoTrackBot : public JumpSemiAutoBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpSemiAutoTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4535,22 +4156,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpSemiAutoBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(0, 0);
+        JumpSemiAutoBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4579,6 +4200,13 @@ public:
 //******************************************
 class JumpThirtyShotTrackBot : public JumpThirtyShotBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpThirtyShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4588,22 +4216,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpThirtyShotBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        ThirtyShotBot::fire(0, 0);
+        JumpThirtyShotBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4615,14 +4243,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpThirtyShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        ThirtyShotBot::setBattlefield(bf);
+        JumpThirtyShotBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4632,6 +4259,13 @@ public:
 //******************************************
 class JumpKnightTrackBot : public JumpKnightBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpKnightTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4641,22 +4275,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpKnightBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(0, 0);
+        JumpKnightBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4668,14 +4302,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpKnightBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        KnightBot::setBattlefield(bf);
+        JumpKnightBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4684,6 +4317,13 @@ public:
 //******************************************
 class JumpQueenTrackBot : public JumpQueenBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpQueenTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4693,22 +4333,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpQueenBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(0, 0);
+        JumpQueenBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4720,14 +4360,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpQueenBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        QueenBot::setBattlefield(bf);
+        JumpQueenBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
@@ -4737,6 +4376,13 @@ public:
 //******************************************
 class JumpVampireTrackBot : public JumpVampireBot, public TrackBot
 {
+protected:
+    const vector<string> &getUpgradeTypes() const override
+    {
+        static const vector<string> upgradeTypes = {};
+        return upgradeTypes;
+    }
+
 public:
     JumpVampireTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
@@ -4746,22 +4392,22 @@ public:
 
     void move() override
     {
-        JumpBot::move();
+        JumpVampireBot::move();
     }
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(0, 0);
+        JumpVampireBot::fire(0, 0);
     }
 
     void think() override
     {
-        JumpBot::think();
+        TrackBot::think();
     }
 
     void act() override
     {
-        TrackBot::look(0, 0);
+        look(0, 0);
         think();
         fire(0, 0);
     }
@@ -4773,14 +4419,13 @@ public:
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpVampireBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        VampireBot::setBattlefield(bf);
+        JumpVampireBot::setBattlefield(bf);
         TrackBot::setBattlefield(bf);
     }
 };
