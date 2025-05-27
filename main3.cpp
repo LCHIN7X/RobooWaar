@@ -817,8 +817,6 @@ public:
         int x = getX();
         int y = getY();
 
-        useAmmo();
-
         for (int dx = -3; dx <= 3; dx++)
         {
             for (int dy = -3; dy <= 3; dy++)
@@ -837,6 +835,7 @@ public:
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     logger << ">> " << getName() << " firesssss at (" << targetX << "," << targetY << ")" << endl;
+                    useAmmo();
 
                     if (gtarget->isHidden())
                     {
@@ -1254,6 +1253,7 @@ public:
                     if (gtarget->canBeHit())
                     {
                         logger << getName() << " Queen fires at (" << targetX << "," << targetY << ")\n";
+                        useAmmo();
                         if (hitProbability())
                         {
                             gtarget->takeDamage();
@@ -1279,7 +1279,6 @@ public:
             if (fired)
                 break;
         }
-        useAmmo();
         if (!fired)
         {
             logger << "No shooting, as sadly, " << getName() << " found no target in straight line\n";
@@ -1394,12 +1393,11 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void look(int X, int Y) override  
+    void look(int X, int Y) override
     {
-    
+
         availableSpaces.clear();
 
-  
         if (scout_count >= 3)
         {
             logger << getName() << " reach the limit,cannot scan already\n";
@@ -1426,18 +1424,18 @@ public:
             logger << getName() << " try scan it next round \n";
         }
 
-       
         int x = getX();
         int y = getY();
         for (int dx = -1; dx <= 1; dx++)
         {
             for (int dy = -1; dy <= 1; dy++)
             {
-                if (dx == 0 && dy == 0) continue; 
-                
+                if (dx == 0 && dy == 0)
+                    continue;
+
                 int newX = x + dx;
                 int newY = y + dy;
-                
+
                 if (battlefield->isPositionAvailable(newX, newY))
                 {
                     availableSpaces.emplace_back(newX, newY);
@@ -1483,12 +1481,11 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void look(int X, int Y) override  
+    void look(int X, int Y) override
     {
 
         availableSpaces.clear();
 
-      
         if (tracker == 0)
         {
             logger << getName() << " cannot track robot already\n";
@@ -1511,7 +1508,7 @@ public:
                     {
                         track_target.push_back(target);
                         tracker--;
-                        logger << getName() << " track " << target->getName() 
+                        logger << getName() << " track " << target->getName()
                                << " at (" << targetX << "," << targetY << ")\n";
                         plant = true;
                     }
@@ -1530,11 +1527,12 @@ public:
         {
             for (int dy = -1; dy <= 1; dy++)
             {
-                if (dx == 0 && dy == 0) continue; 
-                
+                if (dx == 0 && dy == 0)
+                    continue;
+
                 int newX = x + dx;
                 int newY = y + dy;
-                
+
                 if (battlefield->isPositionAvailable(newX, newY))
                 {
                     availableSpaces.emplace_back(newX, newY);
@@ -1547,7 +1545,7 @@ public:
     {
         logger << "TrackBot is thinking..." << endl;
         look(0, 0);
-        fire(0,0);
+        fire(0, 0);
         move();
     }
 
