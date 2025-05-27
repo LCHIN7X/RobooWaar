@@ -1,7 +1,7 @@
 M by N : 10 10
 steps: 100
 robots: 4 
-TrackBot Kidd 3 6
-ScoutBot Jet 3 7
-TrackBot Harry 3 8
-ScoutBot Star random random
+GenericRobot Kidd 3 6
+GenericRobot Jet 3 7
+GenericRobot Harry 3 8
+GenericRobot Star random random
