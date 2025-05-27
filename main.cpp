@@ -25,6 +25,7 @@ Phone: 011-1098 8658
 
 **********|**********|**********/
 
+// headers
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -42,7 +43,6 @@ Phone: 011-1098 8658
 
 using namespace std;
 
-// TO DO: SemiAutoBot, LongShotBot, ThirtyShotBot, KnightBot, QueenBot, VampireBot have fire isHurt problem, will fix soon
 //  Forward declarations
 class Robot;
 
@@ -59,28 +59,25 @@ public:
     // Constructor
     Logger()
     {
-        cout << "Logger class starting up..." << endl;
+        // call open() to open input file
         open();
     };
 
-    bool open()
+    void open()
     {
         outputFile.open(fileName);
-        if (outputFile.is_open())
-        {
-            return true;
-        }
-        return false;
     }
 
     void close()
     {
         if (outputFile.is_open())
         {
-            outputFile.close();
+            outputFile.close(); // close output file if it is open
         }
     }
 
+    // operator overloading
+    // overload << operator to accept generic data types
     template <typename T>
     Logger &operator<<(const T &outputContent)
     {
@@ -89,6 +86,7 @@ public:
         return *this;
     }
 
+    // overload << operator to accept stream manipulators (for endl)
     Logger &operator<<(ostream &(*manip)(ostream &))
     {
         manip(cout);
@@ -117,7 +115,6 @@ private:
     int numberOfRobots;
     vector<Robot *> listOfRobots;            // stores all robots
     vector<vector<Robot *>> battlefieldGrid; // battlefield grid
-    vector<pair<string, int>> respawnQueue;  // Tracks robot name, robot lives in pairs
     map<string, int> respawnCounts;
     struct reentryData
     {
@@ -128,21 +125,16 @@ private:
     queue<reentryData> reentryQueue; // Queue for reentry
     set<Robot *> queuedThisRound;    // Track robots queued for reentry this round
 
-    // TODO for Battlefield:
-    // - fix bugs if any
-
-    // TODO others:
-    // - Detailed comments
-    // - More error handling
-
 public:
-    Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {};
-    ~Battlefield();
+    Battlefield() : height(0), width(0), steps(0), numberOfRobots(0) {}; // Constructor, initialize height, width, steps, numberOfRobots to 0
+    ~Battlefield();                                                      // Destructor declaration
+
+    // function to set dimension of battlefield
     void setDimensions(int h, int w)
     {
         height = h;
         width = w;
-        battlefieldGrid.assign(height, vector<Robot *>(width, nullptr));
+        battlefieldGrid.assign(height, vector<Robot *>(width, nullptr)); // assign(count, value), count = height number of rows, width number of columns, initialize all values in the row to nullptr
     }
 
     void setSteps(int s)
@@ -165,6 +157,7 @@ public:
         return numberOfRobots;
     }
 
+    // get list of all robots
     const vector<Robot *> getListOfRobots() const
     {
         return listOfRobots;
@@ -211,20 +204,21 @@ protected:
     bool getEnemyDetectedNearby() const;
 
 public:
+    // Constructor, set name, position, lives and hidden state to specified values
     Robot(string name, int x, int y)
         : name(name), positionX(x), positionY(y), lives(3), hidden(false) {}
 
-    virtual ~Robot() = default;
+    virtual ~Robot() = default; // Virtual destructor
 
-    void setBattlefield(Battlefield *bf) { battlefield = bf; } // Setter
-    Battlefield *getBattlefield() const { return battlefield; }
+    void setBattlefield(Battlefield *bf) { battlefield = bf; }  // Setter
+    Battlefield *getBattlefield() const { return battlefield; } // get battlefield context
 
-    virtual void initializeFrom(const Robot *oldRobot) = 0;
-    virtual void think() = 0;
-    virtual void act() = 0;
-    virtual void move() = 0;
-    virtual void fire(int X, int Y) = 0;
-    virtual void look(int X, int Y) = 0;
+    virtual void initializeFrom(const Robot *oldRobot) = 0; //  is here to be overridden by ThirtyShotBot
+    virtual void think() = 0;                               // pure virtual think function to be overriden in derived classes
+    virtual void act() = 0;                                 // pure virtual act function to be overriden in derived classes
+    virtual void move() = 0;                                // pure virtual move function to be overriden in derived classes
+    virtual void fire(int X, int Y) = 0;                    // pure virtual fire function to be overridden in derived classes
+    virtual void look(int X, int Y) = 0;                    // pure virtual look function to be overridden in derived classes
 
     // Common robot functions
     string getName() const { return name; }
@@ -248,11 +242,11 @@ public:
     {
         if (!hidden)
         {
-            lives--;
+            lives--; // decrement lives by 1
             if (lives <= 0)
             {
                 logger << name << " has been destroyed!\n";
-                isDie = true; // Mark as dead for this turn
+                isDie = true; // Mark as dead, permanently destroyed
             }
             else{
             isHurt = true; // Mark as hurt for requeue
@@ -266,18 +260,18 @@ public:
 //******************************************
 // MovingRobot class
 //*******************************************
-
 class MovingRobot : public virtual Robot
 {
 protected:
     int moveCount;
 
 public:
+    // Constructor
     MovingRobot(const string &name, int x, int y)
         : Robot(name, x, y), moveCount(0) {}
 
-    virtual ~MovingRobot() = default;
-    virtual void move() = 0;
+    virtual ~MovingRobot() = default; // Virtual destructor
+    virtual void move() = 0;          // pure virtual move function to be overridden
 
     bool isValidMove(int newX, int newY, const Battlefield &battlefield) const
     {
@@ -302,17 +296,18 @@ protected:
     int ammo;
 
 public:
+    // Constructor
     ShootingRobot(const string &name, int x, int y, int initialAmmo)
         : Robot(name, x, y), ammo(initialAmmo) {}
 
-    virtual ~ShootingRobot() = default;
-    virtual void fire(int X, int Y) = 0;
+    virtual ~ShootingRobot() = default;  // virtual destructor
+    virtual void fire(int X, int Y) = 0; // pure virtual fire() method
     bool hasAmmo() const { return ammo > 0; }
 
     void useAmmo()
     {
         if (ammo > 0)
-            ammo--;
+            ammo--; // decrements ammo by 1
     }
 
     int getAmmo() const { return ammo; }
@@ -321,7 +316,7 @@ public:
         ammo = num;
     }
 
-    // Stimulate and check hit probablity is 70 percent
+    // Simulate hit probablity of 70 percent
     bool hitProbability() const
     {
         static random_device rd;                   // True random number generator
@@ -330,6 +325,7 @@ public:
         return dis(gen) <= 0.7;                    // 70% hit chance
     }
 
+    // Preserve ammo after upgrades (specifically used for ThirtyShotBot)
     void initializeFrom(const Robot *oldRobot) override
     {
         const ShootingRobot *oldShootingBot = dynamic_cast<const ShootingRobot *>(oldRobot);
@@ -352,11 +348,12 @@ protected:
     bool enemyDetectedNearby;
 
 public:
+    // Constructor
     SeeingRobot(const string &name, int x, int y, int range)
         : Robot(name, x, y), visionRange(range) {}
 
-    virtual ~SeeingRobot() = default;
-    virtual void look(int X, int Y) = 0;
+    virtual ~SeeingRobot() = default;    // virtual destructor
+    virtual void look(int X, int Y) = 0; // pure virtual look method
 
     const vector<Robot *> &getDetectedTargets() const { return detectedTargets; }
 
@@ -375,10 +372,11 @@ protected:
     int strategyLevel;
 
 public:
+    // Constructor
     ThinkingRobot(const string &name, int x, int y, int strategy)
         : Robot(name, x, y), strategyLevel(strategy) {}
 
-    virtual ~ThinkingRobot() = default;
+    virtual ~ThinkingRobot() = default; // virtual destructor
     void think() override
     {
         logger << ">> " << name << " is thinking..." << endl;
@@ -389,6 +387,7 @@ public:
 
 //******************************************
 // GenericRobot class
+// inherits from MovingRobot, ShootingRobot, SeeingRobot, ThinkingRobot
 //******************************************
 
 class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobot, public ThinkingRobot
@@ -396,13 +395,13 @@ class GenericRobot : public MovingRobot, public ShootingRobot, public SeeingRobo
 protected:
     bool hasUpgraded[3] = {false, false, false}; // Track upgrades for moving, shooting, seeing
     Battlefield *battlefield = nullptr;          // Pointer to current battlefield
-    bool pendingUpgrade = false;
-    string upgradeType = "";
-    bool enemyDetectedNearby = false; // Flag for detecting nearby enemies
-    vector<Robot *> detectedTargets;  // <-- Add this line
-    vector<string> upgrades;
+    bool pendingUpgrade = false;                 // flag to indicate if it has an upgrade to be performed
+    string upgradeType = "";                     // to store upgrade type
+    bool enemyDetectedNearby = false;            // Flag for detecting nearby enemies
+    vector<Robot *> detectedTargets;             // to store detected enemies/targets
     vector<pair<int, int>> availableSpaces;
 
+    // virtual getUpgradeTypes method that returns the possible upgrade combinations at each stage for each robot (overridden by all robots later on)
     virtual const vector<string> &getUpgradeTypes() const
     {
         static const vector<string> defaultTypes = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "KnightBot", "QueenBot", "VampireBot", "ScoutBot", "TrackBot"};
@@ -443,7 +442,7 @@ public:
     }
 };
 
-// Definitions outside the class body
+// Constructor for GenericRobot
 GenericRobot::GenericRobot(const string &name, int x, int y)
     : Robot(name, x, y),
       MovingRobot(name, x, y),
@@ -453,11 +452,11 @@ GenericRobot::GenericRobot(const string &name, int x, int y)
 {
 }
 
-GenericRobot::~GenericRobot() = default;
+GenericRobot::~GenericRobot() = default; // virtual GenericRobot destructor
 
 void GenericRobot::setBattlefield(Battlefield *bf) { battlefield = bf; }
 
-void GenericRobot::think()
+void GenericRobot::think() // override think()
 {
     if (hasThought)
         return;
@@ -474,7 +473,7 @@ void GenericRobot::think()
         fire(0, 0);
     }
 }
-void GenericRobot::act()
+void GenericRobot::act() // when it's a robot's turn, this function is first called
 {
     if (isDie || isHurt || getLives() <= 0)
         return; // If robot is dead or hurt, skip action
@@ -488,7 +487,7 @@ void GenericRobot::act()
     detectedTargets.clear();
 }
 
-void GenericRobot::move()
+void GenericRobot::move() // override move() method
 {
     if (hasMoved)
         return;
@@ -516,7 +515,7 @@ void GenericRobot::move()
     logger << name << " could not move (no available adjacent cell).\n";
 }
 
-void GenericRobot::fire(int X, int Y)
+void GenericRobot::fire(int X, int Y) // override fire() method
 {
     if (hasFired)
         return;
@@ -552,13 +551,6 @@ void GenericRobot::fire(int X, int Y)
             {
                 logger << "Hit! (" << target->getName() << ") is killed!" << endl;
                 target->takeDamage();
-                // Alternate upgrade types
-                //  If the robot's class name starts with "Hide" (for HideBot and all Hide* hybrids)
-                // if (typeid(*this).name() && string(typeid(*this).name()).find("Hide") != string::npos) {
-                // types = {"HideLongShotBot","HideSemiAutoBot","HideThirtyShotBot","HideKnightBot","HideQueenBot","HideVampireBot","HideScoutBot","HideTrackBot"};
-                //} else {
-                // types = {"HideBot", "JumpBot", "LongShotBot", "SemiAutoBot", "ThirtyShotBot", "ScoutBot", "TrackBot", "KnightBot", "QueenBot", "VampireBot"};
-                //}
                 vector<string> upgradeTypes = getUpgradeTypes();
                 if (!upgradeTypes.empty())
                 {
@@ -569,7 +561,7 @@ void GenericRobot::fire(int X, int Y)
             }
             else
             {
-                logger << "Missed!" << endl;
+                logger << getName() << " missed!" << endl;
             }
 
             if (!hasAmmo())
@@ -586,14 +578,14 @@ void GenericRobot::fire(int X, int Y)
     }
     else
     {
-        logger << name << " has no ammo left. It will self destroy!" << endl;
+        logger << name << " has no ammo left. It will self destruct!" << endl;
         lives = 0;
         isDie = true;
     }
     detectedTargets.clear();
 }
 
-void GenericRobot::look(int X, int Y)
+void GenericRobot::look(int X, int Y) // override look() method
 {
     if (!battlefield)
     {
@@ -690,10 +682,11 @@ class HideBot : public virtual GenericRobot
 {
 
 private:
-    int hide_count = 0;
+    int hideCount = 0;
     bool isHidden = false;
 
 protected:
+    // override getUpgradeTypes method from GenericRobot to include its own upgrade areas
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {"HideLongShotBot", "HideSemiAutoBot", "HideThirtyShotBot", "HideKnightBot", "HideQueenBot", "HideVampireBot", "HideScoutBot", "HideTrackBot"};
@@ -705,21 +698,21 @@ public:
         : Robot(name, x, y),
           GenericRobot(name, x, y) {}
 
-    void move() override
+    void move() override // override move()
     {
-        if (hide_count < 3 && rand() % 2 == 0)
+        if (hideCount < 3 && rand() % 2 == 0)
         {
             isHidden = true;
-            hide_count++;
+            hideCount++;
             setHidden(true);
-            logger << getName() << " hide, (" << hide_count << "/3)" << endl;
+            logger << getName() << " hide, (" << hideCount << "/3)" << endl;
         }
         else
         {
             isHidden = false;
             setHidden(false);
 
-            if (hide_count >= 3)
+            if (hideCount >= 3)
                 logger << getName() << " finish use hide, keep moving." << endl;
             else
                 logger << getName() << " did not hide this turn, keep moving." << endl;
@@ -756,7 +749,7 @@ public:
 class JumpBot : public virtual GenericRobot
 {
 private:
-    int jump_count = 0;
+    int jumpCount = 0;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -772,7 +765,7 @@ public:
 
     void move() override
     {
-        if (jump_count < 3 && rand() % 2 == 0)
+        if (jumpCount < 3 && rand() % 2 == 0)
         {
             int jumpx, jumpy;
             bool positionFound = false;
@@ -793,11 +786,11 @@ public:
 
             if (positionFound)
             {
-                jump_count++;
+                jumpCount++;
                 battlefield->removeRobotFromGrid(this);
                 battlefield->placeRobot(this, jumpx, jumpy);
                 setPosition(jumpx, jumpy);
-                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jump_count << "/3)\n";
+                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jumpCount << "/3)\n";
             }
             else
             {
@@ -806,7 +799,7 @@ public:
         }
         else
         {
-            if (jump_count >= 3)
+            if (jumpCount >= 3)
             {
                 logger << getName() << " cannot jump already. \n";
             }
@@ -820,7 +813,6 @@ public:
     void act() override
     {
         logger << getName() << " is thinking..." << endl;
-        // TO DO : the logic will be implemented later
         look(0, 0);
         fire(0, 0);
         move();
@@ -828,7 +820,7 @@ public:
 
     int getJumpCount() const
     {
-        return jump_count;
+        return jumpCount;
     }
 };
 
@@ -839,7 +831,7 @@ public:
 class LongShotBot : public virtual GenericRobot
 {
 private:
-    int fire_count = 0;
+    int fireCount = 0;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -861,7 +853,7 @@ public:
 
         if (!hasAmmo())
         {
-            logger << name << " has no ammo left. It will self destroy!" << endl;
+            logger << name << " has no ammo left. It will self destruct!" << endl;
             lives = 0;
             isDie = true;
             return;
@@ -900,7 +892,7 @@ public:
                     {
                         gtarget->takeDamage();
                         logger << "Hit! (" << gtarget->getName() << ") be killed" << endl;
-                        fire_count++;
+                        fireCount++;
                         fired = true;
 
                         const vector<string> &upgradeTypes = getUpgradeTypes();
@@ -947,7 +939,7 @@ public:
 class SemiAutoBot : public virtual GenericRobot
 {
 private:
-    int fire_count = 0;
+    int fireCount = 0;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -1014,7 +1006,7 @@ public:
             {
                 logger << "Shot " << (i + 1) << " hit " << gtarget->getName() << "!" << endl;
                 gtarget->takeDamage();
-                fire_count++;
+                fireCount++;
                 hitSuccessful = true;
             }
             else
@@ -1045,7 +1037,7 @@ public:
 
     int getFireCount() const
     {
-        return fire_count;
+        return fireCount;
     }
 };
 
@@ -1055,7 +1047,8 @@ public:
 class ThirtyShotBot : public virtual GenericRobot
 {
 private:
-    int shell_count;
+    // has 30 shells
+    int shellCount;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -1068,36 +1061,42 @@ public:
     ThirtyShotBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
-          shell_count(30)
+          shellCount(30)
     {
     }
 
-    void setShellCount(int shellCount)
+    void setShellCount(int s)
     {
-        shell_count = shellCount;
+        shellCount = s;
     }
 
+    int getShellCount() const
+    {
+        return shellCount;
+    }
+
+    //  this is to prevent shellCount from being set to 30 everytime ThirtyShotBot's constructor is called (during upgrades)
     void initializeFrom(const Robot *oldRobot) override
     {
         GenericRobot::initializeFrom(oldRobot); // call ShootingRobot's initializeFrom
 
-        // Now, handle ThirtyShotBot specific state
+        // if the previous robot was already a ThirtyShotBot, shellCount is preserved
         const ThirtyShotBot *oldThirtyShotBot = dynamic_cast<const ThirtyShotBot *>(oldRobot);
         if (oldThirtyShotBot)
         {
-            this->shell_count = oldThirtyShotBot->getShellCount(); // Preserve shell_count
+            this->shellCount = oldThirtyShotBot->getShellCount(); // Preserve shellCount
             logger << ">> " << getName() << " (upgraded) preserves "
-                   << this->shell_count << " shells from its previous form: " << oldRobot->getName() << endl;
+                   << this->shellCount << " shells from its previous form: " << oldRobot->getName() << endl;
         }
         else
-        {
+        { // if previous robot was not a ThirtyShotBot, shellCount remains as 30
             logger << getName() << " got 30 shells, replacing its current shells!" << endl;
         }
     }
 
     void fire(int X, int Y) override
     {
-        if (shell_count <= 0)
+        if (shellCount <= 0)
         {
             logger << getName() << " shell is finish\n";
             return;
@@ -1130,10 +1129,10 @@ public:
                         if (hitProbability())
                         {
                             gtarget->takeDamage();
-                            shell_count--;
+                            shellCount--;
                             logger << getName() << " fires at (" << targetX << ", " << targetY << "), shell left: " << getShellCount() << "\n";
                             hitSuccessful = true;
-                            logger << "Successful hit on " << gtarget->getName() << "!\n";
+                            logger << "Hit! " << gtarget->getName() << " is killed!\n";
                             const vector<string> &upgradeTypes = getUpgradeTypes();
                             if (!upgradeTypes.empty())
                             {
@@ -1145,8 +1144,8 @@ public:
                         }
                         else
                         {
-                            shell_count--;
-                            logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
+                            shellCount--;
+                            logger << getName() << " fire at (" << targetX << ", " << targetY << "), shell left: " << shellCount << "\n";
                             logger << "Missed!\n";
                         }
                         fired = true;
@@ -1160,11 +1159,6 @@ public:
             logger << " No shooting as no robots within shooting range.";
         }
     }
-
-    int getShellCount() const
-    {
-        return shell_count;
-    }
 };
 
 //******************************************
@@ -1174,8 +1168,7 @@ public:
 class KnightBot : public virtual GenericRobot
 {
 private:
-    int fire_count = 0;
-    const vector<string> upgradeTypes = {"HideKnightBot", "JumpKnightBot", "KnightScoutBot", "KnightTrackBot"};
+    int fireCount = 0;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -1216,7 +1209,7 @@ public:
             if (target && target != this && target->getLives() > 0&& !target->getIsHurt())
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                logger << getName() << "fires at (" << targetX << "," << targetY << ")" << endl;
+                logger << getName() << " fires at (" << targetX << "," << targetY << ")" << endl;
                 useAmmo();
                 fired = true;
                 if (gtarget && gtarget->canBeHit())
@@ -1224,14 +1217,14 @@ public:
                     if (hitProbability())
                     {
                         gtarget->takeDamage();
-                        fire_count++;
+                        fireCount++;
                         hitSuccessful = true;
                         hitRobots.push_back(gtarget->getName());
-                        logger << "Hit! (" << gtarget->getName() << ") be killed" << endl;
+                        logger << "Hit! (" << gtarget->getName() << ") is killed!" << endl;
                     }
                     else
                     {
-                        logger << "Missed!" << endl;
+                        logger << getName() << " missed!" << endl;
                     }
                 }
             }
@@ -1408,11 +1401,11 @@ public:
 
             if (target->isHidden())
             {
-                logger << target->getName() << " is hide, attack miss." << endl;
+                logger << target->getName() << " is hidden, attack missed." << endl;
             }
             else if (hitProbability())
             {
-                logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                logger << "Hit! (" << target->getName() << ") is killed!" << endl;
 
                 target->takeDamage();
                 if (getLives() < 3)
@@ -1455,7 +1448,7 @@ public:
 class ScoutBot : public virtual GenericRobot
 {
 private:
-    int scout_count = 0;
+    int scoutCount = 0;
 
 protected:
     const vector<string> &getUpgradeTypes() const override
@@ -1474,7 +1467,7 @@ public:
 
         availableSpaces.clear();
 
-        if (scout_count >= 3)
+        if (scoutCount >= 3)
         {
             logger << getName() << " reach the limit,cannot scan already\n";
         }
@@ -1493,7 +1486,7 @@ public:
                     }
                 }
             }
-            scout_count++;
+            scoutCount++;
         }
         else
         {
@@ -1531,7 +1524,7 @@ public:
 
     int getScoutCount() const
     {
-        return scout_count;
+        return scoutCount;
     }
 };
 
@@ -1665,30 +1658,24 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideBot::move();  // use HideBot's move()
     }
 
     void fire(int X, int Y) override
     {
-        LongShotBot::fire(X, Y);
+        LongShotBot::fire(X, Y); // use LongShotBot's move()
     }
 
     void think() override
     {
-        // Disambiguate GenericRobot base
-        HideBot::think();
+        HideBot::think(); // use HideBot's think()
     }
 
     void act() override
     {
-        LongShotBot::look(0, 0); // Use long-range look for targeting
+        look(0, 0);  // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        LongShotBot::look(X, Y); // Use long-range look for any explicit look calls
     }
 
     bool canBeHit() override
@@ -1723,29 +1710,24 @@ public:
 
     void move() override
     {
-        HideBot::move();
+        HideBot::move();  // HideBot's move()
     }
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(X, Y);
+        SemiAutoBot::fire(X, Y);  // SemiAutoBot's fire()
     }
 
     void think() override
     {
-        HideBot::think();
+        HideBot::think();  // HideBot's think
     }
 
     void act() override
     {
-        SemiAutoBot::look(0, 0); // Use SemiAutoBot's look for targeting
+        look(0, 0);  // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        SemiAutoBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -1795,14 +1777,9 @@ public:
 
     void act() override
     {
-        ThirtyShotBot::look(0, 0); // Use ThirtyShotBot's look for targeting
+        look(0, 0);  // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        ThirtyShotBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -1852,14 +1829,9 @@ public:
 
     void act() override
     {
-        KnightBot::look(0, 0); // Use KnightBot's look for targeting
+        look(0, 0);
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        KnightBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -1909,14 +1881,9 @@ public:
 
     void act() override
     {
-        QueenBot::look(0, 0); // Use QueenBot's look for targeting
+        look(0, 0);   // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        QueenBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -1966,14 +1933,9 @@ public:
 
     void act() override
     {
-        VampireBot::look(0, 0); // Use VampireBot's look for targeting
+        look(0, 0);  // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        VampireBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2024,9 +1986,9 @@ public:
 
     void act() override
     {
-        ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
+        look(0, 0);
         think();
-        fire(0, 0);
+        fire(0, 0);  // GenericRobot's fire
     }
 
     void look(int X, int Y) override
@@ -2082,9 +2044,9 @@ public:
 
     void act() override
     {
-        TrackBot::look(0, 0); // Use TrackBot's look for targeting
+        look(0, 0);
         think();
-        fire(0, 0);
+        fire(0, 0); // GenericRobot's fire
     }
 
     void look(int X, int Y) override
@@ -2139,14 +2101,9 @@ public:
 
     void act() override
     {
-        LongShotBot::look(0, 0); // Use long-range look for targeting
+        look(0, 0);  // GenericRobot's look
         think();
         fire(0, 0);
-    }
-
-    void look(int X, int Y) override
-    {
-        LongShotBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -4521,8 +4478,6 @@ public:
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
-// This function should be part of your Battlefield class implementation
-
 void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
 {
     // Clear queuedThisRound at the start of each round
@@ -4531,7 +4486,6 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
     for (size_t i = 0; i < listOfRobots.size(); ++i)
     {
         GenericRobot *gen = dynamic_cast<GenericRobot *>(listOfRobots[i]);
-        // Using PendingUpgrade() and getUpgradeType() as provided in your snippet
         if (gen && gen->PendingUpgrade())
         {
             string type = gen->getUpgradeType();
@@ -4677,7 +4631,7 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
                 if (upGen)
                 {
-                    upGen->clearPendingUpgrade(); // Assuming clearPendingUpgrade exists
+                    upGen->clearPendingUpgrade(); 
                     upGen->setBattlefield(this);  // Ensure battlefield context is set
                     upGen->resetActionFlags();
                 }
@@ -4690,8 +4644,7 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
         }
     }
 
-    // --- NEWLY MOVED LOGGING BLOCK START ---
-    // Log robot status *after* upgrades have been processed for this step
+    // Log robot status after upgrades have been processed for this step
     logger << "Robot Status before Step " << stepNumber << ":" << endl;
     for (Robot *robot : listOfRobots)
     {
@@ -4775,7 +4728,7 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
             else if (dynamic_cast<JumpThirtyShotBot *>(robot))
                 typeName = "JumpThirtyShotBot";
             else if (dynamic_cast<JumpKnightBot *>(robot))
-                typeName = "KnightBot"; // Typo in original code, should be KnightBot if dynamic_cast passes
+                typeName = "JumpKnightBot"; 
             else if (dynamic_cast<JumpQueenBot *>(robot))
                 typeName = "JumpQueenBot";
             else if (dynamic_cast<JumpVampireBot *>(robot))
@@ -4856,13 +4809,6 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
             }
             logger << endl;
         }
-        else // For non-GenericRobot types, if any, that don't have getAmmo()
-        {
-            logger << "  Type: Robot"
-                   << ", Name: " << robot->getName()
-                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
-                   << ", Life: " << robot->getLives() << endl;
-        }
     }
     vector<Robot *> currentlyAliveRobots;
 
@@ -4904,7 +4850,7 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
     }
 }
 
-// COMPLETED: To get the number of alive robots
+// To get the number of alive robots
 int Battlefield::getNumberOfAliveRobots()
 {
     int num = 0;
@@ -4918,7 +4864,7 @@ int Battlefield::getNumberOfAliveRobots()
     return num;
 }
 
-// COMPLETED: To add new robot to battlefield during initialization
+// To add new robot to battlefield during initialization
 void Battlefield::addNewRobot(Robot *robot)
 {
     listOfRobots.push_back(robot);
@@ -4929,13 +4875,13 @@ void Battlefield::addNewRobot(Robot *robot)
     }
 }
 
-// COMPLETED: to check if the given coordinates are within the grid
+// to check if the given coordinates are within the grid
 bool Battlefield::isPositionWithinGrid(int x, int y) const
 {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
 
-// COMPLETED: to get the Robot at given coordinates, if not found then return nullptr
+// to get the Robot at given coordinates, if not found then return nullptr
 Robot *Battlefield::getRobotAt(int x, int y) const
 {
     if (!isPositionWithinGrid(x, y))
@@ -4945,7 +4891,7 @@ Robot *Battlefield::getRobotAt(int x, int y) const
     return battlefieldGrid[y][x];
 }
 
-// COMPLETED: to check if the given coordinates is available
+// To check if the specified coordinates is available (not occupied by another robot)
 bool Battlefield::isPositionAvailable(int x, int y)
 {
     if (getRobotAt(x, y) == nullptr)
@@ -4958,7 +4904,7 @@ bool Battlefield::isPositionAvailable(int x, int y)
     }
 }
 
-// COMPLETED: to put robot at specified coordinates
+// To put robot at specified coordinates
 void Battlefield::placeRobot(Robot *robot, int x, int y)
 {
     if (isPositionAvailable(x, y) && isPositionWithinGrid(x, y))
@@ -4968,7 +4914,7 @@ void Battlefield::placeRobot(Robot *robot, int x, int y)
     }
 }
 
-// COMPLETED: to remove robot from grid position
+// To remove robot from grid position
 void Battlefield::removeRobotFromGrid(Robot *robot)
 {
     int x = robot->getX();
@@ -4987,7 +4933,7 @@ void Battlefield::queueForReentry(Robot *robot)
     if (queuedThisRound.find(robot) != queuedThisRound.end()) return;
     queuedThisRound.insert(robot);
     int currentAmmo;
-    // Try to get ammo, prioritizing ThirtyShotBot's shell_count
+    // Try to get ammo, prioritizing ThirtyShotBot's shellCount
     ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
     if (TSB)
     {
@@ -5006,6 +4952,7 @@ void Battlefield::queueForReentry(Robot *robot)
            << " lives and " << currentAmmo << " ammo." << endl;
 }
 
+// To handle robot respawns
 //COMPLETED: respawnRobots member function definition
 void Battlefield::respawnRobots()
 {
@@ -5060,7 +5007,6 @@ void Battlefield::respawnRobots()
 void Battlefield::cleanupDestroyedRobots()
 {
     logger << "----------------------------------------" << endl;
-    logger << "Battlefield::cleanupDestroyedRobots()" << endl;
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
     {
@@ -5162,22 +5108,23 @@ void Battlefield::displayBattlefield()
     // Print legend
     logger << "LEGEND:" << endl;
     logger << "  . - Empty space" << endl;
+    logger << "  H - Hidden Robot" << endl;
     logger << "  [Letter] - First letter of robot's name" << endl
            << endl;
 }
 
 //******************************************
-// Destructor
+// Battlefield Destructor
 //******************************************
 
 Battlefield::~Battlefield()
 {
+    // clear robot pointers
     for (Robot *robot : listOfRobots)
     {
         delete robot;
     }
     listOfRobots.clear();
-    logger << "Battlefield: Destructor" << endl;
 }
 
 //******************************************
@@ -6287,8 +6234,6 @@ void readInputFile(Battlefield &battlefield, const string &filename = "inputFile
     inputFile.close();
 }
 
-// ... (includes and global logger object) ...
-
 int main()
 {
     // Seed the random number generator once
@@ -6313,7 +6258,7 @@ int main()
         int x = robot->getX();
         int y = robot->getY();
         int lives = robot->getLives();
-        logger << "Robot Name: " << name << ", Coords: (" << x << "," << y << "), Lives: " << lives << endl;
+        logger << "Robot Name: " << name << ", Coords: (" << x << "," << y << "), Lives: " << lives <<  endl;
     }
     logger << endl;
 
@@ -6336,7 +6281,7 @@ int main()
         logger << "\n--- Simulation Step " << currentStep << " ---" << endl;
 
         // Call simulationStep, passing the current step number
-        // The robot status logging will now happen *inside* simulationStep, after upgrades.
+        // The robot status logging will happen inside simulationStep, after upgrades.
         battlefield.simulationStep(currentStep); // Pass the current step number
 
         logger << "\nBattlefield State after Step " << currentStep << ":" << endl;
@@ -6380,6 +6325,10 @@ int main()
     {
         logger << "Result: Maximum steps reached (" << maxSteps << " steps)." << endl;
         logger << "Remaining robots: " << remainingRobots << endl;
+        const vector<Robot *> &finalRobotList = battlefield.getListOfRobots();
+        for (const Robot *remainingRobot : finalRobotList) {
+            logger << remainingRobot->getName() << endl;
+        }
     }
 
     return 0;
