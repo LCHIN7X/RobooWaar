@@ -630,7 +630,7 @@ void GenericRobot::look(int X, int Y)
                 logger << "Empty space" << endl;
                 availableSpaces.emplace_back(lookX, lookY);
             }
-            else if (occupant != this)
+            else if (occupant != this && !occupant->getIsDie() && !occupant->getIsHurt())
             {
                 logger << "Enemy " << occupant->getName() << endl;
                 enemyDetectedNearby = true;
