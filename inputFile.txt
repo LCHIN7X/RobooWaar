@@ -1,9 +1,13 @@
 M by N : 10 10
 steps: 100
-robots: 4 
+robots: 10 
 GenericRobot Kidd 3 6
 GenericRobot Sorry 3 4
 GenericRobot Xiao 4 0
 GenericRobot Jet 3 7
 GenericRobot Harry 3 8
 GenericRobot Star random random
+GenericRobot Edward random random
+GenericRobot Bella random random
+GenericRobot Alpha random random 
+GenericRobot Zeta random random 

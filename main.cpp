@@ -550,7 +550,7 @@ void GenericRobot::fire(int X, int Y)
             }
             else if (hitProbability())
             {
-                logger << "Hit! (" << target->getName() << ") be killed" << endl;
+                logger << "Hit! (" << target->getName() << ") is killed!" << endl;
                 target->takeDamage();
                 // Alternate upgrade types
                 //  If the robot's class name starts with "Hide" (for HideBot and all Hide* hybrids)
@@ -581,7 +581,7 @@ void GenericRobot::fire(int X, int Y)
         }
         else
         {
-            logger << "No shooting as no robots within shooting range ." << endl;
+            logger << "No shooting as no robots within shooting range." << endl;
         }
     }
     else
@@ -642,7 +642,7 @@ void GenericRobot::look(int X, int Y)
             }
             else
             {
-                logger << "Dead robot" << endl;
+                logger << "Dead Robot" << endl;
             }
         }
     }
@@ -712,7 +712,7 @@ public:
             isHidden = true;
             hide_count++;
             setHidden(true);
-            logger << getName() << " hide,(" << hide_count << "/3)" << endl;
+            logger << getName() << " hide, (" << hide_count << "/3)" << endl;
         }
         else
         {
@@ -720,9 +720,9 @@ public:
             setHidden(false);
 
             if (hide_count >= 3)
-                logger << getName() << " finish use hide , keep moving" << endl;
+                logger << getName() << " finish use hide, keep moving." << endl;
             else
-                logger << getName() << " did not hide this turn, keep moving" << endl;
+                logger << getName() << " did not hide this turn, keep moving." << endl;
         }
     }
 
@@ -738,8 +738,7 @@ public:
 
     void act() override
     {
-        logger << "HideBot is thinking..." << endl;
-        // TO DO : the logic will be implemented later
+        logger << getName() << " is thinking..." << endl;
         look(0, 0);
         fire(0, 0);
         move();
@@ -809,7 +808,7 @@ public:
         {
             if (jump_count >= 3)
             {
-                logger << getName() << " cannot jump already \n";
+                logger << getName() << " cannot jump already. \n";
             }
             else
             {
@@ -820,7 +819,7 @@ public:
 
     void act() override
     {
-        logger << "JumpBot is thinking..." << endl;
+        logger << getName() << " is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire(0, 0);
@@ -936,7 +935,7 @@ public:
 
         if (!fired)
         {
-            logger << "No shooting as no robots within shooting range . " << endl;
+            logger << "No shooting as no robots within shooting range. " << endl;
         }
     }
 };
@@ -991,14 +990,14 @@ public:
 
         if (!target)
         {
-            logger << "No shooting as no robots within shooting range ." << endl;
+            logger << "No shooting as no robots within shooting range." << endl;
             return;
         }
 
         GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
         useAmmo();
 
-        logger << ">> " << getName() << "SemiAuto fires 3 consecutive shots at ("
+        logger << ">> " << getName() << " fires 3 consecutive shots at ("
                << gtarget->getX() << "," << gtarget->getY() << ")" << endl;
 
         bool hitSuccessful = false;
@@ -1132,7 +1131,7 @@ public:
                         {
                             gtarget->takeDamage();
                             shell_count--;
-                            logger << getName() << "ThirtyShot fire at (" << targetX << ", " << targetY << "), shell left: " << getShellCount() << "\n";
+                            logger << getName() << " fires at (" << targetX << ", " << targetY << "), shell left: " << getShellCount() << "\n";
                             hitSuccessful = true;
                             logger << "Successful hit on " << gtarget->getName() << "!\n";
                             const vector<string> &upgradeTypes = getUpgradeTypes();
@@ -1158,7 +1157,7 @@ public:
 
         if (!fired)
         {
-            logger << " No shooting as no robots within shooting range .";
+            logger << " No shooting as no robots within shooting range.";
         }
     }
 
@@ -1217,7 +1216,7 @@ public:
             if (target && target != this && target->getLives() > 0 && !isHurt)
             {
                 GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                logger << getName() << "Knight fires at (" << targetX << "," << targetY << ")" << endl;
+                logger << getName() << "fires at (" << targetX << "," << targetY << ")" << endl;
                 useAmmo();
                 fired = true;
                 if (gtarget && gtarget->canBeHit())
@@ -1329,7 +1328,7 @@ public:
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
                     if (gtarget->canBeHit())
                     {
-                        logger << getName() << " Queen fires at (" << targetX << "," << targetY << ")\n";
+                        logger << getName() << " fires at (" << targetX << "," << targetY << ")\n";
                         useAmmo();
                         if (hitProbability())
                         {
@@ -1404,7 +1403,7 @@ public:
             Robot *target = detectedTargets[randomIndex];
             int targetX = target->getX();
             int targetY = target->getY();
-            logger << ">> " << getName() << "Vampire fires at (" << targetX << ", " << targetY << ")" << endl;
+            logger << ">> " << getName() << " fires at (" << targetX << ", " << targetY << ")" << endl;
             useAmmo();
 
             if (target->isHidden())
@@ -1523,7 +1522,7 @@ public:
 
     void act() override
     {
-        logger << "ScoutBot is thinking..." << endl;
+        logger << getName() << " is thinking..." << endl;
         // TO DO : the logic will be implemented later
         look(0, 0);
         fire(0, 0);
@@ -1620,7 +1619,7 @@ public:
 
     void act() override
     {
-        logger << "TrackBot is thinking..." << endl;
+        logger << getName() << " is thinking..." << endl;
         look(0, 0);
         fire(0, 0);
         move();
@@ -5003,9 +5002,12 @@ void Battlefield::queueForReentry(Robot *robot)
     if (queuedThisRound.find(robot) != queuedThisRound.end())
         return;
     queuedThisRound.insert(robot);
-    reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});
-    logger << robot->getName() << " queued for reentry with " << robot->getLives()
-           << " lives and " << currentAmmo << " ammo." << endl;
+    if (robot->getLives() > 0)
+    {
+        reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});
+        logger << robot->getName() << " queued for reentry with " << robot->getLives()
+               << " lives and " << currentAmmo << " ammo." << endl;
+    }
 }
 
 // PARTIALLY COMPLETED: respawnRobots member function definition
@@ -5155,8 +5157,6 @@ void Battlefield::displayBattlefield()
     // Print legend
     logger << "LEGEND:" << endl;
     logger << "  . - Empty space" << endl;
-    logger << "  X - Destroyed robot" << endl;
-    logger << "  H - Hidden robot" << endl;
     logger << "  [Letter] - First letter of robot's name" << endl
            << endl;
 }
@@ -6290,11 +6290,9 @@ int main()
     srand(static_cast<unsigned>(time(0)));
 
     Battlefield battlefield;
-    logger << "READING INPUT FILE" << endl;
     readInputFile(battlefield); // This sets dimensions and initializes grid
 
-    logger << "TESTING BATTLEFIELD CLASS" << endl;
-    logger << "Battlefield Dimensions: ";
+    logger << "Battlefield Dimensions: " << endl;
     logger << "Width: " << battlefield.getWidth() << endl;
     logger << "Height: " << battlefield.getHeight() << endl;
 
