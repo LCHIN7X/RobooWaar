@@ -1282,7 +1282,7 @@ public:
         useAmmo();
         if (!fired)
         {
-            logger << "sadly, " << getName() << " found no target in straight line\n";
+            logger << "No shooting, as sadly, " << getName() << " found no target in straight line\n";
         }
     }
 };
@@ -1370,7 +1370,7 @@ public:
         }
         else
         {
-            logger << "Missed!" << endl;
+            logger << "No shooting as no robots within shooting range." << endl;
         }
     }
 };
