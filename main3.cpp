@@ -4788,7 +4788,6 @@ void Battlefield::cleanupDestroyedRobots()
     auto iterator = listOfRobots.begin();
     while (iterator != listOfRobots.end())
     {
-        Robot *robot = *iterator;
         if (robot->getLives() <= 0 || robot->getIsDie() || robot->getIsHurt())
         {
             removeRobotFromGrid(robot);
