@@ -4475,10 +4475,6 @@ void Battlefield::simulationStep()
                 upgraded = new ScoutBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "TrackBot")
                 upgraded = new TrackBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "QueenBot")
-                upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "VampireBot")
-                upgraded = new VampireBot(gen->getName(), gen->getX(), gen->getY());
 
             else if (type == "HideLongShotBot")
                 upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
