@@ -852,10 +852,13 @@ public:
 
                         const vector<string> &upgradeTypes = getUpgradeTypes();
 
-                        int t = rand() % upgradeTypes.size();
-                        string newType = upgradeTypes[t];
-                        setPendingUpgrade(newType);
-                        logger << getName() << " will upgrade into " << newType << " next turn" << endl;
+                        if (!upgradeTypes.empty())
+                        {
+                            int t = rand() % upgradeTypes.size();
+                            string newType = upgradeTypes[t];
+                            setPendingUpgrade(newType);
+                            logger << getName() << " will upgrade into " << newType << " next turn" << endl;
+                        }
                     }
                     else
                     {
@@ -977,10 +980,13 @@ public:
         if (hitSuccessful)
         {
             const vector<string> &upgradeTypes = getUpgradeTypes();
-            int t = rand() % upgradeTypes.size();
-            string newType = upgradeTypes[t];
-            setPendingUpgrade(newType);
-            logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
+            if (!upgradeTypes.empty())
+            {
+                int t = rand() % upgradeTypes.size();
+                string newType = upgradeTypes[t];
+                setPendingUpgrade(newType);
+                logger << getName() << " will upgrade into " << newType << " next turn" << endl;
+            }
         }
     }
 
@@ -1054,10 +1060,13 @@ public:
                             hitSuccessful = true;
                             logger << "Successful hit on " << gtarget->getName() << "!\n";
                             const vector<string> &upgradeTypes = getUpgradeTypes();
-                            int t = rand() % upgradeTypes.size();
-                            string newType = upgradeTypes[t];
-                            setPendingUpgrade(newType);
-                            logger << getName() << " will upgrade into " << newType << " next turn!\n";
+                            if (!upgradeTypes.empty())
+                            {
+                                int t = rand() % upgradeTypes.size();
+                                string newType = upgradeTypes[t];
+                                setPendingUpgrade(newType);
+                                logger << getName() << " will upgrade into " << newType << " next turn" << endl;
+                            }
                         }
                         else
                         {
@@ -1169,10 +1178,13 @@ public:
             }
             logger << endl;
             const vector<string> &upgradeTypes = getUpgradeTypes();
-            int t = rand() % upgradeTypes.size();
-            string newType = upgradeTypes[t];
-            setPendingUpgrade(newType);
-            logger << getName() << " will upgrade into " << newType << " next turn!" << endl;
+            if (!upgradeTypes.empty())
+            {
+                int t = rand() % upgradeTypes.size();
+                string newType = upgradeTypes[t];
+                setPendingUpgrade(newType);
+                logger << getName() << " will upgrade into " << newType << " next turn!\n";
+            }
         }
     }
 };
@@ -1247,9 +1259,13 @@ public:
                             gtarget->takeDamage();
                             logger << getName() << " hit " << gtarget->getName() << endl;
                             const vector<string> upgradeTypes = getUpgradeTypes();
-                            int t = rand() % upgradeTypes.size();
-                            setPendingUpgrade(upgradeTypes[t]);
-                            logger << getName() << " will upgrade into " << upgradeTypes[t] << " next turn" << endl;
+                            if (!upgradeTypes.empty())
+                            {
+                                int t = rand() % upgradeTypes.size();
+                                string newType = upgradeTypes[t];
+                                setPendingUpgrade(newType);
+                                logger << getName() << " will upgrade into " << newType << " next turn!\n";
+                            }
                         }
                         else
                         {
@@ -1324,11 +1340,6 @@ public:
                 logger << "Hit! (" << target->getName() << ") be killed" << endl;
 
                 target->takeDamage();
-                const vector<string> upgradeTypes = getUpgradeTypes();
-                int t = rand() % upgradeTypes.size();
-                setPendingUpgrade(upgradeTypes[t]);
-                logger << getName() << " will upgrade in to " << upgradeTypes[t] << "next turn" << endl;
-
                 if (getLives() < 3)
                 {
                     if (gainLivesCount < 3)
@@ -1345,6 +1356,15 @@ public:
                 else
                 {
                     logger << getName() << " is already at max lives (" << getLives() << "), cannot gain extra life from this kill." << endl;
+                }
+
+                const vector<string> upgradeTypes = getUpgradeTypes();
+                if (!upgradeTypes.empty())
+                {
+                    int t = rand() % upgradeTypes.size();
+                    string newType = upgradeTypes[t];
+                    setPendingUpgrade(newType);
+                    logger << getName() << " will upgrade into " << newType << " next turn!\n";
                 }
             }
         }
