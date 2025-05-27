@@ -19,7 +19,7 @@ Phone: 016-614 4391
 
 Member 3
 Name:LAW CHIN XUAN
-ID:202UC244GC
+ID:242UC244GC
 Email: law.chin.xuan@student.mmu.edu.my
 Phone: 011-1098 8658
 
