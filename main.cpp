@@ -172,7 +172,7 @@ public:
     int getHeight() const { return height; }
 
     // Function prototypes (definitions are after Robot class)
-    void simulationStep();
+    void simulationStep(int);
     void addNewRobot(Robot *robot);
     int getNumberOfAliveRobots();
     void cleanupDestroyedRobots();
@@ -4509,28 +4509,35 @@ public:
 // simulationStep member function of Battlefield class (declared later to avoid issues with code not seeing each other when they need to)
 //******************************************
 
-void Battlefield::simulationStep()
+// This function should be part of your Battlefield class implementation
+
+void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
 {
     // Handle upgrades first
     for (size_t i = 0; i < listOfRobots.size(); ++i)
     {
         GenericRobot *gen = dynamic_cast<GenericRobot *>(listOfRobots[i]);
+        // Using PendingUpgrade() and getUpgradeType() as provided in your snippet
         if (gen && gen->PendingUpgrade())
         {
             string type = gen->getUpgradeType();
             Robot *upgraded = nullptr;
-            if (type == "HideBot")
+
+            // Create the new upgraded robot based on the type
+            if (type == "GenericRobot")
+                upgraded = new GenericRobot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "HideBot")
                 upgraded = new HideBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "JumpBot")
                 upgraded = new JumpBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "LongShotBot")
-                upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "KnightBot")
-                upgraded = new KnightBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "SemiAutoBot")
                 upgraded = new SemiAutoBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "LongShotBot")
+                upgraded = new LongShotBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ThirtyShotBot")
                 upgraded = new ThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "KnightBot")
+                upgraded = new KnightBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "QueenBot")
                 upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireBot")
@@ -4652,11 +4659,11 @@ void Battlefield::simulationStep()
             if (upgraded)
             {
                 upgraded->setLives(gen->getLives());
-                upgraded->initializeFrom(gen);
+                upgraded->initializeFrom(gen); // This is where the ammo is correctly set for ThirtyShotBot
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
                 if (upGen)
                 {
-                    upGen->clearPendingUpgrade();
+                    upGen->clearPendingUpgrade(); // Assuming clearPendingUpgrade exists
                     upGen->setBattlefield(this); // Ensure battlefield context is set
                     upGen->resetActionFlags();
                 }
@@ -4668,6 +4675,180 @@ void Battlefield::simulationStep()
             }
         }
     }
+
+    // --- NEWLY MOVED LOGGING BLOCK START ---
+    // Log robot status *after* upgrades have been processed for this step
+    logger << "Robot Status before Step " << stepNumber << ":" << endl;
+    for (Robot *robot : listOfRobots)
+    {
+        string typeName;
+        int currentAmmo = 0;
+
+        GenericRobot *gen = dynamic_cast<GenericRobot *>(robot);
+        if (gen)
+        {
+            // Dynamically determine type for logging (replicated from your main's logic)
+            if (dynamic_cast<HideLongShotScoutBot *>(robot))
+                typeName = "HideLongShotScoutBot";
+            else if (dynamic_cast<HideSemiAutoScoutBot *>(robot))
+                typeName = "HideSemiAutoScoutBot";
+            else if (dynamic_cast<HideThirtyShotScoutBot *>(robot))
+                typeName = "HideThirtyShotScoutBot";
+            else if (dynamic_cast<HideKnightScoutBot *>(robot))
+                typeName = "HideKnightScoutBot";
+            else if (dynamic_cast<HideQueenScoutBot *>(robot))
+                typeName = "HideQueenScoutBot";
+            else if (dynamic_cast<HideVampireScoutBot *>(robot))
+                typeName = "HideVampireScoutBot";
+            else if (dynamic_cast<HideLongShotTrackBot *>(robot))
+                typeName = "HideLongShotTrackBot";
+            else if (dynamic_cast<HideSemiAutoTrackBot *>(robot))
+                typeName = "HideSemiAutoTrackBot";
+            else if (dynamic_cast<HideThirtyShotTrackBot *>(robot))
+                typeName = "HideThirtyShotTrackBot";
+            else if (dynamic_cast<HideKnightTrackBot *>(robot))
+                typeName = "HideKnightTrackBot";
+            else if (dynamic_cast<HideQueenTrackBot *>(robot))
+                typeName = "HideQueenTrackBot";
+            else if (dynamic_cast<HideVampireTrackBot *>(robot))
+                typeName = "HideVampireTrackBot";
+
+            else if (dynamic_cast<JumpLongShotScoutBot *>(robot))
+                typeName = "JumpLongShotScoutBot";
+            else if (dynamic_cast<JumpSemiAutoScoutBot *>(robot))
+                typeName = "JumpSemiAutoScoutBot";
+            else if (dynamic_cast<JumpThirtyShotScoutBot *>(robot))
+                typeName = "JumpThirtyShotScoutBot";
+            else if (dynamic_cast<JumpKnightScoutBot *>(robot))
+                typeName = "JumpKnightScoutBot";
+            else if (dynamic_cast<JumpQueenScoutBot *>(robot))
+                typeName = "JumpQueenScoutBot";
+            else if (dynamic_cast<JumpVampireScoutBot *>(robot))
+                typeName = "JumpVampireScoutBot";
+            else if (dynamic_cast<JumpLongShotTrackBot *>(robot))
+                typeName = "JumpLongShotTrackBot";
+            else if (dynamic_cast<JumpSemiAutoTrackBot *>(robot))
+                typeName = "JumpSemiAutoTrackBot";
+            else if (dynamic_cast<JumpThirtyShotTrackBot *>(robot))
+                typeName = "JumpThirtyShotTrackBot";
+            else if (dynamic_cast<JumpKnightTrackBot *>(robot))
+                typeName = "JumpKnightTrackBot";
+            else if (dynamic_cast<JumpQueenTrackBot *>(robot))
+                typeName = "JumpQueenTrackBot";
+            else if (dynamic_cast<JumpVampireTrackBot *>(robot))
+                typeName = "JumpVampireTrackBot";
+
+            else if (dynamic_cast<HideLongShotBot *>(robot))
+                typeName = "HideLongShotBot";
+            else if (dynamic_cast<HideSemiAutoBot *>(robot))
+                typeName = "HideSemiAutoBot";
+            else if (dynamic_cast<HideThirtyShotBot *>(robot))
+                typeName = "HideThirtyShotBot";
+            else if (dynamic_cast<HideKnightBot *>(robot))
+                typeName = "HideKnightBot";
+            else if (dynamic_cast<HideQueenBot *>(robot))
+                typeName = "HideQueenBot";
+            else if (dynamic_cast<HideVampireBot *>(robot))
+                typeName = "HideVampireBot";
+            else if (dynamic_cast<HideScoutBot *>(robot))
+                typeName = "HideScoutBot";
+            else if (dynamic_cast<HideTrackBot *>(robot))
+                typeName = "HideTrackBot";
+            else if (dynamic_cast<JumpLongShotBot *>(robot))
+                typeName = "JumpLongShotBot";
+            else if (dynamic_cast<JumpSemiAutoBot *>(robot))
+                typeName = "JumpSemiAutoBot";
+            else if (dynamic_cast<JumpThirtyShotBot *>(robot))
+                typeName = "JumpThirtyShotBot";
+            else if (dynamic_cast<JumpKnightBot *>(robot))
+                typeName = "KnightBot"; // Typo in original code, should be KnightBot if dynamic_cast passes
+            else if (dynamic_cast<JumpQueenBot *>(robot))
+                typeName = "JumpQueenBot";
+            else if (dynamic_cast<JumpVampireBot *>(robot))
+                typeName = "JumpVampireBot";
+            else if (dynamic_cast<JumpScoutBot *>(robot))
+                typeName = "JumpScoutBot";
+            else if (dynamic_cast<JumpTrackBot *>(robot))
+                typeName = "JumpTrackBot";
+            else if (dynamic_cast<LongShotScoutBot *>(robot))
+                typeName = "LongShotScoutBot";
+            else if (dynamic_cast<LongShotTrackBot *>(robot))
+                typeName = "LongShotTrackBot";
+            else if (dynamic_cast<SemiAutoScoutBot *>(robot))
+                typeName = "SemiAutoScoutBot";
+            else if (dynamic_cast<SemiAutoTrackBot *>(robot))
+                typeName = "SemiAutoTrackBot";
+            else if (dynamic_cast<ThirtyShotScoutBot *>(robot))
+                typeName = "ThirtyShotScoutBot";
+            else if (dynamic_cast<ThirtyShotTrackBot *>(robot))
+                typeName = "ThirtyShotTrackBot";
+            else if (dynamic_cast<QueenScoutBot *>(robot))
+                typeName = "QueenScoutBot";
+            else if (dynamic_cast<QueenTrackBot *>(robot))
+                typeName = "QueenTrackBot";
+            else if (dynamic_cast<VampireScoutBot *>(robot))
+                typeName = "VampireScoutBot";
+            else if (dynamic_cast<VampireTrackBot *>(robot))
+                typeName = "VampireTrackBot";
+            else if (dynamic_cast<KnightScoutBot *>(robot))
+                typeName = "KnightScoutBot";
+            else if (dynamic_cast<KnightTrackBot *>(robot))
+                typeName = "KnightTrackBot";
+            else if (dynamic_cast<HideBot *>(robot))
+                typeName = "HideBot";
+            else if (dynamic_cast<JumpBot *>(robot))
+                typeName = "JumpBot";
+            else if (dynamic_cast<LongShotBot *>(robot))
+                typeName = "LongShotBot";
+            else if (dynamic_cast<KnightBot *>(robot))
+                typeName = "KnightBot";
+            else if (dynamic_cast<SemiAutoBot *>(robot))
+                typeName = "SemiAutoBot";
+            else if (dynamic_cast<ThirtyShotBot *>(robot))
+                typeName = "ThirtyShotBot";
+            else if (dynamic_cast<ScoutBot *>(robot))
+                typeName = "ScoutBot";
+            else if (dynamic_cast<TrackBot *>(robot))
+                typeName = "TrackBot";
+            else if (dynamic_cast<QueenBot *>(robot))
+                typeName = "QueenBot";
+            else if (dynamic_cast<VampireBot *>(robot))
+                typeName = "VampireBot";
+            else if (dynamic_cast<GenericRobot *>(robot))
+                typeName = "GenericRobot";
+            else
+                typeName = "UnknownType"; // Fallback for any unrecognized types
+
+
+            // Ammo check: Prioritize ThirtyShotBot's shell count, then general ShootingRobot ammo
+            ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
+            ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
+
+            if (TSB) {
+                currentAmmo = TSB->getShellCount();
+            } else if (shooter) {
+                currentAmmo = shooter->getAmmo();
+            }
+
+            logger << "  Type: " << typeName
+                   << ", Name: " << robot->getName()
+                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
+                   << ", Life: " << robot->getLives();
+            if (shooter) { // Only print ammo if it's a shooting robot
+                logger << ", Ammo: " << currentAmmo;
+            }
+            logger << endl;
+        }
+        else // For non-GenericRobot types, if any, that don't have getAmmo()
+        {
+            logger << "  Type: Robot"
+                   << ", Name: " << robot->getName()
+                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
+                   << ", Life: " << robot->getLives() << endl;
+        }
+    }
+    // --- NEWLY MOVED LOGGING BLOCK END ---
+
 
     vector<Robot *> currentlyAliveRobots;
 
@@ -4705,9 +4886,11 @@ void Battlefield::simulationStep()
     respawnRobots();
     for (Robot *robot : listOfRobots)
     {
-        robot->setIsDie(false);
+        robot->setIsDie(false); // Reset isDie flag for next turn
     }
 }
+
+// ... (rest of your Battlefield member functions: getNumberOfAliveRobots, addNewRobot, etc.) ...
 
 // COMPLETED: To get the number of alive robots
 // **TO BE USED IN MAIN LOOP**
@@ -6077,6 +6260,8 @@ void readInputFile(Battlefield &battlefield, const string &filename = "inputFile
     inputFile.close();
 }
 
+// ... (includes and global logger object) ...
+
 int main()
 {
     // Seed the random number generator once
@@ -6120,186 +6305,17 @@ int main()
     // Loop while max steps not reached AND there's more than one robot alive
     while (currentStep < maxSteps && battlefield.getNumberOfAliveRobots() > 1)
     {
-        logger << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
+        // Increment step for the current iteration
+        currentStep++; 
 
-        logger << "Robot Status before Step " << currentStep + 1 << ":" << endl;
-        for (Robot *robot : battlefield.getListOfRobots())
-        {
-            string type;
-            GenericRobot *gen = dynamic_cast<GenericRobot *>(robot);
+        logger << "\n--- Simulation Step " << currentStep << " ---" << endl;
 
-            if (gen)
-            {
-                if (gen->PendingUpgrade())
-                {
-                    type = gen->getUpgradeType();
-                }
-                else
-                {
-                    if (dynamic_cast<HideLongShotScoutBot *>(robot))
-                        type = "HideLongShotScoutBot";
-                    else if (dynamic_cast<HideSemiAutoScoutBot *>(robot))
-                        type = "HideSemiAutoScoutBot";
-                    else if (dynamic_cast<HideThirtyShotScoutBot *>(robot))
-                        type = "HideThirtyShotScoutBot";
-                    else if (dynamic_cast<HideKnightScoutBot *>(robot))
-                        type = "HideKnightScoutBot";
-                    else if (dynamic_cast<HideQueenScoutBot *>(robot))
-                        type = "HideQueenScoutBot";
-                    else if (dynamic_cast<HideVampireScoutBot *>(robot))
-                        type = "HideVampireScoutBot";
-                    else if (dynamic_cast<HideLongShotTrackBot *>(robot))
-                        type = "HideLongShotTrackBot";
-                    else if (dynamic_cast<HideSemiAutoTrackBot *>(robot))
-                        type = "HideSemiAutoTrackBot";
-                    else if (dynamic_cast<HideThirtyShotTrackBot *>(robot))
-                        type = "HideThirtyShotTrackBot";
-                    else if (dynamic_cast<HideKnightTrackBot *>(robot))
-                        type = "HideKnightTrackBot";
-                    else if (dynamic_cast<HideQueenTrackBot *>(robot))
-                        type = "HideQueenTrackBot";
-                    else if (dynamic_cast<HideVampireTrackBot *>(robot))
-                        type = "HideVampireTrackBot";
+        // Call simulationStep, passing the current step number
+        // The robot status logging will now happen *inside* simulationStep, after upgrades.
+        battlefield.simulationStep(currentStep); // Pass the current step number
 
-                    else if (dynamic_cast<JumpLongShotScoutBot *>(robot))
-                        type = "JumpLongShotScoutBot";
-                    else if (dynamic_cast<JumpSemiAutoScoutBot *>(robot))
-                        type = "JumpSemiAutoScoutBot";
-                    else if (dynamic_cast<JumpThirtyShotScoutBot *>(robot))
-                        type = "JumpThirtyShotScoutBot";
-                    else if (dynamic_cast<JumpKnightScoutBot *>(robot))
-                        type = "JumpKnightScoutBot";
-                    else if (dynamic_cast<JumpQueenScoutBot *>(robot))
-                        type = "JumpQueenScoutBot";
-                    else if (dynamic_cast<JumpVampireScoutBot *>(robot))
-                        type = "JumpVampireScoutBot";
-                    else if (dynamic_cast<JumpLongShotTrackBot *>(robot))
-                        type = "JumpLongShotTrackBot";
-                    else if (dynamic_cast<JumpSemiAutoTrackBot *>(robot))
-                        type = "JumpSemiAutoTrackBot";
-                    else if (dynamic_cast<JumpThirtyShotTrackBot *>(robot))
-                        type = "JumpThirtyShotTrackBot";
-                    else if (dynamic_cast<JumpKnightTrackBot *>(robot))
-                        type = "JumpKnightTrackBot";
-                    else if (dynamic_cast<JumpQueenTrackBot *>(robot))
-                        type = "JumpQueenTrackBot";
-                    else if (dynamic_cast<JumpVampireTrackBot *>(robot))
-                        type = "JumpVampireTrackBot";
-
-                    else if (dynamic_cast<HideLongShotBot *>(robot))
-                        type = "HideLongShotBot";
-                    else if (dynamic_cast<HideSemiAutoBot *>(robot))
-                        type = "HideSemiAutoBot";
-                    else if (dynamic_cast<HideThirtyShotBot *>(robot))
-                        type = "HideThirtyShotBot";
-                    else if (dynamic_cast<HideKnightBot *>(robot))
-                        type = "HideKnightBot";
-                    else if (dynamic_cast<HideQueenBot *>(robot))
-                        type = "HideQueenBot";
-                    else if (dynamic_cast<HideVampireBot *>(robot))
-                        type = "HideVampireBot";
-                    else if (dynamic_cast<HideScoutBot *>(robot))
-                        type = "HideScoutBot";
-                    else if (dynamic_cast<HideTrackBot *>(robot))
-                        type = "HideTrackBot";
-                    else if (dynamic_cast<JumpLongShotBot *>(robot))
-                        type = "JumpLongShotBot";
-                    else if (dynamic_cast<JumpSemiAutoBot *>(robot))
-                        type = "JumpSemiAutoBot";
-                    else if (dynamic_cast<JumpThirtyShotBot *>(robot))
-                        type = "JumpThirtyShotBot";
-                    else if (dynamic_cast<JumpKnightBot *>(robot))
-                        type = "JumpKnightBot";
-                    else if (dynamic_cast<JumpQueenBot *>(robot))
-                        type = "JumpQueenBot";
-                    else if (dynamic_cast<JumpVampireBot *>(robot))
-                        type = "JumpVampireBot";
-                    else if (dynamic_cast<JumpScoutBot *>(robot))
-                        type = "JumpScoutBot";
-                    else if (dynamic_cast<JumpTrackBot *>(robot))
-                        type = "JumpTrackBot";
-                    else if (dynamic_cast<LongShotScoutBot *>(robot))
-                        type = "LongShotScoutBot";
-                    else if (dynamic_cast<LongShotTrackBot *>(robot))
-                        type = "LongShotTrackBot";
-                    else if (dynamic_cast<SemiAutoScoutBot *>(robot))
-                        type = "SemiAutoScoutBot";
-                    else if (dynamic_cast<SemiAutoTrackBot *>(robot))
-                        type = "SemiAutoTrackBot";
-                    else if (dynamic_cast<ThirtyShotScoutBot *>(robot))
-                        type = "ThirtyShotScoutBot";
-                    else if (dynamic_cast<ThirtyShotTrackBot *>(robot))
-                        type = "ThirtyShotTrackBot";
-                    else if (dynamic_cast<QueenScoutBot *>(robot))
-                        type = "QueenScoutBot";
-                    else if (dynamic_cast<QueenTrackBot *>(robot))
-                        type = "QueenTrackBot";
-                    else if (dynamic_cast<VampireScoutBot *>(robot))
-                        type = "VampireScoutBot";
-                    else if (dynamic_cast<VampireTrackBot *>(robot))
-                        type = "VampireTrackBot";
-                    else if (dynamic_cast<KnightScoutBot *>(robot))
-                        type = "KnightScoutBot";
-                    else if (dynamic_cast<KnightTrackBot *>(robot))
-                        type = "KnightTrackBot";
-
-                    else if (dynamic_cast<HideBot *>(robot))
-                        type = "HideBot";
-                    else if (dynamic_cast<JumpBot *>(robot))
-                        type = "JumpBot";
-                    else if (dynamic_cast<LongShotBot *>(robot))
-                        type = "LongShotBot";
-                    else if (dynamic_cast<KnightBot *>(robot))
-                        type = "KnightBot";
-                    else if (dynamic_cast<SemiAutoBot *>(robot))
-                        type = "SemiAutoBot";
-                    else if (dynamic_cast<ThirtyShotBot *>(robot))
-                        type = "ThirtyShotBot";
-                    else if (dynamic_cast<ScoutBot *>(robot))
-                        type = "ScoutBot";
-                    else if (dynamic_cast<TrackBot *>(robot))
-                        type = "TrackBot";
-                    else if (dynamic_cast<QueenBot *>(robot))
-                        type = "QueenBot";
-                    else if (dynamic_cast<VampireBot *>(robot))
-                        type = "VampireBot";
-
-                    else if (dynamic_cast<GenericRobot *>(robot))
-                        type = "GenericRobot";
-                    else
-                        type = "UnknownType"; // Fallback for any unrecognized types
-                }
-            }
-            else
-            {
-                type = "Robot";
-            }
-            // TO DO :able to display current robot type
-            logger << "  Type: " << type
-                   << ", Name: " << robot->getName()
-                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
-                   << ", Life: " << robot->getLives();
-
-            // Check if robot is a shooter
-            ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
-            ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
-            if (shooter && TSB)
-            {
-                logger << ", Ammo: " << TSB->getShellCount();
-            }
-            else if (shooter && TSB)
-            {
-                logger << ", Ammo: " << shooter->getAmmo();
-            }
-            logger << endl;
-        }
-        
-        battlefield.simulationStep(); // Executes turns, cleans up, respawns
-
-        logger << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
+        logger << "\nBattlefield State after Step " << currentStep << ":" << endl;
         battlefield.displayBattlefield(); // Display the updated grid
-
-        currentStep++;
     }
 
     // --- End of Simulation ---
@@ -6341,5 +6357,5 @@ int main()
         logger << "Remaining robots: " << remainingRobots << endl;
     }
 
-    return 0; // Battlefield object goes out of scope here, destructor is called.
+    return 0;
 }
