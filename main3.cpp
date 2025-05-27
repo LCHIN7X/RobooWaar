@@ -91,7 +91,12 @@ private:
     vector<vector<Robot *>> battlefieldGrid; // battlefield grid
     vector<pair<string, int>> respawnQueue;  // Tracks robot name, robot lives in pairs
     map<string, int> respawnCounts;
-    queue<pair<string, int>> reentryQueue; // Queue for reentry
+    struct reentryData {
+        string name;
+        int lives;
+        int ammo;
+    };
+    queue<reentryData> reentryQueue; // Queue for reentry
 
     // TODO for Battlefield:
     // - fix bugs if any
@@ -180,6 +185,7 @@ public:
 
     virtual ~Robot() = default;
 
+    virtual void initializeFrom(const Robot *oldRobot) = 0;
     virtual void think() = 0;
     virtual void act() = 0;
     virtual void move() = 0;
@@ -274,6 +280,9 @@ public:
     }
 
     int getAmmo() const { return ammo; }
+    void setAmmo(int num) {
+        ammo = num;
+    }
 
     // Stimulate and check hit probablity is 70 percent
     bool hitProbability() const
@@ -282,6 +291,15 @@ public:
         static mt19937 gen(rd());                  // Mersenne Twister pseudo-random generator seeded with rd
         uniform_real_distribution<> dis(0.0, 1.0); // Distribution for numbers between 0.0 and 1.0
         return dis(gen) <= 0.7;                    // 70% hit chance
+    }
+
+    void initializeFrom(const Robot *oldRobot) override
+    {
+        const ShootingRobot *oldShootingBot = dynamic_cast<const ShootingRobot *>(oldRobot);
+        if (oldShootingBot)
+        {
+            this->setAmmo(oldShootingBot->getAmmo()); // Preserves standard ammo
+        }
     }
 };
 
@@ -1016,7 +1034,25 @@ public:
           GenericRobot(name, x, y),
           shell_count(30)
     {
-        logger << name << " got 30 shells replace current shells \n";
+    }
+
+    void setShellCount(int shellCount) {
+        shell_count = shellCount;
+    }
+
+    void initializeFrom(const Robot* oldRobot) override {
+        GenericRobot::initializeFrom(oldRobot); // call ShootingRobot's initializeFrom
+
+        // Now, handle ThirtyShotBot specific state
+        const ThirtyShotBot* oldThirtyShotBot = dynamic_cast<const ThirtyShotBot*>(oldRobot);
+        if (oldThirtyShotBot) {
+            this->shell_count = oldThirtyShotBot->getShellCount(); // Preserve shell_count
+            logger << ">> " << getName() << " (upgraded) preserves "
+                   << this->shell_count << " shells from its previous form: " << oldRobot->getName() << endl;
+        }
+        else {
+            logger << getName() << " got 30 shells, replacing its current shells!" << endl;
+        }
     }
 
     void fire(int X, int Y) override
@@ -1055,7 +1091,7 @@ public:
                         {
                             gtarget->takeDamage();
                             shell_count--;
-                            logger << getName() << "ThirtyShot fire at (" << targetX << ", " << targetY << "), shell left: " << shell_count << "\n";
+                            logger << getName() << "ThirtyShot fire at (" << targetX << ", " << targetY << "), shell left: " << getShellCount() << "\n";
                             hitSuccessful = true;
                             logger << "Successful hit on " << gtarget->getName() << "!\n";
                             const vector<string> &upgradeTypes = getUpgradeTypes();
@@ -4530,7 +4566,8 @@ void Battlefield::simulationStep()
                 upgraded = new QueenTrackBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireScoutBot")
                 upgraded = new VampireScoutBot(gen->getName(), gen->getX(), gen->getY());
-            else if (type == "VampireTrackBot") {
+            else if (type == "VampireTrackBot")
+            {
                 upgraded = new VampireTrackBot(gen->getName(), gen->getX(), gen->getY());
             }
 
@@ -4587,6 +4624,7 @@ void Battlefield::simulationStep()
             if (upgraded)
             {
                 upgraded->setLives(gen->getLives());
+                upgraded->initializeFrom(gen);
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
                 if (upGen)
                 {
@@ -4722,7 +4760,21 @@ void Battlefield::removeRobotFromGrid(Robot *robot)
 // COMPLETED: to queue robot for reentry
 void Battlefield::queueForReentry(Robot *robot)
 {
-    reentryQueue.push({robot->getName(), robot->getLives()});
+    int currentAmmo;
+        // Try to get ammo, prioritizing ThirtyShotBot's shell_count
+    ThirtyShotBot* TSB = dynamic_cast<ThirtyShotBot*>(robot);
+    if (TSB) {
+        currentAmmo = TSB->getShellCount(); // Gets specific shell count
+    } else {
+        ShootingRobot* shooter = dynamic_cast<ShootingRobot*>(robot);
+        if (shooter) {
+            currentAmmo = shooter->getAmmo(); // Gets standard ammo
+        }
+    }
+
+    reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});
+    logger << robot->getName() << " queued for reentry with " << robot->getLives()
+           << " lives and " << currentAmmo << " ammo." << endl;
 }
 
 // PARTIALLY COMPLETED: respawnRobots member function definition
@@ -4731,8 +4783,8 @@ void Battlefield::respawnRobots()
     if (!reentryQueue.empty())
     {
         auto respawnInfo = reentryQueue.front();
-        string nameOfRobotToRespawn = respawnInfo.first;
-        int livesLeft = respawnInfo.second;
+        string nameOfRobotToRespawn = respawnInfo.name;
+        int livesLeft = respawnInfo.lives;
         reentryQueue.pop();
         logger << "Reentering " << nameOfRobotToRespawn << endl;
         int randomX;
@@ -4754,6 +4806,10 @@ void Battlefield::respawnRobots()
         {
             Robot *newRobot = new GenericRobot(nameOfRobotToRespawn, randomX, randomY);
             newRobot->setLives(livesLeft); // Restore the lives before being hit
+            ShootingRobot* newShooter = dynamic_cast<ShootingRobot*>(newRobot);
+            if (newShooter) {
+                newShooter->setAmmo(respawnInfo.ammo); // Set the preserved ammo
+            }
             placeRobot(newRobot, randomX, randomY);
             listOfRobots.push_back(newRobot);
             logger << nameOfRobotToRespawn << " reentered as GenericRobot at (" << randomX << ", " << randomY << ") with ";
@@ -6198,9 +6254,14 @@ int main()
 
             // Check if robot is a shooter
             ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
-            if (shooter)
+            ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
+            if (shooter && !TSB)
             {
                 logger << ", Ammo: " << shooter->getAmmo();
+            }
+            else if (shooter && TSB)
+            {
+                logger << ", Ammo: " << TSB->getShellCount();
             }
             logger << endl;
         }
