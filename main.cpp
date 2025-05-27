@@ -4857,9 +4857,6 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
                    << ", Life: " << robot->getLives() << endl;
         }
     }
-    // --- NEWLY MOVED LOGGING BLOCK END ---
-
-
     vector<Robot *> currentlyAliveRobots;
 
     for (Robot *robot : listOfRobots)
@@ -4900,10 +4897,8 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
     }
 }
 
-// ... (rest of your Battlefield member functions: getNumberOfAliveRobots, addNewRobot, etc.) ...
 
 // COMPLETED: To get the number of alive robots
-// **TO BE USED IN MAIN LOOP**
 int Battlefield::getNumberOfAliveRobots()
 {
     int num = 0;
