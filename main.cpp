@@ -39,6 +39,7 @@ Phone: 011-1098 8658
 #include <map>
 #include <algorithm>
 #include <unordered_map>
+#include <set> 
 
 using namespace std;
 
@@ -124,7 +125,9 @@ private:
         int lives;
         int ammo;
     };
-    queue<reentryData> reentryQueue; // Queue for reentry
+    queue<reentryData> reentryQueue; // Queue for reentry 
+    std::set<Robot*> queuedThisRound; // Track robots queued for reentry this round
+
 
     // TODO for Battlefield:
     // - fix bugs if any
@@ -197,6 +200,7 @@ class Robot
 private:
     int positionX;
     int positionY;
+    Battlefield* battlefield = nullptr; // Add pointer to Battlefield
 
 protected:
     string name;
@@ -212,6 +216,9 @@ public:
         : name(name), positionX(x), positionY(y), lives(3), hidden(false) {}
 
     virtual ~Robot() = default;
+
+    void setBattlefield(Battlefield* bf) { battlefield = bf; } // Setter
+    Battlefield* getBattlefield() const { return battlefield; }
 
     virtual void initializeFrom(const Robot *oldRobot) = 0;
     virtual void think() = 0;
@@ -249,6 +256,7 @@ public:
                 isDie = true; // Mark as dead for this turn
             }
             isHurt = true; // Mark as hurt for requeue
+            if (battlefield) battlefield->queueForReentry(this); // Immediately queue for reentry
         }
     }
 
@@ -4511,6 +4519,8 @@ public:
 
 void Battlefield::simulationStep()
 {
+    // Clear queuedThisRound at the start of each round
+    queuedThisRound.clear();
     // Handle upgrades first
     for (size_t i = 0; i < listOfRobots.size(); ++i)
     {
@@ -4728,9 +4738,10 @@ int Battlefield::getNumberOfAliveRobots()
 void Battlefield::addNewRobot(Robot *robot)
 {
     listOfRobots.push_back(robot);
+    robot->setBattlefield(this); // Set battlefield pointer
     if (respawnCounts.find(robot->getName()) == respawnCounts.end())
     {
-        respawnCounts[robot->getName()] = 3;
+        respawnCounts[robot->getName()] = 3; //limit respawn count to 3
     }
 }
 
@@ -4800,6 +4811,8 @@ void Battlefield::queueForReentry(Robot *robot)
         }
     }
 
+    if (queuedThisRound.find(robot) != queuedThisRound.end()) return;
+    queuedThisRound.insert(robot);
     reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});
     logger << robot->getName() << " queued for reentry with " << robot->getLives()
            << " lives and " << currentAmmo << " ammo." << endl;
@@ -4834,6 +4847,7 @@ void Battlefield::respawnRobots()
         {
             Robot *newRobot = new GenericRobot(nameOfRobotToRespawn, randomX, randomY);
             newRobot->setLives(livesLeft); // Restore the lives before being hit
+            newRobot->setBattlefield(this); // Set battlefield pointer
             ShootingRobot* newShooter = dynamic_cast<ShootingRobot*>(newRobot);
             if (newShooter) {
                 newShooter->setAmmo(respawnInfo.ammo); // Set the preserved ammo
@@ -4865,8 +4879,8 @@ void Battlefield::cleanupDestroyedRobots()
         {
             removeRobotFromGrid(robot);
             logger << robot->getName() << " has been removed from the battlefield." << endl;
-            if (robot->getIsHurt() && !robot->getIsDie())
-                queueForReentry(robot);
+            //if (robot->getIsHurt() && !robot->getIsDie())
+                //queueForReentry(robot);
             delete robot;
             iterator = listOfRobots.erase(iterator);
             continue;
