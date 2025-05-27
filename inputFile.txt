@@ -1,7 +1,7 @@
-M by N : 10 10
+M by N : 5 5
 steps: 100
 robots: 4 
-GenericRobot Kidd 3 6
-GenericRobot Jet 3 7
-GenericRobot Harry 3 8
+HideBot Kidd 3 2
+HideBot Jet 3 3
+GenericRobot Harry 3 1
 GenericRobot Star random random
