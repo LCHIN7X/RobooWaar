@@ -1679,7 +1679,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        SemiAutoBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -1736,7 +1736,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        ThirtyShotBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -1793,7 +1793,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        KnightBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -1850,7 +1850,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        QueenBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -1907,7 +1907,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        VampireBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -1965,7 +1965,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        ScoutBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2023,7 +2023,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        TrackBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2080,7 +2080,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        LongShotBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2132,7 +2132,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        SemiAutoBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 //******************************************
@@ -2183,7 +2183,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        ThirtyShotBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2235,7 +2235,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        KnightBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2287,7 +2287,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        QueenBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2339,7 +2339,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        VampireBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2397,7 +2397,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        ScoutBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -2455,7 +2455,7 @@ public:
 
     void setBattlefield(Battlefield *bf)
     {
-        TrackBot::setBattlefield(bf);
+        GenericRobot::setBattlefield(bf);
     }
 };
 
@@ -3068,7 +3068,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        VampireBot::setBattlefield(bf);
     }
 };
 
@@ -3126,8 +3125,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideLongShotBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3185,8 +3182,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideSemiAutoBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3244,8 +3239,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideThirtyShotBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3303,8 +3296,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideKnightBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3363,8 +3354,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideQueenBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3422,8 +3411,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideVampireBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3481,8 +3468,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideLongShotBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -3540,8 +3525,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideSemiAutoBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -3599,8 +3582,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideThirtyShotBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -3658,8 +3639,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideKnightBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 //******************************************
@@ -3716,8 +3695,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideQueenBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -3775,8 +3752,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        HideVampireBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -3834,8 +3809,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpLongShotBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3893,8 +3866,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpSemiAutoBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -3952,8 +3923,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpThirtyShotBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -4011,8 +3980,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpKnightBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -4071,8 +4038,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpQueenBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -4130,8 +4095,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpVampireBot::setBattlefield(bf);
-        ScoutBot::setBattlefield(bf);
     }
 };
 
@@ -4190,8 +4153,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpLongShotBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -4250,9 +4211,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpBot::setBattlefield(bf);
-        SemiAutoBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -4310,8 +4268,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpThirtyShotBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -4369,8 +4325,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpKnightBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 //******************************************
@@ -4427,8 +4381,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpQueenBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -4486,8 +4438,6 @@ public:
     void setBattlefield(Battlefield *bf)
     {
         GenericRobot::setBattlefield(bf);
-        JumpVampireBot::setBattlefield(bf);
-        TrackBot::setBattlefield(bf);
     }
 };
 
@@ -4517,6 +4467,10 @@ void Battlefield::simulationStep()
                 upgraded = new SemiAutoBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ThirtyShotBot")
                 upgraded = new ThirtyShotBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "QueenBot")
+                upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "VampireBot")
+                upgraded = new VampireBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "ScoutBot")
                 upgraded = new ScoutBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "TrackBot")
@@ -4525,6 +4479,7 @@ void Battlefield::simulationStep()
                 upgraded = new QueenBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireBot")
                 upgraded = new VampireBot(gen->getName(), gen->getX(), gen->getY());
+
             else if (type == "HideLongShotBot")
                 upgraded = new HideLongShotBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "HideSemiAutoBot")
@@ -4579,6 +4534,9 @@ void Battlefield::simulationStep()
                 upgraded = new QueenTrackBot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "VampireScoutBot")
                 upgraded = new VampireScoutBot(gen->getName(), gen->getX(), gen->getY());
+            else if (type == "VampireTrackBot") {
+                upgraded = new VampireTrackBot(gen->getName(), gen->getX(), gen->getY());
+            }
 
             else if (type == "HideLongShotScoutBot")
                 upgraded = new HideLongShotScoutBot(gen->getName(), gen->getX(), gen->getY());
