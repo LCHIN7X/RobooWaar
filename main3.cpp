@@ -6057,26 +6057,56 @@ int main()
                 }
                 else
                 {
-                    if (dynamic_cast<HideBot *>(robot))
-                        type = "HideBot";
-                    else if (dynamic_cast<JumpBot *>(robot))
-                        type = "JumpBot";
-                    else if (dynamic_cast<LongShotBot *>(robot))
-                        type = "LongShotBot";
-                    else if (dynamic_cast<KnightBot *>(robot))
-                        type = "KnightBot";
-                    else if (dynamic_cast<SemiAutoBot *>(robot))
-                        type = "SemiAutoBot";
-                    else if (dynamic_cast<ThirtyShotBot *>(robot))
-                        type = "ThirtyShotBot";
-                    else if (dynamic_cast<ScoutBot *>(robot))
-                        type = "ScoutBot";
-                    else if (dynamic_cast<TrackBot *>(robot))
-                        type = "TrackBot";
-                    else if (dynamic_cast<QueenBot *>(robot))
-                        type = "QueenBot";
-                    else if (dynamic_cast<VampireBot *>(robot))
-                        type = "VampireBot";
+                    if (dynamic_cast<HideLongShotScoutBot *>(robot))
+                        type = "HideLongShotScoutBot";
+                    else if (dynamic_cast<HideSemiAutoScoutBot *>(robot))
+                        type = "HideSemiAutoScoutBot";
+                    else if (dynamic_cast<HideThirtyShotScoutBot *>(robot))
+                        type = "HideThirtyShotScoutBot";
+                    else if (dynamic_cast<HideKnightScoutBot *>(robot))
+                        type = "HideKnightScoutBot";
+                    else if (dynamic_cast<HideQueenScoutBot *>(robot))
+                        type = "HideQueenScoutBot";
+                    else if (dynamic_cast<HideVampireScoutBot *>(robot))
+                        type = "HideVampireScoutBot";
+                    else if (dynamic_cast<HideLongShotTrackBot *>(robot))
+                        type = "HideLongShotTrackBot";
+                    else if (dynamic_cast<HideSemiAutoTrackBot *>(robot))
+                        type = "HideSemiAutoTrackBot";
+                    else if (dynamic_cast<HideThirtyShotTrackBot *>(robot))
+                        type = "HideThirtyShotTrackBot";
+                    else if (dynamic_cast<HideKnightTrackBot *>(robot))
+                        type = "HideKnightTrackBot";
+                    else if (dynamic_cast<HideQueenTrackBot *>(robot))
+                        type = "HideQueenTrackBot";
+                    else if (dynamic_cast<HideVampireTrackBot *>(robot))
+                        type = "HideVampireTrackBot";
+
+                    else if (dynamic_cast<JumpLongShotScoutBot *>(robot))
+                        type = "JumpLongShotScoutBot";
+                    else if (dynamic_cast<JumpSemiAutoScoutBot *>(robot))
+                        type = "JumpSemiAutoScoutBot";
+                    else if (dynamic_cast<JumpThirtyShotScoutBot *>(robot))
+                        type = "JumpThirtyShotScoutBot";
+                    else if (dynamic_cast<JumpKnightScoutBot *>(robot))
+                        type = "JumpKnightScoutBot";
+                    else if (dynamic_cast<JumpQueenScoutBot *>(robot))
+                        type = "JumpQueenScoutBot";
+                    else if (dynamic_cast<JumpVampireScoutBot *>(robot))
+                        type = "JumpVampireScoutBot";
+                    else if (dynamic_cast<JumpLongShotTrackBot *>(robot))
+                        type = "JumpLongShotTrackBot";
+                    else if (dynamic_cast<JumpSemiAutoTrackBot *>(robot))
+                        type = "JumpSemiAutoTrackBot";
+                    else if (dynamic_cast<JumpThirtyShotTrackBot *>(robot))
+                        type = "JumpThirtyShotTrackBot";
+                    else if (dynamic_cast<JumpKnightTrackBot *>(robot))
+                        type = "JumpKnightTrackBot";
+                    else if (dynamic_cast<JumpQueenTrackBot *>(robot))
+                        type = "JumpQueenTrackBot";
+                    else if (dynamic_cast<JumpVampireTrackBot *>(robot))
+                        type = "JumpVampireTrackBot";
+
                     else if (dynamic_cast<HideLongShotBot *>(robot))
                         type = "HideLongShotBot";
                     else if (dynamic_cast<HideSemiAutoBot *>(robot))
@@ -6134,55 +6164,26 @@ int main()
                     else if (dynamic_cast<KnightTrackBot *>(robot))
                         type = "KnightTrackBot";
 
-                    else if (dynamic_cast<HideLongShotScoutBot *>(robot))
-                        type = "HideLongShotScoutBot";
-                    else if (dynamic_cast<HideSemiAutoScoutBot *>(robot))
-                        type = "HideSemiAutoScoutBot";
-                    else if (dynamic_cast<HideThirtyShotScoutBot *>(robot))
-                        type = "HideThirtyShotScoutBot";
-                    else if (dynamic_cast<HideKnightScoutBot *>(robot))
-                        type = "HideKnightScoutBot";
-                    else if (dynamic_cast<HideQueenScoutBot *>(robot))
-                        type = "HideQueenScoutBot";
-                    else if (dynamic_cast<HideVampireScoutBot *>(robot))
-                        type = "HideVampireScoutBot";
-                    else if (dynamic_cast<HideLongShotTrackBot *>(robot))
-                        type = "HideLongShotTrackBot";
-                    else if (dynamic_cast<HideSemiAutoTrackBot *>(robot))
-                        type = "HideSemiAutoTrackBot";
-                    else if (dynamic_cast<HideThirtyShotTrackBot *>(robot))
-                        type = "HideThirtyShotTrackBot";
-                    else if (dynamic_cast<HideKnightTrackBot *>(robot))
-                        type = "HideKnightTrackBot";
-                    else if (dynamic_cast<HideQueenTrackBot *>(robot))
-                        type = "HideQueenTrackBot";
-                    else if (dynamic_cast<HideVampireTrackBot *>(robot))
-                        type = "HideVampireTrackBot";
-
-                    else if (dynamic_cast<JumpLongShotScoutBot *>(robot))
-                        type = "JumpLongShotScoutBot";
-                    else if (dynamic_cast<JumpSemiAutoScoutBot *>(robot))
-                        type = "JumpSemiAutoScoutBot";
-                    else if (dynamic_cast<JumpThirtyShotScoutBot *>(robot))
-                        type = "JumpThirtyShotScoutBot";
-                    else if (dynamic_cast<JumpKnightScoutBot *>(robot))
-                        type = "JumpKnightScoutBot";
-                    else if (dynamic_cast<JumpQueenScoutBot *>(robot))
-                        type = "JumpQueenScoutBot";
-                    else if (dynamic_cast<JumpVampireScoutBot *>(robot))
-                        type = "JumpVampireScoutBot";
-                    else if (dynamic_cast<JumpLongShotTrackBot *>(robot))
-                        type = "JumpLongShotTrackBot";
-                    else if (dynamic_cast<JumpSemiAutoTrackBot *>(robot))
-                        type = "JumpSemiAutoTrackBot";
-                    else if (dynamic_cast<JumpThirtyShotTrackBot *>(robot))
-                        type = "JumpThirtyShotTrackBot";
-                    else if (dynamic_cast<JumpKnightTrackBot *>(robot))
-                        type = "JumpKnightTrackBot";
-                    else if (dynamic_cast<JumpQueenTrackBot *>(robot))
-                        type = "JumpQueenTrackBot";
-                    else if (dynamic_cast<JumpVampireTrackBot *>(robot))
-                        type = "JumpVampireTrackBot";
+                    else if (dynamic_cast<HideBot *>(robot))
+                        type = "HideBot";
+                    else if (dynamic_cast<JumpBot *>(robot))
+                        type = "JumpBot";
+                    else if (dynamic_cast<LongShotBot *>(robot))
+                        type = "LongShotBot";
+                    else if (dynamic_cast<KnightBot *>(robot))
+                        type = "KnightBot";
+                    else if (dynamic_cast<SemiAutoBot *>(robot))
+                        type = "SemiAutoBot";
+                    else if (dynamic_cast<ThirtyShotBot *>(robot))
+                        type = "ThirtyShotBot";
+                    else if (dynamic_cast<ScoutBot *>(robot))
+                        type = "ScoutBot";
+                    else if (dynamic_cast<TrackBot *>(robot))
+                        type = "TrackBot";
+                    else if (dynamic_cast<QueenBot *>(robot))
+                        type = "QueenBot";
+                    else if (dynamic_cast<VampireBot *>(robot))
+                        type = "VampireBot";
 
                     else if (dynamic_cast<GenericRobot *>(robot))
                         type = "GenericRobot";
