@@ -6122,7 +6122,7 @@ int main()
     {
         logger << "\n--- Simulation Step " << currentStep + 1 << " ---" << endl;
 
-        logger << "Robot Status before Step" << currentStep + 1 << ":" << endl;
+        logger << "Robot Status before Step " << currentStep + 1 << ":" << endl;
         for (Robot *robot : battlefield.getListOfRobots())
         {
             string type;
@@ -6283,17 +6283,17 @@ int main()
             // Check if robot is a shooter
             ShootingRobot *shooter = dynamic_cast<ShootingRobot *>(robot);
             ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
-            if (shooter && !TSB)
-            {
-                logger << ", Ammo: " << shooter->getAmmo();
-            }
-            else if (shooter && TSB)
+            if (shooter && TSB)
             {
                 logger << ", Ammo: " << TSB->getShellCount();
             }
+            else if (shooter && TSB)
+            {
+                logger << ", Ammo: " << shooter->getAmmo();
+            }
             logger << endl;
         }
-
+        
         battlefield.simulationStep(); // Executes turns, cleans up, respawns
 
         logger << "\nBattlefield State after Step " << currentStep + 1 << ":" << endl;
