@@ -347,6 +347,8 @@ protected:
     vector<Robot *> detectedTargets;  // <-- Add this line
     vector<string> upgrades;
     vector<pair<int, int>> availableSpaces;
+    int timeBeingHit;  // To track when the robot was last hit
+    int currentTime; // To track the current time in the simulation
 
     // Action flags for per-round limitation
     bool hasLooked = false;
@@ -371,6 +373,10 @@ public:
     string getUpgradeType() const;
     void clearPendingUpgrade();
     bool getEnemyDetectedNearby() const;
+
+    int getTimeBeingHit() const { return timeBeingHit; }
+    void setTimeBeingHit(int time) { timeBeingHit = time; }
+    void setCurrentTime(int time) { currentTime = time; }
 
     // Reset all action flags (call at start/end of each round)
     void resetActionFlags()
@@ -491,6 +497,12 @@ void GenericRobot::fire(int X, int Y)
             {
                 logger << "Hit! (" << target->getName() << ") be killed" << endl;
                 target->takeDamage();
+
+                // Set the time when the target was hit
+                GenericRobot* genericTarget = dynamic_cast<GenericRobot*>(target);
+                if (genericTarget) {
+                    genericTarget->setTimeBeingHit(currentTime); // You'll need to have access to current time
+                }
                 // Alternate upgrade types
                 //  If the robot's class name starts with "Hide" (for HideBot and all Hide* hybrids)
                 // if (typeid(*this).name() && std::string(typeid(*this).name()).find("Hide") != std::string::npos) {
