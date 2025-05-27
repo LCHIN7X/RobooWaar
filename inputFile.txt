@@ -1,9 +1,9 @@
-M by N : 10 10
+M by N : 5 5
 steps: 100
 robots: 4 
-LongShotBot Kidd 3 6
-LongShotBot Sorry 3 4
-LongShotBot Xiao 4 0
-LongShotBot Jet 3 7
+JumpBot Kidd 3 6
+ScoutBot Sorry 3 4
+JumpBot Xiao 4 0
+HideLongShotScoutBot Jet 3 7
 LongShotBot Harry 3 8
-LongShotBot Star random random
+ScoutBot Star random random

@@ -973,7 +973,7 @@ public:
         Robot *target = nullptr;
         for (Robot *r : battlefield->getListOfRobots())
         {
-            if (r != nullptr && r != this && r->getLives() > 0&& !target->getIsHurt())
+            if (r != nullptr && r != this && r->getLives() > 0&& !r->getIsHurt())
             {
                 target = r;
                 break;
@@ -4953,6 +4953,7 @@ void Battlefield::queueForReentry(Robot *robot)
 }
 
 // To handle robot respawns
+//COMPLETED: respawnRobots member function definition
 void Battlefield::respawnRobots()
 {
     if (!reentryQueue.empty())
@@ -5002,7 +5003,7 @@ void Battlefield::respawnRobots()
     }
 }
 
-// To remove destroyed/hurt robots from the battlefield 
+//COMPLETED: cleanupDestroyedRobots member function
 void Battlefield::cleanupDestroyedRobots()
 {
     logger << "----------------------------------------" << endl;
@@ -5010,10 +5011,20 @@ void Battlefield::cleanupDestroyedRobots()
     while (iterator != listOfRobots.end())
     {
         Robot *robot = *iterator;
-        if (robot->getLives() <= 0 || robot->getIsDie() || robot->getIsHurt())
-        {
+        // If robot is hurt but not dead, queue for reentry and remove from grid, then delete and remove from list
+        if (robot->getIsHurt() && robot->getLives() > 0 && !robot->getIsDie()) {
+            queueForReentry(robot);
             removeRobotFromGrid(robot);
             logger << robot->getName() << " has been removed from the battlefield." << endl;
+            robot->setIsHurt(false);
+            delete robot;
+            iterator = listOfRobots.erase(iterator);
+            continue;
+        }
+        if (robot->getLives() <= 0 || robot->getIsDie())
+        {
+            removeRobotFromGrid(robot);
+            logger << robot->getName() << " has been destroyed and removed from the battlefield." << endl;
             delete robot;
             iterator = listOfRobots.erase(iterator);
             continue;
