@@ -741,14 +741,6 @@ public:
         isHidden = false;
     }
 
-    void act() override //ovveride action take by hidebot
-    {
-        logger << getName() << " is thinking..." << endl;            //TBC
-        look(0, 0);  
-        fire(0, 0);
-        move();
-    }
-
     bool canBeHit() override //override can be hit when robot not hide
     {
         return !isHidden;
@@ -823,14 +815,6 @@ public:
                 logger << getName() << " did not jump this turn, keep moving\n";
             }
         }
-    }
-
-    void act() override //action take by jumpbot
-    {
-        logger << getName() << " is thinking..." << endl; // TBC
-        look(0, 0);
-        fire(0, 0);
-        move();
     }
 
     int getJumpCount() const //return number of jump robot use   //TBC
@@ -1547,14 +1531,6 @@ public:
         }
     }
 
-    void act() override //robot action 
-    {
-        logger << getName() << " is thinking..." << endl; // TBC
-        look(0, 0);
-        fire(0, 0);
-        move();
-    }
-
     int getScoutCount() const //get robot scan count
     {
         return scoutCount;
@@ -1643,14 +1619,6 @@ public:
                 }
             }
         }
-    }
-    //robot action 
-    void act() override 
-    {
-        logger << getName() << " is thinking..." << endl; // TBC
-        look(0, 0);
-        fire(0, 0);
-        move();
     }
 
     void showTrackTarget() //display track robot
@@ -3162,6 +3130,7 @@ public:
 class HideLongShotScoutBot : public HideLongShotBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since HideLongShotScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3169,13 +3138,14 @@ protected:
     }
 
 public:
+    //constructor
     HideLongShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideLongShotBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override // Override the move method to use HideLongShotBot's move
     {
         HideLongShotBot::move();  
     }
@@ -3197,14 +3167,14 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
 
-    bool canBeHit() override
+    bool canBeHit() override      
     {
-        return HideBot::canBeHit();
+        return HideLongShotBot::canBeHit(); 
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3219,6 +3189,7 @@ public:
 class HideSemiAutoScoutBot : public HideSemiAutoBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since HideSemiAutoScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3226,13 +3197,14 @@ protected:
     }
 
 public:
+    //constructor
     HideSemiAutoScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideSemiAutoBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override   // Override the move method to use HideSemiAutoBot's move
     {
         HideSemiAutoBot::move();
     }
@@ -3254,7 +3226,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3276,6 +3248,7 @@ public:
 class HideThirtyShotScoutBot : public HideThirtyShotBot, public ScoutBot
 {
 protected:
+    //This method returns an empty vector since HideThirtyShotScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3283,13 +3256,14 @@ protected:
     }
 
 public:
+    //constructor
     HideThirtyShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideThirtyShotBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override   // Override the move method to use HideThirtyShotBot's move
     {
         HideThirtyShotBot::move();
     }
@@ -3299,9 +3273,9 @@ public:
         HideThirtyShotBot::fire(0, 0);
     }
 
-    void think() override
+    void think() override   
     {
-        ScoutBot::think();
+        HideThirtyShotBot::think();
     }
 
     void act() override
@@ -3311,7 +3285,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3333,6 +3307,7 @@ public:
 class HideKnightScoutBot : public HideKnightBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since HideKnightScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3340,13 +3315,14 @@ protected:
     }
 
 public:
+    //constructor
     HideKnightScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideKnightBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override        // Override the move method to use HideKnightBot's move
     {
         HideKnightBot::move();
     }
@@ -3358,7 +3334,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        HideKnightBot::think();
     }
 
     void act() override
@@ -3368,7 +3344,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3391,6 +3367,7 @@ public:
 class HideQueenScoutBot : public HideQueenBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since HideQueenScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3398,13 +3375,14 @@ protected:
     }
 
 public:
+    //constructor
     HideQueenScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideQueenBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override      // Override the move method to use HideQueenBot's move
     {
         HideQueenBot::move();
     }
@@ -3416,7 +3394,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        HideQueenBot::think();
     }
 
     void act() override
@@ -3426,7 +3404,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3448,6 +3426,7 @@ public:
 class HideVampireScoutBot : public HideVampireBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since HideVampireScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3461,7 +3440,7 @@ public:
           HideVampireBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override   // Override the move method to use HideVampireBot's move
     {
         HideVampireBot::move();
     }
@@ -3473,7 +3452,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        HideVampireBot::think();
     }
 
     void act() override
@@ -3483,7 +3462,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3505,6 +3484,7 @@ public:
 class HideLongShotTrackBot : public HideLongShotBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideLongShotTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3512,13 +3492,14 @@ protected:
     }
 
 public:
+    //constructor
     HideLongShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideLongShotBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override         // Override the move method to use HideLongShotBot's move
     {
         HideLongShotBot::move();
     }
@@ -3530,7 +3511,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        HideLongShotBot::think();
     }
 
     void act() override
@@ -3540,7 +3521,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override  // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -3562,6 +3543,7 @@ public:
 class HideSemiAutoTrackBot : public HideSemiAutoBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideSemiAutoTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3569,13 +3551,14 @@ protected:
     }
 
 public:
+    //constructor
     HideSemiAutoTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideSemiAutoBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override  // Override the move method to use HideSemiAutoBot's move
     {
         HideSemiAutoBot::move();
     }
@@ -3597,7 +3580,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -3619,6 +3602,7 @@ public:
 class HideThirtyShotTrackBot : public HideThirtyShotBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideThirtyShotTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3626,13 +3610,14 @@ protected:
     }
 
 public:
+    //constructor
     HideThirtyShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideThirtyShotBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override    // Override the move method to use HideThirtyShotBot's move
     {
         HideThirtyShotBot::move();
     }
@@ -3644,7 +3629,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        HideThirtyShotBot::think();
     }
 
     void act() override
@@ -3654,14 +3639,14 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override   // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
 
     bool canBeHit() override
     {
-        return HideBot::canBeHit();
+        return HideThirtyShotBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -3676,6 +3661,7 @@ public:
 class HideKnightTrackBot : public HideKnightBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideKnightTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3683,13 +3669,14 @@ protected:
     }
 
 public:
+    //constructor
     HideKnightTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideKnightBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use HideKnightBot's move
     {
         HideKnightBot::move();
     }
@@ -3701,7 +3688,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        HideKnightBot::think();
     }
 
     void act() override
@@ -3711,7 +3698,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override   // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -3732,6 +3719,7 @@ public:
 class HideQueenTrackBot : public HideQueenBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideQueenTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3739,13 +3727,14 @@ protected:
     }
 
 public:
+    //constructor
     HideQueenTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideQueenBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override         // Override the move method to use HideQueenBot's move
     {
         HideQueenBot::move();
     }
@@ -3757,7 +3746,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        HideQueenBot::think();
     }
 
     void act() override
@@ -3767,7 +3756,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -3789,6 +3778,7 @@ public:
 class HideVampireTrackBot : public HideVampireBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since HideVampireTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3796,13 +3786,14 @@ protected:
     }
 
 public:
+    //constructor
     HideVampireTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           HideVampireBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override       // Override the move method to use HideVampireBot's move
     {
         HideVampireBot::move();
     }
@@ -3814,7 +3805,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        HideVampireBot::think();
     }
 
     void act() override
@@ -3824,7 +3815,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -3846,6 +3837,7 @@ public:
 class JumpLongShotScoutBot : public JumpLongShotBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpLongShotScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3853,13 +3845,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpLongShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpLongShotBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override           // Override the move method to use JumpLongShotBot's move
     {
         JumpLongShotBot::move();
     }
@@ -3871,7 +3864,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        JumpLongShotBot::think();
     }
 
     void act() override
@@ -3881,7 +3874,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override         // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3903,6 +3896,7 @@ public:
 class JumpSemiAutoScoutBot : public JumpSemiAutoBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpSemiAutoScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3910,13 +3904,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpSemiAutoScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpSemiAutoBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override      // Override the move method to use JumpSemiAutoBot's move
     {
         JumpSemiAutoBot::move();
     }
@@ -3928,7 +3923,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        JumpSemiAutoBot::think();
     }
 
     void act() override
@@ -3938,7 +3933,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -3960,6 +3955,7 @@ public:
 class JumpThirtyShotScoutBot : public JumpThirtyShotBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpThirtyShotScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -3967,13 +3963,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpThirtyShotScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpThirtyShotBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use JumpThirtyShotBot's move
     {
         JumpThirtyShotBot::move();
     }
@@ -3985,7 +3982,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        JumpThirtyShotBot::think();
     }
 
     void act() override
@@ -3995,7 +3992,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -4017,6 +4014,7 @@ public:
 class JumpKnightScoutBot : public JumpKnightBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpKnightScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4024,13 +4022,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpKnightScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpKnightBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override       // Override the move method to use JumpKnightBot's move
     {
         JumpKnightBot::move();
     }
@@ -4052,7 +4051,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -4075,6 +4074,7 @@ public:
 class JumpQueenScoutBot : public JumpQueenBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpQueenScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4082,13 +4082,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpQueenScoutBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpQueenBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override      // Override the move method to use JumpQueenBot's move
     {
         JumpQueenBot::move();
     }
@@ -4110,7 +4111,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -4132,6 +4133,7 @@ public:
 class JumpVampireScoutBot : public JumpVampireBot, public ScoutBot
 {
 protected:
+    // This method returns an empty vector since JumpVampireScoutBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4139,13 +4141,14 @@ protected:
     }
 
 public:
-    JumpVampireScoutBot(const string &name, int x, int y)
+    //constructor
+    JumpVampireScoutBot(const string &name, int x, int y)   
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpVampireBot(name, x, y),
           ScoutBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use JumpVampireBot's move
     {
         JumpVampireBot::move();
     }
@@ -4157,7 +4160,7 @@ public:
 
     void think() override
     {
-        ScoutBot::think();
+        JumpVampireBot::think();
     }
 
     void act() override
@@ -4167,7 +4170,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
     {
         ScoutBot::look(X, Y);
     }
@@ -4190,6 +4193,7 @@ public:
 class JumpLongShotTrackBot : public JumpLongShotBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpLongShotTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4197,13 +4201,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpLongShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpLongShotBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use JumpLongShotBot's move
     {
         JumpLongShotBot::move();
     }
@@ -4215,7 +4220,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        JumpLongShotBot::think();
     }
 
     void act() override
@@ -4225,7 +4230,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -4248,6 +4253,7 @@ public:
 class JumpSemiAutoTrackBot : public JumpSemiAutoBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpSemiAutoTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4255,13 +4261,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpSemiAutoTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpSemiAutoBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override      // Override the move method to use JumpSemiAutoBot's move
     {
         JumpSemiAutoBot::move();
     }
@@ -4273,24 +4280,24 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        JumpSemiAutoBot::think();
     }
 
-    void act() override
+    void act() override      
     {
         look(0, 0);
         think();
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override  // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
 
     bool canBeHit() override
     {
-        return JumpBot::canBeHit();
+        return JumpSemiAutoBot::canBeHit();
     }
 
     void setBattlefield(Battlefield *bf)
@@ -4305,6 +4312,7 @@ public:
 class JumpThirtyShotTrackBot : public JumpThirtyShotBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpThirtyShotTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4312,13 +4320,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpThirtyShotTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpThirtyShotBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override    // Override the move method to use JumpThirtyShotBot's move
     {
         JumpThirtyShotBot::move();
     }
@@ -4330,7 +4339,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        JumpThirtyShotBot::think();
     }
 
     void act() override
@@ -4340,7 +4349,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -4362,6 +4371,7 @@ public:
 class JumpKnightTrackBot : public JumpKnightBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpKnightTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4369,13 +4379,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpKnightTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpKnightBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use JumpKnightBot's move
     {
         JumpKnightBot::move();
     }
@@ -4387,7 +4398,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        JumpKnightBot::think();
     }
 
     void act() override
@@ -4397,7 +4408,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -4418,6 +4429,7 @@ public:
 class JumpQueenTrackBot : public JumpQueenBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpQueenTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4425,13 +4437,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpQueenTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpQueenBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override      // Override the move method to use JumpQueenBot's move
     {
         JumpQueenBot::move();
     }
@@ -4443,7 +4456,7 @@ public:
 
     void think() override
     {
-        TrackBot::think();
+        JumpQueenBot::think();
     }
 
     void act() override
@@ -4453,7 +4466,7 @@ public:
         fire(0, 0);
     }
 
-    void look(int X, int Y) override
+    void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -4475,6 +4488,7 @@ public:
 class JumpVampireTrackBot : public JumpVampireBot, public TrackBot
 {
 protected:
+    // This method returns an empty vector since JumpVampireTrackBot does not have any specific upgrades as it is the last upgradebot
     const vector<string> &getUpgradeTypes() const override
     {
         static const vector<string> upgradeTypes = {};
@@ -4482,13 +4496,14 @@ protected:
     }
 
 public:
+    //constructor
     JumpVampireTrackBot(const string &name, int x, int y)
         : Robot(name, x, y),
           GenericRobot(name, x, y),
           JumpVampireBot(name, x, y),
           TrackBot(name, x, y) {}
 
-    void move() override
+    void move() override     // Override the move method to use JumpVampireBot's move
     {
         JumpVampireBot::move();
     }
@@ -4498,9 +4513,9 @@ public:
         JumpVampireBot::fire(0, 0);
     }
 
-    void think() override
+    void think() override    //
     {
-        TrackBot::think();
+        JumpVampireBot::think();
     }
 
     void act() override
@@ -4509,8 +4524,8 @@ public:
         think();
         fire(0, 0);
     }
-
-    void look(int X, int Y) override
+ 
+    void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
     {
         TrackBot::look(X, Y);
     }
@@ -4532,7 +4547,8 @@ public:
 
 void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
 {
-    // Clear queuedThisRound at the start of each round
+    
+    // Clear queuedThisRound at the start of each round to ensure it only contains robots queued in the current round
     queuedThisRound.clear();
     // Handle upgrades first
     for (size_t i = 0; i < listOfRobots.size(); ++i)
@@ -4543,7 +4559,8 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
             string type = gen->getUpgradeType();
             Robot *upgraded = nullptr;
 
-            // Create the new upgraded robot based on the type
+            //$$
+            // Create the new upgraded robot based on the pending upgrade type
             if (type == "GenericRobot")
                 upgraded = new GenericRobot(gen->getName(), gen->getX(), gen->getY());
             else if (type == "HideBot")
@@ -4678,19 +4695,20 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
 
             if (upgraded)
             {
-                upgraded->setLives(gen->getLives());
-                upgraded->initializeFrom(gen); // This is where the ammo is correctly set for ThirtyShotBot
+                upgraded->setLives(gen->getLives()); // Copy lives from the old robot
+                upgraded->initializeFrom(gen);    // Copy other necessary attributes
+                                                  // This is where the ammo is correctly set for ThirtyShotBot
                 GenericRobot *upGen = dynamic_cast<GenericRobot *>(upgraded);
                 if (upGen)
                 {
-                    upGen->clearPendingUpgrade(); 
+                    upGen->clearPendingUpgrade();  // Clear the pending upgrade flag
                     upGen->setBattlefield(this);  // Ensure battlefield context is set
-                    upGen->resetActionFlags();
+                    upGen->resetActionFlags();     // Reset action flags for the new robot
                 }
-                removeRobotFromGrid(gen);
-                placeRobot(upgraded, gen->getX(), gen->getY());
-                delete gen;
-                listOfRobots[i] = upgraded;
+                removeRobotFromGrid(gen);   // Remove the old robot from the grid
+                placeRobot(upgraded, gen->getX(), gen->getY());  // Place the upgraded robot at the same position
+                delete gen;    // Delete the old robot to avoid memory leaks
+                listOfRobots[i] = upgraded;   // Replace the old robot in the list with the upgraded one
                 logger << upgraded->getName() << " has upgraded to " << type << "!" << endl;
             }
         }
@@ -4703,7 +4721,7 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
         string typeName;
         int currentAmmo = 0;
 
-        GenericRobot *gen = dynamic_cast<GenericRobot *>(robot);
+        GenericRobot *gen = dynamic_cast<GenericRobot *>(robot);   
         if (gen)
         {
             // Dynamically determine type for logging (replicated from your main's logic)
@@ -4851,10 +4869,10 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
                 currentAmmo = shooter->getAmmo();
             }
 
-            logger << "  Type: " << typeName
-                   << ", Name: " << robot->getName()
-                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"
-                   << ", Life: " << robot->getLives();
+            logger << "  Type: " << typeName        // Log the type of the robot
+                   << ", Name: " << robot->getName()   // Log the name of the robot
+                   << ", Coords: (" << robot->getX() << "," << robot->getY() << ")"   // Log the coordinates
+                   << ", Life: " << robot->getLives();    // Log the number of lives
             if (shooter)
             { // Only print ammo if it's a shooting robot
                 logger << ", Ammo: " << currentAmmo;
@@ -4866,9 +4884,9 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
 
     for (Robot *robot : listOfRobots)
     {
-        if (robot->getLives() > 0 && !robot->getIsDie())
+        if (robot->getLives() > 0 && !robot->getIsDie())  // Check if the robot is alive and not marked for destruction
         {
-            currentlyAliveRobots.push_back(robot);
+            currentlyAliveRobots.push_back(robot);   // Add to the list of currently alive robots
         }
     }
 
@@ -4877,8 +4895,8 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
         // Set battlefield context if robot is a GenericRobot
         if (auto gen = dynamic_cast<GenericRobot *>(robot))
         {
-            gen->setBattlefield(this);
-            gen->resetActionFlags();
+            gen->setBattlefield(this);  // Ensure battlefield context is set
+            gen->resetActionFlags();    // Reset action flags for the new robot
         }
         // Skip robot's turn if it is hurt (was hit this turn)
         if (robot->getIsHurt())
@@ -4888,14 +4906,14 @@ void Battlefield::simulationStep(int stepNumber) // Added stepNumber parameter
             continue;
         }
         logger << "----------------------------------------" << endl;
-        logger << robot->getName() << "'s turn: " << endl;
-        robot->act();
-        logger << robot->getName() << " is done." << endl;
+        logger << robot->getName() << "'s turn: " << endl;   // Log the robot's turn
+        robot->act();                                        // Call the act method(think, look, move, fire) of the robot
+        logger << robot->getName() << " is done." << endl;   // Log that the robot's turn is done
     }
 
-    cleanupDestroyedRobots();
+    cleanupDestroyedRobots();      // Cleanup robots that are marked for destruction
     logger << "----------------------------------------" << endl;
-    respawnRobots();
+    respawnRobots();     // Handle respawning robots that were queued for reentry
     for (Robot *robot : listOfRobots)
     {
         robot->setIsDie(false); // Reset isDie flag for next turn
@@ -4919,21 +4937,21 @@ int Battlefield::getNumberOfAliveRobots()
 // To add new robot to battlefield during initialization
 void Battlefield::addNewRobot(Robot *robot)
 {
-    listOfRobots.push_back(robot);
+    listOfRobots.push_back(robot); // Add the robot to the list of robots
     robot->setBattlefield(this); // Set battlefield pointer
-    if (respawnCounts.find(robot->getName()) == respawnCounts.end())
+    if (respawnCounts.find(robot->getName()) == respawnCounts.end())  // Check if the robot is already in respawnCounts
     {
         respawnCounts[robot->getName()] = 3; // limit respawn count to 3
     }
 }
 
-// to check if the given coordinates are within the grid
+// To check if the given coordinates are within the grid
 bool Battlefield::isPositionWithinGrid(int x, int y) const
 {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
 
-// to get the Robot at given coordinates, if not found then return nullptr
+// To get the Robot at given coordinates, if not found then return nullptr
 Robot *Battlefield::getRobotAt(int x, int y) const
 {
     if (!isPositionWithinGrid(x, y))
@@ -4978,12 +4996,12 @@ void Battlefield::removeRobotFromGrid(Robot *robot)
     }
 }
 
-// COMPLETED: to queue robot for reentry
+// To queue robot for reentry
 void Battlefield::queueForReentry(Robot *robot)
 {
     
-    if (queuedThisRound.find(robot) != queuedThisRound.end()) return;
-    queuedThisRound.insert(robot);
+    if (queuedThisRound.find(robot) != queuedThisRound.end()) return;  // Prevent re-queuing the same robot in the same round
+    queuedThisRound.insert(robot);   // Add robot to the set of queued robots for this round
     int currentAmmo;
     // Try to get ammo, prioritizing ThirtyShotBot's shellCount
     ThirtyShotBot *TSB = dynamic_cast<ThirtyShotBot *>(robot);
@@ -4999,27 +5017,27 @@ void Battlefield::queueForReentry(Robot *robot)
             currentAmmo = shooter->getAmmo(); // Gets standard ammo
         }
     }
-    reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});
+    reentryQueue.push({robot->getName(), robot->getLives(), currentAmmo});  // Push the robot's name, lives, and ammo into the reentry queue
     logger << robot->getName() << " queued for reentry with " << robot->getLives()
            << " lives and " << currentAmmo << " ammo." << endl;
 }
 
 // To handle robot respawns
-//COMPLETED: respawnRobots member function definition
 void Battlefield::respawnRobots()
 {
     if (!reentryQueue.empty())
     {
-        auto respawnInfo = reentryQueue.front();
-        string nameOfRobotToRespawn = respawnInfo.name;
-        int livesLeft = respawnInfo.lives;
-        int ammoLeft = respawnInfo.ammo;
-        reentryQueue.pop();
+        auto respawnInfo = reentryQueue.front();   // Get the front of the queue which contains the robot's respawn info
+        string nameOfRobotToRespawn = respawnInfo.name;  // Get the name of the robot to respawn
+        int livesLeft = respawnInfo.lives;   // Get the lives left for the robot to respawn
+        int ammoLeft = respawnInfo.ammo;     // Get the ammo left for the robot to respawn
+        reentryQueue.pop();                  // Remove the front of the queue after processing
         logger << "Reentering " << nameOfRobotToRespawn << endl;
         int randomX;
         int randomY;
         int attempts = 50;  //Set a limit of 50 attempts to find a valid and unoccupied grid position
         bool spotFound = false;
+        // Try to find a random position within the grid that is available
         while (attempts > 0)
         {
             randomX = rand() % width;
@@ -5041,8 +5059,8 @@ void Battlefield::respawnRobots()
             {
                 newShooter->setAmmo(respawnInfo.ammo); // Set the preserved ammo
             }
-            placeRobot(newRobot, randomX, randomY);
-            listOfRobots.push_back(newRobot);
+            placeRobot(newRobot, randomX, randomY);  // Place the new robot at the random position
+            listOfRobots.push_back(newRobot);  // Add the new robot to the list of robots
             logger << nameOfRobotToRespawn << " reentered as GenericRobot at (" << randomX << ", " << randomY << ") with ";
             logger << livesLeft << " lives and " << ammoLeft << " ammo next turn." << endl;
         }
@@ -5064,18 +5082,18 @@ void Battlefield::cleanupDestroyedRobots()
     {
         Robot *robot = *iterator;
         // If robot is hurt but not dead, queue for reentry and remove from grid, then delete and remove from list
-        if (robot->getIsHurt() && robot->getLives() > 0 && !robot->getIsDie()) {
-            queueForReentry(robot);
-            removeRobotFromGrid(robot);
+        if (robot->getIsHurt() && robot->getLives() > 0 && !robot->getIsDie()) { // Check if the robot is hurt but not dead
+            queueForReentry(robot);  // Queue the robot for reentry
+            removeRobotFromGrid(robot);  // Remove the robot from the grid
             logger << robot->getName() << " has been removed from the battlefield." << endl;
-            robot->setIsHurt(false);
-            delete robot;
-            iterator = listOfRobots.erase(iterator);
+            robot->setIsHurt(false);  // Reset the hurt status
+            delete robot;  // Delete the robot to free memory
+            iterator = listOfRobots.erase(iterator); // Remove the robot from the list
             continue;
         }
         if (robot->getLives() <= 0 || robot->getIsDie())
         {
-            removeRobotFromGrid(robot);
+            removeRobotFromGrid(robot);  // Remove the robot from the grid
             logger << robot->getName() << " has been destroyed and removed from the battlefield." << endl;
             delete robot;
             iterator = listOfRobots.erase(iterator);
@@ -5176,7 +5194,7 @@ Battlefield::~Battlefield()
     {
         delete robot;
     }
-    listOfRobots.clear();
+    listOfRobots.clear();   // Clear the list of robots
 }
 
 //******************************************
@@ -5185,59 +5203,59 @@ Battlefield::~Battlefield()
 
 void parseInputFile(const string &line, Battlefield &battlefield)
 {
-    vector<string> tokens;
-    istringstream iss(line);
-    string token;
+    vector<string> tokens;  // Vector to hold tokens from the line
+    istringstream iss(line);  // Use istringstream to split the line into tokens
+    string token;    // Temporary string to hold each token
 
-    while (iss >> token)
+    while (iss >> token)   // Extract tokens from the line
     {
         tokens.push_back(token);
     }
 
-    if (tokens.empty())
+    if (tokens.empty())  // Check if the line is empty
     {
         return; // Skip empty lines
     }
 
-    if (tokens[0] == "M" && tokens.size() >= 6)
+    if (tokens[0] == "M" && tokens.size() >= 6)  //Check for battlefield dimensions
     {
         int height = stoi(tokens[4]);
         int width = stoi(tokens[5]);
         battlefield.setDimensions(height, width);
     }
-    else if (tokens[0] == "steps:" && tokens.size() >= 2)
+    else if (tokens[0] == "steps:" && tokens.size() >= 2)   //Check for steps
     {
         int steps = stoi(tokens[1]);
         battlefield.setSteps(steps);
     }
-    else if (tokens[0] == "robots:" && tokens.size() >= 2)
+    else if (tokens[0] == "robots:" && tokens.size() >= 2)   //Check for number of robots
     {
         int numRobots = stoi(tokens[1]);
         battlefield.setNumberOfRobots(numRobots);
     }
-    else if (tokens[0] == "GenericRobot" && tokens.size() >= 4)
+    else if (tokens[0] == "GenericRobot" && tokens.size() >= 4) // Check for GenericRobot creation
     {
 
-        string robotName = tokens[1];
-        int robotXCoordinates;
-        int robotYCoordinates;
+        string robotName = tokens[1];  // Get the robot name
+        int robotXCoordinates;         // Get the robot's X coordinates
+        int robotYCoordinates;         // Get the robot's Y coordinates
 
-        if (tokens[2] == "random" && tokens[3] == "random")
+        if (tokens[2] == "random" && tokens[3] == "random")   // Check if coordinates are random
         {
-            robotXCoordinates = rand() % battlefield.getWidth();
-            robotYCoordinates = rand() % battlefield.getHeight();
+            robotXCoordinates = rand() % battlefield.getWidth();   // Generate random X coordinate
+            robotYCoordinates = rand() % battlefield.getHeight();  // Generate random Y coordinate
         }
         else
         {
-            robotXCoordinates = stoi(tokens[2]);
-            robotYCoordinates = stoi(tokens[3]);
+            robotXCoordinates = stoi(tokens[2]);    // Convert string to integer for X coordinate
+            robotYCoordinates = stoi(tokens[3]);    // Convert string to integer for Y coordinate
         }
 
-        Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);
-        battlefield.addNewRobot(newRobot);
-        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);
+        Robot *newRobot = new GenericRobot(robotName, robotXCoordinates, robotYCoordinates);  // Create a new GenericRobot object
+        battlefield.addNewRobot(newRobot);   // Add the new robot to the battlefield
+        battlefield.placeRobot(newRobot, robotXCoordinates, robotYCoordinates);  // Place the robot at the specified coordinates
     }
-    else if (tokens[0] == "HideBot" && tokens.size() >= 4)
+    else if (tokens[0] == "HideBot" && tokens.size() >= 4)  // Check for HideBot creation
     {
         string robotName = tokens[1];
         int robotXCoordinates;
@@ -6264,26 +6282,26 @@ void parseInputFile(const string &line, Battlefield &battlefield)
 // Modified to take Battlefield by reference to avoid copying/double-free memory error
 //*****************************************************************************************
 
-void readInputFile(Battlefield &battlefield, const string &filename = "inputFile.txt")
+void readInputFile(Battlefield &battlefield, const string &filename = "inputFile.txt") // Default filename
 {
-    ifstream inputFile(filename);
+    ifstream inputFile(filename);  // Open the input file
 
-    if (!inputFile.is_open())
+    if (!inputFile.is_open())  // Check if the file opened successfully
     {
-        cerr << "Error opening input file." << endl;
+        cerr << "Error opening input file." << endl; // Log an error message
         return;
     }
 
-    string line;
-    while (getline(inputFile, line))
+    string line;  // Variable to hold each line read from the file
+    while (getline(inputFile, line))   //Read each line from the file
     {
-        if (!line.empty())
+        if (!line.empty())    //Check if the line is not empty
         {
-            parseInputFile(line, battlefield);
+            parseInputFile(line, battlefield);  //Call the function to parse the line and update the battlefield
         }
     }
 
-    inputFile.close();
+    inputFile.close();   // Close the input file after reading all lines
 }
 
 int main()
@@ -6291,18 +6309,18 @@ int main()
     // Seed the random number generator once
     srand(static_cast<unsigned>(time(0)));
 
-    Battlefield battlefield;
+    Battlefield battlefield;     // Create a Battlefield object
     readInputFile(battlefield); // This sets dimensions and initializes grid
 
     logger << "Battlefield Dimensions: " << endl;
-    logger << "Width: " << battlefield.getWidth() << endl;
-    logger << "Height: " << battlefield.getHeight() << endl;
+    logger << "Width: " << battlefield.getWidth() << endl;  // Log the width of the battlefield
+    logger << "Height: " << battlefield.getHeight() << endl; // Log the height of the battlefield
 
-    logger << "Battlefield steps: " << battlefield.getSteps() << endl;
+    logger << "Battlefield steps: " << battlefield.getSteps() << endl;  // Log the number of steps for the simulation
 
-    logger << "Battlefield number of robots: " << battlefield.getNumberOfRobots() << endl;
+    logger << "Battlefield number of robots: " << battlefield.getNumberOfRobots() << endl; // Log the number of robots on the battlefield
 
-    logger << "Initial Robots on battlefield: " << endl;
+    logger << "Initial Robots on battlefield: " << endl; // Log the initial state of robots on the battlefield
 
     for (Robot *robot : battlefield.getListOfRobots())
     {
@@ -6315,12 +6333,12 @@ int main()
     logger << endl;
 
     logger << "Initial Battlefield State:" << endl;
-    battlefield.displayBattlefield(); // Display the grid
+    battlefield.displayBattlefield(); // Display the initial state of the battlefield
     logger << endl;
 
     // --- Simulation Loop ---
-    int currentStep = 0;
-    int maxSteps = battlefield.getSteps();
+    int currentStep = 0; // Initialize the current step counter
+    int maxSteps = battlefield.getSteps(); // Get the maximum number of steps from the battlefield 
 
     logger << "--- Starting Simulation ---" << endl;
 
@@ -6337,24 +6355,25 @@ int main()
         battlefield.simulationStep(currentStep); // Pass the current step number
 
         logger << "\nBattlefield State after Step " << currentStep << ":" << endl;
-        battlefield.displayBattlefield(); // Display the updated grid
+        battlefield.displayBattlefield(); // Display the updated state of the battlefield
     }
 
     // --- End of Simulation ---
     logger << "\n--- Simulation Ended ---" << endl;
 
-    size_t remainingRobots = battlefield.getNumberOfAliveRobots();
+    size_t remainingRobots = battlefield.getNumberOfAliveRobots();  // Get the number of remaining robots after the simulation ends
 
-    if (remainingRobots <= 1)
+    if (remainingRobots <= 1) // If one or zero robots are left after the simulation
     {
-        if (remainingRobots == 0)
+        if (remainingRobots == 0) // If no robots are left
         {
             logger << "Result: All robots destroyed!" << endl;
         }
-        else
+        else // If exactly one robot is left
         {
-            Robot *lastRobot = nullptr;
-            const vector<Robot *> &finalRobotList = battlefield.getListOfRobots();
+            Robot *lastRobot = nullptr;  // Pointer to hold the last remaining robot
+            const vector<Robot *> &finalRobotList = battlefield.getListOfRobots(); // Get the final list of robots
+            // Iterate through the final list of robots to find the last one standing
             for (Robot *robot : finalRobotList)
             {
                 if (robot->getLives() > 0)
@@ -6373,7 +6392,7 @@ int main()
             }
         }
     }
-    else
+    else // If more than one robot is still alive after the simulation ends
     {
         logger << "Result: Maximum steps reached (" << maxSteps << " steps)." << endl;
         logger << "Remaining robots: " << remainingRobots << endl;
