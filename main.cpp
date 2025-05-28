@@ -2566,7 +2566,7 @@ public:
 
     void look(int X, int Y) override
     {
-        ScoutBot::look(X, Y);
+        ScoutBot::look(X, Y); //scoutbot look
     }
 
     bool canBeHit() override
