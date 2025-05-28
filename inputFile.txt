@@ -1,7 +1,9 @@
 M by N : 10 10
 steps: 100
 robots: 4 
-GenericRobot Kidd 3 6
-GenericRobot Jet 3 7
-GenericRobot Harry 3 8
-GenericRobot Star random random
+LongShotBot Kidd 3 6
+LongShotBot Sorry 3 4
+LongShotBot Xiao 4 0
+LongShotBot Jet 3 7
+LongShotBot Harry 3 8
+LongShotBot Star random random
