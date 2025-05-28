@@ -2724,7 +2724,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        SemiAutoBot::fire(X, Y);
+        SemiAutoBot::fire(X, Y); //fire inherit from SemiAutoBot
     }
 
     void think() override
@@ -2774,7 +2774,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        ThirtyShotBot::fire(X, Y);
+        ThirtyShotBot::fire(X, Y); //fire inherit from ThirtyShotBot
     }
 
     void think() override
@@ -2792,7 +2792,7 @@ public:
 
     void look(int X, int Y) override
     {
-        ScoutBot::look(X, Y); // Use long-range look for any explicit look calls
+        ScoutBot::look(X, Y);
     }
 
     bool canBeHit() override
@@ -2822,7 +2822,7 @@ protected:
 public:
     ThirtyShotTrackBot(const string &name, int x, int y) : Robot(name, x, y), GenericRobot(name, x, y), ThirtyShotBot(name, x, y), TrackBot(name, x, y) {}
 
-    void fire(int X, int Y) override
+    void fire(int X, int Y) override  //fire inherit from ThirtyShotBot
     {
         ThirtyShotBot::fire(X, Y);
     }
@@ -2874,7 +2874,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(X, Y);
+        KnightBot::fire(X, Y);  //fire inherit from KnightBot
     }
 
     void think() override
@@ -2924,7 +2924,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        KnightBot::fire(X, Y);
+        KnightBot::fire(X, Y);  //fire inherit from KnightBot
     }
 
     void think() override
@@ -2974,7 +2974,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(X, Y);
+        QueenBot::fire(X, Y);  //fire inherit from QueenBot
     }
 
     void think() override
@@ -3024,7 +3024,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        QueenBot::fire(X, Y);
+        QueenBot::fire(X, Y);  //fire inherit from QueenBot
     }
 
     void think() override
@@ -3074,7 +3074,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(X, Y);
+        VampireBot::fire(X, Y);  //fire inherit from VampireBot
     }
 
     void think() override
@@ -3124,7 +3124,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        VampireBot::fire(X, Y);
+        VampireBot::fire(X, Y);  //fire inherit from VampireBot
     }
 
     void think() override
@@ -3177,7 +3177,7 @@ public:
 
     void move() override
     {
-        HideLongShotBot::move();
+        HideLongShotBot::move();  
     }
 
     void fire(int X, int Y) override
