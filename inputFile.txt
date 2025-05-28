@@ -1,9 +1,8 @@
-M by N : 5 5
-steps: 100
-robots: 4 
-JumpBot Kidd 3 6
-ScoutBot Sorry 3 4
-JumpBot Xiao 4 0
-HideLongShotScoutBot Jet 3 7
-LongShotBot Harry 3 8
-ScoutBot Star random random
+M by N : 40 50
+steps: 300
+robots: 5
+GenericRobot  Kidd 3 6
+GenericRobot  Jet 12 1
+GenericRobot  Alpha 35 20
+GenericRobot  Beta 20 37
+GenericRobot  Star random random
