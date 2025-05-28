@@ -1,0 +1,6295 @@
+Battlefield Dimensions: 
+Width: 5
+Height: 5
+Battlefield steps: 100
+Battlefield number of robots: 4
+Initial Robots on battlefield: 
+Robot Name: Kidd, Coords: (3,6), Lives: 3
+Robot Name: Sorry, Coords: (3,4), Lives: 3
+Robot Name: Xiao, Coords: (4,0), Lives: 3
+Robot Name: Jet, Coords: (3,7), Lives: 3
+Robot Name: Harry, Coords: (3,8), Lives: 3
+Robot Name: Star, Coords: (0,4), Lives: 3
+
+Initial Battlefield State:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . X | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |S . . S . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Starting Simulation ---
+
+--- Simulation Step 1 ---
+Robot Status before Step 1:
+  Type: JumpBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Sorry, Coords: (3,4), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (4,0), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (0,4), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (2, 5): Out of bounds
+Revealing (2, 6): Out of bounds
+Revealing (2, 7): Out of bounds
+Revealing (3, 5): Out of bounds
+Revealing (3, 6): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (4, 5): Out of bounds
+Revealing (4, 6): Out of bounds
+Revealing (4, 7): Out of bounds
+No shooting as no robots within shooting range.
+Kidd jump to (3,3), (1/3)
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry try scan it next round 
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (3, 5)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Xiao did not jump this turn, keep moving
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet scan the battlefield
+got robot: Xiao at (4,0)
+got robot: Kidd at (3,3)
+got robot: Star at (0,4)
+>> Jet is thinking...
+Jet hide, (1/3)
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star is thinking...
+Star try scan it next round 
+No shooting as no robots within shooting range.
+>> Star is moving...
+Star moved to (1, 3)
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 1:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . X | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. S . K . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 2 ---
+Robot Status before Step 2:
+  Type: JumpBot, Name: Kidd, Coords: (3,3), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Sorry, Coords: (3,4), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (4,0), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (1,3), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+Revealing (2, 4): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Current position
+Revealing (3, 4): Empty space
+Revealing (4, 2): Empty space
+Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+No shooting as no robots within shooting range.
+Kidd did not jump this turn, keep moving
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry try scan it next round 
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (2, 5)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Xiao jump to (3,0), (1/3)
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet scan the battlefield
+got robot: Xiao at (3,0)
+got robot: Star at (1,3)
+got robot: Kidd at (3,3)
+>> Jet is thinking...
+Jet hide, (2/3)
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star is thinking...
+Star try scan it next round 
+No shooting as no robots within shooting range.
+>> Star is moving...
+Star moved to (2, 4)
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 2:
+   0 1 2 3 4 
+  +----------+
+0 |. . . X . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . K . | 3
+4 |. . S . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 3 ---
+Robot Status before Step 3:
+  Type: JumpBot, Name: Kidd, Coords: (3,3), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Sorry, Coords: (3,4), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (3,0), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (2,4), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+Revealing (2, 4): Enemy Star
+Revealing (3, 2): Empty space
+Revealing (3, 3): Current position
+Revealing (3, 4): Empty space
+Revealing (4, 2): Empty space
+Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+>> Kidd fires at (2, 4)
+Kidd missed!
+Kidd jump to (1,0), (2/3)
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Xiao at (3,0)
+got robot: Star at (2,4)
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (2, 3)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Current position
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Empty space
+Revealing (4, 1): Empty space
+No shooting as no robots within shooting range.
+Xiao jump to (4,0), (2/3)
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet try scan it next round 
+>> Jet is thinking...
+Jet hide, (3/3)
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star is thinking...
+Star try scan it next round 
+No shooting as no robots within shooting range.
+>> Star is moving...
+Star moved to (3, 3)
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 3:
+   0 1 2 3 4 
+  +----------+
+0 |. K . . X | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . S S . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 4 ---
+Robot Status before Step 4:
+  Type: JumpBot, Name: Kidd, Coords: (1,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (2,3), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (4,0), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (3,3), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (0, -1): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Current position
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+No shooting as no robots within shooting range.
+Kidd did not jump this turn, keep moving
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Xiao at (4,0)
+got robot: Sorry at (2,3)
+got robot: Star at (3,3)
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (3, 4)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Xiao did not jump this turn, keep moving
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Xiao at (4,0)
+got robot: Star at (3,3)
+got robot: Sorry at (3,4)
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+>> Jet firesssss at (3,4)
+Missed!
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star is thinking...
+Star scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Xiao at (4,0)
+got robot: Star at (3,3)
+got robot: Sorry at (3,4)
+No shooting as no robots within shooting range.
+>> Star is moving...
+Star moved to (3, 2)
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 4:
+   0 1 2 3 4 
+  +----------+
+0 |. K . . X | 0
+1 |. . . . . | 1
+2 |. . . S . | 2
+3 |. . . . . | 3
+4 |. . . S . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 5 ---
+Robot Status before Step 5:
+  Type: JumpBot, Name: Kidd, Coords: (1,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (3,4), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (4,0), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (3,2), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (0, -1): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Current position
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+No shooting as no robots within shooting range.
+Kidd did not jump this turn, keep moving
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Xiao at (4,0)
+got robot: Star at (3,2)
+got robot: Sorry at (3,4)
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (4, 5)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Xiao jump to (4,4), (3/3)
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Star is thinking...
+Star scan the battlefield
+got robot: Kidd at (1,0)
+got robot: Star at (3,2)
+got robot: Xiao at (4,4)
+No shooting as no robots within shooting range.
+>> Star is moving...
+Star moved to (4, 3)
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 5:
+   0 1 2 3 4 
+  +----------+
+0 |. K . . . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . S | 3
+4 |. . . . X | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 6 ---
+Robot Status before Step 6:
+  Type: JumpBot, Name: Kidd, Coords: (1,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (3,4), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (4,4), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ScoutBot, Name: Star, Coords: (4,3), Life: 3, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (0, -1): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Current position
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+No shooting as no robots within shooting range.
+Kidd did not jump this turn, keep moving
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry reach the limit,cannot scan already
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (2, 4)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Out of bounds
+Revealing (4, 3): Enemy Star
+Revealing (4, 4): Current position
+Revealing (4, 5): Out of bounds
+Revealing (5, 3): Out of bounds
+Revealing (5, 4): Out of bounds
+Revealing (5, 5): Out of bounds
+>> Xiao fires at (4, 3)
+Hit! (Star) is killed!
+Star queued for reentry with 2 lives and 10 ammo.
+Xiao will upgrade into JumpScoutBot next turn!
+Xiao cannot jump already. 
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+-----------------------------------
+Star was hit and skips this turn.
+----------------------------------------
+Star has been removed from the battlefield.
+----------------------------------------
+Reentering Star
+Star reentered as GenericRobot at (0, 3) with 2 lives and 10 ammo next turn.
+
+Battlefield State after Step 6:
+   0 1 2 3 4 
+  +----------+
+0 |. K . . . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |S . . . . | 3
+4 |. . S . X | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 7 ---
+Xiao has upgraded to JumpScoutBot!
+Robot Status before Step 7:
+  Type: JumpBot, Name: Kidd, Coords: (1,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (2,4), Life: 3, Ammo: 10
+  Type: JumpScoutBot, Name: Xiao, Coords: (4,4), Life: 3, Ammo: 9
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (0,3), Life: 2, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (0, -1): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Current position
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+No shooting as no robots within shooting range.
+Kidd did not jump this turn, keep moving
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry reach the limit,cannot scan already
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (3, 3)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao try scan it next round 
+>> Xiao is thinking...
+Xiao did not jump this turn, keep moving
+No shooting as no robots within shooting range.
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (-1, 2): Out of bounds
+Revealing (-1, 3): Out of bounds
+Revealing (-1, 4): Out of bounds
+Revealing (0, 2): Empty space
+Revealing (0, 3): Current position
+Revealing (0, 4): Empty space
+Revealing (1, 2): Empty space
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+>> Star is thinking...
+>> Star is moving...
+Star moved to (0, 4)
+No shooting as no robots within shooting range.
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 7:
+   0 1 2 3 4 
+  +----------+
+0 |. K . . . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . S . | 3
+4 |S . . . X | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 8 ---
+Robot Status before Step 8:
+  Type: JumpBot, Name: Kidd, Coords: (1,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (3,3), Life: 3, Ammo: 10
+  Type: JumpScoutBot, Name: Xiao, Coords: (4,4), Life: 3, Ammo: 9
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (0,4), Life: 2, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (0, -1): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Empty space
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Current position
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+No shooting as no robots within shooting range.
+Kidd jump to (4,0), (3/3)
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry reach the limit,cannot scan already
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (3, 2)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao try scan it next round 
+>> Xiao is thinking...
+Xiao jump to (0,2), (1/3)
+No shooting as no robots within shooting range.
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (-1, 3): Out of bounds
+Revealing (-1, 4): Out of bounds
+Revealing (-1, 5): Out of bounds
+Revealing (0, 3): Empty space
+Revealing (0, 4): Current position
+Revealing (0, 5): Out of bounds
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (1, 5): Out of bounds
+>> Star is thinking...
+>> Star is moving...
+Star moved to (1, 4)
+No shooting as no robots within shooting range.
+Star is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 8:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . K | 0
+1 |. . . . . | 1
+2 |X . . S . | 2
+3 |. . . . . | 3
+4 |. S . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 9 ---
+Robot Status before Step 9:
+  Type: JumpBot, Name: Kidd, Coords: (4,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (3,2), Life: 3, Ammo: 10
+  Type: JumpScoutBot, Name: Xiao, Coords: (0,2), Life: 3, Ammo: 9
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (1,4), Life: 2, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Kidd cannot jump already. 
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry reach the limit,cannot scan already
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (4, 2)
+Sorry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao scan the battlefield
+got robot: Kidd at (4,0)
+got robot: Xiao at (0,2)
+got robot: Sorry at (4,2)
+got robot: Star at (1,4)
+>> Xiao is thinking...
+Xiao jump to (0,4), (2/3)
+No shooting as no robots within shooting range.
+Xiao is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (0, 3): Empty space
+Revealing (0, 4): Enemy Xiao
+Revealing (0, 5): Out of bounds
+Revealing (1, 3): Empty space
+Revealing (1, 4): Current position
+Revealing (1, 5): Out of bounds
+Revealing (2, 3): Empty space
+Revealing (2, 4): Empty space
+Revealing (2, 5): Out of bounds
+>> Star is thinking...
+>> Star fires at (0, 4)
+Hit! (Xiao) is killed!
+Star will upgrade into ThirtyShotBot next turn!
+>> Star is moving...
+Star moved to (1, 3)
+Star is done.
+----------------------------------------
+Xiao queued for reentry with 2 lives and 9 ammo.
+Xiao has been removed from the battlefield.
+----------------------------------------
+Reentering Xiao
+Xiao reentered as GenericRobot at (2, 4) with 2 lives and 9 ammo next turn.
+
+Battlefield State after Step 9:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . K | 0
+1 |. . . . . | 1
+2 |. . . . S | 2
+3 |. S . . . | 3
+4 |. . X . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 10 ---
+Star got 30 shells, replacing its current shells!
+Star has upgraded to ThirtyShotBot!
+Robot Status before Step 10:
+  Type: JumpBot, Name: Kidd, Coords: (4,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (4,2), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: ThirtyShotBot, Name: Star, Coords: (1,3), Life: 2, Ammo: 30
+  Type: GenericRobot, Name: Xiao, Coords: (2,4), Life: 2, Ammo: 9
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+No shooting as no robots within shooting range.
+Kidd cannot jump already. 
+Kidd is done.
+----------------------------------------
+Sorry's turn: 
+Sorry is thinking...
+Sorry reach the limit,cannot scan already
+No shooting as no robots within shooting range.
+>> Sorry is moving...
+Sorry moved to (3, 1)
+Sorry is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Star's turn: 
+Revealing (0, 2): Empty space
+Revealing (0, 3): Empty space
+Revealing (0, 4): Empty space
+Revealing (1, 2): Empty space
+Revealing (1, 3): Current position
+Revealing (1, 4): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+Revealing (2, 4): Enemy Xiao
+>> Star is thinking...
+Star fire at (2, 4), shell left: 29
+Missed!
+>> Star is moving...
+Star moved to (1, 4)
+Star is done.
+----------------------------------------
+Xiao's turn: 
+Revealing (1, 3): Empty space
+Revealing (1, 4): Enemy Star
+Revealing (1, 5): Out of bounds
+Revealing (2, 3): Empty space
+Revealing (2, 4): Current position
+Revealing (2, 5): Out of bounds
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Out of bounds
+>> Xiao is thinking...
+>> Xiao fires at (1, 4)
+Hit! (Star) is killed!
+Xiao will upgrade into JumpBot next turn!
+>> Xiao is moving...
+Xiao moved to (2, 3)
+Xiao is done.
+----------------------------------------
+Star queued for reentry with 1 lives and 29 ammo.
+Star has been removed from the battlefield.
+----------------------------------------
+Reentering Star
+Star reentered as GenericRobot at (4, 2) with 1 lives and 29 ammo next turn.
+
+Battlefield State after Step 10:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . K | 0
+1 |. . . S . | 1
+2 |. . . . S | 2
+3 |. . X . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 11 ---
+Xiao has upgraded to JumpBot!
+Robot Status before Step 11:
+  Type: JumpBot, Name: Kidd, Coords: (4,0), Life: 3, Ammo: 9
+  Type: ScoutBot, Name: Sorry, Coords: (3,1), Life: 3, Ammo: 10
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (2,3), Life: 2, Ammo: 8
+  Type: GenericRobot, Name: Star, Coords: (4,2), Life: 1, Ammo: 29
+----------------------------------------
+Kidd's turn: 
+Kidd is thinking...
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Enemy Sorry
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+>> Kidd fires at (3, 1)
+Hit! (Sorry) is killed!
+Sorry queued for reentry with 2 lives and 10 ammo.
+Kidd will upgrade into JumpLongShotBot next turn!
+Kidd cannot jump already. 
+Kidd is done.
+-----------------------------------
+Sorry was hit and skips this turn.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (1, 2): Empty space
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Current position
+Revealing (2, 4): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+No shooting as no robots within shooting range.
+Xiao jump to (2,4), (1/3)
+Xiao is done.
+----------------------------------------
+Star's turn: 
+Revealing (3, 1): Dead Robot
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Current position
+Revealing (4, 3): Empty space
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+>> Star is thinking...
+>> Star is moving...
+Star moved to (3, 3)
+No shooting as no robots within shooting range.
+Star is done.
+----------------------------------------
+Sorry has been removed from the battlefield.
+----------------------------------------
+Reentering Sorry
+Sorry reentered as GenericRobot at (4, 4) with 2 lives and 10 ammo next turn.
+
+Battlefield State after Step 11:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . K | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . S . | 3
+4 |. . X . S | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 12 ---
+Kidd has upgraded to JumpLongShotBot!
+Robot Status before Step 12:
+  Type: JumpLongShotBot, Name: Kidd, Coords: (4,0), Life: 3, Ammo: 8
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Xiao, Coords: (2,4), Life: 2, Ammo: 8
+  Type: GenericRobot, Name: Star, Coords: (3,3), Life: 1, Ammo: 29
+  Type: GenericRobot, Name: Sorry, Coords: (4,4), Life: 2, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (4, -1): Out of bounds
+Revealing (4, 0): Current position
+Revealing (4, 1): Empty space
+Revealing (5, -1): Out of bounds
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+>> Kidd is thinking...
+Kidd jump to (4,1), (1/3)
+>> Kidd firesssss at (3,3)
+Missed!
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is thinking...
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (1, 5): Out of bounds
+Revealing (2, 3): Empty space
+Revealing (2, 4): Current position
+Revealing (2, 5): Out of bounds
+Revealing (3, 3): Enemy Star
+Revealing (3, 4): Empty space
+Revealing (3, 5): Out of bounds
+>> Xiao fires at (3, 3)
+Hit! (Star) is killed!
+Star has been destroyed!
+Xiao will upgrade into JumpKnightBot next turn!
+Xiao jump to (2,1), (2/3)
+Xiao is done.
+----------------------------------------
+Star's turn: 
+Star is done.
+----------------------------------------
+Sorry's turn: 
+Revealing (3, 3): Dead Robot
+Revealing (3, 4): Empty space
+Revealing (3, 5): Out of bounds
+Revealing (4, 3): Empty space
+Revealing (4, 4): Current position
+Revealing (4, 5): Out of bounds
+Revealing (5, 3): Out of bounds
+Revealing (5, 4): Out of bounds
+Revealing (5, 5): Out of bounds
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (4, 3)
+No shooting as no robots within shooting range.
+Sorry is done.
+----------------------------------------
+Star has been destroyed and removed from the battlefield.
+----------------------------------------
+
+Battlefield State after Step 12:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . X . K | 1
+2 |. . . . . | 2
+3 |. . . . S | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 13 ---
+Xiao has upgraded to JumpKnightBot!
+Robot Status before Step 13:
+  Type: JumpLongShotBot, Name: Kidd, Coords: (4,1), Life: 3, Ammo: 7
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: JumpKnightBot, Name: Xiao, Coords: (2,1), Life: 2, Ammo: 7
+  Type: GenericRobot, Name: Sorry, Coords: (4,3), Life: 2, Ammo: 10
+----------------------------------------
+Kidd's turn: 
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (4, 0): Empty space
+Revealing (4, 1): Current position
+Revealing (4, 2): Empty space
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+>> Kidd is thinking...
+Kidd jump to (4,2), (2/3)
+>> Kidd firesssss at (2,1)
+Hit! (Xiao) be killed
+Kidd will upgrade into JumpLongShotScoutBot next turn
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+-----------------------------------
+Xiao was hit and skips this turn.
+----------------------------------------
+Sorry's turn: 
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+Revealing (4, 2): Enemy Kidd
+Revealing (4, 3): Current position
+Revealing (4, 4): Empty space
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+Revealing (5, 4): Out of bounds
+>> Sorry is thinking...
+>> Sorry fires at (4, 2)
+Hit! (Kidd) is killed!
+Sorry will upgrade into LongShotBot next turn!
+>> Sorry is moving...
+Sorry moved to (3, 2)
+Sorry is done.
+----------------------------------------
+Kidd queued for reentry with 2 lives and 6 ammo.
+Kidd has been removed from the battlefield.
+Xiao queued for reentry with 1 lives and 7 ammo.
+Xiao has been removed from the battlefield.
+----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (0, 4) with 2 lives and 6 ammo next turn.
+
+Battlefield State after Step 13:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . . . . | 1
+2 |. . . S . | 2
+3 |. . . . . | 3
+4 |K . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 14 ---
+Sorry has upgraded to LongShotBot!
+Robot Status before Step 14:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Sorry, Coords: (3,2), Life: 2, Ammo: 9
+  Type: GenericRobot, Name: Kidd, Coords: (0,4), Life: 2, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Revealing (2, 1): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Current position
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Empty space
+Revealing (4, 3): Empty space
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (2, 1)
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (-1, 3): Out of bounds
+Revealing (-1, 4): Out of bounds
+Revealing (-1, 5): Out of bounds
+Revealing (0, 3): Empty space
+Revealing (0, 4): Current position
+Revealing (0, 5): Out of bounds
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (1, 5): Out of bounds
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (0, 3)
+No shooting as no robots within shooting range.
+Kidd is done.
+----------------------------------------
+----------------------------------------
+Reentering Xiao
+Xiao reentered as GenericRobot at (4, 2) with 1 lives and 7 ammo next turn.
+
+Battlefield State after Step 14:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . S . . | 1
+2 |. . . . X | 2
+3 |K . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 15 ---
+Robot Status before Step 15:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: LongShotBot, Name: Sorry, Coords: (2,1), Life: 2, Ammo: 9
+  Type: GenericRobot, Name: Kidd, Coords: (0,3), Life: 2, Ammo: 6
+  Type: GenericRobot, Name: Xiao, Coords: (4,2), Life: 1, Ammo: 7
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Revealing (1, 0): Empty space
+Revealing (1, 1): Empty space
+Revealing (1, 2): Empty space
+Revealing (2, 0): Empty space
+Revealing (2, 1): Current position
+Revealing (2, 2): Empty space
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (3, 2)
+>> Sorry firesssss at (4,2)
+Xiao has been destroyed!
+Hit! (Xiao) be killed
+Sorry will upgrade into LongShotTrackBot next turn
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (-1, 2): Out of bounds
+Revealing (-1, 3): Out of bounds
+Revealing (-1, 4): Out of bounds
+Revealing (0, 2): Empty space
+Revealing (0, 3): Current position
+Revealing (0, 4): Empty space
+Revealing (1, 2): Empty space
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (1, 4)
+No shooting as no robots within shooting range.
+Kidd is done.
+----------------------------------------
+Xiao's turn: 
+Xiao is done.
+----------------------------------------
+Xiao has been destroyed and removed from the battlefield.
+----------------------------------------
+
+Battlefield State after Step 15:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . . . . | 1
+2 |. . . S . | 2
+3 |. . . . . | 3
+4 |. K . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 16 ---
+Sorry has upgraded to LongShotTrackBot!
+Robot Status before Step 16:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: LongShotTrackBot, Name: Sorry, Coords: (3,2), Life: 2, Ammo: 8
+  Type: GenericRobot, Name: Kidd, Coords: (1,4), Life: 2, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (2, 1)
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (0, 3): Empty space
+Revealing (0, 4): Empty space
+Revealing (0, 5): Out of bounds
+Revealing (1, 3): Empty space
+Revealing (1, 4): Current position
+Revealing (1, 5): Out of bounds
+Revealing (2, 3): Empty space
+Revealing (2, 4): Empty space
+Revealing (2, 5): Out of bounds
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (2, 3)
+No shooting as no robots within shooting range.
+Kidd is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 16:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . S . . | 1
+2 |. . . . . | 2
+3 |. . K . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 17 ---
+Robot Status before Step 17:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: LongShotTrackBot, Name: Sorry, Coords: (2,1), Life: 2, Ammo: 8
+  Type: GenericRobot, Name: Kidd, Coords: (2,3), Life: 2, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (3, 1)
+>> Sorry firesssss at (2,3)
+Missed!
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (1, 2): Empty space
+Revealing (1, 3): Empty space
+Revealing (1, 4): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Current position
+Revealing (2, 4): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (2, 2)
+No shooting as no robots within shooting range.
+Kidd is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 17:
+   0 1 2 3 4 
+  +----------+
+0 |. . . . . | 0
+1 |. . . S . | 1
+2 |. . K . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 18 ---
+Robot Status before Step 18:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: LongShotTrackBot, Name: Sorry, Coords: (3,1), Life: 2, Ammo: 7
+  Type: GenericRobot, Name: Kidd, Coords: (2,2), Life: 2, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry track Kidd at (2,2)
+>> Sorry is thinking...
+>> Sorry is moving...
+Sorry moved to (3, 0)
+>> Sorry firesssss at (2,2)
+Kidd queued for reentry with 1 lives and 6 ammo.
+Hit! (Kidd) be killed
+Sorry will upgrade into HideLongShotTrackBot next turn
+Sorry is done.
+-----------------------------------
+Kidd was hit and skips this turn.
+----------------------------------------
+Kidd has been removed from the battlefield.
+----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (3, 2) with 1 lives and 6 ammo next turn.
+
+Battlefield State after Step 18:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . K . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 19 ---
+Sorry has upgraded to HideLongShotTrackBot!
+Robot Status before Step 19:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 6
+  Type: GenericRobot, Name: Kidd, Coords: (3,2), Life: 1, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry hide, (1/3)
+>> Sorry firesssss at (3,2)
+Missed!
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Revealing (2, 1): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Current position
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Empty space
+Revealing (4, 3): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (2, 1)
+No shooting as no robots within shooting range.
+Kidd is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 19:
+   0 1 2 3 4 
+  +----------+
+0 |. . . H . | 0
+1 |. . K . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 20 ---
+Robot Status before Step 20:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 5
+  Type: GenericRobot, Name: Kidd, Coords: (2,1), Life: 1, Ammo: 6
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry track Kidd at (2,1)
+>> Sorry is thinking...
+Sorry did not hide this turn, keep moving.
+>> Sorry firesssss at (2,1)
+Kidd has been destroyed!
+Hit! (Kidd) be killed
+Sorry is done.
+----------------------------------------
+Kidd's turn: 
+Kidd is done.
+----------------------------------------
+Kidd has been destroyed and removed from the battlefield.
+----------------------------------------
+
+Battlefield State after Step 20:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 21 ---
+Robot Status before Step 21:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry hide, (2/3)
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 21:
+   0 1 2 3 4 
+  +----------+
+0 |. . . H . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 22 ---
+Robot Status before Step 22:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry hide, (3/3)
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 22:
+   0 1 2 3 4 
+  +----------+
+0 |. . . H . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 23 ---
+Robot Status before Step 23:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 23:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 24 ---
+Robot Status before Step 24:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 24:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 25 ---
+Robot Status before Step 25:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 25:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 26 ---
+Robot Status before Step 26:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 26:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 27 ---
+Robot Status before Step 27:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 27:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 28 ---
+Robot Status before Step 28:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 28:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 29 ---
+Robot Status before Step 29:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 29:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 30 ---
+Robot Status before Step 30:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 30:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 31 ---
+Robot Status before Step 31:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 31:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 32 ---
+Robot Status before Step 32:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 32:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 33 ---
+Robot Status before Step 33:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 33:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 34 ---
+Robot Status before Step 34:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 34:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 35 ---
+Robot Status before Step 35:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 35:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 36 ---
+Robot Status before Step 36:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 36:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 37 ---
+Robot Status before Step 37:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 37:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 38 ---
+Robot Status before Step 38:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 38:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 39 ---
+Robot Status before Step 39:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 39:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 40 ---
+Robot Status before Step 40:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 40:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 41 ---
+Robot Status before Step 41:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 41:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 42 ---
+Robot Status before Step 42:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 42:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 43 ---
+Robot Status before Step 43:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 43:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 44 ---
+Robot Status before Step 44:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 44:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 45 ---
+Robot Status before Step 45:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 45:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 46 ---
+Robot Status before Step 46:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 46:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 47 ---
+Robot Status before Step 47:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 47:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 48 ---
+Robot Status before Step 48:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 48:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 49 ---
+Robot Status before Step 49:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 49:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 50 ---
+Robot Status before Step 50:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 50:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 51 ---
+Robot Status before Step 51:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 51:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 52 ---
+Robot Status before Step 52:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 52:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 53 ---
+Robot Status before Step 53:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 53:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 54 ---
+Robot Status before Step 54:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 54:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 55 ---
+Robot Status before Step 55:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 55:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 56 ---
+Robot Status before Step 56:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 56:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 57 ---
+Robot Status before Step 57:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 57:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 58 ---
+Robot Status before Step 58:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 58:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 59 ---
+Robot Status before Step 59:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 59:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 60 ---
+Robot Status before Step 60:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 60:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 61 ---
+Robot Status before Step 61:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 61:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 62 ---
+Robot Status before Step 62:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 62:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 63 ---
+Robot Status before Step 63:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 63:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 64 ---
+Robot Status before Step 64:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 64:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 65 ---
+Robot Status before Step 65:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 65:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 66 ---
+Robot Status before Step 66:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 66:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 67 ---
+Robot Status before Step 67:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 67:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 68 ---
+Robot Status before Step 68:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 68:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 69 ---
+Robot Status before Step 69:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 69:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 70 ---
+Robot Status before Step 70:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 70:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 71 ---
+Robot Status before Step 71:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 71:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 72 ---
+Robot Status before Step 72:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 72:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 73 ---
+Robot Status before Step 73:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 73:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 74 ---
+Robot Status before Step 74:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 74:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 75 ---
+Robot Status before Step 75:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 75:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 76 ---
+Robot Status before Step 76:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 76:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 77 ---
+Robot Status before Step 77:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 77:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 78 ---
+Robot Status before Step 78:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 78:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 79 ---
+Robot Status before Step 79:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 79:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 80 ---
+Robot Status before Step 80:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 80:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 81 ---
+Robot Status before Step 81:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 81:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 82 ---
+Robot Status before Step 82:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 82:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 83 ---
+Robot Status before Step 83:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 83:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 84 ---
+Robot Status before Step 84:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 84:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 85 ---
+Robot Status before Step 85:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 85:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 86 ---
+Robot Status before Step 86:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 86:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 87 ---
+Robot Status before Step 87:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 87:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 88 ---
+Robot Status before Step 88:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 88:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 89 ---
+Robot Status before Step 89:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 89:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 90 ---
+Robot Status before Step 90:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 90:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 91 ---
+Robot Status before Step 91:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 91:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 92 ---
+Robot Status before Step 92:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 92:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 93 ---
+Robot Status before Step 93:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 93:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 94 ---
+Robot Status before Step 94:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 94:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 95 ---
+Robot Status before Step 95:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 95:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 96 ---
+Robot Status before Step 96:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 96:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 97 ---
+Robot Status before Step 97:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 97:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 98 ---
+Robot Status before Step 98:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 98:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 99 ---
+Robot Status before Step 99:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 99:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Step 100 ---
+Robot Status before Step 100:
+  Type: HideLongShotScoutBot, Name: Jet, Coords: (3,7), Life: 3, Ammo: 9
+  Type: LongShotBot, Name: Harry, Coords: (3,8), Life: 3, Ammo: 10
+  Type: HideLongShotTrackBot, Name: Sorry, Coords: (3,0), Life: 2, Ammo: 4
+----------------------------------------
+Jet's turn: 
+Jet reach the limit,cannot scan already
+>> Jet is thinking...
+Jet finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Jet is done.
+----------------------------------------
+Harry's turn: 
+Revealing (2, 7): Out of bounds
+Revealing (2, 8): Out of bounds
+Revealing (2, 9): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (3, 8): Out of bounds
+Revealing (3, 9): Out of bounds
+Revealing (4, 7): Out of bounds
+Revealing (4, 8): Out of bounds
+Revealing (4, 9): Out of bounds
+>> Harry is thinking...
+>> Harry is moving...
+Harry could not move (no available adjacent cell).
+No shooting as no robots within shooting range. 
+Harry is done.
+----------------------------------------
+Sorry's turn: 
+Sorry no target can track
+>> Sorry is thinking...
+Sorry finish use hide, keep moving.
+No shooting as no robots within shooting range. 
+Sorry is done.
+----------------------------------------
+----------------------------------------
+
+Battlefield State after Step 100:
+   0 1 2 3 4 
+  +----------+
+0 |. . . S . | 0
+1 |. . . . . | 1
+2 |. . . . . | 2
+3 |. . . . . | 3
+4 |. . . . . | 4
+  +----------+
+   0 1 2 3 4 
+
+LEGEND:
+  . - Empty space
+  H - Hidden Robot
+  [Letter] - First letter of robot's name
+
+
+--- Simulation Ended ---
+Result: Maximum steps reached (100 steps).
+Remaining robots: 3
+Jet
+Harry
+Sorry
