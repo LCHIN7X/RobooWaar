@@ -1555,11 +1555,13 @@ public:
     availableSpaces.clear(); // clear available spaces before scanning
 
     if (scoutCount >= 3) {
-        logger << getName() << " reached the scan limit, cannot scan anymore\n";
+        logger << getName() << "  reach the limit,cannot scan already\n";
     } else if (rand() % 2 == 0) {  //50 percent to use scan function 
-        logger << getName() << " scans the battlefield\n";
-        for (int y = 0; y < battlefield->getHeight(); ++y) {//scan the entire battlefield
-            for (int x = 0; x < battlefield->getWidth(); ++x) {
+        logger << ">> "<< getName() << " scan the battlefield\n";
+        for (int y = 0; y < battlefield->getHeight(); ++y) //scan the entire battlefield
+        {
+            for (int x = 0; x < battlefield->getWidth(); ++x) 
+            {
                 Robot* r = battlefield->getRobotAt(x, y);
                 if (r) //print all robot found in battlefield
                 { 
@@ -1572,7 +1574,7 @@ public:
     } 
     else  //if not use scan function
     {
-        logger << getName() << " will try scanning the battlefield next round\n";
+        logger << ">> " << getName() << " try scan it next round \n";
     }
 
     
@@ -1647,7 +1649,7 @@ public:
 
         if (tracker == 0)//if finish use tracking
         {
-            logger << getName() << " cannot track any more robots\n";
+            logger << ">> "<< getName() << " cannot track robot already\n";
         } 
         else 
         {
@@ -1671,8 +1673,8 @@ public:
                     if (target && target != this) {
                         track_target.push_back(target);  //add to track list
                         tracker--;  //-1 tracker
-                        logger << getName() << " is tracking " << target->getName()
-                            << " at (" << targetX << "," << targetY << ")\n";
+                        logger << ">> "<< getName() << " track " << target->getName()
+                               << " at (" << targetX << "," << targetY << ")\n";
                         plant = true; //target found
                     }
                 }
@@ -1680,7 +1682,7 @@ public:
 
             if (!plant) //no target found
             {
-                logger << getName() << " did not find any robot to track\n";
+                logger << ">> "<< getName() << " no target can track\n";
             }
         }
 
