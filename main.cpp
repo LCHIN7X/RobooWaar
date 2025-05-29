@@ -1503,54 +1503,64 @@ public:
 
     void look(int X, int Y) override //override look method
     {
+    availableSpaces.clear(); // clear available spaces before scanning
 
-        availableSpaces.clear(); // clear available spaces before scanning
-
-        if (scoutCount >= 3) //if scan more than 3 time
-        {
-            logger << getName() << " reach the limit,cannot scan already\n";
-        }
-        else if (rand() % 2 == 0) //50 percent to use scan function 
-        {
-            logger << getName() << " scan the battlefield\n";
-            for (int y = 0; y < battlefield->getHeight(); ++y) //scan the entire battlefield
-            {
-                for (int x = 0; x < battlefield->getWidth(); ++x) 
-                {
-                    Robot *r = battlefield->getRobotAt(x, y);
-                    if (r) //print all robot found in battlefield
-                    {
-                        logger << "got robot: " << r->getName()
-                               << " at (" << x << "," << y << ")\n";
-                    }
+    if (scoutCount >= 3) {
+        logger << getName() << " reached the scan limit, cannot scan anymore\n";
+    } else if (rand() % 2 == 0) {  //50 percent to use scan function 
+        logger << getName() << " scans the battlefield\n";
+        for (int y = 0; y < battlefield->getHeight(); ++y) {//scan the entire battlefield
+            for (int x = 0; x < battlefield->getWidth(); ++x) {
+                Robot* r = battlefield->getRobotAt(x, y);
+                if (r) //print all robot found in battlefield
+                { 
+                    logger << "got robot: " << r->getName()
+                           << " at (" << x << "," << y << ")\n";
                 }
             }
-            scoutCount++; //+1 after use
         }
-        else //if not use scan function
+        scoutCount++; //+1 after use
+    } 
+    else  //if not use scan function
+    {
+        logger << getName() << " will try scanning the battlefield next round\n";
+    }
+
+    
+    int x = getX(); //get robot x location
+    int y = getY(); //get robot y location
+
+    for (int dx = -1; dx <= 1; dx++) //movement space (-1,0,1)
+    {
+        for (int dy = -1; dy <= 1; dy++) 
         {
-            logger << getName() << " try scan it next round \n";
-        }
+            int newX = x + dx;
+            int newY = y + dy;
 
-        int x = getX(); //get robot x location
-        int y = getY(); //get robot y location
-        for (int dx = -1; dx <= 1; dx++) //movement space (-1,0,1)
-        {
-            for (int dy = -1; dy <= 1; dy++)
-            {
-                if (dx == 0 && dy == 0)
-                    continue;
+            // Boundary check (since isInside doesn't exist)
+            if (newX < 0 || newX >= battlefield->getWidth() || newY < 0 || newY >= battlefield->getHeight())
+                continue;
 
-                int newX = x + dx; // calculate new x position
-                int newY = y + dy; // calculate new y position
+            if (dx == 0 && dy == 0) {
+                logger << "Revealing (" << newX << ", " << newY << "): Current position\n";
+            } else {
+                Robot* r = battlefield->getRobotAt(newX, newY);
+                if (r) {
+                    logger << "Revealing (" << newX << ", " << newY << "): Enemy " << r->getName() << "\n";
+                } else {
+                    logger << "Revealing (" << newX << ", " << newY << "): Empty space\n";
+                }
 
-                if (battlefield->isPositionAvailable(newX, newY))
+                if (battlefield->isPositionAvailable(newX, newY)) 
                 {
                     availableSpaces.emplace_back(newX, newY);
                 }
             }
         }
     }
+}
+
+
 
     int getScoutCount() const //get robot scan count
     {
@@ -1584,58 +1594,73 @@ public:
 
     void look(int X, int Y) override
     {
-
         availableSpaces.clear(); // clear available spaces before scanning
 
-        if (tracker == 0) //if finish use tracking
+        if (tracker == 0)//if finish use tracking
         {
-            logger << getName() << " cannot track robot already\n";
-        }
-        else
+            logger << getName() << " cannot track any more robots\n";
+        } 
+        else 
         {
             int x = getX();
             int y = getY();
             bool plant = false; //track if find robot
 
-            for (int dx = -1; dx <= 1 && !plant; dx++) //scan 3x3 battlefield (-1,0,1)
+            for (int dx = -1; dx <= 1 && !plant; dx++) 
             {
-                for (int dy = -1; dy <= 1 && !plant; dy++)
+                for (int dy = -1; dy <= 1 && !plant; dy++) 
                 {
                     int targetX = x + dx; // calculate target x location
                     int targetY = y + dy; // calculate target y location
 
+
+                    // boundary check
+                    if (targetX < 0 || targetX >= battlefield->getWidth() || targetY < 0 || targetY >= battlefield->getHeight())
+                        continue;
+
                     Robot *target = battlefield->getRobotAt(targetX, targetY);
-                    if (target && target != this) //if taget is not null, not itself, not hurt, able to be tracked
-                    {
-                        track_target.push_back(target); //add to track list
-                        tracker--; //-1 tracker
-                        logger << getName() << " track " << target->getName()
-                               << " at (" << targetX << "," << targetY << ")\n";
+                    if (target && target != this) {
+                        track_target.push_back(target);  //add to track list
+                        tracker--;  //-1 tracker
+                        logger << getName() << " is tracking " << target->getName()
+                            << " at (" << targetX << "," << targetY << ")\n";
                         plant = true; //target found
                     }
                 }
             }
+
             if (!plant) //no target found
             {
-                logger << getName() << " no target can track\n";
+                logger << getName() << " did not find any robot to track\n";
             }
         }
 
         // movement space(like GenericRobot)
         int x = getX();
         int y = getY();
-        for (int dx = -1; dx <= 1; dx++)
+        for (int dx = -1; dx <= 1; dx++) 
         {
             for (int dy = -1; dy <= 1; dy++)
             {
-                if (dx == 0 && dy == 0)
-                    continue;
-
                 int newX = x + dx;
                 int newY = y + dy;
 
-                if (battlefield->isPositionAvailable(newX, newY))
-                {
+                // skip out-of-bounds
+                if (newX < 0 || newX >= battlefield->getWidth() || newY < 0 || newY >= battlefield->getHeight())
+                    continue;
+
+                if (dx == 0 && dy == 0) {
+                    logger << "Revealing (" << newX << ", " << newY << "): Current position\n";
+                } else {
+                    Robot *r = battlefield->getRobotAt(newX, newY);
+                    if (r) {
+                        logger << "Revealing (" << newX << ", " << newY << "): Enemy " << r->getName() << "\n";
+                    } else {
+                        logger << "Revealing (" << newX << ", " << newY << "): Empty space\n";
+                    }
+                }
+
+                if (battlefield->isPositionAvailable(newX, newY)) {
                     availableSpaces.emplace_back(newX, newY);
                 }
             }
