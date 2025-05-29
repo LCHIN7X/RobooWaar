@@ -748,25 +748,49 @@ public:
 
             if (hideCount >= 3)  //if robot hide 3 times already
                 logger <<">> " << getName() << " finish use hide, keep moving." << endl;
-            else   //robot choose not to hide 
+            else   //robot choose not to hide, keep moving
                 logger <<">> " << getName() << " did not hide this turn, keep moving." << endl;
-        }
-    }
+                 if (hasMoved)  //prevent multiple move in one round
+                    return;
+                hasMoved = true;
+                logger << ">> " << name << " is moving...\n";
+                if (!battlefield)
+                {
+                    logger << name << " has no battlefield context!" << endl;
+                    return;
+                }
+                // If availableSpaces (from look) is not empty, pick a random one
+                if (!availableSpaces.empty())
+                {
+                    static random_device rd;  //choose random number
+                    static mt19937 g(rd());
+                    uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+                    auto [newX, newY] = availableSpaces[dist(g)];  //get random location for move
+                    battlefield->removeRobotFromGrid(this);     //remove robot from current position
+                    battlefield->placeRobot(this, newX, newY);  //place robot to new position
+                    incrementMoveCount();
+                    logger << name << " moved to (" << newX << ", " << newY << ")\n";
+                    return;
+                }
 
-    bool getHiddenStatus() const   //get robot hide status
-    {
-        return isHidden;
-    }
+                logger << name << " could not move (no available adjacent cell).\n";
+                    }
+                }
 
-    void appear() //robot appear if didnt hide
-    {
-        isHidden = false;
-    }
+                bool getHiddenStatus() const   //get robot hide status
+                {
+                    return isHidden;
+                }
 
-    bool canBeHit() override //override can be hit when robot not hide
-    {
-        return !isHidden;
-    }
+                void appear() //robot appear if didnt hide
+                {
+                    isHidden = false;
+                }
+
+                bool canBeHit() override //override can be hit when robot not hide
+                {
+                    return !isHidden;
+                }
 };
 
 //******************************************
