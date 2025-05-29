@@ -1,7 +1,7 @@
 M by N : 5 5
 steps: 10
 robots: 5
-HideLongShotScoutBot  Kidd 3 6
+HideBot  Kidd 3 6
 LongShotScoutBot  Jet 4 2
 LongShotBot  Alpha 1 1
 HideVampireBot Beta 0 0
