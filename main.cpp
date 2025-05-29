@@ -475,7 +475,8 @@ void GenericRobot::setBattlefield(Battlefield *bf) { battlefield = bf; } //set b
 
 //$$ 
 void GenericRobot::think() // override think()
-{
+{   
+    logger << ">> " << name << " is thinking..." << endl;
     if (getEnemyDetectedNearby())  //if detect other robot nearby,attack then move
     {
         // Filter valid targets and pick one
@@ -625,7 +626,7 @@ void GenericRobot::look(int X, int Y) // override look() method
     enemyDetectedNearby = false;
     availableSpaces.clear(); //ensure availableapces is empty before looking
     detectedTargets.clear(); //clear detected targets before looking
-
+    logger << ">> " << name << " is looking around...\n";
     int centerX = getX() + X;
     int centerY = getY() + Y;
 
@@ -738,7 +739,7 @@ public:
             isHidden = true;
             hideCount++;
             setHidden(true);   //set robot hidden status to true
-            logger << getName() << " hide, (" << hideCount << "/3)" << endl;
+            logger <<">> " << getName() << " hide, (" << hideCount << "/3)" << endl;
         }
         else
         {
@@ -746,9 +747,9 @@ public:
             setHidden(false);
 
             if (hideCount >= 3)  //if robot hide 3 times already
-                logger << getName() << " finish use hide, keep moving." << endl;
+                logger <<">> " << getName() << " finish use hide, keep moving." << endl;
             else   //robot choose not to hide 
-                logger << getName() << " did not hide this turn, keep moving." << endl;
+                logger <<">> " << getName() << " did not hide this turn, keep moving." << endl;
         }
     }
 
@@ -818,22 +819,22 @@ public:
                 battlefield->removeRobotFromGrid(this); // remove robot from current position
                 battlefield->placeRobot(this, jumpx, jumpy); // place robot to new position
                 setPosition(jumpx, jumpy);     // update robot position
-                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jumpCount << "/3)\n";
+                logger <<">> " << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jumpCount << "/3)\n";
             }
             else
             {
-                logger << getName() << " could not find empty position to jump\n";
+                logger <<">> " << getName() << " could not find empty position to jump\n";
             }
         }
         else
         {
             if (jumpCount >= 3) //if robot jump 3 times already
             {
-                logger << getName() << " cannot jump already. \n";
+                logger  <<">> " << getName() << " cannot jump already. \n";
             }
             else  //robot choose not to jump
             {
-                logger << getName() << " did not jump this turn, keep moving\n";
+                logger <<">> " << getName() << " did not jump this turn, keep moving\n";
             }
         }
     }
@@ -902,7 +903,7 @@ public:
                 if (target && target != this&& !target->getIsHurt())      // if target is not null, not itself, and not hurt,can be hit
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << ">> " << getName() << "LongShotBot fire at (" << targetX << "," << targetY << ")" << endl;
+                    logger << ">> " << getName() << " fire at (" << targetX << "," << targetY << ")" << endl;
                     useAmmo();
 
                     if (gtarget->isHidden()) //if robot hide, attack miss
@@ -929,7 +930,7 @@ public:
                     }
                     else //if hit miss
                     {
-                        logger << "LongShotBot Missed!" << endl; 
+                        logger << "Missed!" << endl; 
                         fired = true;
                     }
 
@@ -949,7 +950,7 @@ public:
 
         if (!fired) //if no fire as no robot in the 7x7 range
         {
-            logger << "LongShotBot No shooting as no robots within shooting range. " << endl;
+            logger <<">> " << "No shooting as no robots within shooting range. " << endl;
         }
     }
 };
@@ -1006,7 +1007,7 @@ public:
 
         if (!target) //no target can shoot, thus no shooting
         {
-            logger << "No shooting as no robots within shooting range." << endl;
+            logger <<">> " << "No shooting as no robots within shooting range." << endl;
             return;
         }
 
@@ -1182,7 +1183,7 @@ public:
 
         if (!fired) //if no fire as no robot in the 3x3 range
         {
-            logger << " No shooting as no robots within shooting range.";
+            logger <<">> " << " No shooting as no robots within shooting range.";
         }
     }
 };
@@ -1262,7 +1263,7 @@ public:
         }
         if (!fired) //if no fire as no robot in the diagonal range
         {
-            logger << " No shooting as no robots in diagonal to fire at\n";
+            logger <<">> " << " No shooting as no robots in diagonal to fire at\n";
         }
         else if (hitSuccessful)  //print the successful hit robot
         {
@@ -1475,7 +1476,7 @@ public:
         }
         else //no shooting as no target robot
         {
-            logger << "No shooting as no robots within shooting range." << endl;
+            logger <<">> " << "No shooting as no robots within shooting range." << endl;
         }
     }
 };
@@ -1512,7 +1513,7 @@ public:
         }
         else if (rand() % 2 == 0) //50 percent to use scan function 
         {
-            logger << getName() << " scan the battlefield\n";
+            logger << ">> "<< getName() << " scan the battlefield\n";
             for (int y = 0; y < battlefield->getHeight(); ++y) //scan the entire battlefield
             {
                 for (int x = 0; x < battlefield->getWidth(); ++x) 
@@ -1529,7 +1530,7 @@ public:
         }
         else //if not use scan function
         {
-            logger << getName() << " try scan it next round \n";
+            logger << ">> " << getName() << " try scan it next round \n";
         }
 
         int x = getX(); //get robot x location
@@ -1589,7 +1590,7 @@ public:
 
         if (tracker == 0) //if finish use tracking
         {
-            logger << getName() << " cannot track robot already\n";
+            logger << ">> "<< getName() << " cannot track robot already\n";
         }
         else
         {
@@ -1609,7 +1610,7 @@ public:
                     {
                         track_target.push_back(target); //add to track list
                         tracker--; //-1 tracker
-                        logger << getName() << " track " << target->getName()
+                        logger << ">> "<< getName() << " track " << target->getName()
                                << " at (" << targetX << "," << targetY << ")\n";
                         plant = true; //target found
                     }
@@ -1617,7 +1618,7 @@ public:
             }
             if (!plant) //no target found
             {
-                logger << getName() << " no target can track\n";
+                logger << ">> "<< getName() << " no target can track\n";
             }
         }
 
