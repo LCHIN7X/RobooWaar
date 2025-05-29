@@ -605,7 +605,7 @@ void GenericRobot::fire(int X, int Y) // override fire() method
         }
         else //if target is not valid
         {
-            logger << "No valid target at (" << targetX << ", " << targetY << ")." << endl;
+            logger<< ">> " << "No valid target at (" << targetX << ", " << targetY << ")." << endl;
         }
     }
     else //if no ammo left
@@ -859,6 +859,30 @@ public:
             else  //robot choose not to jump
             {
                 logger <<">> " << getName() << " did not jump this turn, keep moving\n";
+                if (hasMoved)  //prevent multiple move in one round
+                    return;
+                hasMoved = true;
+                logger << ">> " << name << " is moving...\n";
+                if (!battlefield)
+                {
+                    logger << name << " has no battlefield context!" << endl;
+                    return;
+                }
+                // If availableSpaces (from look) is not empty, pick a random one
+                if (!availableSpaces.empty())
+                {
+                    static random_device rd;  //choose random number
+                    static mt19937 g(rd());
+                    uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+                    auto [newX, newY] = availableSpaces[dist(g)];  //get random location for move
+                    battlefield->removeRobotFromGrid(this);     //remove robot from current position
+                    battlefield->placeRobot(this, newX, newY);  //place robot to new position
+                    incrementMoveCount();
+                    logger << name << " moved to (" << newX << ", " << newY << ")\n";
+                    return;
+                }
+                logger << name << " could not move (no available adjacent cell).\n";
+                
             }
         }
     }
