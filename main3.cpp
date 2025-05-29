@@ -262,9 +262,8 @@ public:
                 isDie = true; // Mark as dead, permanently destroyed
             }
             else{
-                logger << name << " has been hit! Lives left: " << lives << endl;
-                isHurt = true; // Mark as hurt for requeue
-                if (battlefield) battlefield->queueForReentry(this); }// Immediately queue for reentry
+            isHurt = true; // Mark as hurt for requeue
+            if (battlefield) battlefield->queueForReentry(this); }// Immediately queue for reentry
         }
     }
 
@@ -472,43 +471,21 @@ GenericRobot::~GenericRobot() = default; // virtual GenericRobot destructor
 
 void GenericRobot::setBattlefield(Battlefield *bf) { battlefield = bf; } //set battlefield 
 
-
-//$$ 
 void GenericRobot::think() // override think()
 {
-    if (getEnemyDetectedNearby())  //if detect other robot nearby,attack then move
+    if (hasThought)
+        return;
+    hasThought = true;    //prevent multiple thinking in one round
+    logger << ">> " << name << " is thinking...\n";
+    if (getEnemyDetectedNearby())  //if detact other robot nearby,attack then move
     {
-        // Filter valid targets and pick one
-        vector<Robot *> validTargets;
-        for (Robot *r : detectedTargets)
-        {
-            if ((r && r != this) && !r->getIsHurt())  //ensure target is not iitself and not hurt
-            {
-                GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
-                if (gtarget && gtarget->canBeHit())
-                {
-                    validTargets.push_back(r);
-                }
-            }
-        }
-        if (!validTargets.empty())
-        {
-            int idx = rand() % validTargets.size(); //random choose valid target
-            Robot *target = validTargets[idx];
-            int X = target->getX() - getX(); // relative X
-            int Y = target->getY() - getY(); // relative Y
-            fire(X, Y);
-        }
-        else
-        {
-            fire(0, 0); // Fallback if no valid targets (though unlikely)
-        }
+        fire(0, 0);
         move();
     }
     else //else move then attack
     {
         move();
-        fire(0, 0); // No target detected, pass (0,0)
+        fire(0, 0);
     }
 }
 void GenericRobot::act() // when it's a robot's turn, this function is called
@@ -559,60 +536,62 @@ void GenericRobot::fire(int X, int Y) // override fire() method
     if (hasFired) //prevent multiple fire in one round
         return;
     hasFired = true;
-     if (hasAmmo())
+    if (hasAmmo())
     {
-        // Calculate absolute target position
-        int targetX = getX() + X;
-        int targetY = getY() + Y;
-        
-        // Find robot at target position
-        Robot *target = battlefield->getRobotAt(targetX, targetY);
-        
-        // Validate target
-        if (target && target != this && !target->getIsDie() && !target->getIsHurt()) //ensure target is not itself, not die, not hurt
+        // Filter detectedTargets to only include robots that are hittable (canBeHit() == true)
+        vector<Robot *> validTargets;
+        for (Robot *r : detectedTargets)
         {
-            GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-            if (gtarget && gtarget->canBeHit())
+            if ((r && r != this) && !r->getIsHurt())
             {
-                logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
-                useAmmo(); //use one ammo
-                if (target->isHidden()) 
+                GenericRobot *gtarget = dynamic_cast<GenericRobot *>(r);
+                if (gtarget && gtarget->canBeHit())
                 {
-                    logger << target->getName() << " is hidden, attack miss." << endl;
+                    validTargets.push_back(r);
                 }
-                else if (hitProbability())  //if hit successful
-                {
-                    //logger << "Hit! (" << target->getName() << ") is killed!" << endl; //TBC
-                    target->takeDamage();
-                    vector<string> upgradeTypes = getUpgradeTypes();  
-                    if (!upgradeTypes.empty())
-                    {
-                        int t = rand() % upgradeTypes.size();
-                        setPendingUpgrade(upgradeTypes[t]);
-                        logger << name << " will upgrade into " << upgradeTypes[t] << " next turn!" << endl;
-                    }
-                }
-                else  // if hit miss
-                {
-                    logger << getName() << " missed!" << endl;
-                }
-            }
-            else //if target cannot be hit
-            {
-                logger << "Target cannot be hit." << endl;
             }
         }
-        else //if target is not valid
+        if (!validTargets.empty())
         {
-            logger << "No valid target at (" << targetX << ", " << targetY << ")." << endl;
+            int idx = rand() % validTargets.size(); //rondom choose robot as target
+            Robot *target = validTargets[idx];
+            int targetX = target->getX() + X;
+            int targetY = target->getY() + Y;
+            logger << ">> " << name << " fires at (" << targetX << ", " << targetY << ")" << endl;
+            useAmmo(); //use one ammo
+            if (target->isHidden()) //after hit result
+            {
+                logger << target->getName() << " is hidden, attack miss." << endl;
+            }
+            else if (hitProbability())  //0.7 chance hit
+            {
+                logger << "Hit! (" << target->getName() << ") is killed!" << endl;
+                target->takeDamage();
+                vector<string> upgradeTypes = getUpgradeTypes();  //random choose upgrade type
+                if (!upgradeTypes.empty())
+                {
+                    int t = rand() % upgradeTypes.size();
+                    setPendingUpgrade(upgradeTypes[t]);
+                    logger << name << " will upgrade into " << upgradeTypes[t] << " next turn!" << endl;
+                }
+            }
+            else
+            {
+                logger << getName() << " missed!" << endl;
+            }
+        }
+        else
+        {
+            logger << "No shooting as no robots within shooting range." << endl;
         }
     }
-    else //if no ammo left
+    else
     {
         logger << name << " has no ammo left. It will self destruct!" << endl;
         lives = 0;
         isDie = true;
     }
+    detectedTargets.clear();
 }
 
 void GenericRobot::look(int X, int Y) // override look() method
@@ -902,7 +881,7 @@ public:
                 if (target && target != this&& !target->getIsHurt())      // if target is not null, not itself, and not hurt,can be hit
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << ">> " << getName() << "LongShotBot fire at (" << targetX << "," << targetY << ")" << endl;
+                    logger << ">> " << getName() << " fire at (" << targetX << "," << targetY << ")" << endl;
                     useAmmo();
 
                     if (gtarget->isHidden()) //if robot hide, attack miss
@@ -929,7 +908,7 @@ public:
                     }
                     else //if hit miss
                     {
-                        logger << "LongShotBot Missed!" << endl; 
+                        logger << "Missed!" << endl; 
                         fired = true;
                     }
 
@@ -949,7 +928,7 @@ public:
 
         if (!fired) //if no fire as no robot in the 7x7 range
         {
-            logger << "LongShotBot No shooting as no robots within shooting range. " << endl;
+            logger << "No shooting as no robots within shooting range. " << endl;
         }
     }
 };
@@ -1702,7 +1681,7 @@ public:
     {
         look(0, 0);  // GenericRobot's look
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -1755,7 +1734,7 @@ public:
     {
         look(0, 0);  // GenericRobot's look
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -1807,7 +1786,7 @@ public:
     {
         look(0, 0);  // GenericRobot's look
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -1860,7 +1839,7 @@ public:
     {
         look(0, 0); //generic robot look 
         think();
-        //fire(0, 0);//TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -1913,7 +1892,7 @@ public:
     {
         look(0, 0);   // GenericRobot's look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -1966,7 +1945,7 @@ public:
     {
         look(0, 0);  // GenericRobot's look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2020,7 +1999,7 @@ public:
     {
         look(0, 0); 
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);  // GenericRobot's fire
     }
 
     void look(int X, int Y) override
@@ -2079,7 +2058,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
+        fire(0, 0); // GenericRobot's fire
     }
 
     void look(int X, int Y) override
@@ -2137,7 +2116,7 @@ public:
     {
         look(0, 0);  // GenericRobot's look
         think();
-       //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2190,7 +2169,7 @@ public:
     {
         look(0, 0); //genericrobot look 
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2242,7 +2221,7 @@ public:
     {
         look(0, 0); //genericrobot look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2295,7 +2274,7 @@ public:
     {
         look(0, 0); //genericrobot look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2348,7 +2327,7 @@ public:
     {
         look(0, 0); //genericrobot look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2401,7 +2380,7 @@ public:
     {
         look(0, 0); //genericrobot look
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     bool canBeHit() override
@@ -2455,7 +2434,7 @@ public:
     {
         ScoutBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override
@@ -2514,7 +2493,7 @@ public:
     {
         TrackBot::look(0, 0); // Use ScoutBot's look for targeting
         think();
-        //fire(0, 0); TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override
@@ -2569,8 +2548,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();     TBC
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2622,8 +2601,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2675,8 +2654,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2725,8 +2704,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2775,8 +2754,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2825,8 +2804,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2875,8 +2854,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2925,8 +2904,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -2975,8 +2954,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -3025,8 +3004,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -3075,8 +3054,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -3125,8 +3104,8 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); TBC
-        //move();
+        fire(0, 0);
+        move();
     }
 
     void look(int X, int Y) override
@@ -3173,7 +3152,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideLongShotBot::fire(X, Y);   //TBC
+        HideLongShotBot::fire(0, 0);
     }
 
     void think() override
@@ -3185,7 +3164,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3232,7 +3211,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideSemiAutoBot::fire(X, Y);  //TBC
+        HideSemiAutoBot::fire(0, 0);
     }
 
     void think() override
@@ -3244,7 +3223,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3291,7 +3270,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideThirtyShotBot::fire(X, Y); //TBC
+        HideThirtyShotBot::fire(0, 0);
     }
 
     void think() override   
@@ -3303,7 +3282,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3350,7 +3329,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideKnightBot::fire(X, Y); //TBC
+        HideKnightBot::fire(0, 0);
     }
 
     void think() override
@@ -3362,7 +3341,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3410,7 +3389,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideQueenBot::fire(X, Y); //TBC
+        HideQueenBot::fire(0, 0);
     }
 
     void think() override
@@ -3422,7 +3401,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3468,7 +3447,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideVampireBot::fire(X, Y); //TBC
+        HideVampireBot::fire(0, 0);
     }
 
     void think() override
@@ -3480,7 +3459,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3527,7 +3506,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideLongShotBot::fire(X, Y); //TBC
+        HideLongShotBot::fire(0, 0);
     }
 
     void think() override
@@ -3539,7 +3518,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override  // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3586,7 +3565,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideSemiAutoBot::fire(X, Y); //TBC
+        HideSemiAutoBot::fire(0, 0);
     }
 
     void think() override
@@ -3598,7 +3577,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3645,7 +3624,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideThirtyShotBot::fire(X, Y); //TBC
+        HideThirtyShotBot::fire(0, 0);
     }
 
     void think() override
@@ -3657,7 +3636,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override   // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3704,7 +3683,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideKnightBot::fire(X, Y); //TBC
+        HideKnightBot::fire(0, 0);
     }
 
     void think() override
@@ -3716,7 +3695,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override   // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3762,7 +3741,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideQueenBot::fire(X, Y); //TBC
+        HideQueenBot::fire(0, 0);
     }
 
     void think() override
@@ -3774,7 +3753,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3821,7 +3800,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        HideVampireBot::fire(X, Y); //TBC
+        HideVampireBot::fire(0, 0);
     }
 
     void think() override
@@ -3833,7 +3812,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
@@ -3880,7 +3859,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpLongShotBot::fire(X, Y); //TBC
+        JumpLongShotBot::fire(0, 0);
     }
 
     void think() override
@@ -3892,7 +3871,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override         // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3939,7 +3918,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpSemiAutoBot::fire(X, Y); //TBC
+        JumpSemiAutoBot::fire(0, 0);
     }
 
     void think() override
@@ -3951,7 +3930,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override  // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -3998,7 +3977,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpThirtyShotBot::fire(X, Y); //TBC
+        JumpThirtyShotBot::fire(0, 0);
     }
 
     void think() override
@@ -4010,7 +3989,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -4057,7 +4036,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpKnightBot::fire(X, Y); //TBC
+        JumpKnightBot::fire(0, 0);
     }
 
     void think() override
@@ -4069,7 +4048,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -4117,7 +4096,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpQueenBot::fire(X, Y); //TBC
+        JumpQueenBot::fire(0, 0);
     }
 
     void think() override
@@ -4129,7 +4108,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override     // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -4176,7 +4155,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpVampireBot::fire(X, Y); //TBC
+        JumpVampireBot::fire(0, 0);
     }
 
     void think() override
@@ -4188,7 +4167,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use ScoutBot's look as Scoutbot is look class
@@ -4236,7 +4215,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpLongShotBot::fire(X, Y); //TBC
+        JumpLongShotBot::fire(0, 0);
     }
 
     void think() override
@@ -4248,7 +4227,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0);   //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
@@ -4296,7 +4275,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpSemiAutoBot::fire(X, Y); //TBC
+        JumpSemiAutoBot::fire(0, 0);
     }
 
     void think() override
@@ -4308,7 +4287,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override  // Override the look method to use TrackBot's look as Trackbot is look class
@@ -4354,8 +4333,8 @@ public:
     }
 
     void fire(int X, int Y) override
-    { 
-        JumpThirtyShotBot::fire(X, Y); //TBC
+    {
+        JumpThirtyShotBot::fire(0, 0);
     }
 
     void think() override
@@ -4367,7 +4346,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
@@ -4414,7 +4393,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpKnightBot::fire(X, Y); //TBC
+        JumpKnightBot::fire(0, 0);
     }
 
     void think() override
@@ -4426,7 +4405,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
@@ -4472,7 +4451,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpQueenBot::fire(X, Y); //TBC
+        JumpQueenBot::fire(0, 0);
     }
 
     void think() override
@@ -4484,7 +4463,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
 
     void look(int X, int Y) override    // Override the look method to use TrackBot's look as Trackbot is look class
@@ -4531,7 +4510,7 @@ public:
 
     void fire(int X, int Y) override
     {
-        JumpVampireBot::fire(X, Y); //TBC
+        JumpVampireBot::fire(0, 0);
     }
 
     void think() override    //
@@ -4543,7 +4522,7 @@ public:
     {
         look(0, 0);
         think();
-        //fire(0, 0); //TBC
+        fire(0, 0);
     }
  
     void look(int X, int Y) override      // Override the look method to use TrackBot's look as Trackbot is look class
