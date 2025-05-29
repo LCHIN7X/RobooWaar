@@ -475,7 +475,8 @@ void GenericRobot::setBattlefield(Battlefield *bf) { battlefield = bf; } //set b
 
 //$$ 
 void GenericRobot::think() // override think()
-{
+{   
+    logger << ">> " << name << " is thinking..." << endl;
     if (getEnemyDetectedNearby())  //if detect other robot nearby,attack then move
     {
         // Filter valid targets and pick one
@@ -604,7 +605,7 @@ void GenericRobot::fire(int X, int Y) // override fire() method
         }
         else //if target is not valid
         {
-            logger << "No valid target at (" << targetX << ", " << targetY << ")." << endl;
+            logger<< ">> " << "No valid target at (" << targetX << ", " << targetY << ")." << endl;
         }
     }
     else //if no ammo left
@@ -625,7 +626,7 @@ void GenericRobot::look(int X, int Y) // override look() method
     enemyDetectedNearby = false;
     availableSpaces.clear(); //ensure availableapces is empty before looking
     detectedTargets.clear(); //clear detected targets before looking
-
+    logger << ">> " << name << " is looking around...\n";
     int centerX = getX() + X;
     int centerY = getY() + Y;
 
@@ -738,7 +739,7 @@ public:
             isHidden = true;
             hideCount++;
             setHidden(true);   //set robot hidden status to true
-            logger << getName() << " hide, (" << hideCount << "/3)" << endl;
+            logger <<">> " << getName() << " hide, (" << hideCount << "/3)" << endl;
         }
         else
         {
@@ -746,26 +747,50 @@ public:
             setHidden(false);
 
             if (hideCount >= 3)  //if robot hide 3 times already
-                logger << getName() << " finish use hide, keep moving." << endl;
-            else   //robot choose not to hide 
-                logger << getName() << " did not hide this turn, keep moving." << endl;
-        }
-    }
+                logger <<">> " << getName() << " finish use hide, keep moving." << endl;
+            else   //robot choose not to hide, keep moving
+                logger <<">> " << getName() << " did not hide this turn, keep moving." << endl;
+                 if (hasMoved)  //prevent multiple move in one round
+                    return;
+                hasMoved = true;
+                logger << ">> " << name << " is moving...\n";
+                if (!battlefield)
+                {
+                    logger << name << " has no battlefield context!" << endl;
+                    return;
+                }
+                // If availableSpaces (from look) is not empty, pick a random one
+                if (!availableSpaces.empty())
+                {
+                    static random_device rd;  //choose random number
+                    static mt19937 g(rd());
+                    uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+                    auto [newX, newY] = availableSpaces[dist(g)];  //get random location for move
+                    battlefield->removeRobotFromGrid(this);     //remove robot from current position
+                    battlefield->placeRobot(this, newX, newY);  //place robot to new position
+                    incrementMoveCount();
+                    logger << name << " moved to (" << newX << ", " << newY << ")\n";
+                    return;
+                }
 
-    bool getHiddenStatus() const   //get robot hide status
-    {
-        return isHidden;
-    }
+                logger << name << " could not move (no available adjacent cell).\n";
+                    }
+                }
 
-    void appear() //robot appear if didnt hide
-    {
-        isHidden = false;
-    }
+                bool getHiddenStatus() const   //get robot hide status
+                {
+                    return isHidden;
+                }
 
-    bool canBeHit() override //override can be hit when robot not hide
-    {
-        return !isHidden;
-    }
+                void appear() //robot appear if didnt hide
+                {
+                    isHidden = false;
+                }
+
+                bool canBeHit() override //override can be hit when robot not hide
+                {
+                    return !isHidden;
+                }
 };
 
 //******************************************
@@ -818,22 +843,46 @@ public:
                 battlefield->removeRobotFromGrid(this); // remove robot from current position
                 battlefield->placeRobot(this, jumpx, jumpy); // place robot to new position
                 setPosition(jumpx, jumpy);     // update robot position
-                logger << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jumpCount << "/3)\n";
+                logger <<">> " << getName() << " jump to (" << jumpx << "," << jumpy << "), (" << jumpCount << "/3)\n";
             }
             else
             {
-                logger << getName() << " could not find empty position to jump\n";
+                logger <<">> " << getName() << " could not find empty position to jump\n";
             }
         }
         else
         {
             if (jumpCount >= 3) //if robot jump 3 times already
             {
-                logger << getName() << " cannot jump already. \n";
+                logger  <<">> " << getName() << " cannot jump already. \n";
             }
             else  //robot choose not to jump
             {
-                logger << getName() << " did not jump this turn, keep moving\n";
+                logger <<">> " << getName() << " did not jump this turn, keep moving\n";
+                if (hasMoved)  //prevent multiple move in one round
+                    return;
+                hasMoved = true;
+                logger << ">> " << name << " is moving...\n";
+                if (!battlefield)
+                {
+                    logger << name << " has no battlefield context!" << endl;
+                    return;
+                }
+                // If availableSpaces (from look) is not empty, pick a random one
+                if (!availableSpaces.empty())
+                {
+                    static random_device rd;  //choose random number
+                    static mt19937 g(rd());
+                    uniform_int_distribution<> dist(0, availableSpaces.size() - 1);
+                    auto [newX, newY] = availableSpaces[dist(g)];  //get random location for move
+                    battlefield->removeRobotFromGrid(this);     //remove robot from current position
+                    battlefield->placeRobot(this, newX, newY);  //place robot to new position
+                    incrementMoveCount();
+                    logger << name << " moved to (" << newX << ", " << newY << ")\n";
+                    return;
+                }
+                logger << name << " could not move (no available adjacent cell).\n";
+                
             }
         }
     }
@@ -902,7 +951,7 @@ public:
                 if (target && target != this&& !target->getIsHurt())      // if target is not null, not itself, and not hurt,can be hit
                 {
                     GenericRobot *gtarget = dynamic_cast<GenericRobot *>(target);
-                    logger << ">> " << getName() << "LongShotBot fire at (" << targetX << "," << targetY << ")" << endl;
+                    logger << ">> " << getName() << " fire at (" << targetX << "," << targetY << ")" << endl;
                     useAmmo();
 
                     if (gtarget->isHidden()) //if robot hide, attack miss
@@ -929,7 +978,7 @@ public:
                     }
                     else //if hit miss
                     {
-                        logger << "LongShotBot Missed!" << endl; 
+                        logger << "Missed!" << endl; 
                         fired = true;
                     }
 
@@ -949,7 +998,7 @@ public:
 
         if (!fired) //if no fire as no robot in the 7x7 range
         {
-            logger << "LongShotBot No shooting as no robots within shooting range. " << endl;
+            logger <<">> " << "No shooting as no robots within shooting range. " << endl;
         }
     }
 };
@@ -1006,7 +1055,7 @@ public:
 
         if (!target) //no target can shoot, thus no shooting
         {
-            logger << "No shooting as no robots within shooting range." << endl;
+            logger <<">> " << "No shooting as no robots within shooting range." << endl;
             return;
         }
 
@@ -1182,7 +1231,7 @@ public:
 
         if (!fired) //if no fire as no robot in the 3x3 range
         {
-            logger << " No shooting as no robots within shooting range.";
+            logger <<">> " << " No shooting as no robots within shooting range.";
         }
     }
 };
@@ -1262,7 +1311,7 @@ public:
         }
         if (!fired) //if no fire as no robot in the diagonal range
         {
-            logger << " No shooting as no robots in diagonal to fire at\n";
+            logger <<">> " << " No shooting as no robots in diagonal to fire at\n";
         }
         else if (hitSuccessful)  //print the successful hit robot
         {
@@ -1475,7 +1524,7 @@ public:
         }
         else //no shooting as no target robot
         {
-            logger << "No shooting as no robots within shooting range." << endl;
+            logger <<">> " << "No shooting as no robots within shooting range." << endl;
         }
     }
 };

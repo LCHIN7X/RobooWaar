@@ -8,7 +8,7 @@ Robot Name: Kidd, Coords: (3,6), Lives: 3
 Robot Name: Jet, Coords: (4,2), Lives: 3
 Robot Name: Alpha, Coords: (1,1), Lives: 3
 Robot Name: Beta, Coords: (0,0), Lives: 3
-Robot Name: Star, Coords: (1,4), Lives: 3
+Robot Name: Star, Coords: (4,4), Lives: 3
 
 Initial Battlefield State:
    0 1 2 3 4 
@@ -17,7 +17,7 @@ Initial Battlefield State:
 1 |. A . . . | 1
 2 |. . . . J | 2
 3 |. . . . . | 3
-4 |. S . . . | 4
+4 |. . . . S | 4
   +----------+
    0 1 2 3 4 
 
@@ -31,34 +31,48 @@ LEGEND:
 
 --- Simulation Step 1 ---
 Robot Status before Step 1:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
-  Type: LongShotScoutBot, Name: Jet, Coords: (4,2), Life: 3, Ammo: 10
+  Type: JumpBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
+  Type: HideBot, Name: Jet, Coords: (4,2), Life: 3, Ammo: 10
   Type: LongShotBot, Name: Alpha, Coords: (1,1), Life: 3, Ammo: 10
   Type: HideVampireBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Star, Coords: (1,4), Life: 3, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (4,4), Life: 3, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Kidd scan the battlefield
-got robot: Beta at (0,0)
-got robot: Alpha at (1,1)
-got robot: Jet at (4,2)
-got robot: Star at (1,4)
-Kidd did not hide this turn, keep moving.
-LongShotBot No shooting as no robots within shooting range. 
+>> Kidd is looking around...
+Revealing (2, 5): Out of bounds
+Revealing (2, 6): Out of bounds
+Revealing (2, 7): Out of bounds
+Revealing (3, 5): Out of bounds
+Revealing (3, 6): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (4, 5): Out of bounds
+Revealing (4, 6): Out of bounds
+Revealing (4, 7): Out of bounds
+>> Kidd is thinking...
+>> Kidd did not jump this turn, keep moving
+>> Kidd is moving...
+Kidd could not move (no available adjacent cell).
+No valid target at (3, 6).
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Jet scan the battlefield
-got robot: Beta at (0,0)
-got robot: Alpha at (1,1)
-got robot: Jet at (4,2)
-got robot: Star at (1,4)
->> Jet is moving...
-Jet moved to (5, 1)
-LongShotBot No shooting as no robots within shooting range. 
+>> Jet is looking around...
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Current position
+Revealing (4, 3): Empty space
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+>> Jet is thinking...
+>> Jet hide, (1/3)
+No valid target at (4, 2).
 Jet is done.
 ----------------------------------------
 Alpha's turn: 
+>> Alpha is looking around...
 Revealing (0, 0): Enemy Beta
 Revealing (0, 1): Empty space
 Revealing (0, 2): Empty space
@@ -68,59 +82,48 @@ Revealing (1, 2): Empty space
 Revealing (2, 0): Empty space
 Revealing (2, 1): Empty space
 Revealing (2, 2): Empty space
->> AlphaLongShotBot fire at (0,0)
-LongShotBot Missed!
+>> Alpha is thinking...
+>> Alpha fire at (0,0)
+Beta has been hit! Lives left: 2
+Beta queued for reentry with 2 lives and 10 ammo.
+Hit! (Beta) be killed
+Alpha will upgrade into HideLongShotBot next turn
 >> Alpha is moving...
-Alpha moved to (0, 1)
+Alpha moved to (0, 2)
 Alpha is done.
-----------------------------------------
-Beta's turn: 
-Revealing (-1, -1): Out of bounds
-Revealing (-1, 0): Out of bounds
-Revealing (-1, 1): Out of bounds
-Revealing (0, -1): Out of bounds
-Revealing (0, 0): Current position
-Revealing (0, 1): Enemy Alpha
-Revealing (1, -1): Out of bounds
-Revealing (1, 0): Empty space
-Revealing (1, 1): Empty space
->> Beta fires at (0, 1)
-Hit! (Alpha) is killed!
-Alpha has been hit! Lives left: 2
-Alpha queued for reentry with 2 lives and 9 ammo.
-Beta is already at max lives (3), cannot gain extra life from this kill.
-Beta will upgrade into HideVampireTrackBot next turn!
-Beta did not hide this turn, keep moving.
-Beta is done.
+-----------------------------------
+Beta was hit and skips this turn.
 ----------------------------------------
 Star's turn: 
-Revealing (0, 3): Empty space
-Revealing (0, 4): Empty space
-Revealing (0, 5): Out of bounds
-Revealing (1, 3): Empty space
-Revealing (1, 4): Current position
-Revealing (1, 5): Out of bounds
-Revealing (2, 3): Empty space
-Revealing (2, 4): Empty space
-Revealing (2, 5): Out of bounds
+>> Star is looking around...
+Revealing (3, 3): Empty space
+Revealing (3, 4): Empty space
+Revealing (3, 5): Out of bounds
+Revealing (4, 3): Empty space
+Revealing (4, 4): Current position
+Revealing (4, 5): Out of bounds
+Revealing (5, 3): Out of bounds
+Revealing (5, 4): Out of bounds
+Revealing (5, 5): Out of bounds
+>> Star is thinking...
 >> Star is moving...
-Star moved to (1, 3)
-No valid target at (1, 3).
+Star moved to (4, 3)
+No valid target at (4, 3).
 Star is done.
 ----------------------------------------
-Alpha has been removed from the battlefield.
+Beta has been removed from the battlefield.
 ----------------------------------------
-Reentering Alpha
-Alpha reentered as GenericRobot at (3, 4) with 2 lives and 9 ammo next turn.
+Reentering Beta
+Beta reentered as GenericRobot at (1, 3) with 2 lives and 10 ammo next turn.
 
 Battlefield State after Step 1:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
+0 |. . . . . | 0
 1 |. . . . . | 1
-2 |. . . . . | 2
-3 |. S . . . | 3
-4 |. . . A . | 4
+2 |A . . . H | 2
+3 |. B . . S | 3
+4 |. . . . . | 4
   +----------+
    0 1 2 3 4 
 
@@ -131,67 +134,89 @@ LEGEND:
 
 
 --- Simulation Step 2 ---
-Beta has upgraded to HideVampireTrackBot!
+Alpha has upgraded to HideLongShotBot!
 Robot Status before Step 2:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
-  Type: LongShotScoutBot, Name: Jet, Coords: (4,2), Life: 3, Ammo: 10
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (1,3), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Alpha, Coords: (3,4), Life: 2, Ammo: 9
+  Type: JumpBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 10
+  Type: HideBot, Name: Jet, Coords: (4,2), Life: 3, Ammo: 10
+  Type: HideLongShotBot, Name: Alpha, Coords: (0,2), Life: 3, Ammo: 9
+  Type: GenericRobot, Name: Star, Coords: (4,3), Life: 3, Ammo: 10
+  Type: GenericRobot, Name: Beta, Coords: (1,3), Life: 2, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Kidd try scan it next round 
-Kidd did not hide this turn, keep moving.
->> KiddLongShotBot fire at (3,4)
-Alpha has been hit! Lives left: 1
-Alpha queued for reentry with 1 lives and 9 ammo.
-Hit! (Alpha) be killed
+>> Kidd is looking around...
+Revealing (2, 5): Out of bounds
+Revealing (2, 6): Out of bounds
+Revealing (2, 7): Out of bounds
+Revealing (3, 5): Out of bounds
+Revealing (3, 6): Out of bounds
+Revealing (3, 7): Out of bounds
+Revealing (4, 5): Out of bounds
+Revealing (4, 6): Out of bounds
+Revealing (4, 7): Out of bounds
+>> Kidd is thinking...
+>> Kidd jump to (2,1), (1/3)
+No valid target at (2, 1).
 Kidd is done.
 ----------------------------------------
 Jet's turn: 
-Jet try scan it next round 
->> Jet is moving...
-Jet moved to (3, 3)
->> JetLongShotBot fire at (1,3)
-LongShotBot Missed!
+>> Jet is looking around...
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Current position
+Revealing (4, 3): Enemy Star
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+>> Jet is thinking...
+>> Jet fires at (4, 3)
+Star has been hit! Lives left: 2
+Star queued for reentry with 2 lives and 10 ammo.
+Jet will upgrade into HideKnightBot next turn!
+>> Jet hide, (2/3)
 Jet is done.
 ----------------------------------------
-Beta's turn: 
-Beta no target can track
-Beta hide, (1/3)
-No shooting as no robots within shooting range.
-Beta is done.
-----------------------------------------
-Star's turn: 
-Revealing (0, 2): Empty space
+Alpha's turn: 
+>> Alpha is looking around...
+Revealing (-1, 1): Out of bounds
+Revealing (-1, 2): Out of bounds
+Revealing (-1, 3): Out of bounds
+Revealing (0, 1): Empty space
+Revealing (0, 2): Current position
 Revealing (0, 3): Empty space
-Revealing (0, 4): Empty space
+Revealing (1, 1): Empty space
 Revealing (1, 2): Empty space
-Revealing (1, 3): Current position
-Revealing (1, 4): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Empty space
-Revealing (2, 4): Empty space
->> Star is moving...
-Star moved to (1, 2)
-No valid target at (1, 2).
-Star is done.
+Revealing (1, 3): Enemy Beta
+>> Alpha is thinking...
+>> Alpha fire at (1,3)
+Beta has been hit! Lives left: 1
+Beta queued for reentry with 1 lives and 10 ammo.
+Hit! (Beta) be killed
+Alpha will upgrade into HideLongShotTrackBot next turn
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (0, 3)
+Alpha is done.
 -----------------------------------
-Alpha was hit and skips this turn.
+Star was hit and skips this turn.
+-----------------------------------
+Beta was hit and skips this turn.
 ----------------------------------------
-Alpha has been removed from the battlefield.
+Star has been removed from the battlefield.
+Beta has been removed from the battlefield.
 ----------------------------------------
-Reentering Alpha
-Alpha reentered as GenericRobot at (4, 4) with 1 lives and 9 ammo next turn.
+Reentering Star
+Star reentered as GenericRobot at (2, 3) with 2 lives and 10 ammo next turn.
 
 Battlefield State after Step 2:
    0 1 2 3 4 
   +----------+
-0 |H . . . . | 0
-1 |. . . . . | 1
-2 |. S . . . | 2
-3 |. . . J . | 3
-4 |. . . . A | 4
+0 |. . . . . | 0
+1 |. . K . . | 1
+2 |. . . . H | 2
+3 |A . S . . | 3
+4 |. . . . . | 4
   +----------+
    0 1 2 3 4 
 
@@ -202,76 +227,73 @@ LEGEND:
 
 
 --- Simulation Step 3 ---
+Jet has upgraded to HideKnightBot!
+Alpha has upgraded to HideLongShotTrackBot!
 Robot Status before Step 3:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 9
-  Type: LongShotScoutBot, Name: Jet, Coords: (3,3), Life: 3, Ammo: 9
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (1,2), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Alpha, Coords: (4,4), Life: 1, Ammo: 9
+  Type: JumpBot, Name: Kidd, Coords: (2,1), Life: 3, Ammo: 10
+  Type: HideKnightBot, Name: Jet, Coords: (4,2), Life: 3, Ammo: 9
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,3), Life: 3, Ammo: 8
+  Type: GenericRobot, Name: Star, Coords: (2,3), Life: 2, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Kidd scan the battlefield
-got robot: Beta at (0,0)
-got robot: Star at (1,2)
-got robot: Jet at (3,3)
-got robot: Alpha at (4,4)
-Kidd hide, (1/3)
->> KiddLongShotBot fire at (3,3)
-Jet has been hit! Lives left: 2
-Jet queued for reentry with 2 lives and 9 ammo.
-Hit! (Jet) be killed
-Kidd is done.
------------------------------------
-Jet was hit and skips this turn.
-----------------------------------------
-Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
-Beta is done.
-----------------------------------------
-Star's turn: 
-Revealing (0, 1): Empty space
-Revealing (0, 2): Empty space
-Revealing (0, 3): Empty space
+>> Kidd is looking around...
+Revealing (1, 0): Empty space
 Revealing (1, 1): Empty space
-Revealing (1, 2): Current position
-Revealing (1, 3): Empty space
-Revealing (2, 1): Empty space
+Revealing (1, 2): Empty space
+Revealing (2, 0): Empty space
+Revealing (2, 1): Current position
 Revealing (2, 2): Empty space
-Revealing (2, 3): Empty space
->> Star is moving...
-Star moved to (2, 2)
-No valid target at (2, 2).
-Star is done.
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+>> Kidd is thinking...
+>> Kidd jump to (4,3), (2/3)
+No valid target at (4, 3).
+Kidd is done.
+----------------------------------------
+Jet's turn: 
+>> Jet is looking around...
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Current position
+Revealing (4, 3): Enemy Kidd
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+>> Jet is thinking...
+Jet selects diagonal (-1,-1) for attack (length 5)
+>>  No shooting as no robots in diagonal to fire at
+>> Jet did not hide this turn, keep moving.
+>> Jet is moving...
+Jet moved to (3, 2)
+Jet is done.
 ----------------------------------------
 Alpha's turn: 
-Revealing (3, 3): Dead Robot
-Revealing (3, 4): Empty space
-Revealing (3, 5): Out of bounds
-Revealing (4, 3): Empty space
-Revealing (4, 4): Current position
-Revealing (4, 5): Out of bounds
-Revealing (5, 3): Out of bounds
-Revealing (5, 4): Out of bounds
-Revealing (5, 5): Out of bounds
->> Alpha is moving...
-Alpha moved to (4, 3)
-No valid target at (4, 3).
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha hide, (1/3)
+>> Alpha fire at (2,3)
+Star has been hit! Lives left: 1
+Star queued for reentry with 1 lives and 10 ammo.
+Hit! (Star) be killed
 Alpha is done.
+-----------------------------------
+Star was hit and skips this turn.
 ----------------------------------------
-Jet has been removed from the battlefield.
+Star has been removed from the battlefield.
 ----------------------------------------
-Reentering Jet
-Jet reentered as GenericRobot at (0, 3) with 2 lives and 9 ammo next turn.
+Reentering Beta
+Beta reentered as GenericRobot at (2, 0) with 1 lives and 10 ammo next turn.
 
 Battlefield State after Step 3:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
+0 |. . B . . | 0
 1 |. . . . . | 1
-2 |. . S . . | 2
-3 |J . . . A | 3
+2 |. . . J . | 2
+3 |H . . . K | 3
 4 |. . . . . | 4
   +----------+
    0 1 2 3 4 
@@ -284,45 +306,14 @@ LEGEND:
 
 --- Simulation Step 4 ---
 Robot Status before Step 4:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 8
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (2,2), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Alpha, Coords: (4,3), Life: 1, Ammo: 9
-  Type: GenericRobot, Name: Jet, Coords: (0,3), Life: 2, Ammo: 9
+  Type: JumpBot, Name: Kidd, Coords: (4,3), Life: 3, Ammo: 10
+  Type: HideKnightBot, Name: Jet, Coords: (3,2), Life: 3, Ammo: 9
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,3), Life: 3, Ammo: 7
+  Type: GenericRobot, Name: Beta, Coords: (2,0), Life: 1, Ammo: 10
 ----------------------------------------
 Kidd's turn: 
-Kidd scan the battlefield
-got robot: Beta at (0,0)
-got robot: Star at (2,2)
-got robot: Jet at (0,3)
-got robot: Alpha at (4,3)
-Kidd hide, (2/3)
-LongShotBot No shooting as no robots within shooting range. 
-Kidd is done.
-----------------------------------------
-Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
-Beta is done.
-----------------------------------------
-Star's turn: 
-Revealing (1, 1): Empty space
-Revealing (1, 2): Empty space
-Revealing (1, 3): Empty space
-Revealing (2, 1): Empty space
-Revealing (2, 2): Current position
-Revealing (2, 3): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Empty space
-Revealing (3, 3): Empty space
->> Star is moving...
-Star moved to (3, 2)
-No valid target at (3, 2).
-Star is done.
-----------------------------------------
-Alpha's turn: 
-Revealing (3, 2): Enemy Star
+>> Kidd is looking around...
+Revealing (3, 2): Enemy Jet
 Revealing (3, 3): Empty space
 Revealing (3, 4): Empty space
 Revealing (4, 2): Empty space
@@ -331,36 +322,60 @@ Revealing (4, 4): Empty space
 Revealing (5, 2): Out of bounds
 Revealing (5, 3): Out of bounds
 Revealing (5, 4): Out of bounds
->> Alpha fires at (3, 2)
-Alpha missed!
+>> Kidd is thinking...
+>> Kidd fires at (3, 2)
+Jet has been hit! Lives left: 2
+Kidd will upgrade into JumpTrackBot next turn!
+>> Kidd did not jump this turn, keep moving
+>> Kidd is moving...
+Kidd moved to (3, 3)
+Kidd is done.
+-----------------------------------
+Jet was hit and skips this turn.
+----------------------------------------
+Alpha's turn: 
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
 >> Alpha is moving...
-Alpha moved to (3, 3)
+Alpha moved to (-1, 3)
+>> Alpha fire at (3,3)
+Kidd has been hit! Lives left: 2
+Kidd queued for reentry with 2 lives and 9 ammo.
+Hit! (Kidd) be killed
 Alpha is done.
 ----------------------------------------
-Jet's turn: 
-Revealing (-1, 2): Out of bounds
-Revealing (-1, 3): Out of bounds
-Revealing (-1, 4): Out of bounds
-Revealing (0, 2): Empty space
-Revealing (0, 3): Current position
-Revealing (0, 4): Empty space
-Revealing (1, 2): Empty space
-Revealing (1, 3): Empty space
-Revealing (1, 4): Empty space
->> Jet is moving...
-Jet moved to (1, 2)
-No valid target at (1, 2).
-Jet is done.
+Beta's turn: 
+>> Beta is looking around...
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Empty space
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Current position
+Revealing (2, 1): Empty space
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (2, 1)
+No valid target at (2, 1).
+Beta is done.
 ----------------------------------------
+Kidd has been removed from the battlefield.
+Jet queued for reentry with 2 lives and 9 ammo.
+Jet has been removed from the battlefield.
 ----------------------------------------
+Reentering Star
+Star reentered as GenericRobot at (3, 3) with 1 lives and 10 ammo next turn.
 
 Battlefield State after Step 4:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
-1 |. . . . . | 1
-2 |. J . S . | 2
-3 |. . . A . | 3
+0 |. . . . . | 0
+1 |. . B . . | 1
+2 |. . . . . | 2
+3 |. . . S . | 3
 4 |. . . . . | 4
   +----------+
    0 1 2 3 4 
@@ -373,71 +388,64 @@ LEGEND:
 
 --- Simulation Step 5 ---
 Robot Status before Step 5:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 8
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (3,2), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Alpha, Coords: (3,3), Life: 1, Ammo: 8
-  Type: GenericRobot, Name: Jet, Coords: (1,2), Life: 2, Ammo: 9
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,3), Life: 3, Ammo: 6
+  Type: GenericRobot, Name: Beta, Coords: (2,1), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (3,3), Life: 1, Ammo: 10
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd did not hide this turn, keep moving.
->> KiddLongShotBot fire at (3,3)
-Alpha has been destroyed!
-Hit! (Alpha) be killed
-Kidd is done.
+Alpha's turn: 
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha hide, (2/3)
+>> Alpha fire at (3,3)
+Missed!
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (1, 0): Empty space
+Revealing (1, 1): Empty space
+Revealing (1, 2): Empty space
+Revealing (2, 0): Empty space
+Revealing (2, 1): Current position
+Revealing (2, 2): Empty space
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (2, 0)
+No valid target at (2, 0).
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Revealing (2, 1): Empty space
+>> Star is looking around...
 Revealing (2, 2): Empty space
 Revealing (2, 3): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Current position
-Revealing (3, 3): Dead Robot
-Revealing (4, 1): Empty space
+Revealing (2, 4): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Current position
+Revealing (3, 4): Empty space
 Revealing (4, 2): Empty space
 Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+>> Star is thinking...
 >> Star is moving...
-Star moved to (2, 3)
-No valid target at (2, 3).
+Star moved to (3, 4)
+No valid target at (3, 4).
 Star is done.
 ----------------------------------------
-Alpha's turn: 
-Alpha is done.
 ----------------------------------------
-Jet's turn: 
-Revealing (0, 1): Empty space
-Revealing (0, 2): Empty space
-Revealing (0, 3): Empty space
-Revealing (1, 1): Empty space
-Revealing (1, 2): Current position
-Revealing (1, 3): Empty space
-Revealing (2, 1): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Enemy Star
->> Jet fires at (2, 3)
-Jet missed!
->> Jet is moving...
-Jet moved to (1, 3)
-Jet is done.
-----------------------------------------
-Alpha has been destroyed and removed from the battlefield.
-----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (0, 1) with 2 lives and 9 ammo next turn.
 
 Battlefield State after Step 5:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
-1 |. . . . . | 1
+0 |. . B . . | 0
+1 |K . . . . | 1
 2 |. . . . . | 2
-3 |. J S . . | 3
-4 |. . . . . | 4
+3 |. . . . . | 3
+4 |. . . S . | 4
   +----------+
    0 1 2 3 4 
 
@@ -449,64 +457,84 @@ LEGEND:
 
 --- Simulation Step 6 ---
 Robot Status before Step 6:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 7
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (2,3), Life: 3, Ammo: 10
-  Type: GenericRobot, Name: Jet, Coords: (1,3), Life: 2, Ammo: 8
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,3), Life: 3, Ammo: 5
+  Type: GenericRobot, Name: Beta, Coords: (2,0), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (3,4), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Kidd, Coords: (0,1), Life: 2, Ammo: 9
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd did not hide this turn, keep moving.
-LongShotBot No shooting as no robots within shooting range. 
-Kidd is done.
+Alpha's turn: 
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (-1, 4)
+>> Alpha fire at (0,1)
+Missed!
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta hide, (2/3)
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (1, -1): Out of bounds
+Revealing (1, 0): Empty space
+Revealing (1, 1): Empty space
+Revealing (2, -1): Out of bounds
+Revealing (2, 0): Current position
+Revealing (2, 1): Empty space
+Revealing (3, -1): Out of bounds
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (3, 1)
+No valid target at (3, 1).
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Revealing (1, 2): Empty space
-Revealing (1, 3): Enemy Jet
-Revealing (1, 4): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Current position
-Revealing (2, 4): Empty space
-Revealing (3, 2): Empty space
-Revealing (3, 3): Empty space
-Revealing (3, 4): Empty space
->> Star fires at (1, 3)
-Star missed!
->> Star is moving...
-Star moved to (3, 4)
-Star is done.
-----------------------------------------
-Jet's turn: 
-Revealing (0, 2): Empty space
-Revealing (0, 3): Empty space
-Revealing (0, 4): Empty space
-Revealing (1, 2): Empty space
-Revealing (1, 3): Current position
-Revealing (1, 4): Empty space
-Revealing (2, 2): Empty space
+>> Star is looking around...
 Revealing (2, 3): Empty space
 Revealing (2, 4): Empty space
->> Jet is moving...
-Jet moved to (0, 3)
-No valid target at (0, 3).
-Jet is done.
+Revealing (2, 5): Out of bounds
+Revealing (3, 3): Empty space
+Revealing (3, 4): Current position
+Revealing (3, 5): Out of bounds
+Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+Revealing (4, 5): Out of bounds
+>> Star is thinking...
+>> Star is moving...
+Star moved to (2, 3)
+No valid target at (2, 3).
+Star is done.
+----------------------------------------
+Kidd's turn: 
+>> Kidd is looking around...
+Revealing (-1, 0): Out of bounds
+Revealing (-1, 1): Out of bounds
+Revealing (-1, 2): Out of bounds
+Revealing (0, 0): Empty space
+Revealing (0, 1): Current position
+Revealing (0, 2): Empty space
+Revealing (1, 0): Empty space
+Revealing (1, 1): Empty space
+Revealing (1, 2): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (1, 2)
+No valid target at (1, 2).
+Kidd is done.
 ----------------------------------------
 ----------------------------------------
+Reentering Jet
+Jet reentered as GenericRobot at (0, 4) with 2 lives and 9 ammo next turn.
 
 Battlefield State after Step 6:
    0 1 2 3 4 
   +----------+
-0 |H . . . . | 0
-1 |. . . . . | 1
-2 |. . . . . | 2
-3 |J . . . . | 3
-4 |. . . S . | 4
+0 |. . . . . | 0
+1 |. . . B . | 1
+2 |. K . . . | 2
+3 |. . S . . | 3
+4 |J . . . . | 4
   +----------+
    0 1 2 3 4 
 
@@ -518,64 +546,107 @@ LEGEND:
 
 --- Simulation Step 7 ---
 Robot Status before Step 7:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 7
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (3,4), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Jet, Coords: (0,3), Life: 2, Ammo: 8
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,3), Life: 3, Ammo: 4
+  Type: GenericRobot, Name: Beta, Coords: (3,1), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (2,3), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Kidd, Coords: (1,2), Life: 2, Ammo: 9
+  Type: GenericRobot, Name: Jet, Coords: (0,4), Life: 2, Ammo: 9
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd hide, (3/3)
->> KiddLongShotBot fire at (3,4)
-LongShotBot Missed!
-Kidd is done.
+Alpha's turn: 
+>> Alpha track Jet at (0,4)
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (1, 4)
+>> Alpha fire at (0,4)
+Missed!
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (2, 0): Empty space
+Revealing (2, 1): Empty space
+Revealing (2, 2): Empty space
+Revealing (3, 0): Empty space
+Revealing (3, 1): Current position
+Revealing (3, 2): Empty space
+Revealing (4, 0): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Empty space
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (4, 1)
+No valid target at (4, 1).
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Revealing (2, 3): Empty space
+>> Star is looking around...
+Revealing (1, 2): Enemy Kidd
+Revealing (1, 3): Empty space
+Revealing (1, 4): Enemy Alpha
+Revealing (2, 2): Empty space
+Revealing (2, 3): Current position
 Revealing (2, 4): Empty space
-Revealing (2, 5): Out of bounds
+Revealing (3, 2): Empty space
 Revealing (3, 3): Empty space
-Revealing (3, 4): Current position
-Revealing (3, 5): Out of bounds
-Revealing (4, 3): Empty space
-Revealing (4, 4): Empty space
-Revealing (4, 5): Out of bounds
+Revealing (3, 4): Empty space
+>> Star is thinking...
+>> Star fires at (1, 2)
+Star missed!
 >> Star is moving...
-Star moved to (2, 3)
-No valid target at (2, 3).
+Star moved to (3, 4)
 Star is done.
 ----------------------------------------
+Kidd's turn: 
+>> Kidd is looking around...
+Revealing (0, 1): Empty space
+Revealing (0, 2): Empty space
+Revealing (0, 3): Empty space
+Revealing (1, 1): Empty space
+Revealing (1, 2): Current position
+Revealing (1, 3): Empty space
+Revealing (2, 1): Empty space
+Revealing (2, 2): Empty space
+Revealing (2, 3): Empty space
+>> Kidd is thinking...
+>> Kidd is moving...
+Kidd moved to (1, 3)
+No valid target at (1, 3).
+Kidd is done.
+----------------------------------------
 Jet's turn: 
-Revealing (-1, 2): Out of bounds
+>> Jet is looking around...
 Revealing (-1, 3): Out of bounds
 Revealing (-1, 4): Out of bounds
-Revealing (0, 2): Empty space
-Revealing (0, 3): Current position
-Revealing (0, 4): Empty space
-Revealing (1, 2): Empty space
-Revealing (1, 3): Empty space
-Revealing (1, 4): Empty space
+Revealing (-1, 5): Out of bounds
+Revealing (0, 3): Empty space
+Revealing (0, 4): Current position
+Revealing (0, 5): Out of bounds
+Revealing (1, 3): Enemy Kidd
+Revealing (1, 4): Enemy Alpha
+Revealing (1, 5): Out of bounds
+>> Jet is thinking...
+>> Jet fires at (1, 3)
+Kidd has been hit! Lives left: 1
+Kidd queued for reentry with 1 lives and 9 ammo.
+Jet will upgrade into VampireBot next turn!
 >> Jet is moving...
-Jet moved to (1, 4)
-No valid target at (1, 4).
+Jet moved to (0, 3)
 Jet is done.
 ----------------------------------------
+Kidd has been removed from the battlefield.
 ----------------------------------------
+Reentering Kidd
+Kidd reentered as GenericRobot at (3, 3) with 1 lives and 9 ammo next turn.
 
 Battlefield State after Step 7:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
-1 |. . . . . | 1
+0 |. . . . . | 0
+1 |. . . . B | 1
 2 |. . . . . | 2
-3 |. . S . . | 3
-4 |. J . . . | 4
+3 |J . . K . | 3
+4 |. A . S . | 4
   +----------+
    0 1 2 3 4 
 
@@ -586,57 +657,81 @@ LEGEND:
 
 
 --- Simulation Step 8 ---
+Jet has upgraded to VampireBot!
 Robot Status before Step 8:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 6
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Star, Coords: (2,3), Life: 3, Ammo: 9
-  Type: GenericRobot, Name: Jet, Coords: (1,4), Life: 2, Ammo: 8
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (1,4), Life: 3, Ammo: 3
+  Type: GenericRobot, Name: Beta, Coords: (4,1), Life: 1, Ammo: 10
+  Type: GenericRobot, Name: Star, Coords: (3,4), Life: 1, Ammo: 9
+  Type: VampireBot, Name: Jet, Coords: (0,3), Life: 2, Ammo: 8
+  Type: GenericRobot, Name: Kidd, Coords: (3,3), Life: 1, Ammo: 9
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd finish use hide, keep moving.
-LongShotBot No shooting as no robots within shooting range. 
-Kidd is done.
+Alpha's turn: 
+>> Alpha track Jet at (0,3)
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (0, 4)
+>> Alpha fire at (0,3)
+Jet has been hit! Lives left: 1
+Hit! (Jet) be killed
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (3, 0): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (4, 0): Empty space
+Revealing (4, 1): Current position
+Revealing (4, 2): Empty space
+Revealing (5, 0): Out of bounds
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (4, 2)
+No valid target at (4, 2).
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Revealing (1, 2): Empty space
-Revealing (1, 3): Empty space
-Revealing (1, 4): Enemy Jet
-Revealing (2, 2): Empty space
-Revealing (2, 3): Current position
+>> Star is looking around...
+Revealing (2, 3): Empty space
 Revealing (2, 4): Empty space
-Revealing (3, 2): Empty space
-Revealing (3, 3): Empty space
-Revealing (3, 4): Empty space
->> Star fires at (1, 4)
-Jet has been hit! Lives left: 1
-Jet queued for reentry with 1 lives and 8 ammo.
-Star will upgrade into LongShotBot next turn!
+Revealing (2, 5): Out of bounds
+Revealing (3, 3): Enemy Kidd
+Revealing (3, 4): Current position
+Revealing (3, 5): Out of bounds
+Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+Revealing (4, 5): Out of bounds
+>> Star is thinking...
+>> Star fires at (3, 3)
+Kidd has been destroyed!
+Star will upgrade into JumpBot next turn!
 >> Star is moving...
-Star moved to (3, 2)
+Star moved to (4, 4)
 Star is done.
 -----------------------------------
 Jet was hit and skips this turn.
 ----------------------------------------
+Kidd's turn: 
+Kidd is done.
+----------------------------------------
+Jet queued for reentry with 1 lives and 8 ammo.
 Jet has been removed from the battlefield.
+Kidd has been destroyed and removed from the battlefield.
 ----------------------------------------
 Reentering Jet
-Jet reentered as GenericRobot at (2, 0) with 1 lives and 8 ammo next turn.
+Jet reentered as GenericRobot at (3, 4) with 1 lives and 8 ammo next turn.
 
 Battlefield State after Step 8:
    0 1 2 3 4 
   +----------+
-0 |B . J . . | 0
+0 |. . . . . | 0
 1 |. . . . . | 1
-2 |. . . S . | 2
+2 |. . . . B | 2
 3 |. . . . . | 3
-4 |. . . . . | 4
+4 |A . . J S | 4
   +----------+
    0 1 2 3 4 
 
@@ -647,41 +742,56 @@ LEGEND:
 
 
 --- Simulation Step 9 ---
-Star has upgraded to LongShotBot!
+Star has upgraded to JumpBot!
 Robot Status before Step 9:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 6
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: LongShotBot, Name: Star, Coords: (3,2), Life: 3, Ammo: 8
-  Type: GenericRobot, Name: Jet, Coords: (2,0), Life: 1, Ammo: 8
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (0,4), Life: 3, Ammo: 2
+  Type: GenericRobot, Name: Beta, Coords: (4,2), Life: 1, Ammo: 10
+  Type: JumpBot, Name: Star, Coords: (4,4), Life: 1, Ammo: 8
+  Type: GenericRobot, Name: Jet, Coords: (3,4), Life: 1, Ammo: 8
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd finish use hide, keep moving.
-LongShotBot No shooting as no robots within shooting range. 
-Kidd is done.
+Alpha's turn: 
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (1, 4)
+>> Alpha fire at (3,4)
+Missed!
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+Revealing (4, 1): Empty space
+Revealing (4, 2): Current position
+Revealing (4, 3): Empty space
+Revealing (5, 1): Out of bounds
+Revealing (5, 2): Out of bounds
+Revealing (5, 3): Out of bounds
+>> Beta is thinking...
+>> Beta is moving...
+Beta moved to (3, 3)
+No valid target at (3, 3).
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Revealing (2, 1): Empty space
-Revealing (2, 2): Empty space
-Revealing (2, 3): Empty space
-Revealing (3, 1): Empty space
-Revealing (3, 2): Current position
-Revealing (3, 3): Empty space
-Revealing (4, 1): Empty space
-Revealing (4, 2): Empty space
+>> Star is looking around...
+Revealing (3, 3): Enemy Beta
+Revealing (3, 4): Enemy Jet
+Revealing (3, 5): Out of bounds
 Revealing (4, 3): Empty space
->> Star is moving...
-Star moved to (2, 2)
->> StarLongShotBot fire at (2,0)
+Revealing (4, 4): Current position
+Revealing (4, 5): Out of bounds
+Revealing (5, 3): Out of bounds
+Revealing (5, 4): Out of bounds
+Revealing (5, 5): Out of bounds
+>> Star is thinking...
+>> Star fires at (3, 4)
 Jet has been destroyed!
-Hit! (Jet) be killed
-Star will upgrade into LongShotTrackBot next turn
+Star will upgrade into JumpThirtyShotBot next turn!
+>> Star jump to (2,2), (1/3)
 Star is done.
 ----------------------------------------
 Jet's turn: 
@@ -693,11 +803,11 @@ Jet has been destroyed and removed from the battlefield.
 Battlefield State after Step 9:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
+0 |. . . . . | 0
 1 |. . . . . | 1
 2 |. . S . . | 2
-3 |. . . . . | 3
-4 |. . . . . | 4
+3 |. . . B . | 3
+4 |. A . . . | 4
   +----------+
    0 1 2 3 4 
 
@@ -708,41 +818,70 @@ LEGEND:
 
 
 --- Simulation Step 10 ---
-Star has upgraded to LongShotTrackBot!
+Star got 30 shells, replacing its current shells!
+Star has upgraded to JumpThirtyShotBot!
 Robot Status before Step 10:
-  Type: HideLongShotScoutBot, Name: Kidd, Coords: (3,6), Life: 3, Ammo: 6
-  Type: HideVampireTrackBot, Name: Beta, Coords: (0,0), Life: 3, Ammo: 9
-  Type: LongShotTrackBot, Name: Star, Coords: (2,2), Life: 3, Ammo: 7
+  Type: HideLongShotTrackBot, Name: Alpha, Coords: (1,4), Life: 3, Ammo: 1
+  Type: GenericRobot, Name: Beta, Coords: (3,3), Life: 1, Ammo: 10
+  Type: JumpThirtyShotBot, Name: Star, Coords: (2,2), Life: 1, Ammo: 30
 ----------------------------------------
-Kidd's turn: 
-Kidd reach the limit,cannot scan already
-Kidd finish use hide, keep moving.
-LongShotBot No shooting as no robots within shooting range. 
-Kidd is done.
+Alpha's turn: 
+>> Alpha no target can track
+>> Alpha is thinking...
+>> Alpha did not hide this turn, keep moving.
+>> Alpha is moving...
+Alpha moved to (0, 5)
+>> Alpha fire at (2,2)
+Missed!
+Alpha has no ammo left, it will self-destruct!
+Alpha is done.
 ----------------------------------------
 Beta's turn: 
-Beta no target can track
-Beta did not hide this turn, keep moving.
-No shooting as no robots within shooting range.
+>> Beta is looking around...
+Revealing (2, 2): Enemy Star
+Revealing (2, 3): Empty space
+Revealing (2, 4): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Current position
+Revealing (3, 4): Empty space
+Revealing (4, 2): Empty space
+Revealing (4, 3): Empty space
+Revealing (4, 4): Empty space
+>> Beta is thinking...
+>> Beta fires at (2, 2)
+Beta missed!
+>> Beta is moving...
+Beta moved to (3, 4)
 Beta is done.
 ----------------------------------------
 Star's turn: 
-Star no target can track
+>> Star is looking around...
+Revealing (1, 1): Empty space
+Revealing (1, 2): Empty space
+Revealing (1, 3): Empty space
+Revealing (2, 1): Empty space
+Revealing (2, 2): Current position
+Revealing (2, 3): Empty space
+Revealing (3, 1): Empty space
+Revealing (3, 2): Empty space
+Revealing (3, 3): Empty space
+>> Star is thinking...
+>> Star did not jump this turn, keep moving
 >> Star is moving...
-Star moved to (2, 3)
-LongShotBot No shooting as no robots within shooting range. 
-Star is done.
+Star moved to (3, 2)
+>>  No shooting as no robots within shooting range.Star is done.
 ----------------------------------------
+Alpha has been destroyed and removed from the battlefield.
 ----------------------------------------
 
 Battlefield State after Step 10:
    0 1 2 3 4 
   +----------+
-0 |B . . . . | 0
+0 |. . . . . | 0
 1 |. . . . . | 1
-2 |. . . . . | 2
-3 |. . S . . | 3
-4 |. . . . . | 4
+2 |. . . S . | 2
+3 |. . . . . | 3
+4 |. . . B . | 4
   +----------+
    0 1 2 3 4 
 
@@ -754,7 +893,6 @@ LEGEND:
 
 --- Simulation Ended ---
 Result: Maximum steps reached (10 steps).
-Remaining robots: 3
-Kidd
+Remaining robots: 2
 Beta
 Star
